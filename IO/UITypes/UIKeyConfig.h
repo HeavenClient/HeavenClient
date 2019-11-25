@@ -44,6 +44,7 @@ namespace ms
 
 		void remove_key(KeyAction::Id action);
 		void add_key(Point<int16_t> cursorposition, KeyAction::Id action);
+		void save_keys();
 
 		void close();
 

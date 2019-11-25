@@ -353,11 +353,79 @@ namespace ms
 		}
 	}
 
+	void UIKeyConfig::save_keys()
+	{
+		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions;
+
+		for each (auto key in tempkeys)
+		{
+			KeyConfig::Key k = KeyConfig::actionbyid(key.first);
+			Keyboard::Mapping map = key.second;
+			KeyAction::Id action = KeyAction::actionbyid(map.action);
+
+			Keyboard::Mapping fmap = keyboard->get_maple_mapping(key.first);
+
+			if (map.action != fmap.action)
+			{
+				updated_actions.emplace_back(std::make_tuple(k, map.type, action));
+			}
+		}
+
+		auto maplekeys = keyboard->get_maplekeys();
+
+		for each (auto key in maplekeys)
+		{
+			bool keyFound = false;
+			KeyConfig::Key keyConfig = KeyConfig::actionbyid(key.first);
+
+			for each (auto tkey in tempkeys)
+			{
+				KeyConfig::Key tKeyConfig = KeyConfig::actionbyid(tkey.first);
+
+				if (keyConfig == tKeyConfig)
+				{
+					keyFound = true;
+					break;
+				}
+			}
+
+			if (!keyFound)
+				updated_actions.emplace_back(std::make_tuple(keyConfig, KeyType::Id::NONE, KeyAction::Id::LENGTH));
+		}
+
+		if (updated_actions.size() > 0)
+			ChangeKeyMapPacket(updated_actions).dispatch();
+
+		for each (auto action in updated_actions)
+		{
+			KeyConfig::Key key = std::get<0>(action);
+			KeyType::Id type = std::get<1>(action);
+			KeyAction::Id keyAction = std::get<2>(action);
+
+			if (type == KeyType::Id::NONE)
+				keyboard->remove(key);
+			else
+				keyboard->assign(key, type, keyAction);
+		}
+	}
+
 	Button::State UIKeyConfig::button_pressed(uint16_t buttonid)
 	{
 		switch (buttonid)
 		{
 		case Buttons::CLOSE:
+		{
+			constexpr char* message = "Do you want to save your changes?";
+
+			auto onok = [&]()
+			{
+				save_keys();
+				close();
+			};
+
+			UI::get().emplace<UIOk>(message, onok);
+			break;
+		}
 		case Buttons::CANCEL:
 			close();
 			break;
@@ -383,8 +451,8 @@ namespace ms
 			};
 
 			UI::get().emplace<UIOk>(message, onok);
+			break;
 		}
-		break;
 		case Buttons::DELETE:
 		{
 			constexpr char* message = "Would you like to clear all key bindings?";
@@ -395,68 +463,16 @@ namespace ms
 			};
 
 			UI::get().emplace<UIOk>(message, onok);
+			break;
 		}
-		break;
 		case Buttons::KEYSETTING:
 			break;
 		case Buttons::OK:
 		{
-			std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions;
-
-			for each (auto key in tempkeys)
-			{
-				KeyConfig::Key k = KeyConfig::actionbyid(key.first);
-				Keyboard::Mapping map = key.second;
-				KeyAction::Id action = KeyAction::actionbyid(map.action);
-
-				Keyboard::Mapping fmap = keyboard->get_maple_mapping(key.first);
-
-				if (map.action != fmap.action)
-				{
-					updated_actions.emplace_back(std::make_tuple(k, map.type, action));
-				}
-			}
-
-			auto maplekeys = keyboard->get_maplekeys();
-
-			for each (auto key in maplekeys)
-			{
-				bool keyFound = false;
-				KeyConfig::Key keyConfig = KeyConfig::actionbyid(key.first);
-
-				for each (auto tkey in tempkeys)
-				{
-					KeyConfig::Key tKeyConfig = KeyConfig::actionbyid(tkey.first);
-
-					if (keyConfig == tKeyConfig)
-					{
-						keyFound = true;
-						break;
-					}
-				}
-
-				if (!keyFound)
-					updated_actions.emplace_back(std::make_tuple(keyConfig, KeyType::Id::NONE, KeyAction::Id::LENGTH));
-			}
-
-			if (updated_actions.size() > 0)
-				ChangeKeyMapPacket(updated_actions).dispatch();
-
-			for each (auto action in updated_actions)
-			{
-				KeyConfig::Key key = std::get<0>(action);
-				KeyType::Id type = std::get<1>(action);
-				KeyAction::Id keyAction = std::get<2>(action);
-
-				if (type == KeyType::Id::NONE)
-					keyboard->remove(key);
-				else
-					keyboard->assign(key, type, keyAction);
-			}
-
+			save_keys();
 			close();
+			break;
 		}
-		break;
 		default:
 			break;
 		}
