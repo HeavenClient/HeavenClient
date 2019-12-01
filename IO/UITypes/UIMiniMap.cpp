@@ -54,7 +54,7 @@ namespace ms
 		player_marker = Animation(marker["user"]);
 		selected_marker = Animation(MiniMap["iconNpc"]);
 
-		//position.shift_y(-Constants::VIEWYOFFSET);
+		position.shift_y(-Constants::VIEWYOFFSET);
 	}
 
 	void UIMiniMap::draw(float alpha) const
@@ -233,7 +233,6 @@ namespace ms
 			UI::get().emplace<UIWorldMap>();
 			break;
 		case BT_NPC:
-			// TODO: make NPC submenu
 			set_npclist_active(!listNpc_enabled);
 			break;
 		}
