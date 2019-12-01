@@ -771,7 +771,7 @@ namespace ms
 	{
 		int16_t x = cursorpos.x();
 
-		if (x < SKILL_OFFSET.x() || x > 148)
+		if (x < SKILL_OFFSET.x() || x > SKILL_OFFSET.x() + 2 * ROW_WIDTH)
 			return nullptr;
 
 		int16_t y = cursorpos.y();
@@ -784,12 +784,19 @@ namespace ms
 		if (row < 0 || row >= ROWS)
 			return nullptr;
 
-		uint16_t absrow = offset + row;
+		uint16_t offset_row = offset + row;
 
-		if (icons.size() <= absrow)
+		if (offset_row >= ROWS)
 			return nullptr;
 
-		auto iter = icons.begin() + absrow;
+		uint16_t col = (x - SKILL_OFFSET.x()) / ROW_WIDTH;
+
+		uint16_t icon_idx = 2 * offset_row + col;
+
+		if (icon_idx >= icons.size())
+			return nullptr;
+
+		auto iter = icons.begin() + icon_idx;
 
 		return iter._Ptr;
 	}
