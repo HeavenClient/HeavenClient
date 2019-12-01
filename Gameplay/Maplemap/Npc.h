@@ -47,6 +47,11 @@ namespace ms
 		// Check if the NPC is in range of the cursor.
 		bool inrange(Point<int16_t> cursorpos, Point<int16_t> viewpos) const;
 
+		// Returns the NPC name.
+		std::string get_name();
+		// Returns the NPC's function description or title.
+		std::string get_func();
+
 	private:
 		std::map<std::string, Animation> animations;
 		std::map<std::string, std::vector<std::string>> lines;

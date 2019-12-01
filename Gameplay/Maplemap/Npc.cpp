@@ -150,4 +150,14 @@ namespace ms
 			absp.y()
 			).contains(cursorpos);
 	}
+
+	std::string Npc::get_name()
+	{
+		return name;
+	}
+
+	std::string Npc::get_func()
+	{
+		return func;
+	}
 }

@@ -76,6 +76,7 @@ namespace ms
 
 	void Stage::load_map(int32_t mapid)
 	{
+		Stage::mapid = mapid;
 		std::string strid = string_format::extend_id(mapid, 9);
 		std::string prefix = std::to_string(mapid / 100000000);
 		nl::node src = nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
@@ -315,6 +316,11 @@ namespace ms
 			return player;
 		else
 			return chars.get_char(cid);
+	}
+
+	int Stage::get_mapid()
+	{
+		return mapid;
 	}
 
 	void Stage::add_effect(std::string path)

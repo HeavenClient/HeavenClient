@@ -85,6 +85,8 @@ namespace ms
 		Player& get_player();
 		// Return a reference to the attack and buff component.
 		Combat& get_combat();
+		// Returns the current map ID.
+		int32_t get_mapid();
 
 		// Return a pointer to a character, possibly the player.
 		Optional<Char> get_character(int32_t cid);
@@ -113,6 +115,7 @@ namespace ms
 
 		Optional<Playable> playable;
 		State state;
+		int32_t mapid;
 
 		MapInfo mapinfo;
 		MapTilesObjs tilesobjs;

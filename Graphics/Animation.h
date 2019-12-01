@@ -65,7 +65,7 @@ namespace ms
 		bool update(uint16_t timestep);
 		void reset();
 
-		void draw(const DrawArgument& arguments, float inter) const;
+		void draw(const DrawArgument& arguments, float alpha) const;
 
 		uint16_t get_delay(int16_t frame) const;
 		uint16_t getdelayuntil(int16_t frame) const;
