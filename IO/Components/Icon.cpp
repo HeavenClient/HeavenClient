@@ -19,14 +19,16 @@
 #include "Charset.h"
 
 #include "../Audio/Audio.h"
+#include "../Template/EnumMap.h"
 
 #include <nlnx/nx.hpp>
 
 namespace ms
 {
-	Icon::Icon(std::unique_ptr<Type> t, Texture tx, int16_t c) : type(std::move(t)), texture(tx), count(c)
+	Icon::Icon(std::unique_ptr<Type> t, Texture tx, int16_t c) : type(std::move(t)), count(c)
 	{
-		texture.shift({ 0, 32 });
+		tx.shift({ 0, 32 });
+		textures[Icon::State::NORMAL] = tx;
 		showcount = c > -1;
 		dragged = false;
 	}
@@ -36,7 +38,7 @@ namespace ms
 	void Icon::draw(Point<int16_t> position) const
 	{
 		float opacity = dragged ? 0.5f : 1.0f;
-		texture.draw({ position, opacity });
+		get_texture().draw({ position, opacity });
 
 		if (showcount)
 		{
@@ -48,7 +50,7 @@ namespace ms
 	void Icon::dragdraw(Point<int16_t> cursorpos) const
 	{
 		if (dragged)
-			texture.draw({ cursorpos - cursoroffset, 0.5f });
+			get_texture().draw({ cursorpos - cursoroffset, 0.5f });
 	}
 
 	void Icon::drop_on_stage() const
@@ -87,6 +89,11 @@ namespace ms
 	void Icon::reset()
 	{
 		dragged = false;
+	}
+
+	Texture Icon::get_texture() const
+	{
+		return textures[Icon::State::NORMAL];
 	}
 
 	void Icon::set_count(int16_t c)

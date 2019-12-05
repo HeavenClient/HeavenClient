@@ -19,6 +19,7 @@
 
 #include "../Character/Inventory/Inventory.h"
 #include "../Graphics/Texture.h"
+#include "../Template/EnumMap.h"
 
 #include <memory>
 
@@ -48,6 +49,14 @@ namespace ms
 			void set_count(int16_t) override {}
 		};
 
+		enum State: uint8_t
+		{
+			NORMAL = 0,
+			DISABLED,
+			MOUSEOVER,
+			LENGTH
+		};
+
 		Icon(std::unique_ptr<Type> type, Texture texture, int16_t count);
 		Icon();
 
@@ -59,13 +68,14 @@ namespace ms
 		void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const;
 		void start_drag(Point<int16_t> offset);
 		void reset();
+		Texture get_texture() const;
 		void set_count(int16_t count);
 		int16_t get_count() const;
 		bool get_drag();
 
 	private:
 		std::unique_ptr<Type> type;
-		Texture texture;
+		EnumMap<Icon::State, Texture> textures;
 		bool showcount;
 		int16_t count;
 
