@@ -29,7 +29,7 @@
 namespace ms
 {
 	UIMiniMap::UIMiniMap(const CharStats& st) : UIDragElement<PosMINIMAP>(Point<int16_t>(128, 20)), stats(st), 
-		big_map(true), has_map(false), listNpc_enabled(false), listNpc_dimensions(Point<int16_t>(150, 170)), listNpc_offset(0), selected(-1)
+		big_map(true), has_map(false), listNpc_enabled(false), listNpc_dimensions(Point<int16_t>(150, 170)), listNpc_offset(0), selected(-1), hover_tooltip()
 	{
 		type = Setting<MiniMapType>::get().load();
 		simpleMode = Setting<MiniMapSimpleMode>::get().load();
@@ -73,8 +73,9 @@ namespace ms
 
 			if (has_map)
 			{
-				for (auto sprite : static_marker_sprites)
-					sprite.draw(position, alpha);
+				Animation portal_marker(marker["portal"]);
+				for (auto sprite : static_marker_info)
+					portal_marker.draw(position + sprite.second, alpha);
 
 				draw_movable_markers(position, alpha);
 				
@@ -82,6 +83,9 @@ namespace ms
 				{
 					draw_npclist(normal_dimensions, alpha);
 				}
+
+				if (tooltip_enabled)
+					hover_tooltip.draw(tooltip_pos);
 			}
 		}
 		else
@@ -94,14 +98,18 @@ namespace ms
 
 			if (has_map)
 			{
-				for (auto sprite : static_marker_sprites)
-					sprite.draw(position + Point<int16_t>(0, max_adj), alpha);
+				Animation portal_marker(marker["portal"]);
+				for (auto sprite : static_marker_info)
+					portal_marker.draw(position + sprite.second + Point<int16_t>(0, max_adj), alpha);
 
 				draw_movable_markers(position + Point<int16_t>(0, max_adj), alpha);
 
 				if (listNpc_enabled) {
 					draw_npclist(max_dimensions, alpha);
 				}
+
+				if (tooltip_enabled)
+					hover_tooltip.draw(tooltip_pos);
 			}
 		}
 
@@ -148,10 +156,6 @@ namespace ms
 				sprite.update();
 		}
 
-		if (has_map)
-			for (auto sprite : static_marker_sprites)
-				sprite.update();
-
 		if (listNpc_enabled)
 			for each (Sprite s in listNpc_sprites)
 				s.update();
@@ -189,8 +193,49 @@ namespace ms
 			{
 				int16_t clicked_item = listNpc_offset + clicked_point.y() / listNpc_item_height;
 				select_npclist(clicked_item < listNpc_names.size() ? clicked_item :  -1);
+
+				return Cursor::State::IDLE;
 			}
 		}
+		
+		bool found = false;
+
+		auto Npcs = Stage::get().get_npcs().get_npcs();
+		for (auto npc = Npcs->begin(); npc != Npcs->end(); npc++)
+		{
+			Point<int16_t> npc_pos = (npc->second->get_position() + center_offset) / scale + Point<int16_t>(map_draw_origin_x, map_draw_origin_y);
+			Rectangle<int16_t> marker_spot(npc_pos - Point<int16_t>(4, 8), npc_pos);
+			if (type == Type::MAX)
+				marker_spot.shift(Point<int16_t>(0, max_adj));
+			if (marker_spot.contains(cursor_relative))
+			{
+				found = true;
+				hover_tooltip.set_text(static_cast<Npc*>(npc->second.get())->get_name());
+				tooltip_pos = cursorpos + 24;
+				break;
+			}
+		}
+		
+		if (!found)
+		{
+			for (auto sprite : static_marker_info)
+			{
+				Rectangle<int16_t> marker_spot(sprite.second, sprite.second + 8);
+				if (type == Type::MAX)
+					marker_spot.shift(Point<int16_t>(0, max_adj));
+				std::cout << "Cursor: " << cursor_relative.to_string() << std::flush << "\r";
+				if (marker_spot.contains(cursor_relative))
+				{
+					found = true;
+					nl::node portal_name_node = nl::nx::string["Map.img"][get_map_category(Map["portal"][sprite.first]["tm"])][Map["portal"][sprite.first]["tm"]];
+					std::string portal_dest_name = portal_name_node["mapName"] + ": " + portal_name_node["streetName"];
+					hover_tooltip.set_text(portal_dest_name);
+					tooltip_pos = cursorpos + 24;
+					break;
+				}
+			}
+		}
+		tooltip_enabled = found;
 
 		return Cursor::State::IDLE;
 	}
@@ -492,6 +537,34 @@ namespace ms
 		return nl::nx::map["Map"]["Map" + std::to_string(mapid / 100000000)][mid_string];
 	}
 
+
+	std::string UIMiniMap::get_map_category(int mapid)
+	{
+		if (mapid < 1000000)
+			return "maple";
+		if (mapid < 200000000)
+			return "victoria";
+		if (mapid < 300000000)
+			return "ossyria";
+		if (mapid < 400000000)
+			return "elin"; 
+		if (mapid >= 540000000 && mapid < 560000000)
+			return "singapore";
+		if (mapid >= 600000000 && mapid < 620000000)
+			return "MasteriaGL"; 
+		if ((mapid >= 670000000 && mapid < 680100000) || mapid == 681000000)
+			return "weddingGL";
+		if (mapid >= 677000000 && mapid < 678000000)
+			return "Episode1GL";
+		if (mapid >= 677000000 && mapid < 678000000)
+			return "HalloweenGL";
+		if (mapid >= 683000000 && mapid < 684000000)
+			return "event";
+		if (mapid >= 800000000 && mapid < 889000000)
+			return "jp";
+		return "etc";
+	}
+
 	void UIMiniMap::draw_movable_markers(Point<int16_t> init_pos, float alpha) const
 	{
 		if (!has_map)
@@ -530,7 +603,7 @@ namespace ms
 
 	void UIMiniMap::update_static_markers()
 	{
-		static_marker_sprites.clear();
+		static_marker_info.clear();
 
 		if (!has_map)
 			return;
@@ -549,7 +622,7 @@ namespace ms
 			if (portal_type == 2)
 			{
 				Point<int16_t> marker_pos = (Point<int16_t>(portal["x"], portal["y"]) + center_offset) / scale - marker_offset + Point<int16_t>(map_draw_origin_x, map_draw_origin_y);
-				static_marker_sprites.emplace_back(marker_sprite, marker_pos);
+				static_marker_info.emplace_back(portal.name(), marker_pos);
 			}
 		}
 	}

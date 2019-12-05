@@ -56,12 +56,17 @@ namespace ms
 			pos.shift_y(adj_y * -1);
 
 		frame.draw(pos + Point<int16_t>(fillwidth / 2 + 2, fillheight - 7), fillwidth - 14, fillheight - 18);
-		cover.draw(pos + Point<int16_t>(-5, -2));
 
 		if (fillheight > 18)
+		{
+			cover.draw(pos + Point<int16_t>(-5, -2));
 			text_label.draw(pos);
+		}
 		else
-			text_label.draw(pos + Point<int16_t>(-1, -3));
+		{
+			cover.draw(DrawArgument(pos + Point<int16_t>(-5, -2), 0.5f, 0.5f));
+			text_label.draw(pos + Point<int16_t>(1, -3));
+		}
 	}
 
 	bool TextTooltip::set_text(std::string t)

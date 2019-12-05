@@ -26,6 +26,7 @@
 #include "../Components/MapleButton.h"
 #include "../Components/AreaButton.h"
 #include "../Components/Slider.h"
+#include "../Components/TextTooltip.h"
 
 namespace ms
 {
@@ -73,6 +74,9 @@ namespace ms
 
 		nl::node get_map_node_name();
 
+		// Returns the name of the node, under which the argument mapid is in.
+		std::string get_map_category(int mapid);
+
 		enum Buttons
 		{
 			BT_MIN,
@@ -110,15 +114,19 @@ namespace ms
 		std::vector<Sprite> min_sprites;
 		std::vector<Sprite> normal_sprites;
 		std::vector<Sprite> max_sprites;
-		std::vector<Sprite> static_marker_sprites;
+		std::vector<std::pair<std::string, Point<int16_t>>> static_marker_info;
 		int16_t map_draw_origin_x, map_draw_origin_y;
 		Point<int16_t> center_offset;
 		Point<int16_t> min_dimensions;
 		Point<int16_t> normal_dimensions;
 		Point<int16_t> max_dimensions;
+		TextTooltip hover_tooltip;
 		Text combined_text;
 		Text region_text;
 		Text town_text;
+
+		bool tooltip_enabled;
+		Point<int16_t> tooltip_pos;
 
 		bool listNpc_enabled;
 		nl::node listNpc;
