@@ -37,6 +37,7 @@ namespace ms
 		settings.emplace<DefaultAccount>();
 		settings.emplace<DefaultWorld>();
 		settings.emplace<DefaultChannel>();
+		settings.emplace<DefaultRegion>();
 		settings.emplace<DefaultCharacter>();
 		settings.emplace<Chatopen>();
 		settings.emplace<PosSTATS>();

@@ -27,7 +27,7 @@ namespace ms
 	namespace NxFiles
 	{
 		// Number of needed files.
-		constexpr uint8_t NUM_FILES = 15;
+		constexpr uint8_t NUM_FILES = 18;
 
 		// Names of the needed game files.
 		constexpr std::array<const char*, NUM_FILES> filenames =
@@ -37,8 +37,11 @@ namespace ms
 			"Etc.nx",
 			"Item.nx",
 			"Map.nx",
-			"Map001.nx",
+			"MapPretty.nx",	// From v167,
+			"MapLatest.nx",	// From v209.2,
+			"Map001.nx",	// From v209.2,
 			"Mob.nx",
+			"Morph.nx",
 			"Npc.nx",
 			"Quest.nx",
 			"Reactor.nx",
@@ -46,7 +49,7 @@ namespace ms
 			"Sound.nx",
 			"String.nx",
 			"TamingMob.nx",
-			"UI.nx"
+			"UI.nx"			// From v209.2
 		};
 
 		// Initialize nlnx.

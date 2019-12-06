@@ -77,8 +77,8 @@ namespace ms
 		nameboard = CustomizeChar["charName"];
 		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(524, 186), Point<int16_t>(630, 243)), 12);
 
-		sprites.emplace_back(Common["frame"], Point<int16_t>(399, 289));
-		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, -10));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
+		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
 
 		buttons[Buttons::BT_BACK] = std::make_unique<MapleButton>(Login["Common"]["BtStart"], Point<int16_t>(0, 505));
 

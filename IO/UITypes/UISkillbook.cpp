@@ -152,9 +152,9 @@ namespace ms
 
 		buttons[Buttons::BT_MACRO_OK]->set_state(Button::State::DISABLED);
 
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 
-		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 17, 12));
+		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 23, 6));
 
 		nl::node Tab = main["Tab"];
 		nl::node enabled = Tab["enabled"];

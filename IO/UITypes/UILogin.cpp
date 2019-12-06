@@ -47,14 +47,16 @@ namespace ms
 		nl::node title = nl::nx::ui["Login.img"]["Title"];
 		nl::node common = nl::nx::ui["Login.img"]["Common"];
 
+		nl::node prettyLogo = nl::nx::mapPretty["Back"]["login.img"]["ani"]["16"];
+
 		sprites.emplace_back(back["11"], Point<int16_t>(400, 290));
 		sprites.emplace_back(ani["17"], Point<int16_t>(129, 273));
 		sprites.emplace_back(ani["18"], Point<int16_t>(306, 242));
 		sprites.emplace_back(ani["19"], Point<int16_t>(379, 197));
 		sprites.emplace_back(back["35"], Point<int16_t>(399, 250));
-		sprites.emplace_back(ani["16"], Point<int16_t>(394, 163)); // From v167
+		sprites.emplace_back(prettyLogo, Point<int16_t>(394, 163));
 		sprites.emplace_back(title["signboard"], Point<int16_t>(391, 320));
-		sprites.emplace_back(common["frame"], Point<int16_t>(399, 289));
+		sprites.emplace_back(common["frame"], Point<int16_t>(400, 290));
 
 		buttons[Buttons::BT_LOGIN] = std::make_unique<MapleButton>(title["BtLogin"], Point<int16_t>(454, 269));
 		buttons[Buttons::BT_SAVEID] = std::make_unique<MapleButton>(title["BtLoginIDSave"], Point<int16_t>(303, 322));

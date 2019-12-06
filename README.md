@@ -4,7 +4,6 @@ HeavenClient is a custom, made-from-scratch game client.
 # Supported versions
 The client is currently compatible with version 83 servers.
 The client has only been tested with [HeavenMS](https://github.com/ronancpl/HeavenMS).
-For the UI file, a v154+ version should be used.
 
 # Configuration
 The build can be configured by editing the **Journey.h** file. The following options are available:
@@ -20,19 +19,19 @@ The default settings can be configured by editing the **Configuration.h** file. 
    * [Windows 8.1 SDK](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
 3. Press **Build** > **Build Solution** or **Ctrl + Shift + B**
 4. After a successful build, you can now run the program by pressing **Debug** > **Start Debugging** or **F5**
-5. Make sure all nx files are present in the parent folder.
-   - For a list of files required navigate to **NxFiles.h**
-6. To convert wz files to nx you can use the [NoLifeStory.zip](https://drive.google.com/open?id=1Mk3Kq1lY4NTMqylN5sn0-DQNAcoZZRYH)
+5. Make sure all nx files are present in the parent folder. To convert wz files to nx you can use [NoLifeStory.zip](https://drive.google.com/open?id=1Mk3Kq1lY4NTMqylN5sn0-DQNAcoZZRYH)
    - Extract the zip
    - Place your wz files in the **files** folder
    - Run **start.bat**
-7. Next you have to fix a difference in the client or your server
-   - Navigate to **LoginParser.cpp: 109**
-   - Change:
-`statsentry.stats[Maplestat::LEVEL] = recv.read_short();`
-   - To:
-`statsentry.stats[Maplestat::LEVEL] = recv.read_byte();`
-   - Or change your server to send the level as a short instead of a byte
+   - See **Required Files** for a list of required nx files
+
+# Required Files
+*Always check **NxFiles.h** for an updated list of required nx files*
+- MapPretty.nx (v167 GMS Map.wz)
+- MapLatest.nx (Lastest GMS Map.wz)
+- Map001.nx (Latest GMS Map001.wz)
+- UI.nx (Latest GMS UI.wz)
+- Everything else is from v83 GMS wz files
 
 # Dependencies
 - Nx library:

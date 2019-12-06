@@ -165,6 +165,15 @@ namespace ms
 			selected_marker.update();
 		}
 
+		if (listNpc_enabled)
+			for each (Sprite s in listNpc_sprites)
+				s.update();
+
+		if (selected >= 0)
+		{
+			selected_marker.update();
+		}
+
 		UIElement::update();
 	}
 
@@ -278,7 +287,6 @@ namespace ms
 			UI::get().emplace<UIWorldMap>();
 			break;
 		case BT_NPC:
-			// TODO: make NPC submenu
 			set_npclist_active(!listNpc_enabled);
 			break;
 		}
@@ -624,6 +632,162 @@ namespace ms
 				Point<int16_t> marker_pos = (Point<int16_t>(portal["x"], portal["y"]) + center_offset) / scale - marker_offset + Point<int16_t>(map_draw_origin_x, map_draw_origin_y);
 				static_marker_info.emplace_back(portal.name(), marker_pos);
 			}
+		}
+	}
+
+	void UIMiniMap::set_npclist_active(bool active)
+	{
+		if (type == Type::MIN) {
+			listNpc_enabled = false;
+			select_npclist(-1);
+		}
+		else {
+			listNpc_enabled = active;
+		}
+
+		update_dimensions();
+	}
+
+	void UIMiniMap::update_dimensions()
+	{
+		if (type == Type::MIN)
+		{
+			dimension = min_dimensions;
+		}
+		else
+		{
+			Point<int16_t> base_dims = type == Type::MAX ? max_dimensions : normal_dimensions;
+			dimension = base_dims;
+			if (listNpc_enabled) {
+				dimension += listNpc_dimensions;
+				dimension.set_y(std::max(base_dims.y(), listNpc_dimensions.y()));
+			}
+		}
+	}
+
+	void UIMiniMap::update_npclist()
+	{
+		listNpc_sprites.clear();
+		listNpc_names.clear();
+		listNpc_list.clear();
+		selected = -1;
+		listNpc_offset = 0;
+
+		if (simpleMode)
+			return;
+
+		MapObjects *npcs = Stage::get().get_npcs().get_npcs();
+		for (auto npc = npcs->begin(); npc != npcs->end(); ++npc)
+		{
+			listNpc_list.emplace_back(npc->second.get());
+
+			Npc* n = static_cast<Npc*>(npc->second.get());
+			std::string name = n->get_name();
+			if (n->get_func() != "")
+				name += " (" + n->get_func() + ")";
+
+			Text name_text = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, name);
+
+			// Stopgap solution to truncating names until Text supports truncation...
+			while (name_text.width() > listNpc_text_width)
+			{
+				name.pop_back();
+				name_text.change_text(name + "..");
+			}
+			listNpc_names.emplace_back(name_text);
+		}
+
+		const Point<int16_t> listNpc_pos = Point<int16_t>(type == Type::MAX ? max_dimensions.x() : normal_dimensions.x(), 0);
+		int16_t c_stretch = 20;
+		int16_t m_stretch = 102;
+
+		if (listNpc_names.size() > 8)
+		{
+			listNpc_slider = Slider(Slider::DEFAULT, Range<int16_t>(23, 11 + listNpc_item_height * 8), listNpc_pos.x() + listNpc_item_width + 13, 8, listNpc_names.size(), 
+			[&](bool upwards) 
+			{
+				int16_t shift = upwards ? -1 : 1;
+				bool above = listNpc_offset + shift >= 0;
+				bool below = listNpc_offset + 8 + shift <= listNpc_names.size();
+
+				if (above && below)
+					listNpc_offset += shift;
+			});
+			c_stretch += 12;
+		}
+		else
+		{
+			listNpc_slider.setenabled(false);
+			m_stretch = listNpc_item_height * listNpc_names.size() - 34;
+		}
+
+		listNpc_sprites.emplace_back(listNpc["c"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x, m_start), Point<int16_t>(c_stretch, m_stretch)));
+		listNpc_sprites.emplace_back(listNpc["w"], DrawArgument(listNpc_pos + Point<int16_t>(0, m_start), Point<int16_t>(0, m_stretch)));
+		listNpc_sprites.emplace_back(listNpc["e"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x+c_stretch, m_start), Point<int16_t>(0, m_stretch)));
+		listNpc_sprites.emplace_back(listNpc["n"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x, 0), Point<int16_t>(c_stretch, 0)));
+		listNpc_sprites.emplace_back(listNpc["s"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x, m_start+m_stretch), Point<int16_t>(c_stretch, 0)));
+		listNpc_sprites.emplace_back(listNpc["nw"], DrawArgument(listNpc_pos + Point<int16_t>(0, 0)));
+		listNpc_sprites.emplace_back(listNpc["ne"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x+c_stretch, 0)));
+		listNpc_sprites.emplace_back(listNpc["sw"], DrawArgument(listNpc_pos + Point<int16_t>(0, m_start + m_stretch)));
+		listNpc_sprites.emplace_back(listNpc["se"], DrawArgument(listNpc_pos + Point<int16_t>(center_start_x+c_stretch, m_start+m_stretch))); 
+		
+		listNpc_dimensions = Point<int16_t>(center_start_x * 2 + c_stretch, m_start + m_stretch + 30);
+
+		update_dimensions();
+	}
+
+	void UIMiniMap::draw_npclist(Point<int16_t> minimap_dims, float alpha) const
+	{
+		Animation npc_marker = Animation(marker["npc"]);
+
+		for each (Sprite s in listNpc_sprites)
+			s.draw(position, alpha);
+
+		Point<int16_t> listNpc_pos = position + Point<int16_t>(minimap_dims.x() + 10, 23);
+
+		for (int8_t i = 0; i + listNpc_offset < listNpc_list.size() && i < 8; i++)
+		{
+			if (selected - listNpc_offset == i)
+			{
+				ColorBox highlight = ColorBox(listNpc_item_width, listNpc_item_height, Color::Name::YELLOW, 1.0f);
+				highlight.draw(listNpc_pos);
+			}
+
+			npc_marker.draw(DrawArgument(listNpc_pos + Point<int16_t>(2, 7), false, npc_marker.get_dimensions()/2), alpha);
+			listNpc_names[listNpc_offset + i].draw(DrawArgument(listNpc_pos + Point<int16_t>(11, -3)));
+
+			listNpc_pos.shift_y(listNpc_item_height);
+		}
+
+		if (listNpc_slider.isenabled())
+		{
+			listNpc_slider.draw(position);
+		}
+
+		if (selected >= 0)
+		{
+			Point<int16_t> npc_pos = (listNpc_list[selected]->get_position() + center_offset) / scale
+				+ Point<int16_t>(map_draw_origin_x, map_draw_origin_y - npc_marker.get_dimensions().y() + (type == Type::MAX ? max_adj : 0));
+			selected_marker.draw(position + npc_pos, 0.5f);
+		}
+	}
+
+	void UIMiniMap::select_npclist(int16_t choice)
+	{
+		if (selected >= 0 && selected < listNpc_names.size())
+		{
+			listNpc_names[selected].change_color(Color::Name::WHITE);
+		}
+
+		if (choice > listNpc_names.size() || choice < 0)
+		{
+			selected = -1;
+		}
+		else
+		{
+			selected = choice != selected ? choice : -1;
+			if (selected >= 0)
+				listNpc_names[selected].change_color(Color::Name::BLACK);
 		}
 	}
 

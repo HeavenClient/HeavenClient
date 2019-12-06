@@ -61,7 +61,7 @@ namespace ms
 		nl::node taben = Tab["enabled"];
 		nl::node tabdis = Tab["disabled"];
 
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close);
 
 		buttons[Buttons::BT_TAB_EQUIP] = std::make_unique<TwoSpriteButton>(tabdis["0"], taben["0"]);
@@ -823,8 +823,8 @@ namespace ms
 
 		dragarea = Point<int16_t>(dimension.x(), 20);
 
-		int16_t adj_x = full_enabled ? 14 : 16;
-		buttons[Buttons::BT_CLOSE]->set_position(Point<int16_t>(dimension.x() - adj_x, 12));
+		int16_t adj_x = full_enabled ? 20 : 22;
+		buttons[Buttons::BT_CLOSE]->set_position(Point<int16_t>(dimension.x() - adj_x, 6));
 
 		buttons[Buttons::BT_COIN]->set_active(!enabled);
 		buttons[Buttons::BT_POINT]->set_active(!enabled);

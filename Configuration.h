@@ -217,7 +217,7 @@ namespace ms
 
 		const char* FILENAME = "Settings";
 		const char* TITLE = "MapleStory";
-		const char* VERSION = "204.1";
+		const char* VERSION = "209.2";
 		const char* JOINLINK = "https://www.nexon.com/account/en/create";
 		const char* WEBSITE = "http://maplestory.nexon.net/";
 		const char* FINDID = "https://www.nexon.com/account/en/login";
@@ -327,6 +327,12 @@ namespace ms
 	struct DefaultChannel : public Configuration::ByteEntry
 	{
 		DefaultChannel() : ByteEntry("Channel", "0") {}
+	};
+
+	// The last used region.
+	struct DefaultRegion : public Configuration::ByteEntry
+	{
+		DefaultRegion() : ByteEntry("Region", "5") {}
 	};
 
 	// The last used character.

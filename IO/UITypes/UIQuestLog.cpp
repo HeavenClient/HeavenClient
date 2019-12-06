@@ -28,7 +28,7 @@ namespace ms
 	{
 		tab = Buttons::TAB0;
 
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		nl::node quest = nl::nx::ui["UIWindow2.img"]["Quest"];
 		nl::node list = quest["list"];
 
@@ -48,7 +48,7 @@ namespace ms
 		buttons[Buttons::TAB0] = std::make_unique<TwoSpriteButton>(tabdis["0"], taben["0"]);
 		buttons[Buttons::TAB1] = std::make_unique<TwoSpriteButton>(tabdis["1"], taben["1"]);
 		buttons[Buttons::TAB2] = std::make_unique<TwoSpriteButton>(tabdis["2"], taben["2"]);
-		buttons[Buttons::CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(281, 12));
+		buttons[Buttons::CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(275, 6));
 		buttons[Buttons::SEARCH] = std::make_unique<MapleButton>(list["BtSearch"]);
 		buttons[Buttons::ALL_LEVEL] = std::make_unique<MapleButton>(list["BtAllLevel"]);
 		buttons[Buttons::MY_LOCATION] = std::make_unique<MapleButton>(list["BtMyLocation"]);

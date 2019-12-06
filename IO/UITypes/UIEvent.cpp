@@ -32,7 +32,7 @@ namespace ms
 		event_count = 16;
 
 		nl::node main = nl::nx::ui["UIWindow2.img"]["EventList"]["main"];
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 
 		nl::node backgrnd = main["backgrnd"];
 		Point<int16_t> bg_dimensions = Texture(backgrnd).get_dimensions();
@@ -40,7 +40,7 @@ namespace ms
 		sprites.emplace_back(backgrnd);
 		sprites.emplace_back(main["backgrnd2"], Point<int16_t>(1, 0));
 
-		buttons[Buttons::CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 13, 12));
+		buttons[Buttons::CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 19, 6));
 
 		bool in_progress = false;
 		bool item_rewards = false;

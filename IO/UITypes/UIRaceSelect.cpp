@@ -44,7 +44,7 @@ namespace ms
 		nl::node Common = Login["Common"];
 		nl::node RaceSelect = Login["RaceSelect_new"];
 
-		screen_adj = Point<int16_t>(0, -10);
+		screen_adj = Point<int16_t>(0, -Constants::VIEWYOFFSET);
 
 		Point<int16_t> make_pos = RaceSelect["make"]["pos"];
 		Point<int16_t> make_posZero = RaceSelect["make"]["posZero"];
@@ -103,7 +103,7 @@ namespace ms
 		class_isdisabled[Classes::ILLIUM] = true;
 		class_isdisabled[Classes::ARK] = true;
 
-		sprites.emplace_back(Common["frame"], Point<int16_t>(399, 289));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
 
 		back = RaceSelect["Back"]["1"]["0"];
 		backZero = RaceSelect["Back"]["2"]["0"];
@@ -157,7 +157,7 @@ namespace ms
 			if (selected_class == Classes::ZERO)
 				class_details_backgroundZero.draw(position + screen_adj);
 			else
-				class_details_background.draw(position + Point<int16_t>(0, -10));
+				class_details_background.draw(position + Point<int16_t>(0, -Constants::VIEWYOFFSET));
 
 			class_background[selected_class].draw(position + screen_adj);
 		}
@@ -168,7 +168,7 @@ namespace ms
 			if (selected_class == Classes::ZERO)
 				class_details_backgroundZero.draw(position + screen_adj);
 			else
-				class_details_background.draw(position + Point<int16_t>(0, -10));
+				class_details_background.draw(position + Point<int16_t>(0, -Constants::VIEWYOFFSET));
 		}
 
 		class_details[selected_class].draw(position + screen_adj);

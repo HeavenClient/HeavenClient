@@ -26,13 +26,13 @@ namespace ms
 {
 	UIUserList::UIUserList(uint16_t t) : UIDragElement<PosUSERLIST>(Point<int16_t>(260, 20)), tab(t)
 	{
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		UserList = nl::nx::ui["UIWindow2.img"]["UserList"];
 		nl::node Main = UserList["Main"];
 
 		sprites.emplace_back(Main["backgrnd"]);
 
-		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(250, 13));
+		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(244, 7));
 
 		nl::node taben = Main["Tab"]["enabled"];
 		nl::node tabdis = Main["Tab"]["disabled"];

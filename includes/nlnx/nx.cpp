@@ -45,7 +45,7 @@ namespace nl
 			return *files.back();
 		}
 
-		node base, character, effect, etc, item, map, map001, mob, morph, npc, quest, reactor, skill, sound, string, tamingmob, ui;
+		node base, character, effect, etc, item, map, mapPretty, mapLatest, map001, mob, morph, npc, quest, reactor, skill, sound, string, tamingmob, ui;
 
 		void load_all()
 		{
@@ -57,6 +57,8 @@ namespace nl
 				etc = add_file("Etc.nx");
 				item = add_file("Item.nx");
 				map = add_file("Map.nx");
+				mapPretty = add_file("MapPretty.nx");
+				mapLatest = add_file("MapLatest.nx");
 				map001 = add_file("Map001.nx");
 				mob = add_file("Mob.nx");
 				morph = add_file("Morph.nx");

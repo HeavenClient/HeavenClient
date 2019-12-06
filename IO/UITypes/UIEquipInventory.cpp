@@ -81,7 +81,7 @@ namespace ms
 		tab_source[Buttons::BT_TAB2] = "Pet";
 		tab_source[Buttons::BT_TAB3] = "Android";
 
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		nl::node Equip = nl::nx::ui["UIWindow4.img"]["Equip"];
 
 		background[Buttons::BT_TAB0] = Equip[tab_source[Buttons::BT_TAB0]]["backgrnd"];
@@ -107,7 +107,7 @@ namespace ms
 		disabled = Equip[tab_source[Buttons::BT_TAB0]]["disabled"];
 		disabled2 = Equip[tab_source[Buttons::BT_TAB0]]["disabled2"];
 
-		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 13, 11));
+		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(bg_dimensions.x() - 19, 5));
 		buttons[Buttons::BT_SLOT] = std::make_unique<MapleButton>(Equip[tab_source[Buttons::BT_TAB0]]["BtSlot"]);
 		buttons[Buttons::BT_EFFECT] = std::make_unique<MapleButton>(EquipGL["Equip"]["btEffect"]);
 		buttons[Buttons::BT_SALON] = std::make_unique<MapleButton>(EquipGL["Equip"]["btSalon"]);

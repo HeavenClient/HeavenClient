@@ -32,7 +32,7 @@ namespace ms
 {
 	UIStatsinfo::UIStatsinfo(const CharStats& st) : UIDragElement<PosSTATS>(Point<int16_t>(212, 20)), stats(st)
 	{
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		nl::node Stat = nl::nx::ui["UIWindow4.img"]["Stat"];
 		nl::node main = Stat["main"];
 		nl::node detail = Stat["detail"];
@@ -57,7 +57,7 @@ namespace ms
 		inner_ability[true] = metierLine["activated"]["0"];
 		inner_ability[false] = metierLine["disabled"]["0"];
 
-		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(196, 12));
+		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, Point<int16_t>(190, 6));
 		buttons[Buttons::BT_HP] = std::make_unique<MapleButton>(main["BtHpUp"]);
 		buttons[Buttons::BT_MP] = std::make_unique<MapleButton>(main["BtHpUp"], Point<int16_t>(0, 18));		// TODO: "BtMpUp" not Working
 		buttons[Buttons::BT_STR] = std::make_unique<MapleButton>(main["BtHpUp"], Point<int16_t>(0, 87));	// TODO: "BtStrUp" not working

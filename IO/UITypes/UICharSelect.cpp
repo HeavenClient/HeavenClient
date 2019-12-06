@@ -84,12 +84,16 @@ namespace ms
 
 		world_dimensions = Texture(selectWorld).get_dimensions();
 
+		uint16_t world;
 		uint8_t world_id = Configuration::get().get_worldid();
 		uint8_t channel_id = Configuration::get().get_channelid();
+		
+		if (auto worldselect = UI::get().get_element<UIWorldSelect>())
+			world = worldselect->get_worldbyid(world_id);
 
 		world_sprites.emplace_back(selectWorld, worldpos);
-		world_sprites.emplace_back(selectedWorld["icon"][world_id], worldpos - Point<int16_t>(14, -1));
-		world_sprites.emplace_back(selectedWorld["name"][world_id], worldpos - Point<int16_t>(8, 1));
+		world_sprites.emplace_back(selectedWorld["icon"][world], worldpos - Point<int16_t>(14, -1));
+		world_sprites.emplace_back(selectedWorld["name"][world], worldpos - Point<int16_t>(8, 1));
 		world_sprites.emplace_back(selectedWorld["ch"][channel_id], worldpos - Point<int16_t>(0, 1));
 
 		nl::node map = nl::nx::map001["Back"]["login.img"];
@@ -99,8 +103,8 @@ namespace ms
 		sprites.emplace_back(ani["17"], Point<int16_t>(151, 273));
 		sprites.emplace_back(ani["18"], Point<int16_t>(365, 242));
 		sprites.emplace_back(ani["19"], Point<int16_t>(191, 198));
-		sprites.emplace_back(Common["frame"], Point<int16_t>(399, 289));
-		sprites.emplace_back(Common["step"]["2"], Point<int16_t>(40, -10));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
+		sprites.emplace_back(Common["step"]["2"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
 
 		nl::node Burning = Common["Burning"];
 
@@ -399,107 +403,7 @@ namespace ms
 	{
 		if (pressed)
 		{
-			uint8_t selected_index = selected_character;
-			uint8_t index_total = std::min(characters_count, static_cast<int8_t>((selected_page + 1) * PAGESIZE));
-
-			uint8_t COLUMNS = 4;
-			uint8_t columns = std::min(index_total, COLUMNS);
-
-			uint8_t rows = std::floor((index_total - 1) / COLUMNS) + 1;
-
-			div_t div = std::div(selected_index, columns);
-			auto current_col = div.rem;
-			//auto current_row = div.quot;
-
-			if (keycode == KeyAction::Id::UP)
-			{
-				auto next_index = (selected_index - COLUMNS < 0 ? (selected_index - COLUMNS) + rows * COLUMNS : selected_index - COLUMNS);
-
-				if (next_index == selected_character)
-					return;
-
-				if (next_index >= index_total)
-					button_pressed(next_index - COLUMNS + Buttons::CHARACTER_SLOT0);
-				else
-					button_pressed(next_index + Buttons::CHARACTER_SLOT0);
-			}
-			else if (keycode == KeyAction::Id::DOWN)
-			{
-				auto next_index = (selected_index + COLUMNS >= index_total ? current_col : selected_index + COLUMNS);
-
-				if (next_index == selected_character)
-					return;
-
-				if (next_index > index_total)
-					button_pressed(next_index + COLUMNS + Buttons::CHARACTER_SLOT0);
-				else
-					button_pressed(next_index + Buttons::CHARACTER_SLOT0);
-			}
-			else if (keycode == KeyAction::Id::LEFT)
-			{
-				if (selected_index != 0)
-				{
-					selected_index--;
-
-					if (selected_index >= (selected_page + 1) * PAGESIZE - PAGESIZE)
-						button_pressed(selected_index + Buttons::CHARACTER_SLOT0);
-					else
-						button_pressed(Buttons::PAGELEFT);
-				}
-			}
-			else if (keycode == KeyAction::Id::RIGHT)
-			{
-				if (selected_index != characters_count - 1)
-				{
-					selected_index++;
-
-					if (selected_index < index_total)
-						button_pressed(selected_index + Buttons::CHARACTER_SLOT0);
-					else
-						button_pressed(Buttons::PAGERIGHT);
-				}
-			}
-			else if (keycode == KeyAction::Id::TAB)
-			{
-				uint8_t prev_tab = tab_index;
-
-				if (!tab_active)
-				{
-					tab_active = true;
-
-					if (!buttons[Buttons::CHARACTER_SELECT]->is_active())
-						tab_index++;
-				}
-				else
-				{
-					tab_index++;
-
-					if (tab_index > 2)
-					{
-						tab_active = false;
-						tab_index = 0;
-					}
-				}
-
-				tab_move = true;
-				tab_move_pos = 0;
-
-				auto& prev_btn = buttons[tab_map[prev_tab]];
-				auto prev_state = prev_btn->get_state();
-
-				if (prev_state != Button::State::DISABLED)
-					prev_btn->set_state(Button::State::NORMAL);
-
-				if (tab_active)
-				{
-					auto& btn = buttons[tab_map[tab_index]];
-					auto state = btn->get_state();
-
-					if (state != Button::State::DISABLED)
-						btn->set_state(Button::State::MOUSEOVER);
-				}
-			}
-			else if (escape)
+			if (escape)
 			{
 				button_pressed(Buttons::BACK);
 			}
@@ -518,6 +422,109 @@ namespace ms
 				else
 				{
 					button_pressed(Buttons::CHARACTER_SELECT);
+				}
+			}
+			else
+			{
+				uint8_t selected_index = selected_character;
+				uint8_t index_total = std::min(characters_count, static_cast<int8_t>((selected_page + 1) * PAGESIZE));
+
+				uint8_t COLUMNS = 4;
+				uint8_t columns = std::min(index_total, COLUMNS);
+
+				uint8_t rows = std::floor((index_total - 1) / COLUMNS) + 1;
+
+				div_t div = std::div(selected_index, columns);
+				auto current_col = div.rem;
+				//auto current_row = div.quot;
+
+				if (keycode == KeyAction::Id::UP)
+				{
+					auto next_index = (selected_index - COLUMNS < 0 ? (selected_index - COLUMNS) + rows * COLUMNS : selected_index - COLUMNS);
+
+					if (next_index == selected_character)
+						return;
+
+					if (next_index >= index_total)
+						button_pressed(next_index - COLUMNS + Buttons::CHARACTER_SLOT0);
+					else
+						button_pressed(next_index + Buttons::CHARACTER_SLOT0);
+				}
+				else if (keycode == KeyAction::Id::DOWN)
+				{
+					auto next_index = (selected_index + COLUMNS >= index_total ? current_col : selected_index + COLUMNS);
+
+					if (next_index == selected_character)
+						return;
+
+					if (next_index > index_total)
+						button_pressed(next_index + COLUMNS + Buttons::CHARACTER_SLOT0);
+					else
+						button_pressed(next_index + Buttons::CHARACTER_SLOT0);
+				}
+				else if (keycode == KeyAction::Id::LEFT)
+				{
+					if (selected_index != 0)
+					{
+						selected_index--;
+
+						if (selected_index >= (selected_page + 1) * PAGESIZE - PAGESIZE)
+							button_pressed(selected_index + Buttons::CHARACTER_SLOT0);
+						else
+							button_pressed(Buttons::PAGELEFT);
+					}
+				}
+				else if (keycode == KeyAction::Id::RIGHT)
+				{
+					if (selected_index != characters_count - 1)
+					{
+						selected_index++;
+
+						if (selected_index < index_total)
+							button_pressed(selected_index + Buttons::CHARACTER_SLOT0);
+						else
+							button_pressed(Buttons::PAGERIGHT);
+					}
+				}
+				else if (keycode == KeyAction::Id::TAB)
+				{
+					uint8_t prev_tab = tab_index;
+
+					if (!tab_active)
+					{
+						tab_active = true;
+
+						if (!buttons[Buttons::CHARACTER_SELECT]->is_active())
+							tab_index++;
+					}
+					else
+					{
+						tab_index++;
+
+						if (tab_index > 2)
+						{
+							tab_active = false;
+							tab_index = 0;
+						}
+					}
+
+					tab_move = true;
+					tab_move_pos = 0;
+
+					auto& prev_btn = buttons[tab_map[prev_tab]];
+					auto prev_state = prev_btn->get_state();
+
+					if (prev_state != Button::State::DISABLED)
+						prev_btn->set_state(Button::State::NORMAL);
+
+					if (tab_active)
+					{
+						auto& btn = buttons[tab_map[tab_index]];
+						auto state = btn->get_state();
+
+						if (state != Button::State::DISABLED)
+							btn->set_state(Button::State::MOUSEOVER);
+					}
 				}
 			}
 		}

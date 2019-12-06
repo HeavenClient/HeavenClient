@@ -33,8 +33,8 @@ namespace ms
 		nl::node na = Gateway["BtButton0"];
 		nl::node eu = Gateway["BtButton1"];
 
-		sprites.emplace_back(Gateway["backgrnd2"], Point<int16_t>(0, -10));
-		sprites.emplace_back(Common["frame"], Point<int16_t>(399, 289));
+		sprites.emplace_back(Gateway["backgrnd2"], Point<int16_t>(0, -Constants::VIEWYOFFSET));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
 
 		int16_t pos_y = 74;
 		Point<int16_t> na_pos = Point<int16_t>(155, pos_y);
@@ -82,14 +82,20 @@ namespace ms
 		{
 		case Buttons::NA:
 		case Buttons::EU:
+		{
+			// TODO: Update UIWorldSelect after selecting new region
+			//uint8_t region = (buttonid == Buttons::NA) ? 5 : 6;
+
 			if (auto worldselect = UI::get().get_element<UIWorldSelect>())
 			{
 				UI::get().remove(UIElement::Type::REGION);
 
+				//worldselect->set_region(region);
 				worldselect->makeactive();
 			}
 
 			break;
+		}
 		case Buttons::EXIT:
 			UI::get().quit();
 			break;

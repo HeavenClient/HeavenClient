@@ -25,7 +25,7 @@ namespace ms
 {
 	UIWorldMap::UIWorldMap() : UIDragElement<PosMAP>(Point<int16_t>(0, 0))
 	{
-		nl::node close = nl::nx::ui["Basic.img"]["BtClose"];
+		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		nl::node WorldMap = nl::nx::ui["UIWindow2.img"]["WorldMap"];
 		nl::node WorldMapSearch = WorldMap["WorldMapSearch"];
 		nl::node Border = WorldMap["Border"]["0"];
@@ -40,7 +40,7 @@ namespace ms
 		bg_search_dimensions = search_background.get_dimensions();
 		background_dimensions = Point<int16_t>(bg_dimensions.x(), 0);
 
-		Point<int16_t> close_dimensions = Point<int16_t>(bg_dimensions.x() - 16, 10);
+		Point<int16_t> close_dimensions = Point<int16_t>(bg_dimensions.x() - 22, 4);
 
 		buttons[Buttons::BT_CLOSE] = std::make_unique<MapleButton>(close, close_dimensions);
 		buttons[Buttons::BT_SEARCH] = std::make_unique<MapleButton>(WorldMap["BtSearch"]);

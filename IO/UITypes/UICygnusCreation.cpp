@@ -48,7 +48,7 @@ namespace ms
 		nl::node Common = Login["Common"];
 		nl::node CustomizeChar = Login["CustomizeChar"]["1000"];
 		nl::node back = nl::nx::map001["Back"]["login.img"]["back"];
-		nl::node signboard = nl::nx::map["Obj"]["login.img"]["NewChar"]["signboard"];
+		nl::node signboard = nl::nx::mapLatest["Obj"]["login.img"]["NewChar"]["signboard"];
 		nl::node board = CustomizeChar["board"];
 		nl::node genderSelect = CustomizeChar["genderSelect"];
 
@@ -56,7 +56,7 @@ namespace ms
 		cloud = back["27"];
 
 		sprites.emplace_back(back["46"], Point<int16_t>(400, 290));
-		sprites.emplace_back(signboard["2"], DrawArgument(Point<int16_t>(212, 207), 2.0f)); // From v204.1
+		sprites.emplace_back(signboard["2"], DrawArgument(Point<int16_t>(212, 207), 2.0f));
 		sprites_gender_select.emplace_back(board["genderTop"], Point<int16_t>(423, 94));
 		sprites_gender_select.emplace_back(board["boardMid"], Point<int16_t>(423, 212));
 		sprites_gender_select.emplace_back(board["boardBottom"], Point<int16_t>(423, 338));
@@ -98,8 +98,8 @@ namespace ms
 		nameboard = CustomizeChar["charName"];
 		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::BLACK, Rectangle<int16_t>(Point<int16_t>(538, 200), Point<int16_t>(630, 243)), 12);
 
-		sprites.emplace_back(Common["frame"], Point<int16_t>(399, 289));
-		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, -10));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
+		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
 
 		buttons[Buttons::BT_BACK] = std::make_unique<MapleButton>(Login["Common"]["BtStart"], Point<int16_t>(0, 505));
 
