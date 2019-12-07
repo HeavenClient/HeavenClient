@@ -54,7 +54,7 @@ namespace ms
 			NORMAL = 0,
 			DISABLED,
 			MOUSEOVER,
-			LENGTH
+			LENGTH  // requirement for EnumMap
 		};
 
 		Icon(std::unique_ptr<Type> type, Texture texture, int16_t count);

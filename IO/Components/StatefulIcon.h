@@ -19,6 +19,8 @@
 
 #include "Icon.h"
 
+#include "../Graphics/Texture.h"
+
 namespace ms
 {
 	class StatefulIcon : public Icon

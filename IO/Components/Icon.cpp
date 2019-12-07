@@ -19,6 +19,7 @@
 #include "Charset.h"
 
 #include "../Audio/Audio.h"
+#include "../Graphics/Texture.h"
 #include "../Template/EnumMap.h"
 
 #include <nlnx/nx.hpp>

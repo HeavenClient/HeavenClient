@@ -22,45 +22,13 @@
 
 #include "../Components/Slider.h"
 #include "../Components/Charset.h"
+#include "../Components/StatefulIcon.h"
 #include "../Character/CharStats.h"
 #include "../Character/Skillbook.h"
 #include "../Graphics/Text.h"
 
 namespace ms
 {
-	class SkillIcon
-	{
-	public:
-		SkillIcon(int32_t id, int32_t level);
-
-		void draw(const DrawArgument& args) const;
-
-		enum State
-		{
-			NORMAL,
-			DISABLED,
-			MOUSEOVER
-		};
-
-		void set_state(State state);
-
-		int32_t get_id() const;
-		int32_t get_level() const;
-		Texture get_icon() const;
-
-	private:
-		Texture normal;
-		Texture disabled;
-		Texture mouseover;
-		Text name;
-		Text level;
-		int32_t id;
-		int32_t lv;
-
-		State state;
-		bool enabled;
-	};
-
 	class UISkillbook : public UIDragElement<PosSKILL>
 	{
 	public:
@@ -99,7 +67,7 @@ namespace ms
 		void spend_sp(int32_t skill_id);
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
-		SkillIcon* icon_by_position(Point<int16_t> cursorpos);
+		SkillIconDeprecated* icon_by_position(Point<int16_t> cursorpos);
 
 		void close();
 		bool check_required(int32_t id) const;
@@ -166,7 +134,7 @@ namespace ms
 		uint16_t skillcount;
 		uint16_t offset;
 
-		std::vector<SkillIcon> icons;
+		std::vector<SkillIconDeprecated> icons;
 		bool grabbing;
 
 		Point<int16_t> bg_dimensions;
@@ -190,5 +158,37 @@ namespace ms
 		Texture sp_skill;
 		int32_t sp_id;
 		int32_t sp_masterlevel;
+
+		class SkillIcon : public StatefulIcon::Type
+		{
+		public:
+			SkillIcon(int32_t skill_id);
+
+			void drop_on_stage() const override {}
+			void drop_on_equips(Equipslot::Id) const override {}
+			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
+			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
+			void set_count(int16_t) override {}
+
+		private:
+			int32_t skill_id;
+		};
+
+		class SkillMeta
+		{
+		public:
+			SkillMeta(int32_t id, int32_t level);
+
+			int32_t get_id() const;
+			int32_t get_level() const;
+			UISkillbook::SkillIcon get_icon() const;
+
+		private:
+			int32_t id;
+			int32_t level;
+			UISkillbook::SkillIcon icon;
+			Text name_text;
+			Text level_text;
+		};
 	};
 }

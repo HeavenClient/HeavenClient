@@ -18,6 +18,7 @@
 #include "UISkillbook.h"
 
 #include "../Components/MapleButton.h"
+#include "../Components/StatefulIcon.h"
 #include "../Character/SkillId.h"
 #include "../Data/JobData.h"
 #include "../Data/SkillData.h"
@@ -30,79 +31,62 @@
 
 namespace ms
 {
-	SkillIcon::SkillIcon(int32_t i, int32_t l) : id(i), lv(l)
+	UISkillbook::SkillIcon::SkillIcon(int32_t id) : skill_id(id) {}
+
+	void UISkillbook::SkillIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
+	{
+		// TODO
+	}
+
+	UISkillbook::SkillMeta::SkillMeta(int32_t i, int32_t l) : id(i), level(l)
 	{
 		const SkillData& data = SkillData::get(id);
 
-		normal = data.get_icon(SkillData::Icon::NORMAL);
-		mouseover = data.get_icon(SkillData::Icon::MOUSEOVER);
-		disabled = data.get_icon(SkillData::Icon::DISABLED);
+		Texture ntx = data.get_icon(SkillData::Icon::NORMAL);
+		Texture dtx = data.get_icon(SkillData::Icon::DISABLED);
+		Texture motx = data.get_icon(SkillData::Icon::MOUSEOVER);
+		icon = std::make_unique<StatefulIcon>(std::make_unique<SkillIcon>(id), ntx, dtx, motx);
 
 		std::string namestr = data.get_name();
-		std::string levelstr = std::to_string(lv);
+		std::string levelstr = std::to_string(level);
 
-		name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR, namestr);
-		level = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR, levelstr);
-		state = State::NORMAL;
+		name_text = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR, namestr);
+		level_text = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR, levelstr);
 
 		constexpr uint16_t MAX_NAME_WIDTH = 97;
 		size_t overhang = 3;
 
-		while (name.width() > MAX_NAME_WIDTH)
+		while (name_text.width() > MAX_NAME_WIDTH)
 		{
 			namestr.replace(namestr.end() - overhang, namestr.end(), "..");
 			overhang += 1;
 
-			name.change_text(namestr);
+			name_text.change_text(namestr);
 		}
 	}
 
-	void SkillIcon::draw(const DrawArgument& args) const
-	{
-		switch (state)
-		{
-		case State::NORMAL:
-			normal.draw(args);
-			break;
-		case State::DISABLED:
-			disabled.draw(args);
-			break;
-		case State::MOUSEOVER:
-			mouseover.draw(args);
-			break;
-		}
-
-		name.draw(args + Point<int16_t>(38, -37));
-		level.draw(args + Point<int16_t>(38, -19));
-	}
-
-	void SkillIcon::set_state(State s)
-	{
-		state = s;
-	}
-
-	int32_t SkillIcon::get_id() const
+	int32_t UISkillbook::SkillMeta::get_id() const
 	{
 		return id;
 	}
 
-	int32_t SkillIcon::get_level() const
+	int32_t UISkillbook::SkillMeta::get_level() const
 	{
-		return lv;
+		return level;
 	}
 
-	Texture SkillIcon::get_icon() const
+	UISkillbook::SkillIcon UISkillbook::SkillMeta::get_icon() const
 	{
-		return normal;
+		return icon;
 	}
 
 	UISkillbook::UISkillbook(const CharStats& in_stats, const Skillbook& in_skillbook) : UIDragElement<PosSKILL>(Point<int16_t>(0, 0)), stats(in_stats), skillbook(in_skillbook), grabbing(false), tab(0), macro_enabled(false), sp_enabled(false)
 	{
 		nl::node Skill = nl::nx::ui["UIWindow2.img"]["Skill"];
 		nl::node main = Skill["main"];
-		nl::node backgrnd = main["backgrnd"];
+		nl::node ui_backgrnd = main["backgrnd"];
 
-		bg_dimensions = Texture(backgrnd).get_dimensions();
+		bg_dimensions = Texture(ui_backgrnd).get_dimensions();
 
 		skilld = main["skill0"];
 		skille = main["skill1"];
@@ -138,7 +122,7 @@ namespace ms
 		sp_remaining = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::SUPERNOVA);
 		sp_name = Text(Text::Font::A12B, Text::Alignment::CENTER, Color::Name::WHITE);
 
-		sprites.emplace_back(backgrnd, Point<int16_t>(1, 0));
+		sprites.emplace_back(ui_backgrnd, Point<int16_t>(1, 0));
 		sprites.emplace_back(main["backgrnd2"]);
 		sprites.emplace_back(main["backgrnd3"]);
 
