@@ -27,6 +27,8 @@
 #include "../Character/Skillbook.h"
 #include "../Graphics/Text.h"
 
+#include <memory>
+
 namespace ms
 {
 	class UISkillbook : public UIDragElement<PosSKILL>
@@ -54,6 +56,38 @@ namespace ms
 		Button::State button_pressed(uint16_t id) override;
 
 	private:
+		class SkillIcon : public StatefulIcon::Type
+		{
+		public:
+			SkillIcon(int32_t skill_id);
+
+			void drop_on_stage() const override {}
+			void drop_on_equips(Equipslot::Id) const override {}
+			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
+			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
+			void set_count(int16_t) override {}
+
+		private:
+			int32_t skill_id;
+		};
+
+		class SkillDisplayMeta
+		{
+		public:
+			SkillDisplayMeta(int32_t id, int32_t level);
+
+			int32_t get_id() const;
+			int32_t get_level() const;
+			StatefulIcon* get_icon() const;
+
+		private:
+			int32_t id;
+			int32_t level;
+			std::unique_ptr<StatefulIcon> icon;
+			Text name_text;
+			Text level_text;
+		};
+
 		void change_job(uint16_t id);
 		void change_sp();
 		void change_tab(uint16_t new_tab);
@@ -67,7 +101,7 @@ namespace ms
 		void spend_sp(int32_t skill_id);
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
-		SkillIconDeprecated* icon_by_position(Point<int16_t> cursorpos);
+		UISkillbook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos) const;
 
 		void close();
 		bool check_required(int32_t id) const;
@@ -134,7 +168,7 @@ namespace ms
 		uint16_t skillcount;
 		uint16_t offset;
 
-		std::vector<SkillIconDeprecated> icons;
+		std::vector<SkillDisplayMeta> skills;
 		bool grabbing;
 
 		Point<int16_t> bg_dimensions;
@@ -158,37 +192,5 @@ namespace ms
 		Texture sp_skill;
 		int32_t sp_id;
 		int32_t sp_masterlevel;
-
-		class SkillIcon : public StatefulIcon::Type
-		{
-		public:
-			SkillIcon(int32_t skill_id);
-
-			void drop_on_stage() const override {}
-			void drop_on_equips(Equipslot::Id) const override {}
-			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
-			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
-			void set_count(int16_t) override {}
-
-		private:
-			int32_t skill_id;
-		};
-
-		class SkillMeta
-		{
-		public:
-			SkillMeta(int32_t id, int32_t level);
-
-			int32_t get_id() const;
-			int32_t get_level() const;
-			UISkillbook::SkillIcon get_icon() const;
-
-		private:
-			int32_t id;
-			int32_t level;
-			UISkillbook::SkillIcon icon;
-			Text name_text;
-			Text level_text;
-		};
 	};
 }

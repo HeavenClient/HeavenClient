@@ -31,16 +31,15 @@ namespace ms
 		state = Icon::State::NORMAL;
 	}
 
-	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<NullType>(), {}, {}, {}) {};
-	StatefulIcon::StatefulIcon();
+	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<Icon::NullType>(), {}, {}, {}) {};
 
 	Texture StatefulIcon::get_texture() const
 	{
-		return textures[state]
+		return textures[state];
 	}
 
-	void StatefulIcon::set_state(Icon::State)
+	void StatefulIcon::set_state(Icon::State s)
 	{
-		state = s
+		state = s;
 	}
 }

@@ -68,7 +68,7 @@ namespace ms
 		void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const;
 		void start_drag(Point<int16_t> offset);
 		void reset();
-		Texture get_texture() const;
+		virtual Texture get_texture() const;
 		void set_count(int16_t count);
 		int16_t get_count() const;
 		bool get_drag();

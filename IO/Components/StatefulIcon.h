@@ -27,6 +27,7 @@ namespace ms
 	{
 	public:
 		StatefulIcon(std::unique_ptr<Icon::Type> type, Texture normal_tx, Texture disabled_tx, Texture mouseover_tx);
+		StatefulIcon();
 
 		Texture get_texture() const override;
 
