@@ -54,7 +54,7 @@ namespace ms
 		player_marker = Animation(marker["user"]);
 		selected_marker = Animation(MiniMap["iconNpc"]);
 
-		//position.shift_y(-Constants::VIEWYOFFSET);
+		position.shift_y(-Constants::VIEWYOFFSET);
 	}
 
 	void UIMiniMap::draw(float alpha) const
@@ -232,7 +232,6 @@ namespace ms
 				Rectangle<int16_t> marker_spot(sprite.second, sprite.second + 8);
 				if (type == Type::MAX)
 					marker_spot.shift(Point<int16_t>(0, max_adj));
-				std::cout << "Cursor: " << cursor_relative.to_string() << std::flush << "\r";
 				if (marker_spot.contains(cursor_relative))
 				{
 					found = true;
