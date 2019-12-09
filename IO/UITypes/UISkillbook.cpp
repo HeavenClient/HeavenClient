@@ -17,8 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UISkillbook.h"
 
-#include "../Components/MapleButton.h"
 #include "../Components/Icon.h"
+#include "../Components/MapleButton.h"
 #include "../Components/StatefulIcon.h"
 #include "../Character/SkillId.h"
 #include "../Data/JobData.h"
@@ -756,7 +756,7 @@ namespace ms
 		}
 	}
 
-	UISkillbook::SkillDisplayMeta* UISkillbook::skill_by_position(Point<int16_t> cursorpos)
+	UISkillbook::SkillDisplayMeta* UISkillbook::skill_by_position(Point<int16_t> cursorpos) const
 	{
 		int16_t x = cursorpos.x();
 

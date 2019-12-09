@@ -65,7 +65,7 @@ namespace ms
 			void drop_on_equips(Equipslot::Id) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
-			void set_count(int16_t) override {}
+			void set_state(Icon::State state) override {};
 
 		private:
 			int32_t skill_id;
@@ -103,7 +103,7 @@ namespace ms
 		void spend_sp(int32_t skill_id);
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
-		UISkillbook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos);
+		UISkillbook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos) const;
 
 		void close();
 		bool check_required(int32_t id) const;

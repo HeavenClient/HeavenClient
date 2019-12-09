@@ -22,7 +22,7 @@
 
 namespace ms
 {
-	StatefulIcon::StatefulIcon(std::unique_ptr<Icon::Type> type, Texture ntx, Texture dtx, Texture motx) : Icon(type, ntx, count(-1))
+	StatefulIcon::StatefulIcon(std::unique_ptr<Type> type, Texture ntx, Texture dtx, Texture motx) : Icon(type, ntx, count(-1))
 	{
 		dtx.shift({ 0, 32 });
 		motx.shift({ 0, 32 });
@@ -31,7 +31,7 @@ namespace ms
 		state = Icon::State::NORMAL;
 	}
 
-	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<Icon::NullType>(), {}, {}, {}) {};
+	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<NullType>(), {}, {}, {}) {};
 
 	Texture StatefulIcon::get_texture() const
 	{

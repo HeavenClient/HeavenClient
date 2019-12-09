@@ -26,7 +26,28 @@ namespace ms
 	class StatefulIcon : public Icon
 	{
 	public:
-		StatefulIcon(std::unique_ptr<Icon::Type> type, Texture normal_tx, Texture disabled_tx, Texture mouseover_tx);
+		class Type
+		{
+		public:
+			virtual ~Type() {}
+
+			virtual void drop_on_stage() const = 0;
+			virtual void drop_on_equips(Equipslot::Id eqslot) const = 0;
+			virtual bool drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot, bool equip) const = 0;
+			virtual void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const = 0;
+			virtual void set_state(Icon::State state) = 0;
+		};
+
+		class NullType : public Type
+		{
+			void drop_on_stage() const override {}
+			void drop_on_equips(Equipslot::Id) const override {}
+			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
+			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override {}
+			void set_state(Icon::State state) override {};
+		};
+
+		StatefulIcon(std::unique_ptr<Type> type, Texture normal_tx, Texture disabled_tx, Texture mouseover_tx);
 		StatefulIcon();
 
 		Texture get_texture() const override;
