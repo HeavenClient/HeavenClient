@@ -26,15 +26,11 @@ namespace ms
 	class StatefulIcon : public Icon
 	{
 	public:
-		class Type
+		class Type : public Icon::Type
 		{
 		public:
 			virtual ~Type() {}
 
-			virtual void drop_on_stage() const = 0;
-			virtual void drop_on_equips(Equipslot::Id eqslot) const = 0;
-			virtual bool drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot, bool equip) const = 0;
-			virtual void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const = 0;
 			virtual void set_state(Icon::State state) = 0;
 		};
 
@@ -44,6 +40,7 @@ namespace ms
 			void drop_on_equips(Equipslot::Id) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override {}
+			void set_count(int16_t) override {}
 			void set_state(Icon::State state) override {};
 		};
 

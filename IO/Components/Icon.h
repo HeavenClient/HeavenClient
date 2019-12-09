@@ -75,11 +75,13 @@ namespace ms
 
 	private:
 		std::unique_ptr<Type> type;
-		EnumMap<Icon::State, Texture> textures;
 		bool showcount;
 		int16_t count;
 
 		bool dragged;
 		Point<int16_t> cursoroffset;
+
+	protected:
+		EnumMap<Icon::State, Texture> textures;
 	};
 }

@@ -28,7 +28,6 @@
 
 #include "../Net/Packets/PlayerPackets.h"
 
-#include <memory>
 #include <nlnx/nx.hpp>
 
 namespace ms
@@ -69,7 +68,8 @@ namespace ms
 
 	void UISkillbook::SkillDisplayMeta::draw(const DrawArgument& args) const
 	{
-		icon->draw(args.getpos());
+		// TODO adjust "ICON_OFFSET" and rename to SKILL_META_OFFSET
+		icon->draw(args.getpos() - Point<int16_t>(0, 32));
 		name_text.draw(args + Point<int16_t>(38, -37));
 		level_text.draw(args + Point<int16_t>(38, -19));
 	}
@@ -474,7 +474,20 @@ namespace ms
 						clear_tooltip();
 						grabbing = true;
 
-						return Cursor::State::GRABBING;
+						int32_t skill_id = skills[i].get_id();
+						int32_t skill_level = skillbook.get_level(skill_id);
+
+						if (skill_level > 0 && !SkillData::get(skill_id).is_passive()) {
+							// TODO refine this
+							skills[i].get_icon()->start_drag(cursorpos - skill_position);
+							UI::get().drag_icon(skills[i].get_icon());
+
+							return Cursor::State::GRABBING;
+						}
+						else
+						{
+							return Cursor::State::IDLE;
+						}
 					}
 					else
 					{
@@ -495,10 +508,8 @@ namespace ms
 		}
 		else
 		{
-			if (clicked)
-				grabbing = false;
-			else
-				return Cursor::State::GRABBING;
+			// TODO this looks correct in the client, but is this logic actually correct? -- look into UIDragElement
+			grabbing = false;
 		}
 
 		return UIElement::send_cursor(clicked, cursorpos);

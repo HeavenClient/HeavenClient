@@ -27,8 +27,6 @@
 #include "../Character/Skillbook.h"
 #include "../Graphics/Text.h"
 
-#include <memory>
-
 namespace ms
 {
 	class UISkillbook : public UIDragElement<PosSKILL>
@@ -65,6 +63,7 @@ namespace ms
 			void drop_on_equips(Equipslot::Id) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
+			void set_count(int16_t) override {}
 			void set_state(Icon::State state) override {};
 
 		private:
