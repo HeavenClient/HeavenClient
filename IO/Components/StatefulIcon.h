@@ -26,12 +26,20 @@ namespace ms
 	class StatefulIcon : public Icon
 	{
 	public:
+		enum State: uint8_t
+		{
+			NORMAL = 0,
+			DISABLED,
+			MOUSEOVER,
+			LENGTH  // requirement for EnumMap
+		};
+
 		class Type : public Icon::Type
 		{
 		public:
 			virtual ~Type() {}
 
-			virtual void set_state(Icon::State state) = 0;
+			virtual void set_state(State state) = 0;
 		};
 
 		class NullType : public Type
@@ -41,7 +49,7 @@ namespace ms
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override {}
 			void set_count(int16_t) override {}
-			void set_state(Icon::State state) override {};
+			void set_state(State state) override {};
 		};
 
 		StatefulIcon(std::unique_ptr<Type> type, Texture normal_tx, Texture disabled_tx, Texture mouseover_tx);
@@ -49,8 +57,10 @@ namespace ms
 
 		Texture get_texture() const override;
 
-		void set_state(Icon::State state);
+		void set_state(State state);
+
 	private:
-		Icon::State state;
+		State state;
+		EnumMap<State, Texture> textures;
 	};
 }

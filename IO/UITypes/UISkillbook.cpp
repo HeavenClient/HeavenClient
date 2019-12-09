@@ -228,7 +228,7 @@ namespace ms
 				else
 				{
 					skilld.draw(pos);
-					skills[i].get_icon()->set_state(Icon::State::DISABLED);
+					skills[i].get_icon()->set_state(StatefulIcon::State::DISABLED);
 				}
 
 				skills[i].draw(pos + ICON_OFFSET);

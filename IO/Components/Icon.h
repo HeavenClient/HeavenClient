@@ -49,14 +49,6 @@ namespace ms
 			void set_count(int16_t) override {}
 		};
 
-		enum State: uint8_t
-		{
-			NORMAL = 0,
-			DISABLED,
-			MOUSEOVER,
-			LENGTH  // requirement for EnumMap
-		};
-
 		Icon(std::unique_ptr<Type> type, Texture texture, int16_t count);
 		Icon();
 
@@ -78,10 +70,8 @@ namespace ms
 		bool showcount;
 		int16_t count;
 
+		Texture texture;
 		bool dragged;
 		Point<int16_t> cursoroffset;
-
-	protected:
-		EnumMap<Icon::State, Texture> textures;
 	};
 }

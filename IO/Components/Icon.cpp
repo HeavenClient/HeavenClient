@@ -26,10 +26,9 @@
 
 namespace ms
 {
-	Icon::Icon(std::unique_ptr<Type> t, Texture tx, int16_t c) : type(std::move(t)), count(c)
+	Icon::Icon(std::unique_ptr<Type> t, Texture tx, int16_t c) : type(std::move(t)), texture(tx), count(c)
 	{
-		tx.shift({ 0, 32 });
-		textures[Icon::State::NORMAL] = tx;
+		texture.shift({ 0, 32 });
 		showcount = c > -1;
 		dragged = false;
 	}
@@ -92,9 +91,12 @@ namespace ms
 		dragged = false;
 	}
 
+	/**
+	 * Allows for Icon extensibility. Use this instead of referencing texture directly.
+	 */
 	Texture Icon::get_texture() const
 	{
-		return textures[Icon::State::NORMAL];
+		return texture;
 	}
 
 	void Icon::set_count(int16_t c)

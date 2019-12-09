@@ -24,11 +24,14 @@ namespace ms
 {
 	StatefulIcon::StatefulIcon(std::unique_ptr<Type> type, Texture ntx, Texture dtx, Texture motx) : Icon(std::move(type), ntx, -1)
 	{
+		ntx.shift({ 0, 32 });
 		dtx.shift({ 0, 32 });
 		motx.shift({ 0, 32 });
-		textures[Icon::State::DISABLED] = dtx;
-		textures[Icon::State::MOUSEOVER] = motx;
-		state = Icon::State::NORMAL;
+		textures[State::NORMAL] = ntx;
+		textures[State::DISABLED] = dtx;
+		textures[State::MOUSEOVER] = motx;
+
+		state = State::NORMAL;
 	}
 
 	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<NullType>(), {}, {}, {}) {};
@@ -38,7 +41,7 @@ namespace ms
 		return textures[state];
 	}
 
-	void StatefulIcon::set_state(Icon::State s)
+	void StatefulIcon::set_state(State s)
 	{
 		state = s;
 	}
