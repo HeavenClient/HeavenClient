@@ -67,6 +67,13 @@ namespace ms
 		}
 	}
 
+	void UISkillbook::SkillDisplayMeta::draw(const DrawArgument& args) const
+	{
+		icon->draw(args.getpos());
+		name_text.draw(args + Point<int16_t>(38, -37));
+		level_text.draw(args + Point<int16_t>(38, -19));
+	}
+
 	int32_t UISkillbook::SkillDisplayMeta::get_id() const
 	{
 		return id;
@@ -224,7 +231,7 @@ namespace ms
 					skills[i].get_icon()->set_state(Icon::State::DISABLED);
 				}
 
-				skills[i].get_icon()->draw(pos + ICON_OFFSET);
+				skills[i].draw(pos + ICON_OFFSET);
 			}
 			else
 			{
@@ -749,7 +756,7 @@ namespace ms
 		}
 	}
 
-	UISkillbook::SkillDisplayMeta* UISkillbook::skill_by_position(Point<int16_t> cursorpos) const
+	UISkillbook::SkillDisplayMeta* UISkillbook::skill_by_position(Point<int16_t> cursorpos)
 	{
 		int16_t x = cursorpos.x();
 

@@ -76,6 +76,8 @@ namespace ms
 		public:
 			SkillDisplayMeta(int32_t id, int32_t level);
 
+			void draw(const DrawArgument& args) const;
+
 			int32_t get_id() const;
 			int32_t get_level() const;
 			StatefulIcon* get_icon() const;
@@ -101,7 +103,7 @@ namespace ms
 		void spend_sp(int32_t skill_id);
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
-		UISkillbook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos) const;
+		UISkillbook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos);
 
 		void close();
 		bool check_required(int32_t id) const;
