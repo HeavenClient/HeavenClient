@@ -53,8 +53,8 @@ namespace ms
 			respawn(portalid);
 			break;
 		}
-
 		state = State::ACTIVE;
+		// PlayerMapTransferPacket().dispatch();
 	}
 
 	void Stage::loadplayer(const CharEntry& entry)
@@ -72,6 +72,8 @@ namespace ms
 		mobs.clear();
 		drops.clear();
 		reactors.clear();
+
+		PlayerMapTransferPacket().dispatch();
 	}
 
 	void Stage::load_map(int32_t mapid)
@@ -184,7 +186,6 @@ namespace ms
 		}
 		else if (warpinfo.valid)
 		{
-			PlayerMapTransferPacket().dispatch();
 			ChangeMapPacket(false, warpinfo.mapid, warpinfo.name, false).dispatch();
 
 			CharStats& stats = Stage::get().get_player().get_stats();
