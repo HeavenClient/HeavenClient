@@ -146,7 +146,7 @@ namespace ms
 		static constexpr int16_t ROW_HEIGHT = 40;
 		static constexpr int16_t ROW_WIDTH = 143;
 		static constexpr Point<int16_t> SKILL_OFFSET = Point<int16_t>(11, 93);
-		static constexpr Point<int16_t> ICON_OFFSET = Point<int16_t>(2, 34);
+		static constexpr Point<int16_t> SKILL_META_OFFSET = Point<int16_t>(2, 2);
 		static constexpr Point<int16_t> LINE_OFFSET = Point<int16_t>(0, 37);
 
 		const CharStats& stats;

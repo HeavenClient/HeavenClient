@@ -68,10 +68,9 @@ namespace ms
 
 	void UISkillbook::SkillDisplayMeta::draw(const DrawArgument& args) const
 	{
-		// TODO adjust "ICON_OFFSET" and rename to SKILL_META_OFFSET
-		icon->draw(args.getpos() - Point<int16_t>(0, 32));
-		name_text.draw(args + Point<int16_t>(38, -37));
-		level_text.draw(args + Point<int16_t>(38, -19));
+		icon->draw(args.getpos());
+		name_text.draw(args + Point<int16_t>(38, -5));
+		level_text.draw(args + Point<int16_t>(38, 13));
 	}
 
 	int32_t UISkillbook::SkillDisplayMeta::get_id() const
@@ -231,7 +230,7 @@ namespace ms
 					skills[i].get_icon()->set_state(StatefulIcon::State::DISABLED);
 				}
 
-				skills[i].draw(pos + ICON_OFFSET);
+				skills[i].draw(pos + SKILL_META_OFFSET);
 			}
 			else
 			{
@@ -479,7 +478,6 @@ namespace ms
 
 						if (skill_level > 0 && !SkillData::get(skill_id).is_passive())
 						{
-							// TODO refine this
 							skills[i].get_icon()->start_drag(cursorpos - skill_position);
 							UI::get().drag_icon(skills[i].get_icon());
 
@@ -514,7 +512,6 @@ namespace ms
 		}
 		else
 		{
-			// TODO this looks correct in the client, but is this logic actually correct? -- look into UIDragElement
 			grabbing = false;
 		}
 
