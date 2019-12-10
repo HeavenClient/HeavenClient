@@ -546,6 +546,9 @@
     <ClCompile Include="Gameplay\Maplemap\MapEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IO\Components\StatefulIcon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h">
@@ -1239,6 +1242,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gameplay\Maplemap\MapEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIKeyIcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Components\StatefulIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
