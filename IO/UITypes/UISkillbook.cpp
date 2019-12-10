@@ -477,7 +477,8 @@ namespace ms
 						int32_t skill_id = skills[i].get_id();
 						int32_t skill_level = skillbook.get_level(skill_id);
 
-						if (skill_level > 0 && !SkillData::get(skill_id).is_passive()) {
+						if (skill_level > 0 && !SkillData::get(skill_id).is_passive())
+						{
 							// TODO refine this
 							skills[i].get_icon()->start_drag(cursorpos - skill_position);
 							UI::get().drag_icon(skills[i].get_icon());
@@ -491,6 +492,7 @@ namespace ms
 					}
 					else
 					{
+						skills[i].get_icon()->set_state(StatefulIcon::MOUSEOVER);
 						show_skill(skills[i].get_id());
 
 						return Cursor::State::IDLE;
@@ -504,6 +506,10 @@ namespace ms
 				}
 			}
 
+			for (size_t i = 0; i < skills.size(); i++)
+			{
+				skills[i].get_icon()->set_state(StatefulIcon::NORMAL);
+			}
 			clear_tooltip();
 		}
 		else
