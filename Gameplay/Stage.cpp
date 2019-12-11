@@ -186,7 +186,7 @@ namespace ms
 		}
 		else if (warpinfo.valid)
 		{
-			ChangeMapPacket(false, warpinfo.mapid, warpinfo.name, false).dispatch();
+			ChangeMapPacket(false, -1, warpinfo.name, false).dispatch();
 
 			CharStats& stats = Stage::get().get_player().get_stats();
 
