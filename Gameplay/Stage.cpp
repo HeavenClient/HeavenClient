@@ -53,6 +53,7 @@ namespace ms
 			respawn(portalid);
 			break;
 		}
+
 		state = State::ACTIVE;
 	}
 
