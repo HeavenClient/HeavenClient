@@ -54,7 +54,6 @@ namespace ms
 			break;
 		}
 		state = State::ACTIVE;
-		// PlayerMapTransferPacket().dispatch();
 	}
 
 	void Stage::loadplayer(const CharEntry& entry)
