@@ -36,7 +36,7 @@ namespace ms
 
 	void UISkillbook::SkillIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
 	{
-		// TODO
+		// TODO: Implement this
 	}
 
 	UISkillbook::SkillDisplayMeta::SkillDisplayMeta(int32_t i, int32_t l) : id(i), level(l)
@@ -490,7 +490,7 @@ namespace ms
 					}
 					else
 					{
-						skills[i].get_icon()->set_state(StatefulIcon::MOUSEOVER);
+						skills[i].get_icon()->set_state(StatefulIcon::State::MOUSEOVER);
 						show_skill(skills[i].get_id());
 
 						return Cursor::State::IDLE;
@@ -506,7 +506,7 @@ namespace ms
 
 			for (size_t i = 0; i < skills.size(); i++)
 			{
-				skills[i].get_icon()->set_state(StatefulIcon::NORMAL);
+				skills[i].get_icon()->set_state(StatefulIcon::State::NORMAL);
 			}
 			clear_tooltip();
 		}

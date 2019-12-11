@@ -31,7 +31,7 @@ namespace ms
 			NORMAL = 0,
 			DISABLED,
 			MOUSEOVER,
-			LENGTH  // requirement for EnumMap
+			LENGTH
 		};
 
 		class Type : public Icon::Type
