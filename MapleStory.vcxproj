@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -234,7 +234,6 @@ copy /y /d  "$(ProjectDir)includes\nlnx\includes\lz4_v1_8_2_win64\dll\liblz4.so.
     <ClCompile Include="io\components\ScrollingNotice.cpp" />
     <ClCompile Include="io\components\SkillTooltip.cpp" />
     <ClCompile Include="io\components\Slider.cpp" />
-    <ClCompile Include="IO\Components\StatefulIcon.cpp" />
     <ClCompile Include="io\components\Textfield.cpp" />
     <ClCompile Include="IO\Components\TextTooltip.cpp" />
     <ClCompile Include="io\components\TwoSpriteButton.cpp" />
@@ -426,7 +425,6 @@ copy /y /d  "$(ProjectDir)includes\nlnx\includes\lz4_v1_8_2_win64\dll\liblz4.so.
     <ClInclude Include="io\components\ScrollingNotice.h" />
     <ClInclude Include="io\components\SkillTooltip.h" />
     <ClInclude Include="io\components\Slider.h" />
-    <ClInclude Include="IO\Components\StatefulIcon.h" />
     <ClInclude Include="io\components\Textfield.h" />
     <ClInclude Include="IO\Components\TextTooltip.h" />
     <ClInclude Include="io\components\Tooltip.h" />
@@ -532,7 +530,6 @@ copy /y /d  "$(ProjectDir)includes\nlnx\includes\lz4_v1_8_2_win64\dll\liblz4.so.
     <ClInclude Include="template\TimedQueue.h" />
     <ClInclude Include="template\TypeMap.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="UIKeyIcon.h" />
     <ClInclude Include="Util\HardwareInfo.h" />
     <ClInclude Include="util\HashUtility.h" />
     <ClInclude Include="util\Lerp.h" />
