@@ -15,7 +15,7 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#include "UIKeyConfig.h"
+#include "UIKeyConfigDeprecated.h"
 
 #include "../UI.h"
 
@@ -28,7 +28,7 @@
 
 namespace ms
 {
-	UIKeyConfig::UIKeyConfig() : UIDragElement<PosKEYCONFIG>(Point<int16_t>(0, 0)), dirty(false)
+	UIKeyConfigDeprecated::UIKeyConfigDeprecated() : UIDragElement<PosKEYCONFIG>(Point<int16_t>(0, 0)), dirty(false)
 	{
 		keyboard = &UI::get().get_keyboard();
 		tempkeys = keyboard->get_maplekeys();
@@ -64,7 +64,7 @@ namespace ms
 		dragarea = Point<int16_t>(bg_dimensions.x(), 20);
 	}
 
-	void UIKeyConfig::draw(float inter) const
+	void UIKeyConfigDeprecated::draw(float inter) const
 	{
 		UIElement::draw(inter);
 
@@ -119,18 +119,18 @@ namespace ms
 			fkey.second.draw(position + keys_pos[fkey.first]);
 	}
 
-	void UIKeyConfig::update()
+	void UIKeyConfigDeprecated::update()
 	{
 		UIElement::update();
 	}
 
-	void UIKeyConfig::send_key(int32_t keycode, bool pressed, bool escape)
+	void UIKeyConfigDeprecated::send_key(int32_t keycode, bool pressed, bool escape)
 	{
 		if (pressed && escape)
 			safe_close();
 	}
 
-	Cursor::State UIKeyConfig::send_cursor(bool clicked, Point<int16_t> cursorpos)
+	Cursor::State UIKeyConfigDeprecated::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
 		Cursor::State dstate = UIDragElement::send_cursor(clicked, cursorpos);
 
@@ -187,7 +187,7 @@ namespace ms
 		return UIElement::send_cursor(clicked, cursorpos);
 	}
 
-	bool UIKeyConfig::send_icon(const Icon& icon, Point<int16_t> cursorpos)
+	bool UIKeyConfigDeprecated::send_icon(const Icon& icon, Point<int16_t> cursorpos)
 	{
 		for (auto iter : icons_pos)
 		{
@@ -208,7 +208,7 @@ namespace ms
 		return true;
 	}
 
-	void UIKeyConfig::remove_key(KeyAction::Id action)
+	void UIKeyConfigDeprecated::remove_key(KeyAction::Id action)
 	{
 		auto iter = std::find(found_actions.begin(), found_actions.end(), action);
 
@@ -260,7 +260,7 @@ namespace ms
 		}
 	}
 
-	void UIKeyConfig::add_key(Point<int16_t> cursorposition, KeyAction::Id action)
+	void UIKeyConfigDeprecated::add_key(Point<int16_t> cursorposition, KeyAction::Id action)
 	{
 		if (std::find(found_actions.begin(), found_actions.end(), action) == found_actions.end())
 		{
@@ -386,7 +386,7 @@ namespace ms
 		}
 	}
 
-	Button::State UIKeyConfig::button_pressed(uint16_t buttonid)
+	Button::State UIKeyConfigDeprecated::button_pressed(uint16_t buttonid)
 	{
 		switch (buttonid)
 		{
@@ -449,13 +449,13 @@ namespace ms
 		return Button::State::NORMAL;
 	}
 
-	void UIKeyConfig::close()
+	void UIKeyConfigDeprecated::close()
 	{
 		deactivate();
 		reset();
 	}
 
-	void UIKeyConfig::load_keys_pos()
+	void UIKeyConfigDeprecated::load_keys_pos()
 	{
 		int16_t slot_width = 33;
 		int16_t slot_width_lg = 98;
@@ -562,7 +562,7 @@ namespace ms
 		keys_pos[KeyConfig::Key::PAGE_DOWN] = Point<int16_t>(row_quickslot_x + (slot_width * 2), row_y + (slot_height * 1));
 	}
 
-	void UIKeyConfig::load_icons_pos()
+	void UIKeyConfigDeprecated::load_icons_pos()
 	{
 		int16_t row_x = 26;
 		int16_t row_y = 307;
@@ -643,7 +643,7 @@ namespace ms
 		//icons_pos[KeyAction::Id::LENGTH] = Point<int16_t>(row_x + (slot_width * 16), row_y + (slot_height * 3));
 	}
 
-	void UIKeyConfig::load_keys()
+	void UIKeyConfigDeprecated::load_keys()
 	{
 		keys[KeyConfig::Key::ESCAPE] = key[1];
 		keys[KeyConfig::Key::NUM1] = key[2];
@@ -733,7 +733,7 @@ namespace ms
 		keys[KeyConfig::Key::F12] = key[88];
 	}
 
-	void UIKeyConfig::load_icons()
+	void UIKeyConfigDeprecated::load_icons()
 	{
 		icons[KeyAction::Id::EQUIPMENT] = std::make_unique<Icon>(std::make_unique<KeyIcon>(KeyAction::Id::EQUIPMENT), icon[0], -1);
 		icons[KeyAction::Id::ITEMS] = std::make_unique<Icon>(std::make_unique<KeyIcon>(KeyAction::Id::ITEMS), icon[1], -1);
@@ -798,7 +798,7 @@ namespace ms
 		icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<KeyIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
 	}
 
-	void UIKeyConfig::map_keys()
+	void UIKeyConfigDeprecated::map_keys()
 	{
 		for (auto fkey : keys)
 		{
@@ -814,7 +814,7 @@ namespace ms
 		}
 	}
 
-	void UIKeyConfig::clear()
+	void UIKeyConfigDeprecated::clear()
 	{
 		found_actions.clear();
 
@@ -823,7 +823,7 @@ namespace ms
 		dirty = true;
 	}
 
-	void UIKeyConfig::reset()
+	void UIKeyConfigDeprecated::reset()
 	{
 		clear();
 
@@ -834,7 +834,7 @@ namespace ms
 		dirty = false;
 	}
 
-	void UIKeyConfig::save_keys()
+	void UIKeyConfigDeprecated::save_keys()
 	{
 		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions;
 
@@ -892,7 +892,7 @@ namespace ms
 		dirty = false;
 	}
 
-	void UIKeyConfig::safe_close()
+	void UIKeyConfigDeprecated::safe_close()
 	{
 		if (dirty)
 		{
@@ -919,7 +919,7 @@ namespace ms
 		}
 	}
 
-	KeyAction::Id UIKeyConfig::icon_by_position(Point<int16_t> cursorpos) const
+	KeyAction::Id UIKeyConfigDeprecated::icon_by_position(Point<int16_t> cursorpos) const
 	{
 		for (auto iter : icons_pos)
 		{
@@ -938,7 +938,7 @@ namespace ms
 		return KeyAction::Id::LENGTH;
 	}
 
-	KeyConfig::Key UIKeyConfig::key_by_position(Point<int16_t> cursorpos) const
+	KeyConfig::Key UIKeyConfigDeprecated::key_by_position(Point<int16_t> cursorpos) const
 	{
 		for (auto iter : keys_pos)
 		{
@@ -962,7 +962,7 @@ namespace ms
 		return KeyConfig::Key::LENGTH;
 	}
 
-	KeyConfig::Key UIKeyConfig::all_keys_by_position(Point<int16_t> cursorpos) const
+	KeyConfig::Key UIKeyConfigDeprecated::all_keys_by_position(Point<int16_t> cursorpos) const
 	{
 		for (auto iter : keys_pos)
 		{
@@ -978,7 +978,7 @@ namespace ms
 		return KeyConfig::Key::LENGTH;
 	}
 
-	int32_t UIKeyConfig::get_tempkey(KeyAction::Id action) const
+	int32_t UIKeyConfigDeprecated::get_tempkey(KeyAction::Id action) const
 	{
 		for (auto map : tempkeys)
 		{
@@ -991,7 +991,7 @@ namespace ms
 		return -1;
 	}
 
-	Keyboard::Mapping UIKeyConfig::get_tempkey_mapping(int32_t keycode) const
+	Keyboard::Mapping UIKeyConfigDeprecated::get_tempkey_mapping(int32_t keycode) const
 	{
 		auto iter = tempkeys.find(keycode);
 
@@ -1001,7 +1001,7 @@ namespace ms
 		return iter->second;
 	}
 
-	KeyType::Id UIKeyConfig::get_keytype(KeyAction::Id action) const
+	KeyType::Id UIKeyConfigDeprecated::get_keytype(KeyAction::Id action) const
 	{
 		switch (action)
 		{
@@ -1090,14 +1090,14 @@ namespace ms
 		}
 	}
 
-	UIKeyConfig::KeyIcon::KeyIcon(KeyAction::Id keyId)
+	UIKeyConfigDeprecated::KeyIcon::KeyIcon(KeyAction::Id keyId)
 	{
 		source = keyId;
 	}
 
-	void UIKeyConfig::KeyIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
+	void UIKeyConfigDeprecated::KeyIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
 	{
-		auto keyconfig = UI::get().get_element<UIKeyConfig>();
+		auto keyconfig = UI::get().get_element<UIKeyConfigDeprecated>();
 
 		if (remove)
 			keyconfig->remove_key(source);

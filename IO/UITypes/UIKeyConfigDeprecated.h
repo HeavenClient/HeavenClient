@@ -26,14 +26,14 @@
 
 namespace ms
 {
-	class UIKeyConfig : public UIDragElement<PosKEYCONFIG>
+	class UIKeyConfigDeprecated : public UIDragElement<PosKEYCONFIG>
 	{
 	public:
 		static constexpr Type TYPE = UIElement::Type::KEYCONFIG;
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIKeyConfig();
+		UIKeyConfigDeprecated();
 
 		void draw(float inter) const override;
 		void update() override;
