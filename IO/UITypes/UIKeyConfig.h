@@ -53,15 +53,17 @@ namespace ms
 		void load_unbound_actions_pos();
 		void load_key_textures();
 		void load_action_icons();
+		void load_skill_icons();
 		void bind_action_keys();
 		void clear();
 		void reset();
 		//void save_keys();
 		//void safe_close();
 
+		Texture get_skill_texture(int32_t skill_id) const;
 		//KeyAction::Id icon_by_position(Point<int16_t> position) const;
+		//int32_t get_key_from_action(KeyAction::Id action) const;
 		// TODO: take note - I'm treating key_by_position as the old logic from all_keys_*
-		int32_t get_key_from_action(KeyAction::Id action) const;
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
@@ -77,6 +79,7 @@ namespace ms
 			OK
 		};
 
+		// TODO: rename MappingIcon
 		class KeyMapIcon : public Icon::Type
 		{
 		public:
@@ -107,6 +110,8 @@ namespace ms
 
 		EnumMap<KeyAction::Id, std::unique_ptr<Icon>> action_icons;
 		EnumMap<KeyAction::Id, Point<int16_t>> unbound_actions_pos;
+
+		std::map<int32_t, std::unique_ptr<Icon>> skill_icons;
 
 		// TODO: some documentation about how bound_actions shows staged_keys state even before commit
 		std::vector<KeyAction::Id> bound_actions;

@@ -20,6 +20,9 @@
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
+#include "../Data/SkillData.h"
+
+#include "../../../Console.h"  // TODO: rm
 
 #include <nlnx/nx.hpp>
 
@@ -58,6 +61,7 @@ namespace ms
 		load_unbound_actions_pos();
 		load_key_textures();
 		load_action_icons();
+		load_skill_icons();
 		bind_action_keys();
 	}
 
@@ -406,55 +410,89 @@ namespace ms
 		action_icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
 	}
 
+	void UIKeyConfig::load_skill_icons()
+	{
+		for (auto const& it : staged_keys)
+		{
+			Keyboard::Mapping mapping = it.second;
+
+			if (mapping.type == KeyType::Id::SKILL)
+			{
+				// TODO: rm print
+				Console::get().print("Loaded skill: " + std::to_string(mapping.action));
+				int32_t skill_id = mapping.action;
+				Texture tx = get_skill_texture(skill_id);
+				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(mapping), tx, -1);
+			}
+		}
+	}
+
 	// UI Actions
 
 	void UIKeyConfig::draw(float inter) const
 	{
 		UIElement::draw(inter);
 
-		for (auto ficon : action_icons)
+		for (auto const& iter : staged_keys)
 		{
-			if (ficon.second)
+			int32_t maplekey = iter.first;
+			Keyboard::Mapping mapping = iter.second;
+
+			Icon* ficon = NULL;
+
+			if (mapping.type == KeyType::SKILL)
 			{
-				if (std::find(bound_actions.begin(), bound_actions.end(), ficon.first) != bound_actions.end())
-				{
-					int32_t maplekey = get_key_from_action(ficon.first);
+				int32_t skill_id = mapping.action;
+				auto it = skill_icons.find(skill_id);
 
-					if (maplekey != -1)
-					{
-						KeyConfig::Key fkey = KeyConfig::actionbyid(maplekey);
+				if (it != skill_icons.end())
+					ficon = it->second.get();
+			}
+			else
+			{
+				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
-						if (maplekey == KeyConfig::Key::SPACE)
+				if (action)
+					for (auto const& it : action_icons)
+						if (it.first == action)
 						{
-							ficon.second->draw(position + keys_pos[fkey] - Point<int16_t>(0, 3));
+							ficon = it.second.get();
+							break;
+						}
+			}
+
+			if (ficon)
+			{
+				if (maplekey != -1)
+				{
+					KeyConfig::Key fkey = KeyConfig::actionbyid(maplekey);
+
+					if (maplekey == KeyConfig::Key::SPACE)
+					{
+						ficon->draw(position + keys_pos[fkey] - Point<int16_t>(0, 3));
+					}
+					else
+					{
+						if (fkey == KeyConfig::Key::LEFT_CONTROL || fkey == KeyConfig::Key::RIGHT_CONTROL)
+						{
+							ficon->draw(position + keys_pos[KeyConfig::Key::LEFT_CONTROL] - Point<int16_t>(2, 3));
+							ficon->draw(position + keys_pos[KeyConfig::Key::RIGHT_CONTROL] - Point<int16_t>(2, 3));
+						}
+						else if (fkey == KeyConfig::Key::LEFT_ALT || fkey == KeyConfig::Key::RIGHT_ALT)
+						{
+							ficon->draw(position + keys_pos[KeyConfig::Key::LEFT_ALT] - Point<int16_t>(2, 3));
+							ficon->draw(position + keys_pos[KeyConfig::Key::RIGHT_ALT] - Point<int16_t>(2, 3));
+						}
+						else if (fkey == KeyConfig::Key::LEFT_SHIFT || fkey == KeyConfig::Key::RIGHT_SHIFT)
+						{
+							ficon->draw(position + keys_pos[KeyConfig::Key::LEFT_SHIFT] - Point<int16_t>(2, 3));
+							ficon->draw(position + keys_pos[KeyConfig::Key::RIGHT_SHIFT] - Point<int16_t>(2, 3));
 						}
 						else
 						{
-							if (fkey == KeyConfig::Key::LEFT_CONTROL || fkey == KeyConfig::Key::RIGHT_CONTROL)
-							{
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_CONTROL] - Point<int16_t>(2, 3));
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_CONTROL] - Point<int16_t>(2, 3));
-							}
-							else if (fkey == KeyConfig::Key::LEFT_ALT || fkey == KeyConfig::Key::RIGHT_ALT)
-							{
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_ALT] - Point<int16_t>(2, 3));
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_ALT] - Point<int16_t>(2, 3));
-							}
-							else if (fkey == KeyConfig::Key::LEFT_SHIFT || fkey == KeyConfig::Key::RIGHT_SHIFT)
-							{
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_SHIFT] - Point<int16_t>(2, 3));
-								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_SHIFT] - Point<int16_t>(2, 3));
-							}
-							else
-							{
-								ficon.second->draw(position + keys_pos[fkey] - Point<int16_t>(2, 3));
-							}
+							ficon->draw(position + keys_pos[fkey] - Point<int16_t>(2, 3));
 						}
 					}
-				}
-				else
-				{
-					ficon.second->draw(position + unbound_actions_pos[ficon.first]);
 				}
 			}
 		}
@@ -619,6 +657,7 @@ namespace ms
 
 	void UIKeyConfig::clear()
 	{
+		skill_icons.clear();
 		bound_actions.clear();
 		staged_keys = {};
 		dirty = true;
@@ -634,18 +673,10 @@ namespace ms
 
 	// Helpers
 
-	// TODO: rename, also we should move away from this
-	int32_t UIKeyConfig::get_key_from_action(KeyAction::Id action) const
+	Texture UIKeyConfig::get_skill_texture(int32_t skill_id) const
 	{
-		for (auto map : staged_keys)
-		{
-			Keyboard::Mapping m = map.second;
-
-			if (m.action == action)
-				return map.first;
-		}
-
-		return -1;
+		const SkillData& data = SkillData::get(skill_id);
+		return data.get_icon(SkillData::Icon::NORMAL);
 	}
 
 	KeyConfig::Key UIKeyConfig::key_by_position(Point<int16_t> cursorpos) const
