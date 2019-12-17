@@ -33,12 +33,12 @@ namespace ms
 
 		UIKeyConfig();
 
-		void draw(float inter) const override;
-		void update() override;
+		//void draw(float inter) const override;
+		//void update() override;
 
-		void send_key(int32_t keycode, bool pressed, bool escape) override;
-		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
-		bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
+		//void send_key(int32_t keycode, bool pressed, bool escape) override;
+		//Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+		//bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
 
 		void stage_keymap(Point<int16_t> cursorposition, Keyboard::Mapping);
 		void unstage_keymap(Keyboard::Mapping);
@@ -99,14 +99,14 @@ namespace ms
 
 		Keyboard* keyboard = nullptr;
 
-		nl::node icon;
 		nl::node key;
-
-		EnumMap<KeyConfig::Key, Point<int16_t>> keys_pos;
-		EnumMap<KeyAction::Id, Point<int16_t>> unbound_actions_pos;
+		nl::node icon;
 
 		EnumMap<KeyConfig::Key, Texture> key_textures;
+		EnumMap<KeyConfig::Key, Point<int16_t>> keys_pos;
+
 		EnumMap<KeyAction::Id, std::unique_ptr<Icon>> action_icons;
+		EnumMap<KeyAction::Id, Point<int16_t>> unbound_actions_pos;
 
 		std::vector<KeyAction::Id> bound_actions;
 		std::map<int32_t, Keyboard::Mapping> staged_keys;

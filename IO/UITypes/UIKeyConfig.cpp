@@ -420,7 +420,10 @@ namespace ms
 	{
 		KeyConfig::Key key = key_by_position(cursorposition);
 
-		if (std::find(bound_actions.begin(), bound_actions.end(), keymap.action) != bound_actions.end())
+		KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
+
+		if (iter != bound_actions.end())
 		{
 			for (auto const& it : staged_keys)
 			{
@@ -455,7 +458,7 @@ namespace ms
 		}
 		else
 		{
-			bound_actions.emplace_back(keymap.action);
+			bound_actions.emplace_back(action);
 		}
 
 		Keyboard::Mapping staged_keymap = staged_keys[key];
@@ -489,7 +492,8 @@ namespace ms
 
 	void UIKeyConfig::unstage_keymap(Keyboard::Mapping keymap)
 	{
-		auto iter = std::find(bound_actions.begin(), bound_actions.end(), keymap);
+		KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
 
 		if (iter != bound_actions.end())
 		{
@@ -497,10 +501,10 @@ namespace ms
 
 			for (auto const& it : staged_keys)
 			{
-				Keyboard::Mapping map = it.second;
+				Keyboard::Mapping staged_map = it.second;
 
 				// TODO: compare whole map
-				if (map.action == keymap.action)
+				if (staged_map.action == keymap.action)
 				{
 					if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
 					{
