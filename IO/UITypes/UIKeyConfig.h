@@ -33,7 +33,7 @@ namespace ms
 
 		UIKeyConfig();
 
-		//void draw(float inter) const override;
+		void draw(float inter) const override;
 		//void update() override;
 
 		//void send_key(int32_t keycode, bool pressed, bool escape) override;
@@ -61,9 +61,9 @@ namespace ms
 
 		//KeyAction::Id icon_by_position(Point<int16_t> position) const;
 		// TODO: take note - I'm treating key_by_position as the old logic from all_keys_*
+		int32_t get_key_from_action(KeyAction::Id action) const;
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
-		//int32_t get_tempkey(KeyAction::Id action) const;
 		Keyboard::Mapping get_staged_key_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
 
@@ -108,6 +108,7 @@ namespace ms
 		EnumMap<KeyAction::Id, std::unique_ptr<Icon>> action_icons;
 		EnumMap<KeyAction::Id, Point<int16_t>> unbound_actions_pos;
 
+		// TODO: some documentation about how bound_actions shows staged_keys state even before commit
 		std::vector<KeyAction::Id> bound_actions;
 		std::map<int32_t, Keyboard::Mapping> staged_keys;
 

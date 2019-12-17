@@ -408,6 +408,66 @@ namespace ms
 
 	// UI Actions
 
+	void UIKeyConfig::draw(float inter) const
+	{
+		UIElement::draw(inter);
+
+		for (auto ficon : action_icons)
+		{
+			if (ficon.second)
+			{
+				if (std::find(bound_actions.begin(), bound_actions.end(), ficon.first) != bound_actions.end())
+				{
+					int32_t maplekey = get_key_from_action(ficon.first);
+
+					if (maplekey != -1)
+					{
+						KeyConfig::Key fkey = KeyConfig::actionbyid(maplekey);
+
+						if (maplekey == KeyConfig::Key::SPACE)
+						{
+							ficon.second->draw(position + keys_pos[fkey] - Point<int16_t>(0, 3));
+						}
+						else
+						{
+							if (fkey == KeyConfig::Key::LEFT_CONTROL || fkey == KeyConfig::Key::RIGHT_CONTROL)
+							{
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_CONTROL] - Point<int16_t>(2, 3));
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_CONTROL] - Point<int16_t>(2, 3));
+							}
+							else if (fkey == KeyConfig::Key::LEFT_ALT || fkey == KeyConfig::Key::RIGHT_ALT)
+							{
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_ALT] - Point<int16_t>(2, 3));
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_ALT] - Point<int16_t>(2, 3));
+							}
+							else if (fkey == KeyConfig::Key::LEFT_SHIFT || fkey == KeyConfig::Key::RIGHT_SHIFT)
+							{
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::LEFT_SHIFT] - Point<int16_t>(2, 3));
+								ficon.second->draw(position + keys_pos[KeyConfig::Key::RIGHT_SHIFT] - Point<int16_t>(2, 3));
+							}
+							else
+							{
+								ficon.second->draw(position + keys_pos[fkey] - Point<int16_t>(2, 3));
+							}
+						}
+					}
+				}
+				else
+				{
+					ficon.second->draw(position + unbound_actions_pos[ficon.first]);
+				}
+			}
+		}
+
+		for (auto fkey : key_textures)
+		{
+			KeyConfig::Key key = fkey.first;
+			Texture tx = fkey.second;
+
+			tx.draw(position + keys_pos[key]);
+		}
+	}
+
 	void UIKeyConfig::close()
 	{
 		deactivate();
@@ -458,13 +518,14 @@ namespace ms
 		}
 		else
 		{
+			// TODO: only bind action if keymap is action type
 			bound_actions.emplace_back(action);
 		}
 
-		Keyboard::Mapping staged_keymap = staged_keys[key];
+		Keyboard::Mapping prior_staged = staged_keys[key];
 		// TODO: does this check need to be changed?
-		if (staged_keymap.type != KeyType::Id::NONE && staged_keymap.action != keymap.action)
-			unstage_keymap(staged_keymap);
+		if (prior_staged.type != KeyType::Id::NONE && prior_staged.action != keymap.action)
+			unstage_keymap(prior_staged);
 
 		if (key == KeyConfig::Key::LEFT_CONTROL || key == KeyConfig::Key::RIGHT_CONTROL)
 		{
@@ -550,8 +611,7 @@ namespace ms
 			{
 				KeyAction::Id action = KeyAction::actionbyid(keymap.action);
 
-				// TODO: EQUIPMENT == 1. Is this distinction actually necessary?
-				if (action || action == KeyAction::Id::EQUIPMENT)
+				if (action)
 					bound_actions.emplace_back(action);
 			}
 		}
@@ -573,6 +633,20 @@ namespace ms
 	}
 
 	// Helpers
+
+	// TODO: rename, also we should move away from this
+	int32_t UIKeyConfig::get_key_from_action(KeyAction::Id action) const
+	{
+		for (auto map : staged_keys)
+		{
+			Keyboard::Mapping m = map.second;
+
+			if (m.action == action)
+				return map.first;
+		}
+
+		return -1;
+	}
 
 	KeyConfig::Key UIKeyConfig::key_by_position(Point<int16_t> cursorpos) const
 	{
@@ -599,7 +673,6 @@ namespace ms
 
 		return iter->second;
 	}
-
 
 	// KeyMapIcon
 
