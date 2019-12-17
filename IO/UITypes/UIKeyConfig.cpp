@@ -476,11 +476,11 @@ namespace ms
 
 	// Keymap Staging
 
-	void UIKeyConfig::stage_keymap(Point<int16_t> cursorposition, Keyboard::Mapping keymap)
+	void UIKeyConfig::stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping mapping)
 	{
 		KeyConfig::Key key = key_by_position(cursorposition);
 
-		KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+		KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
 
 		if (iter != bound_actions.end())
@@ -490,7 +490,7 @@ namespace ms
 				Keyboard::Mapping staged_map = it.second;
 
 				// TODO: compare whole map
-				if (staged_map.action == keymap.action)
+				if (staged_map.action == mapping.action)
 				{
 					if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
 					{
@@ -524,36 +524,36 @@ namespace ms
 
 		Keyboard::Mapping prior_staged = staged_keys[key];
 		// TODO: does this check need to be changed?
-		if (prior_staged.type != KeyType::Id::NONE && prior_staged.action != keymap.action)
-			unstage_keymap(prior_staged);
+		if (prior_staged.type != KeyType::Id::NONE && prior_staged.action != mapping.action)
+			unstage_mapping(prior_staged);
 
 		if (key == KeyConfig::Key::LEFT_CONTROL || key == KeyConfig::Key::RIGHT_CONTROL)
 		{
-			staged_keys[KeyConfig::Key::LEFT_CONTROL] = keymap;
-			staged_keys[KeyConfig::Key::RIGHT_CONTROL] = keymap;
+			staged_keys[KeyConfig::Key::LEFT_CONTROL] = mapping;
+			staged_keys[KeyConfig::Key::RIGHT_CONTROL] = mapping;
 		}
 		else if (key == KeyConfig::Key::LEFT_ALT || key == KeyConfig::Key::RIGHT_ALT)
 		{
-			staged_keys[KeyConfig::Key::LEFT_ALT] = keymap;
-			staged_keys[KeyConfig::Key::RIGHT_ALT] = keymap;
+			staged_keys[KeyConfig::Key::LEFT_ALT] = mapping;
+			staged_keys[KeyConfig::Key::RIGHT_ALT] = mapping;
 		}
 		else if (key == KeyConfig::Key::LEFT_SHIFT || key == KeyConfig::Key::RIGHT_SHIFT)
 		{
-			staged_keys[KeyConfig::Key::LEFT_SHIFT] = keymap;
-			staged_keys[KeyConfig::Key::RIGHT_SHIFT] = keymap;
+			staged_keys[KeyConfig::Key::LEFT_SHIFT] = mapping;
+			staged_keys[KeyConfig::Key::RIGHT_SHIFT] = mapping;
 		}
 		else
 		{
-			staged_keys[key] = keymap;
+			staged_keys[key] = mapping;
 		}
 
 		// TODO: old logic would effectively always set dirty = true, is this correct though?
 		dirty = true;
 	}
 
-	void UIKeyConfig::unstage_keymap(Keyboard::Mapping keymap)
+	void UIKeyConfig::unstage_mapping(Keyboard::Mapping mapping)
 	{
-		KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+		KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
 
 		if (iter != bound_actions.end())
@@ -565,7 +565,7 @@ namespace ms
 				Keyboard::Mapping staged_map = it.second;
 
 				// TODO: compare whole map
-				if (staged_map.action == keymap.action)
+				if (staged_map.action == mapping.action)
 				{
 					if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
 					{
@@ -605,11 +605,11 @@ namespace ms
 	{
 		for (auto fkey : key_textures)
 		{
-			Keyboard::Mapping keymap = get_staged_key_mapping(fkey.first);
+			Keyboard::Mapping mapping = get_staged_mapping(fkey.first);
 
-			if (keymap.type != KeyType::Id::NONE)
+			if (mapping.type != KeyType::Id::NONE)
 			{
-				KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
 				if (action)
 					bound_actions.emplace_back(action);
@@ -664,7 +664,7 @@ namespace ms
 		return KeyConfig::Key::LENGTH;
 	}
 
-	Keyboard::Mapping UIKeyConfig::get_staged_key_mapping(int32_t keycode) const
+	Keyboard::Mapping UIKeyConfig::get_staged_mapping(int32_t keycode) const
 	{
 		auto iter = staged_keys.find(keycode);
 
@@ -676,11 +676,11 @@ namespace ms
 
 	// KeyMapIcon
 
-	UIKeyConfig::KeyMapIcon::KeyMapIcon(Keyboard::Mapping km) : keymap(km) {}
+	UIKeyConfig::KeyMapIcon::KeyMapIcon(Keyboard::Mapping m) : mapping(m) {}
 
 	UIKeyConfig::KeyMapIcon::KeyMapIcon(KeyAction::Id action) {
 		KeyType::Id type = get_keytype(action);
-		keymap = Keyboard::Mapping(type, action);
+		mapping = Keyboard::Mapping(type, action);
 	}
 
 	void UIKeyConfig::KeyMapIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
@@ -688,9 +688,9 @@ namespace ms
 		auto keyconfig = UI::get().get_element<UIKeyConfig>();
 
 		if (remove)
-			keyconfig->unstage_keymap(keymap);
+			keyconfig->unstage_mapping(mapping);
 		else
-			keyconfig->stage_keymap(cursorposition, keymap);
+			keyconfig->stage_mapping(cursorposition, mapping);
 	}
 
 	KeyType::Id UIKeyConfig::KeyMapIcon::get_keytype(KeyAction::Id action) const

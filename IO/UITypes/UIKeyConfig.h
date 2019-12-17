@@ -40,8 +40,8 @@ namespace ms
 		//Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
 		//bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
 
-		void stage_keymap(Point<int16_t> cursorposition, Keyboard::Mapping);
-		void unstage_keymap(Keyboard::Mapping);
+		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
+		void unstage_mapping(Keyboard::Mapping);
 
 		void close();
 
@@ -64,7 +64,7 @@ namespace ms
 		int32_t get_key_from_action(KeyAction::Id action) const;
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
-		Keyboard::Mapping get_staged_key_mapping(int32_t keycode) const;
+		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
 
 		enum Buttons : uint16_t
@@ -92,7 +92,7 @@ namespace ms
 			KeyType::Id get_keytype(KeyAction::Id action) const;
 
 		private:
-			Keyboard::Mapping keymap;
+			Keyboard::Mapping mapping;
 		};
 
 		bool dirty;
