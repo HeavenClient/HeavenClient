@@ -22,6 +22,8 @@
 #include "../KeyConfig.h"
 #include "../Keyboard.h"
 
+#include "../Template/EnumMap.h"
+
 namespace ms
 {
 	class UIKeyConfig : public UIDragElement<PosKEYCONFIG>
@@ -46,7 +48,7 @@ namespace ms
 		void close();
 
 	protected:
-		//Button::State button_pressed(uint16_t buttonid) override;
+		Button::State button_pressed(uint16_t buttonid) override;
 
 	private:
 		void load_keys_pos();
@@ -54,11 +56,13 @@ namespace ms
 		void load_key_textures();
 		void load_action_icons();
 		void load_skill_icons();
+
+		void safe_close();
+
 		void bind_action_keys();
+		void save_staged_mappings();
 		void clear();
 		void reset();
-		//void save_keys();
-		//void safe_close();
 
 		Texture get_skill_texture(int32_t skill_id) const;
 		//KeyAction::Id icon_by_position(Point<int16_t> position) const;
@@ -115,7 +119,7 @@ namespace ms
 
 		// TODO: some documentation about how bound_actions shows staged_keys state even before commit
 		std::vector<KeyAction::Id> bound_actions;
-		std::map<int32_t, Keyboard::Mapping> staged_keys;
+		std::map<int32_t, Keyboard::Mapping> staged_mappings;
 
 		std::map<int32_t, Keyboard::Mapping> alternate_keys = {
 		   { KeyConfig::Key::ESCAPE, Keyboard::Mapping(KeyType::Id::MENU, KeyAction::Id::MAINMENU) },
