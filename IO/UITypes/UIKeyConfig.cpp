@@ -58,7 +58,10 @@ namespace ms
 		load_unbound_actions_pos();
 		load_key_textures();
 		load_action_icons();
+		bind_action_keys();
 	}
+
+	// Load
 
 	void UIKeyConfig::load_keys_pos()
 	{
@@ -403,6 +406,16 @@ namespace ms
 		action_icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
 	}
 
+	// UI Actions
+
+	void UIKeyConfig::close()
+	{
+		deactivate();
+		reset();
+	}
+
+	// Keymap Staging
+
 	void UIKeyConfig::stage_keymap(Point<int16_t> cursorposition, Keyboard::Mapping keymap)
 	{
 		KeyConfig::Key key = key_by_position(cursorposition);
@@ -523,6 +536,40 @@ namespace ms
 		}
 	}
 
+	void UIKeyConfig::bind_action_keys()
+	{
+		for (auto fkey : key_textures)
+		{
+			Keyboard::Mapping keymap = get_staged_key_mapping(fkey.first);
+
+			if (keymap.type != KeyType::Id::NONE)
+			{
+				KeyAction::Id action = KeyAction::actionbyid(keymap.action);
+
+				// TODO: EQUIPMENT == 1. Is this distinction actually necessary?
+				if (action || action == KeyAction::Id::EQUIPMENT)
+					bound_actions.emplace_back(action);
+			}
+		}
+	}
+
+	void UIKeyConfig::clear()
+	{
+		bound_actions.clear();
+		staged_keys = {};
+		dirty = true;
+	}
+
+	void UIKeyConfig::reset()
+	{
+		clear();
+		staged_keys = keyboard->get_maplekeys();
+		bind_action_keys();
+		dirty = false;
+	}
+
+	// Helpers
+
 	KeyConfig::Key UIKeyConfig::key_by_position(Point<int16_t> cursorpos) const
 	{
 		for (auto iter : keys_pos)
@@ -538,6 +585,19 @@ namespace ms
 
 		return KeyConfig::Key::LENGTH;
 	}
+
+	Keyboard::Mapping UIKeyConfig::get_staged_key_mapping(int32_t keycode) const
+	{
+		auto iter = staged_keys.find(keycode);
+
+		if (iter == staged_keys.end())
+			return {};
+
+		return iter->second;
+	}
+
+
+	// KeyMapIcon
 
 	UIKeyConfig::KeyMapIcon::KeyMapIcon(Keyboard::Mapping km) : keymap(km) {}
 

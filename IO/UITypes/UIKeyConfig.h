@@ -43,7 +43,7 @@ namespace ms
 		void stage_keymap(Point<int16_t> cursorposition, Keyboard::Mapping);
 		void unstage_keymap(Keyboard::Mapping);
 
-		//void close();
+		void close();
 
 	protected:
 		//Button::State button_pressed(uint16_t buttonid) override;
@@ -53,9 +53,9 @@ namespace ms
 		void load_unbound_actions_pos();
 		void load_key_textures();
 		void load_action_icons();
-		//void map_keys();
-		//void clear();
-		//void reset();
+		void bind_action_keys();
+		void clear();
+		void reset();
 		//void save_keys();
 		//void safe_close();
 
@@ -64,7 +64,7 @@ namespace ms
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
 		//int32_t get_tempkey(KeyAction::Id action) const;
-		//Keyboard::Mapping get_tempkey_mapping(int32_t keycode) const;
+		Keyboard::Mapping get_staged_key_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
 
 		enum Buttons : uint16_t
