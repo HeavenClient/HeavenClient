@@ -28,7 +28,7 @@
 
 namespace ms
 {
-	UIKeyConfig::UIKeyConfig() : UIDragElement<PosKEYCONFIG>(Point<int16_t>(0, 0)), dirty(false)
+	UIKeyConfig::UIKeyConfig() : UIDragElement<PosKEYCONFIG>(), dirty(false)
 	{
 		keyboard = &UI::get().get_keyboard();
 		staged_keys = keyboard->get_maplekeys();
