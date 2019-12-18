@@ -54,6 +54,7 @@ namespace ms
 		void load_keys_pos();
 		void load_unbound_actions_pos();
 		void load_key_textures();
+		void load_action_mappings();
 		void load_action_icons();
 		void load_skill_icons();
 
@@ -72,6 +73,95 @@ namespace ms
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
+
+		static KeyType::Id get_keytype(KeyAction::Id action)
+		{
+			switch (action)
+			{
+			case KeyAction::Id::EQUIPMENT:
+			case KeyAction::Id::ITEMS:
+			case KeyAction::Id::STATS:
+			case KeyAction::Id::SKILLS:
+			case KeyAction::Id::FRIENDS:
+			case KeyAction::Id::WORLDMAP:
+			case KeyAction::Id::MAPLECHAT:
+			case KeyAction::Id::MINIMAP:
+			case KeyAction::Id::QUESTLOG:
+			case KeyAction::Id::KEYBINDINGS:
+			case KeyAction::Id::TOGGLECHAT:
+			case KeyAction::Id::WHISPER:
+			case KeyAction::Id::SAY:
+			case KeyAction::Id::PARTYCHAT:
+			case KeyAction::Id::MENU:
+			case KeyAction::Id::QUICKSLOTS:
+			case KeyAction::Id::GUILD:
+			case KeyAction::Id::FRIENDSCHAT:
+			case KeyAction::Id::PARTY:
+			case KeyAction::Id::NOTIFIER:
+			case KeyAction::Id::CASHSHOP:
+			case KeyAction::Id::GUILDCHAT:
+			case KeyAction::Id::MEDALS:
+			case KeyAction::Id::BITS:
+			case KeyAction::Id::ALLIANCECHAT:
+			case KeyAction::Id::MAPLENEWS:
+			case KeyAction::Id::MANAGELEGION:
+			case KeyAction::Id::PROFESSION:
+			case KeyAction::Id::BOSSPARTY:
+			case KeyAction::Id::ITEMPOT:
+			case KeyAction::Id::EVENT:
+			case KeyAction::Id::SILENTCRUSADE:
+			case KeyAction::Id::BATTLEANALYSIS:
+			case KeyAction::Id::GUIDE:
+			case KeyAction::Id::VIEWERSCHAT:
+			case KeyAction::Id::ENHANCEEQUIP:
+			case KeyAction::Id::MONSTERCOLLECTION:
+			case KeyAction::Id::SOULWEAPON:
+			case KeyAction::Id::CHARINFO:
+			case KeyAction::Id::CHANGECHANNEL:
+			case KeyAction::Id::MAINMENU:
+			case KeyAction::Id::SCREENSHOT:
+			case KeyAction::Id::PICTUREMODE:
+			case KeyAction::Id::MAPLEACHIEVEMENT:
+				return KeyType::Id::MENU;
+			case KeyAction::Id::PICKUP:
+			case KeyAction::Id::SIT:
+			case KeyAction::Id::ATTACK:
+			case KeyAction::Id::JUMP:
+				return KeyType::Id::ACTION;
+			case KeyAction::Id::INTERACT_HARVEST:
+			case KeyAction::Id::MAPLESTORAGE:
+			case KeyAction::Id::SAFEMODE:
+			case KeyAction::Id::MUTE:
+			case KeyAction::Id::MONSTERBOOK:
+			case KeyAction::Id::TOSPOUSE:
+				return KeyType::Id::MENU;
+			case KeyAction::Id::FACE1:
+			case KeyAction::Id::FACE2:
+			case KeyAction::Id::FACE3:
+			case KeyAction::Id::FACE4:
+			case KeyAction::Id::FACE5:
+			case KeyAction::Id::FACE6:
+			case KeyAction::Id::FACE7:
+				return KeyType::Id::FACE;
+			case KeyAction::Id::LEFT:
+			case KeyAction::Id::RIGHT:
+			case KeyAction::Id::UP:
+			case KeyAction::Id::DOWN:
+			case KeyAction::Id::BACK:
+			case KeyAction::Id::TAB:
+			case KeyAction::Id::RETURN:
+			case KeyAction::Id::ESCAPE:
+			case KeyAction::Id::SPACE:
+			case KeyAction::Id::DELETE:
+			case KeyAction::Id::HOME:
+			case KeyAction::Id::END:
+			case KeyAction::Id::COPY:
+			case KeyAction::Id::PASTE:
+			case KeyAction::Id::LENGTH:
+			default:
+				return KeyType::Id::NONE;
+			}
+		}
 
 		enum Buttons : uint16_t
 		{
@@ -96,8 +186,6 @@ namespace ms
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 			void set_count(int16_t) override {}
 
-			KeyType::Id get_keytype(KeyAction::Id action) const;
-
 		private:
 			Keyboard::Mapping mapping;
 		};
@@ -117,7 +205,11 @@ namespace ms
 
 		std::map<int32_t, std::unique_ptr<Icon>> skill_icons;
 
-		// TODO: some documentation about how bound_actions shows staged_keys state even before commit
+		// Used to determine if mapping belongs to predefined action
+		std::vector<Keyboard::Mapping> action_mappings;
+
+		// TODO: some documentation about how bound_actions shows staged_mappings state even before commit
+		// TODO: can I get rid of bound_actions completely? could I make a set of action_mappings to check against, instead?
 		std::vector<KeyAction::Id> bound_actions;
 		std::map<int32_t, Keyboard::Mapping> staged_mappings;
 

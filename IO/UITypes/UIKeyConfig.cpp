@@ -349,6 +349,71 @@ namespace ms
 		key_textures[KeyConfig::Key::F12] = key[88];
 	}
 
+	void UIKeyConfig::load_action_mappings()
+	{
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::EQUIPMENT), KeyAction::Id::EQUIPMENT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::ITEMS), KeyAction::Id::ITEMS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::STATS), KeyAction::Id::STATS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SKILLS), KeyAction::Id::SKILLS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FRIENDS), KeyAction::Id::FRIENDS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::WORLDMAP), KeyAction::Id::WORLDMAP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MAPLECHAT), KeyAction::Id::MAPLECHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MINIMAP), KeyAction::Id::MINIMAP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::QUESTLOG), KeyAction::Id::QUESTLOG));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::KEYBINDINGS), KeyAction::Id::KEYBINDINGS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SAY), KeyAction::Id::SAY));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::WHISPER), KeyAction::Id::WHISPER));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::PARTYCHAT), KeyAction::Id::PARTYCHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FRIENDSCHAT), KeyAction::Id::FRIENDSCHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MENU), KeyAction::Id::MENU));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::QUICKSLOTS), KeyAction::Id::QUICKSLOTS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::TOGGLECHAT), KeyAction::Id::TOGGLECHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::GUILD), KeyAction::Id::GUILD));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::GUILDCHAT), KeyAction::Id::GUILDCHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::PARTY), KeyAction::Id::PARTY));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::NOTIFIER), KeyAction::Id::NOTIFIER));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MAPLENEWS), KeyAction::Id::MAPLENEWS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::CASHSHOP), KeyAction::Id::CASHSHOP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::ALLIANCECHAT), KeyAction::Id::ALLIANCECHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MANAGELEGION), KeyAction::Id::MANAGELEGION));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MEDALS), KeyAction::Id::MEDALS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::BOSSPARTY), KeyAction::Id::BOSSPARTY));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::PROFESSION), KeyAction::Id::PROFESSION));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::ITEMPOT), KeyAction::Id::ITEMPOT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::EVENT), KeyAction::Id::EVENT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SILENTCRUSADE), KeyAction::Id::SILENTCRUSADE));
+		//action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::BITS), KeyAction::Id::BITS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::BATTLEANALYSIS), KeyAction::Id::BATTLEANALYSIS));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::GUIDE), KeyAction::Id::GUIDE));
+		//action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::VIEWERSCHAT), KeyAction::Id::VIEWERSCHAT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::ENHANCEEQUIP), KeyAction::Id::ENHANCEEQUIP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MONSTERCOLLECTION), KeyAction::Id::MONSTERCOLLECTION));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SOULWEAPON), KeyAction::Id::SOULWEAPON));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::CHARINFO), KeyAction::Id::CHARINFO));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::CHANGECHANNEL), KeyAction::Id::CHANGECHANNEL));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MAINMENU), KeyAction::Id::MAINMENU));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SCREENSHOT), KeyAction::Id::SCREENSHOT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::PICTUREMODE), KeyAction::Id::PICTUREMODE));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MAPLEACHIEVEMENT), KeyAction::Id::MAPLEACHIEVEMENT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::PICKUP), KeyAction::Id::PICKUP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SIT), KeyAction::Id::SIT));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::ATTACK), KeyAction::Id::ATTACK));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::JUMP), KeyAction::Id::JUMP));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::INTERACT_HARVEST), KeyAction::Id::INTERACT_HARVEST));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE1), KeyAction::Id::FACE1));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE2), KeyAction::Id::FACE2));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE3), KeyAction::Id::FACE3));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE4), KeyAction::Id::FACE4));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE5), KeyAction::Id::FACE5));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE6), KeyAction::Id::FACE6));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::FACE7), KeyAction::Id::FACE7));
+		//action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MAPLESTORAGE), KeyAction::Id::MAPLESTORAGE));
+		//action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::SAFEMODE), KeyAction::Id::SAFEMODE));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MUTE), KeyAction::Id::MUTE));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::MONSTERBOOK), KeyAction::Id::MONSTERBOOK));
+		action_mappings.push_back(Keyboard::Mapping(get_keytype(KeyAction::Id::TOSPOUSE), KeyAction::Id::TOSPOUSE));
+	}
+
 	void UIKeyConfig::load_action_icons()
 	{
 		action_icons[KeyAction::Id::EQUIPMENT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::EQUIPMENT), icon[0], -1);
@@ -763,7 +828,7 @@ namespace ms
 
 	void UIKeyConfig::save_staged_mappings()
 	{
-		// TODO: this logic hasn't been looked at. is there anything missing?
+		// TODO: the logic in this function will need to be generalized for mappings instead of actions
 		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions;
 
 		for each (auto key in staged_mappings)
@@ -875,7 +940,7 @@ namespace ms
 	UIKeyConfig::KeyMapIcon::KeyMapIcon(Keyboard::Mapping m) : mapping(m) {}
 
 	UIKeyConfig::KeyMapIcon::KeyMapIcon(KeyAction::Id action) {
-		KeyType::Id type = get_keytype(action);
+		KeyType::Id type = UIKeyConfig::get_keytype(action);
 		mapping = Keyboard::Mapping(type, action);
 	}
 
@@ -889,92 +954,4 @@ namespace ms
 			keyconfig->stage_mapping(cursorposition, mapping);
 	}
 
-	KeyType::Id UIKeyConfig::KeyMapIcon::get_keytype(KeyAction::Id action) const
-	{
-		switch (action)
-		{
-		case KeyAction::Id::EQUIPMENT:
-		case KeyAction::Id::ITEMS:
-		case KeyAction::Id::STATS:
-		case KeyAction::Id::SKILLS:
-		case KeyAction::Id::FRIENDS:
-		case KeyAction::Id::WORLDMAP:
-		case KeyAction::Id::MAPLECHAT:
-		case KeyAction::Id::MINIMAP:
-		case KeyAction::Id::QUESTLOG:
-		case KeyAction::Id::KEYBINDINGS:
-		case KeyAction::Id::TOGGLECHAT:
-		case KeyAction::Id::WHISPER:
-		case KeyAction::Id::SAY:
-		case KeyAction::Id::PARTYCHAT:
-		case KeyAction::Id::MENU:
-		case KeyAction::Id::QUICKSLOTS:
-		case KeyAction::Id::GUILD:
-		case KeyAction::Id::FRIENDSCHAT:
-		case KeyAction::Id::PARTY:
-		case KeyAction::Id::NOTIFIER:
-		case KeyAction::Id::CASHSHOP:
-		case KeyAction::Id::GUILDCHAT:
-		case KeyAction::Id::MEDALS:
-		case KeyAction::Id::BITS:
-		case KeyAction::Id::ALLIANCECHAT:
-		case KeyAction::Id::MAPLENEWS:
-		case KeyAction::Id::MANAGELEGION:
-		case KeyAction::Id::PROFESSION:
-		case KeyAction::Id::BOSSPARTY:
-		case KeyAction::Id::ITEMPOT:
-		case KeyAction::Id::EVENT:
-		case KeyAction::Id::SILENTCRUSADE:
-		case KeyAction::Id::BATTLEANALYSIS:
-		case KeyAction::Id::GUIDE:
-		case KeyAction::Id::VIEWERSCHAT:
-		case KeyAction::Id::ENHANCEEQUIP:
-		case KeyAction::Id::MONSTERCOLLECTION:
-		case KeyAction::Id::SOULWEAPON:
-		case KeyAction::Id::CHARINFO:
-		case KeyAction::Id::CHANGECHANNEL:
-		case KeyAction::Id::MAINMENU:
-		case KeyAction::Id::SCREENSHOT:
-		case KeyAction::Id::PICTUREMODE:
-		case KeyAction::Id::MAPLEACHIEVEMENT:
-			return KeyType::Id::MENU;
-		case KeyAction::Id::PICKUP:
-		case KeyAction::Id::SIT:
-		case KeyAction::Id::ATTACK:
-		case KeyAction::Id::JUMP:
-			return KeyType::Id::ACTION;
-		case KeyAction::Id::INTERACT_HARVEST:
-		case KeyAction::Id::MAPLESTORAGE:
-		case KeyAction::Id::SAFEMODE:
-		case KeyAction::Id::MUTE:
-		case KeyAction::Id::MONSTERBOOK:
-		case KeyAction::Id::TOSPOUSE:
-			return KeyType::Id::MENU;
-		case KeyAction::Id::FACE1:
-		case KeyAction::Id::FACE2:
-		case KeyAction::Id::FACE3:
-		case KeyAction::Id::FACE4:
-		case KeyAction::Id::FACE5:
-		case KeyAction::Id::FACE6:
-		case KeyAction::Id::FACE7:
-			return KeyType::Id::FACE;
-		case KeyAction::Id::LEFT:
-		case KeyAction::Id::RIGHT:
-		case KeyAction::Id::UP:
-		case KeyAction::Id::DOWN:
-		case KeyAction::Id::BACK:
-		case KeyAction::Id::TAB:
-		case KeyAction::Id::RETURN:
-		case KeyAction::Id::ESCAPE:
-		case KeyAction::Id::SPACE:
-		case KeyAction::Id::DELETE:
-		case KeyAction::Id::HOME:
-		case KeyAction::Id::END:
-		case KeyAction::Id::COPY:
-		case KeyAction::Id::PASTE:
-		case KeyAction::Id::LENGTH:
-		default:
-			return KeyType::Id::NONE;
-		}
-	}
 }
