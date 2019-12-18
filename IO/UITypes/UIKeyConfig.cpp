@@ -65,6 +65,7 @@ namespace ms
 		load_key_textures();
 		load_action_icons();
 		load_skill_icons();
+
 		bind_action_keys();
 	}
 
@@ -496,6 +497,17 @@ namespace ms
 							ficon->draw(position + keys_pos[fkey] - Point<int16_t>(2, 3));
 						}
 					}
+				}
+			}
+		}
+
+		for (auto ubicon : action_icons)
+		{
+			if (ubicon.second)
+			{
+				if (std::find(bound_actions.begin(), bound_actions.end(), ubicon.first) == bound_actions.end())
+				{
+					ubicon.second->draw(position + unbound_actions_pos[ubicon.first]);
 				}
 			}
 		}
