@@ -44,10 +44,10 @@ namespace ms
 		bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
+		void close();
+
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
 		void unstage_mapping(Keyboard::Mapping);
-
-		void close();
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
@@ -62,8 +62,8 @@ namespace ms
 
 		void safe_close();
 
-		void bind_staged_action_keys();
 		void save_staged_mappings();
+		void bind_staged_action_keys();
 		void clear();
 		void reset();
 

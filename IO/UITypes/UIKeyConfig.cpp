@@ -495,7 +495,7 @@ namespace ms
 		}
 	}
 
-	// UI Actions
+	// UI
 
 	void UIKeyConfig::draw(float inter) const
 	{
@@ -510,7 +510,7 @@ namespace ms
 
 			if (mapping.type == KeyType::SKILL)
 			{
-				// TODO: can I just reference this directly?
+				// TODO: why can't I just reference this directly here? i.e. `ficon = skill_icons[skill_id].get();`
 				int32_t skill_id = mapping.action;
 				auto it = skill_icons.find(skill_id);
 
@@ -521,7 +521,7 @@ namespace ms
 			{
 				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
-				// TODO: do I actually need all these checks?
+				// TODO: do I actually need this check?
 				if (action)
 					for (auto const& it : action_icons)
 						if (it.first == action)
@@ -594,6 +594,12 @@ namespace ms
 	void UIKeyConfig::update()
 	{
 		UIElement::update();
+	}
+
+	void UIKeyConfig::close()
+	{
+		deactivate();
+		reset();
 	}
 
 	Button::State UIKeyConfig::button_pressed(uint16_t buttonid)
@@ -756,12 +762,6 @@ namespace ms
 	{
 		if (pressed && escape)
 			safe_close();
-	}
-
-	void UIKeyConfig::close()
-	{
-		deactivate();
-		reset();
 	}
 
 	void UIKeyConfig::safe_close()
