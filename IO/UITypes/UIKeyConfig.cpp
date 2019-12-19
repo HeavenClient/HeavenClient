@@ -1010,6 +1010,7 @@ namespace ms
 	{
 		clear();
 		staged_mappings = keyboard->get_maplekeys();
+		load_skill_icons();
 		bind_action_keys();
 		dirty = false;
 	}
@@ -1079,6 +1080,14 @@ namespace ms
 	UIKeyConfig::MappingIcon::MappingIcon(KeyAction::Id action) {
 		KeyType::Id type = UIKeyConfig::get_keytype(action);
 		mapping = Keyboard::Mapping(type, action);
+	}
+
+	void UIKeyConfig::MappingIcon::drop_on_stage() const {
+		if (mapping.type == KeyType::SKILL)
+		{
+			auto keyconfig = UI::get().get_element<UIKeyConfig>();
+			keyconfig->unstage_mapping(mapping);
+		}
 	}
 
 	void UIKeyConfig::MappingIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
