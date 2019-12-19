@@ -41,7 +41,7 @@ namespace ms
 
 		//void send_key(int32_t keycode, bool pressed, bool escape) override;
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
-		//bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
+		bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
 
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
 		void unstage_mapping(Keyboard::Mapping);

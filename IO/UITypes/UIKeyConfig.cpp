@@ -728,6 +728,27 @@ namespace ms
 		return UIElement::send_cursor(clicked, cursorpos);
 	}
 
+	bool UIKeyConfig::send_icon(const Icon& icon, Point<int16_t> cursorpos)
+	{
+		for (auto iter : unbound_actions_pos)
+		{
+			Rectangle<int16_t> icon_rect = Rectangle<int16_t>(
+				position + iter.second,
+				position + iter.second + Point<int16_t>(32, 32)
+			);
+
+			if (icon_rect.contains(cursorpos))
+				icon.drop_on_bindings(cursorpos, true);
+		}
+
+		KeyConfig::Key fkey = key_by_position(cursorpos);
+
+		if (fkey != KeyConfig::Key::LENGTH)
+			icon.drop_on_bindings(cursorpos, false);
+
+		return true;
+	}
+
 	void UIKeyConfig::close()
 	{
 		deactivate();
