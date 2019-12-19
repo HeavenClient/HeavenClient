@@ -17,15 +17,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIKeyConfig.h"
 
+#include "../Console.h"
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
 #include "../Data/SkillData.h"
-#include "../Net/Packets/PlayerPackets.h"
 #include "../UITypes/UINotice.h"
 #include "../UITypes/UILoginNotice.h"
 
-#include "../../../Console.h"
+#include "../Net/Packets/PlayerPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -508,27 +508,26 @@ namespace ms
 
 			Icon* ficon = NULL;
 
-			if (mapping.type == KeyType::SKILL)
+			if (mapping.type == KeyType::Id::SKILL)
 			{
-				// TODO: why can't I just reference this directly here? i.e. `ficon = skill_icons[skill_id].get();`
 				int32_t skill_id = mapping.action;
-				auto it = skill_icons.find(skill_id);
-
-				if (it != skill_icons.end())
-					ficon = it->second.get();
+				ficon = skill_icons.at(skill_id).get();
 			}
 			else if (is_action_mapping(mapping))
 			{
 				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
-				// TODO: do I actually need this check?
 				if (action)
+				{
 					for (auto const& it : action_icons)
+					{
 						if (it.first == action)
 						{
 							ficon = it.second.get();
 							break;
 						}
+					}
+				}
 			}
 			else
 			{
@@ -702,7 +701,7 @@ namespace ms
 			{
 				Icon* ficon = NULL;
 
-				if (mapping.type == KeyType::SKILL)
+				if (mapping.type == KeyType::Id::SKILL)
 				{
 					int32_t skill_id = mapping.action;
 					ficon = skill_icons[skill_id].get();
@@ -798,10 +797,10 @@ namespace ms
 		KeyConfig::Key key = key_by_position(cursorposition);
 		Keyboard::Mapping prior_staged = staged_mappings[key];
 
-		if (prior_staged != mapping)
-			unstage_mapping(prior_staged);
-		else
+		if (prior_staged == mapping)
 			return;
+
+		unstage_mapping(prior_staged);
 
 		if (is_action_mapping(mapping))
 		{
@@ -862,7 +861,7 @@ namespace ms
 			staged_mappings[key] = mapping;
 		}
 
-		if (mapping.type == KeyType::SKILL)
+		if (mapping.type == KeyType::Id::SKILL)
 		{
 			int32_t skill_id = mapping.action;
 
@@ -913,7 +912,7 @@ namespace ms
 					staged_mappings.erase(it.first);
 				}
 
-				if (staged_mapping.type == KeyType::SKILL)
+				if (staged_mapping.type == KeyType::Id::SKILL)
 				{
 					int32_t skill_id = staged_mapping.action;
 					skill_icons.erase(skill_id);
@@ -1084,7 +1083,7 @@ namespace ms
 	}
 
 	void UIKeyConfig::MappingIcon::drop_on_stage() const {
-		if (mapping.type == KeyType::SKILL)
+		if (mapping.type == KeyType::Id::SKILL)
 		{
 			auto keyconfig = UI::get().get_element<UIKeyConfig>();
 			keyconfig->unstage_mapping(mapping);
