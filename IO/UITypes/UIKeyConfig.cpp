@@ -417,67 +417,67 @@ namespace ms
 
 	void UIKeyConfig::load_action_icons()
 	{
-		action_icons[KeyAction::Id::EQUIPMENT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::EQUIPMENT), icon[0], -1);
-		action_icons[KeyAction::Id::ITEMS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::ITEMS), icon[1], -1);
-		action_icons[KeyAction::Id::STATS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::STATS), icon[2], -1);
-		action_icons[KeyAction::Id::SKILLS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SKILLS), icon[3], -1);
-		action_icons[KeyAction::Id::FRIENDS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FRIENDS), icon[4], -1);
-		action_icons[KeyAction::Id::WORLDMAP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::WORLDMAP), icon[5], -1);
-		action_icons[KeyAction::Id::MAPLECHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MAPLECHAT), icon[6], -1);
-		action_icons[KeyAction::Id::MINIMAP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MINIMAP), icon[7], -1);
-		action_icons[KeyAction::Id::QUESTLOG] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::QUESTLOG), icon[8], -1);
-		action_icons[KeyAction::Id::KEYBINDINGS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::KEYBINDINGS), icon[9], -1);
-		action_icons[KeyAction::Id::SAY] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SAY), icon[10], -1);
-		action_icons[KeyAction::Id::WHISPER] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::WHISPER), icon[11], -1);
-		action_icons[KeyAction::Id::PARTYCHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::PARTYCHAT), icon[12], -1);
-		action_icons[KeyAction::Id::FRIENDSCHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FRIENDSCHAT), icon[13], -1);
-		action_icons[KeyAction::Id::MENU] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MENU), icon[14], -1);
-		action_icons[KeyAction::Id::QUICKSLOTS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::QUICKSLOTS), icon[15], -1);
-		action_icons[KeyAction::Id::TOGGLECHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::TOGGLECHAT), icon[16], -1);
-		action_icons[KeyAction::Id::GUILD] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::GUILD), icon[17], -1);
-		action_icons[KeyAction::Id::GUILDCHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::GUILDCHAT), icon[18], -1);
-		action_icons[KeyAction::Id::PARTY] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::PARTY), icon[19], -1);
-		action_icons[KeyAction::Id::NOTIFIER] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::NOTIFIER), icon[20], -1);
-		action_icons[KeyAction::Id::MAPLENEWS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MAPLENEWS), icon[21], -1);
-		action_icons[KeyAction::Id::CASHSHOP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::CASHSHOP), icon[22], -1);
-		action_icons[KeyAction::Id::ALLIANCECHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::ALLIANCECHAT), icon[23], -1);
-		action_icons[KeyAction::Id::MANAGELEGION] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MANAGELEGION), icon[25], -1);
-		action_icons[KeyAction::Id::MEDALS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MEDALS), icon[26], -1);
-		action_icons[KeyAction::Id::BOSSPARTY] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::BOSSPARTY), icon[27], -1);
-		action_icons[KeyAction::Id::PROFESSION] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::PROFESSION), icon[29], -1);
-		action_icons[KeyAction::Id::ITEMPOT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::ITEMPOT), icon[30], -1);
-		action_icons[KeyAction::Id::EVENT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::EVENT), icon[31], -1);
-		action_icons[KeyAction::Id::SILENTCRUSADE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SILENTCRUSADE), icon[33], -1);
+		action_icons[KeyAction::Id::EQUIPMENT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::EQUIPMENT), icon[0], -1);
+		action_icons[KeyAction::Id::ITEMS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::ITEMS), icon[1], -1);
+		action_icons[KeyAction::Id::STATS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::STATS), icon[2], -1);
+		action_icons[KeyAction::Id::SKILLS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SKILLS), icon[3], -1);
+		action_icons[KeyAction::Id::FRIENDS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FRIENDS), icon[4], -1);
+		action_icons[KeyAction::Id::WORLDMAP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::WORLDMAP), icon[5], -1);
+		action_icons[KeyAction::Id::MAPLECHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MAPLECHAT), icon[6], -1);
+		action_icons[KeyAction::Id::MINIMAP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MINIMAP), icon[7], -1);
+		action_icons[KeyAction::Id::QUESTLOG] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::QUESTLOG), icon[8], -1);
+		action_icons[KeyAction::Id::KEYBINDINGS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::KEYBINDINGS), icon[9], -1);
+		action_icons[KeyAction::Id::SAY] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SAY), icon[10], -1);
+		action_icons[KeyAction::Id::WHISPER] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::WHISPER), icon[11], -1);
+		action_icons[KeyAction::Id::PARTYCHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::PARTYCHAT), icon[12], -1);
+		action_icons[KeyAction::Id::FRIENDSCHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FRIENDSCHAT), icon[13], -1);
+		action_icons[KeyAction::Id::MENU] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MENU), icon[14], -1);
+		action_icons[KeyAction::Id::QUICKSLOTS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::QUICKSLOTS), icon[15], -1);
+		action_icons[KeyAction::Id::TOGGLECHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::TOGGLECHAT), icon[16], -1);
+		action_icons[KeyAction::Id::GUILD] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::GUILD), icon[17], -1);
+		action_icons[KeyAction::Id::GUILDCHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::GUILDCHAT), icon[18], -1);
+		action_icons[KeyAction::Id::PARTY] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::PARTY), icon[19], -1);
+		action_icons[KeyAction::Id::NOTIFIER] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::NOTIFIER), icon[20], -1);
+		action_icons[KeyAction::Id::MAPLENEWS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MAPLENEWS), icon[21], -1);
+		action_icons[KeyAction::Id::CASHSHOP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::CASHSHOP), icon[22], -1);
+		action_icons[KeyAction::Id::ALLIANCECHAT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::ALLIANCECHAT), icon[23], -1);
+		action_icons[KeyAction::Id::MANAGELEGION] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MANAGELEGION), icon[25], -1);
+		action_icons[KeyAction::Id::MEDALS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MEDALS), icon[26], -1);
+		action_icons[KeyAction::Id::BOSSPARTY] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::BOSSPARTY), icon[27], -1);
+		action_icons[KeyAction::Id::PROFESSION] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::PROFESSION), icon[29], -1);
+		action_icons[KeyAction::Id::ITEMPOT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::ITEMPOT), icon[30], -1);
+		action_icons[KeyAction::Id::EVENT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::EVENT), icon[31], -1);
+		action_icons[KeyAction::Id::SILENTCRUSADE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SILENTCRUSADE), icon[33], -1);
 		//action_icons[KeyAction::Id::BITS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::BITS), icon[34], -1);
-		action_icons[KeyAction::Id::BATTLEANALYSIS] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::BATTLEANALYSIS), icon[35], -1);
-		action_icons[KeyAction::Id::GUIDE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::GUIDE), icon[39], -1);
+		action_icons[KeyAction::Id::BATTLEANALYSIS] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::BATTLEANALYSIS), icon[35], -1);
+		action_icons[KeyAction::Id::GUIDE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::GUIDE), icon[39], -1);
 		//action_icons[KeyAction::Id::VIEWERSCHAT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::VIEWERSCHAT), icon[40], -1);
-		action_icons[KeyAction::Id::ENHANCEEQUIP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::ENHANCEEQUIP), icon[41], -1);
-		action_icons[KeyAction::Id::MONSTERCOLLECTION] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MONSTERCOLLECTION), icon[42], -1);
-		action_icons[KeyAction::Id::SOULWEAPON] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SOULWEAPON), icon[43], -1);
-		action_icons[KeyAction::Id::CHARINFO] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::CHARINFO), icon[44], -1);
-		action_icons[KeyAction::Id::CHANGECHANNEL] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::CHANGECHANNEL), icon[45], -1);
-		action_icons[KeyAction::Id::MAINMENU] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MAINMENU), icon[46], -1);
-		action_icons[KeyAction::Id::SCREENSHOT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SCREENSHOT), icon[47], -1);
-		action_icons[KeyAction::Id::PICTUREMODE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::PICTUREMODE), icon[48], -1);
-		action_icons[KeyAction::Id::MAPLEACHIEVEMENT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MAPLEACHIEVEMENT), icon[49], -1);
-		action_icons[KeyAction::Id::PICKUP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::PICKUP), icon[50], -1);
-		action_icons[KeyAction::Id::SIT] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SIT), icon[51], -1);
-		action_icons[KeyAction::Id::ATTACK] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::ATTACK), icon[52], -1);
-		action_icons[KeyAction::Id::JUMP] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::JUMP), icon[53], -1);
-		action_icons[KeyAction::Id::INTERACT_HARVEST] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::INTERACT_HARVEST), icon[54], -1);
-		action_icons[KeyAction::Id::FACE1] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE1), icon[100], -1);
-		action_icons[KeyAction::Id::FACE2] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE2), icon[101], -1);
-		action_icons[KeyAction::Id::FACE3] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE3), icon[102], -1);
-		action_icons[KeyAction::Id::FACE4] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE4), icon[103], -1);
-		action_icons[KeyAction::Id::FACE5] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE5), icon[104], -1);
-		action_icons[KeyAction::Id::FACE6] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE6), icon[105], -1);
-		action_icons[KeyAction::Id::FACE7] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::FACE7), icon[106], -1);
+		action_icons[KeyAction::Id::ENHANCEEQUIP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::ENHANCEEQUIP), icon[41], -1);
+		action_icons[KeyAction::Id::MONSTERCOLLECTION] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MONSTERCOLLECTION), icon[42], -1);
+		action_icons[KeyAction::Id::SOULWEAPON] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SOULWEAPON), icon[43], -1);
+		action_icons[KeyAction::Id::CHARINFO] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::CHARINFO), icon[44], -1);
+		action_icons[KeyAction::Id::CHANGECHANNEL] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::CHANGECHANNEL), icon[45], -1);
+		action_icons[KeyAction::Id::MAINMENU] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MAINMENU), icon[46], -1);
+		action_icons[KeyAction::Id::SCREENSHOT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SCREENSHOT), icon[47], -1);
+		action_icons[KeyAction::Id::PICTUREMODE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::PICTUREMODE), icon[48], -1);
+		action_icons[KeyAction::Id::MAPLEACHIEVEMENT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MAPLEACHIEVEMENT), icon[49], -1);
+		action_icons[KeyAction::Id::PICKUP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::PICKUP), icon[50], -1);
+		action_icons[KeyAction::Id::SIT] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::SIT), icon[51], -1);
+		action_icons[KeyAction::Id::ATTACK] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::ATTACK), icon[52], -1);
+		action_icons[KeyAction::Id::JUMP] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::JUMP), icon[53], -1);
+		action_icons[KeyAction::Id::INTERACT_HARVEST] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::INTERACT_HARVEST), icon[54], -1);
+		action_icons[KeyAction::Id::FACE1] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE1), icon[100], -1);
+		action_icons[KeyAction::Id::FACE2] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE2), icon[101], -1);
+		action_icons[KeyAction::Id::FACE3] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE3), icon[102], -1);
+		action_icons[KeyAction::Id::FACE4] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE4), icon[103], -1);
+		action_icons[KeyAction::Id::FACE5] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE5), icon[104], -1);
+		action_icons[KeyAction::Id::FACE6] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE6), icon[105], -1);
+		action_icons[KeyAction::Id::FACE7] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::FACE7), icon[106], -1);
 		//action_icons[KeyAction::Id::MAPLESTORAGE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MAPLESTORAGE), icon[200], -1);
 		//action_icons[KeyAction::Id::SAFEMODE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::SAFEMODE), icon[201], -1);
-		action_icons[KeyAction::Id::MUTE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MUTE), icon[202], -1);
-		action_icons[KeyAction::Id::MONSTERBOOK] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::MONSTERBOOK), icon[1000], -1);
-		action_icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
+		action_icons[KeyAction::Id::MUTE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MUTE), icon[202], -1);
+		action_icons[KeyAction::Id::MONSTERBOOK] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::MONSTERBOOK), icon[1000], -1);
+		action_icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
 	}
 
 	void UIKeyConfig::load_skill_icons()
@@ -492,7 +492,7 @@ namespace ms
 				Console::get().print("Loaded skill: " + std::to_string(mapping.action));
 				int32_t skill_id = mapping.action;
 				Texture tx = get_skill_texture(skill_id);
-				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(mapping), tx, -1);
+				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
 			}
 		}
 	}
@@ -839,7 +839,7 @@ namespace ms
 			if (skill_icons.find(skill_id) == skill_icons.end())
 			{
 				Texture tx = get_skill_texture(skill_id);
-				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(mapping), tx, -1);
+				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
 			}
 		}
 
@@ -1046,16 +1046,16 @@ namespace ms
 		return std::find(action_mappings.begin(), action_mappings.end(), mapping) != action_mappings.end();
 	}
 
-	// KeyMapIcon
+	// MappingIcon
 
-	UIKeyConfig::KeyMapIcon::KeyMapIcon(Keyboard::Mapping m) : mapping(m) {}
+	UIKeyConfig::MappingIcon::MappingIcon(Keyboard::Mapping m) : mapping(m) {}
 
-	UIKeyConfig::KeyMapIcon::KeyMapIcon(KeyAction::Id action) {
+	UIKeyConfig::MappingIcon::MappingIcon(KeyAction::Id action) {
 		KeyType::Id type = UIKeyConfig::get_keytype(action);
 		mapping = Keyboard::Mapping(type, action);
 	}
 
-	void UIKeyConfig::KeyMapIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
+	void UIKeyConfig::MappingIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
 	{
 		auto keyconfig = UI::get().get_element<UIKeyConfig>();
 

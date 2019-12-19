@@ -174,12 +174,11 @@ namespace ms
 			OK
 		};
 
-		// TODO: rename MappingIcon
-		class KeyMapIcon : public Icon::Type
+		class MappingIcon : public Icon::Type
 		{
 		public:
-			KeyMapIcon(Keyboard::Mapping);
-			KeyMapIcon(KeyAction::Id keyId);
+			MappingIcon(Keyboard::Mapping);
+			MappingIcon(KeyAction::Id keyId);
 
 			void drop_on_stage() const override {}
 			void drop_on_equips(Equipslot::Id) const override {}
