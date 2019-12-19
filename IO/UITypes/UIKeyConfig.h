@@ -73,6 +73,8 @@ namespace ms
 		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
+		bool UIKeyConfig::is_action_mapping(Keyboard::Mapping mapping) const;
+		bool UIKeyConfig::skill_icon_exists(int32_t skill_id) const;
 
 		static KeyType::Id get_keytype(KeyAction::Id action)
 		{
@@ -205,11 +207,10 @@ namespace ms
 
 		std::map<int32_t, std::unique_ptr<Icon>> skill_icons;
 
-		// Used to determine if mapping belongs to predefined action
+		// Used to determine if mapping belongs to predefined action, e.g. attack, pick up, faces, etc.
 		std::vector<Keyboard::Mapping> action_mappings;
 
-		// TODO: some documentation about how bound_actions shows staged_mappings state even before commit
-		// TODO: can I get rid of bound_actions completely? could I make a set of action_mappings to check against, instead?
+		// TODO: consider renaming staged_actions, but I don't really mind it like this
 		std::vector<KeyAction::Id> bound_actions;
 		std::map<int32_t, Keyboard::Mapping> staged_mappings;
 

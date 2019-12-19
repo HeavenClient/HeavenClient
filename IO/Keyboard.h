@@ -34,6 +34,16 @@ namespace ms
 
 			Mapping() : type(KeyType::Id::NONE), action(0) {}
 			Mapping(KeyType::Id in_type, int32_t in_action) : type(in_type), action(in_action) {}
+
+			bool operator==(const Mapping& other) const
+			{
+				return type == other.type && action == other.action;
+			}
+
+			bool operator!=(const Mapping& other) const
+			{
+				return type != other.type || action != other.action;
+			}
 		};
 
 		Keyboard();

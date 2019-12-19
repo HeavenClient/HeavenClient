@@ -63,6 +63,7 @@ namespace ms
 		load_keys_pos();
 		load_unbound_actions_pos();
 		load_key_textures();
+		load_action_mappings();
 		load_action_icons();
 		load_skill_icons();
 
@@ -517,7 +518,7 @@ namespace ms
 				if (it != skill_icons.end())
 					ficon = it->second.get();
 			}
-			else
+			else if (is_action_mapping(mapping))
 			{
 				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
@@ -528,6 +529,10 @@ namespace ms
 							ficon = it.second.get();
 							break;
 						}
+			}
+			else
+			{
+				Console::get().print("Unresolvable key mapping: " + std::to_string(mapping.type) + ", " + std::to_string(mapping.action));
 			}
 
 			if (ficon)
@@ -687,53 +692,51 @@ namespace ms
 	void UIKeyConfig::stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping mapping)
 	{
 		KeyConfig::Key key = key_by_position(cursorposition);
+		Keyboard::Mapping prior_staged = staged_mappings[key];
 
-		KeyAction::Id action = KeyAction::actionbyid(mapping.action);
-		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
+		if (prior_staged != mapping)
+			unstage_mapping(prior_staged);
+		else
+			return;
 
-		if (iter != bound_actions.end())
+		if (is_action_mapping(mapping))
 		{
-			for (auto const& it : staged_mappings)
+			KeyAction::Id action = KeyAction::actionbyid(mapping.action);
+			auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
+
+			if (iter == bound_actions.end())
+				bound_actions.emplace_back(action);
+		}
+
+		for (auto const& it : staged_mappings)
+		{
+			Keyboard::Mapping staged_mapping = it.second;
+
+			if (staged_mapping == mapping)
 			{
-				Keyboard::Mapping staged_map = it.second;
-
-				// TODO: compare whole map
-				if (staged_map.action == mapping.action)
+				if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
 				{
-					if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_CONTROL);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_CONTROL);
-					}
-					else if (it.first == KeyConfig::Key::LEFT_ALT || it.first == KeyConfig::Key::RIGHT_ALT)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_ALT);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_ALT);
-					}
-					else if (it.first == KeyConfig::Key::LEFT_SHIFT || it.first == KeyConfig::Key::RIGHT_SHIFT)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_SHIFT);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_SHIFT);
-					}
-					else
-					{
-						staged_mappings.erase(it.first);
-					}
-
-					break;
+					staged_mappings.erase(KeyConfig::Key::LEFT_CONTROL);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_CONTROL);
 				}
+				else if (it.first == KeyConfig::Key::LEFT_ALT || it.first == KeyConfig::Key::RIGHT_ALT)
+				{
+					staged_mappings.erase(KeyConfig::Key::LEFT_ALT);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_ALT);
+				}
+				else if (it.first == KeyConfig::Key::LEFT_SHIFT || it.first == KeyConfig::Key::RIGHT_SHIFT)
+				{
+					staged_mappings.erase(KeyConfig::Key::LEFT_SHIFT);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_SHIFT);
+				}
+				else
+				{
+					staged_mappings.erase(it.first);
+				}
+
+				break;
 			}
 		}
-		else
-		{
-			// TODO: only bind action if keymap is action type
-			bound_actions.emplace_back(action);
-		}
-
-		Keyboard::Mapping prior_staged = staged_mappings[key];
-		// TODO: does this check need to be changed?
-		if (prior_staged.type != KeyType::Id::NONE && prior_staged.action != mapping.action)
-			unstage_mapping(prior_staged);
 
 		if (key == KeyConfig::Key::LEFT_CONTROL || key == KeyConfig::Key::RIGHT_CONTROL)
 		{
@@ -755,73 +758,66 @@ namespace ms
 			staged_mappings[key] = mapping;
 		}
 
-		// TODO: old logic would effectively always set dirty = true, is this correct though?
+		if (mapping.type == KeyType::SKILL)
+		{
+			int32_t skill_id = mapping.action;
+
+			if (skill_icons.find(skill_id) == skill_icons.end())
+			{
+				Texture tx = get_skill_texture(skill_id);
+				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<KeyMapIcon>(mapping), tx, -1);
+			}
+		}
+
 		dirty = true;
 	}
 
 	void UIKeyConfig::unstage_mapping(Keyboard::Mapping mapping)
 	{
-		KeyAction::Id action = KeyAction::actionbyid(mapping.action);
-		auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
-
-		if (iter != bound_actions.end())
+		if (is_action_mapping(mapping))
 		{
-			bound_actions.erase(iter);
+			KeyAction::Id action = KeyAction::actionbyid(mapping.action);
+			auto iter = std::find(bound_actions.begin(), bound_actions.end(), action);
 
-			for (auto const& it : staged_mappings)
-			{
-				Keyboard::Mapping staged_map = it.second;
-
-				// TODO: compare whole map
-				if (staged_map.action == mapping.action)
-				{
-					if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_CONTROL);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_CONTROL);
-
-						dirty = true;
-					}
-					else if (it.first == KeyConfig::Key::LEFT_ALT || it.first == KeyConfig::Key::RIGHT_ALT)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_ALT);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_ALT);
-
-						dirty = true;
-					}
-					else if (it.first == KeyConfig::Key::LEFT_SHIFT || it.first == KeyConfig::Key::RIGHT_SHIFT)
-					{
-						staged_mappings.erase(KeyConfig::Key::LEFT_SHIFT);
-						staged_mappings.erase(KeyConfig::Key::RIGHT_SHIFT);
-
-						dirty = true;
-					}
-					else
-					{
-						staged_mappings.erase(it.first);
-
-						dirty = true;
-					}
-
-					break;
-				}
-			}
+			if (iter != bound_actions.end())
+				bound_actions.erase(iter);
 		}
-	}
 
-	void UIKeyConfig::bind_action_keys()
-	{
-		// TODO: does this need to do more than just bind the action keys?
-		for (auto fkey : key_textures)
+		for (auto const& it : staged_mappings)
 		{
-			Keyboard::Mapping mapping = get_staged_mapping(fkey.first);
+			Keyboard::Mapping staged_mapping = it.second;
 
-			if (mapping.type != KeyType::Id::NONE)
+			if (staged_mapping == mapping)
 			{
-				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
+				if (it.first == KeyConfig::Key::LEFT_CONTROL || it.first == KeyConfig::Key::RIGHT_CONTROL)
+				{
+					staged_mappings.erase(KeyConfig::Key::LEFT_CONTROL);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_CONTROL);
+				}
+				else if (it.first == KeyConfig::Key::LEFT_ALT || it.first == KeyConfig::Key::RIGHT_ALT)
+				{
+					staged_mappings.erase(KeyConfig::Key::LEFT_ALT);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_ALT);
+				}
+				else if (it.first == KeyConfig::Key::LEFT_SHIFT || it.first == KeyConfig::Key::RIGHT_SHIFT)
+				{
+					staged_mappings.erase(KeyConfig::Key::LEFT_SHIFT);
+					staged_mappings.erase(KeyConfig::Key::RIGHT_SHIFT);
+				}
+				else
+				{
+					staged_mappings.erase(it.first);
+				}
 
-				if (action)
-					bound_actions.emplace_back(action);
+				if (staged_mapping.type == KeyType::SKILL)
+				{
+					int32_t skill_id = staged_mapping.action;
+					skill_icons.erase(skill_id);
+				}
+
+				dirty = true;
+
+				break;
 			}
 		}
 	}
@@ -885,6 +881,23 @@ namespace ms
 		dirty = false;
 	}
 
+	void UIKeyConfig::bind_action_keys()
+	{
+		// TODO: does this need to do more than just bind the action keys?
+		for (auto fkey : key_textures)
+		{
+			Keyboard::Mapping mapping = get_staged_mapping(fkey.first);
+
+			if (mapping.type != KeyType::Id::NONE)
+			{
+				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
+
+				if (action)
+					bound_actions.emplace_back(action);
+			}
+		}
+	}
+
 	void UIKeyConfig::clear()
 	{
 		skill_icons.clear();
@@ -933,6 +946,11 @@ namespace ms
 			return {};
 
 		return iter->second;
+	}
+
+	bool UIKeyConfig::is_action_mapping(Keyboard::Mapping mapping) const
+	{
+		return std::find(action_mappings.begin(), action_mappings.end(), mapping) != action_mappings.end();
 	}
 
 	// KeyMapIcon
