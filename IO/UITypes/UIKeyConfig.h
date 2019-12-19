@@ -26,6 +26,7 @@
 
 namespace ms
 {
+	// TODO: reorganize functions based on ordering in .cpp file
 	class UIKeyConfig : public UIDragElement<PosKEYCONFIG>
 	{
 	public:
@@ -39,7 +40,7 @@ namespace ms
 		//void update() override;
 
 		//void send_key(int32_t keycode, bool pressed, bool escape) override;
-		//Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
 		//bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
 
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
@@ -66,15 +67,13 @@ namespace ms
 		void reset();
 
 		Texture get_skill_texture(int32_t skill_id) const;
-		//KeyAction::Id icon_by_position(Point<int16_t> position) const;
 		//int32_t get_key_from_action(KeyAction::Id action) const;
 		// TODO: take note - I'm treating key_by_position as the old logic from all_keys_*
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
-		//KeyConfig::Key all_keys_by_position(Point<int16_t> position) const;
+		KeyAction::Id unbound_action_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
 		//KeyType::Id get_keytype(KeyAction::Id action) const;
 		bool UIKeyConfig::is_action_mapping(Keyboard::Mapping mapping) const;
-		bool UIKeyConfig::skill_icon_exists(int32_t skill_id) const;
 
 		static KeyType::Id get_keytype(KeyAction::Id action)
 		{

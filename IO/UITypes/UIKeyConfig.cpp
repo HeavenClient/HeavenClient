@@ -512,6 +512,7 @@ namespace ms
 
 			if (mapping.type == KeyType::SKILL)
 			{
+				// TODO: can I just reference this directly?
 				int32_t skill_id = mapping.action;
 				auto it = skill_icons.find(skill_id);
 
@@ -522,6 +523,7 @@ namespace ms
 			{
 				KeyAction::Id action = KeyAction::actionbyid(mapping.action);
 
+				// TODO: do I actually need all these checks?
 				if (action)
 					for (auto const& it : action_icons)
 						if (it.first == action)
@@ -652,6 +654,78 @@ namespace ms
 		}
 
 		return Button::State::NORMAL;
+	}
+
+	Cursor::State UIKeyConfig::send_cursor(bool clicked, Point<int16_t> cursorpos)
+	{
+		Cursor::State dstate = UIDragElement::send_cursor(clicked, cursorpos);
+
+		if (dragged)
+			return dstate;
+
+		KeyAction::Id icon_slot = unbound_action_by_position(cursorpos);
+
+		if (icon_slot != KeyAction::Id::LENGTH)
+		{
+			if (auto icon = action_icons[icon_slot].get())
+			{
+				if (clicked)
+				{
+					icon->start_drag(cursorpos - position - unbound_actions_pos[icon_slot]);
+					UI::get().drag_icon(icon);
+
+					return Cursor::State::GRABBING;
+				}
+				else
+				{
+					return Cursor::State::CANGRAB;
+				}
+			}
+		}
+
+		KeyConfig::Key key_slot = key_by_position(cursorpos);
+
+		if (key_slot != KeyConfig::Key::LENGTH)
+		{
+			Keyboard::Mapping mapping = get_staged_mapping(key_slot);
+
+			if (mapping.type != KeyType::Id::NONE)
+			{
+				Icon* ficon = NULL;
+
+				if (mapping.type == KeyType::SKILL)
+				{
+					int32_t skill_id = mapping.action;
+					ficon = skill_icons[skill_id].get();
+				}
+				else if (is_action_mapping(mapping))
+				{
+					KeyAction::Id action = KeyAction::actionbyid(mapping.action);
+					ficon = action_icons[action].get();
+				}
+				else
+				{
+					Console::get().print("Could not determine icon type for key mapping: " + std::to_string(mapping.type) + ", " + std::to_string(mapping.action));
+				}
+
+				if (ficon)
+				{
+					if (clicked)
+					{
+						ficon->start_drag(cursorpos - position - keys_pos[key_slot]);
+						UI::get().drag_icon(ficon);
+
+						return Cursor::State::GRABBING;
+					}
+					else
+					{
+						return Cursor::State::CANGRAB;
+					}
+				}
+			}
+		}
+
+		return UIElement::send_cursor(clicked, cursorpos);
 	}
 
 	void UIKeyConfig::close()
@@ -936,6 +1010,25 @@ namespace ms
 		}
 
 		return KeyConfig::Key::LENGTH;
+	}
+
+	KeyAction::Id UIKeyConfig::unbound_action_by_position(Point<int16_t> cursorpos) const
+	{
+		for (auto iter : unbound_actions_pos)
+		{
+			if (std::find(bound_actions.begin(), bound_actions.end(), iter.first) != bound_actions.end())
+				continue;
+
+			Rectangle<int16_t> icon_rect = Rectangle<int16_t>(
+				position + iter.second,
+				position + iter.second + Point<int16_t>(32, 32)
+			);
+
+			if (icon_rect.contains(cursorpos))
+				return iter.first;
+		}
+
+		return KeyAction::Id::LENGTH;
 	}
 
 	Keyboard::Mapping UIKeyConfig::get_staged_mapping(int32_t keycode) const
