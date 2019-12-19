@@ -593,6 +593,11 @@ namespace ms
 		}
 	}
 
+	void UIKeyConfig::update()
+	{
+		UIElement::update();
+	}
+
 	Button::State UIKeyConfig::button_pressed(uint16_t buttonid)
 	{
 		switch (buttonid)

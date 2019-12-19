@@ -24,6 +24,8 @@
 #include "../Data/JobData.h"
 #include "../Data/SkillData.h"
 #include "../Gameplay/Stage.h"
+#include "../Keyboard.h"
+#include "../KeyType.h"
 #include "../IO/UI.h"
 
 #include "../Net/Packets/PlayerPackets.h"
