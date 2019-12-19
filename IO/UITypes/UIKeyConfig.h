@@ -68,12 +68,9 @@ namespace ms
 		void reset();
 
 		Texture get_skill_texture(int32_t skill_id) const;
-		//int32_t get_key_from_action(KeyAction::Id action) const;
-		// TODO: take note - I'm treating key_by_position as the old logic from all_keys_*
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		KeyAction::Id unbound_action_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
-		//KeyType::Id get_keytype(KeyAction::Id action) const;
 		bool UIKeyConfig::is_action_mapping(Keyboard::Mapping mapping) const;
 
 		static KeyType::Id get_keytype(KeyAction::Id action)
@@ -209,7 +206,6 @@ namespace ms
 		// Used to determine if mapping belongs to predefined action, e.g. attack, pick up, faces, etc.
 		std::vector<Keyboard::Mapping> action_mappings;
 
-		// TODO: consider renaming staged_actions, but I don't really mind it like this
 		std::vector<KeyAction::Id> bound_actions;
 		std::map<int32_t, Keyboard::Mapping> staged_mappings;
 
