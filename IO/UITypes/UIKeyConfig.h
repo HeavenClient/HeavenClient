@@ -40,9 +40,9 @@ namespace ms
 		void draw(float inter) const override;
 		void update() override;
 
-		//void send_key(int32_t keycode, bool pressed, bool escape) override;
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
 		bool send_icon(const Icon& icon, Point<int16_t> cursorpos) override;
+		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
 		void unstage_mapping(Keyboard::Mapping);
@@ -62,7 +62,7 @@ namespace ms
 
 		void safe_close();
 
-		void bind_action_keys();
+		void bind_staged_action_keys();
 		void save_staged_mappings();
 		void clear();
 		void reset();

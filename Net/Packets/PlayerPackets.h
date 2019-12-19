@@ -54,7 +54,7 @@ namespace ms
 	class ChangeKeyMapPacket : public OutPacket
 	{
 	public:
-		ChangeKeyMapPacket(std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions) : OutPacket(OutPacket::Opcode::CHANGE_KEYMAP)
+		ChangeKeyMapPacket(std::vector<std::tuple<KeyConfig::Key, KeyType::Id, int32_t>> updated_actions) : OutPacket(OutPacket::Opcode::CHANGE_KEYMAP)
 		{
 			write_int(0); // mode
 			write_int(updated_actions.size()); // Number of key changes

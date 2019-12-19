@@ -25,7 +25,7 @@
 #include "../UITypes/UINotice.h"
 #include "../UITypes/UILoginNotice.h"
 
-#include "../../../Console.h"  // TODO: rm
+#include "../../../Console.h"
 
 #include <nlnx/nx.hpp>
 
@@ -67,7 +67,7 @@ namespace ms
 		load_action_icons();
 		load_skill_icons();
 
-		bind_action_keys();
+		bind_staged_action_keys();
 	}
 
 	// Load
@@ -488,8 +488,6 @@ namespace ms
 
 			if (mapping.type == KeyType::Id::SKILL)
 			{
-				// TODO: rm print
-				Console::get().print("Loaded skill: " + std::to_string(mapping.action));
 				int32_t skill_id = mapping.action;
 				Texture tx = get_skill_texture(skill_id);
 				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
@@ -623,7 +621,7 @@ namespace ms
 						else
 							staged_mappings = basic_keys;
 
-						bind_action_keys();
+						bind_staged_action_keys();
 					};
 
 					UI::get().emplace<UIKeySelect>(keysel_onok, false);
@@ -752,6 +750,12 @@ namespace ms
 			icon.drop_on_bindings(cursorpos, false);
 
 		return true;
+	}
+
+	void UIKeyConfig::send_key(int32_t keycode, bool pressed, bool escape)
+	{
+		if (pressed && escape)
+			safe_close();
 	}
 
 	void UIKeyConfig::close()
@@ -924,20 +928,18 @@ namespace ms
 
 	void UIKeyConfig::save_staged_mappings()
 	{
-		// TODO: the logic in this function will need to be generalized for mappings instead of actions
-		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, KeyAction::Id>> updated_actions;
+		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, int32_t>> updated_actions;
 
 		for each (auto key in staged_mappings)
 		{
 			KeyConfig::Key k = KeyConfig::actionbyid(key.first);
-			Keyboard::Mapping map = key.second;
-			KeyAction::Id action = KeyAction::actionbyid(map.action);
+			Keyboard::Mapping mapping = key.second;
 
-			Keyboard::Mapping fmap = keyboard->get_maple_mapping(key.first);
+			Keyboard::Mapping saved_mapping = keyboard->get_maple_mapping(key.first);
 
-			if (map.action != fmap.action)
+			if (mapping != saved_mapping)
 			{
-				updated_actions.emplace_back(std::make_tuple(k, map.type, action));
+				updated_actions.emplace_back(std::make_tuple(k, mapping.type, mapping.action));
 			}
 		}
 
@@ -970,7 +972,7 @@ namespace ms
 		{
 			KeyConfig::Key key = std::get<0>(action);
 			KeyType::Id type = std::get<1>(action);
-			KeyAction::Id keyAction = std::get<2>(action);
+			int32_t keyAction = std::get<2>(action);
 
 			if (type == KeyType::Id::NONE)
 				keyboard->remove(key);
@@ -981,9 +983,8 @@ namespace ms
 		dirty = false;
 	}
 
-	void UIKeyConfig::bind_action_keys()
+	void UIKeyConfig::bind_staged_action_keys()
 	{
-		// TODO: does this need to do more than just bind the action keys?
 		for (auto fkey : key_textures)
 		{
 			Keyboard::Mapping mapping = get_staged_mapping(fkey.first);
@@ -1011,7 +1012,7 @@ namespace ms
 		clear();
 		staged_mappings = keyboard->get_maplekeys();
 		load_skill_icons();
-		bind_action_keys();
+		bind_staged_action_keys();
 		dirty = false;
 	}
 
