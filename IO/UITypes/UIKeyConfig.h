@@ -46,8 +46,8 @@ namespace ms
 
 		void close();
 
-		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping);
-		void unstage_mapping(Keyboard::Mapping);
+		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping mapping);
+		void unstage_mapping(Keyboard::Mapping mapping);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;

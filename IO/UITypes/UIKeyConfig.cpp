@@ -929,7 +929,7 @@ namespace ms
 	{
 		std::vector<std::tuple<KeyConfig::Key, KeyType::Id, int32_t>> updated_actions;
 
-		for each (auto key in staged_mappings)
+		for (auto key : staged_mappings)
 		{
 			KeyConfig::Key k = KeyConfig::actionbyid(key.first);
 			Keyboard::Mapping mapping = key.second;
@@ -944,12 +944,12 @@ namespace ms
 
 		auto maplekeys = keyboard->get_maplekeys();
 
-		for each (auto key in maplekeys)
+		for (auto key : maplekeys)
 		{
 			bool keyFound = false;
 			KeyConfig::Key keyConfig = KeyConfig::actionbyid(key.first);
 
-			for each (auto tkey in staged_mappings)
+			for (auto tkey : staged_mappings)
 			{
 				KeyConfig::Key tKeyConfig = KeyConfig::actionbyid(tkey.first);
 
@@ -967,7 +967,7 @@ namespace ms
 		if (updated_actions.size() > 0)
 			ChangeKeyMapPacket(updated_actions).dispatch();
 
-		for each (auto action in updated_actions)
+		for (auto action : updated_actions)
 		{
 			KeyConfig::Key key = std::get<0>(action);
 			KeyType::Id type = std::get<1>(action);
@@ -1077,12 +1077,14 @@ namespace ms
 
 	UIKeyConfig::MappingIcon::MappingIcon(Keyboard::Mapping m) : mapping(m) {}
 
-	UIKeyConfig::MappingIcon::MappingIcon(KeyAction::Id action) {
+	UIKeyConfig::MappingIcon::MappingIcon(KeyAction::Id action)
+	{
 		KeyType::Id type = UIKeyConfig::get_keytype(action);
 		mapping = Keyboard::Mapping(type, action);
 	}
 
-	void UIKeyConfig::MappingIcon::drop_on_stage() const {
+	void UIKeyConfig::MappingIcon::drop_on_stage() const
+	{
 		if (mapping.type == KeyType::Id::SKILL)
 		{
 			auto keyconfig = UI::get().get_element<UIKeyConfig>();
