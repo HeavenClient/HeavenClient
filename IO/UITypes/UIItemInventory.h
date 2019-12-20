@@ -75,7 +75,7 @@ namespace ms
 
 			void drop_on_stage() const override;
 			void drop_on_equips(Equipslot::Id eqslot) const override;
-			bool drop_on_items(InventoryType::Id tab, Equipslot::Id, int16_t slot, bool) const override;
+			bool drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot, bool equip) const override;
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 			void set_count(int16_t count) override;
 
