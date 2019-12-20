@@ -27,7 +27,6 @@
 
 namespace ms
 {
-	// TODO: reorganize functions based on ordering in .cpp file
 	class UIKeyConfig : public UIDragElement<PosKEYCONFIG>
 	{
 	public:
@@ -72,95 +71,7 @@ namespace ms
 		KeyAction::Id unbound_action_by_position(Point<int16_t> position) const;
 		Keyboard::Mapping get_staged_mapping(int32_t keycode) const;
 		bool UIKeyConfig::is_action_mapping(Keyboard::Mapping mapping) const;
-
-		static KeyType::Id get_keytype(KeyAction::Id action)
-		{
-			switch (action)
-			{
-			case KeyAction::Id::EQUIPMENT:
-			case KeyAction::Id::ITEMS:
-			case KeyAction::Id::STATS:
-			case KeyAction::Id::SKILLS:
-			case KeyAction::Id::FRIENDS:
-			case KeyAction::Id::WORLDMAP:
-			case KeyAction::Id::MAPLECHAT:
-			case KeyAction::Id::MINIMAP:
-			case KeyAction::Id::QUESTLOG:
-			case KeyAction::Id::KEYBINDINGS:
-			case KeyAction::Id::TOGGLECHAT:
-			case KeyAction::Id::WHISPER:
-			case KeyAction::Id::SAY:
-			case KeyAction::Id::PARTYCHAT:
-			case KeyAction::Id::MENU:
-			case KeyAction::Id::QUICKSLOTS:
-			case KeyAction::Id::GUILD:
-			case KeyAction::Id::FRIENDSCHAT:
-			case KeyAction::Id::PARTY:
-			case KeyAction::Id::NOTIFIER:
-			case KeyAction::Id::CASHSHOP:
-			case KeyAction::Id::GUILDCHAT:
-			case KeyAction::Id::MEDALS:
-			case KeyAction::Id::BITS:
-			case KeyAction::Id::ALLIANCECHAT:
-			case KeyAction::Id::MAPLENEWS:
-			case KeyAction::Id::MANAGELEGION:
-			case KeyAction::Id::PROFESSION:
-			case KeyAction::Id::BOSSPARTY:
-			case KeyAction::Id::ITEMPOT:
-			case KeyAction::Id::EVENT:
-			case KeyAction::Id::SILENTCRUSADE:
-			case KeyAction::Id::BATTLEANALYSIS:
-			case KeyAction::Id::GUIDE:
-			case KeyAction::Id::VIEWERSCHAT:
-			case KeyAction::Id::ENHANCEEQUIP:
-			case KeyAction::Id::MONSTERCOLLECTION:
-			case KeyAction::Id::SOULWEAPON:
-			case KeyAction::Id::CHARINFO:
-			case KeyAction::Id::CHANGECHANNEL:
-			case KeyAction::Id::MAINMENU:
-			case KeyAction::Id::SCREENSHOT:
-			case KeyAction::Id::PICTUREMODE:
-			case KeyAction::Id::MAPLEACHIEVEMENT:
-				return KeyType::Id::MENU;
-			case KeyAction::Id::PICKUP:
-			case KeyAction::Id::SIT:
-			case KeyAction::Id::ATTACK:
-			case KeyAction::Id::JUMP:
-				return KeyType::Id::ACTION;
-			case KeyAction::Id::INTERACT_HARVEST:
-			case KeyAction::Id::MAPLESTORAGE:
-			case KeyAction::Id::SAFEMODE:
-			case KeyAction::Id::MUTE:
-			case KeyAction::Id::MONSTERBOOK:
-			case KeyAction::Id::TOSPOUSE:
-				return KeyType::Id::MENU;
-			case KeyAction::Id::FACE1:
-			case KeyAction::Id::FACE2:
-			case KeyAction::Id::FACE3:
-			case KeyAction::Id::FACE4:
-			case KeyAction::Id::FACE5:
-			case KeyAction::Id::FACE6:
-			case KeyAction::Id::FACE7:
-				return KeyType::Id::FACE;
-			case KeyAction::Id::LEFT:
-			case KeyAction::Id::RIGHT:
-			case KeyAction::Id::UP:
-			case KeyAction::Id::DOWN:
-			case KeyAction::Id::BACK:
-			case KeyAction::Id::TAB:
-			case KeyAction::Id::RETURN:
-			case KeyAction::Id::ESCAPE:
-			case KeyAction::Id::SPACE:
-			case KeyAction::Id::DELETE:
-			case KeyAction::Id::HOME:
-			case KeyAction::Id::END:
-			case KeyAction::Id::COPY:
-			case KeyAction::Id::PASTE:
-			case KeyAction::Id::LENGTH:
-			default:
-				return KeyType::Id::NONE;
-			}
-		}
+		static KeyType::Id get_keytype(KeyAction::Id action);
 
 		enum Buttons : uint16_t
 		{
@@ -179,7 +90,7 @@ namespace ms
 			MappingIcon(KeyAction::Id keyId);
 
 			void drop_on_stage() const override;
-			void drop_on_equips(Equipslot::Id) const override {}
+			void drop_on_equips(Equipslot::Id eqslot) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 			void set_count(int16_t) override {}
