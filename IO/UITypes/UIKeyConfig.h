@@ -57,6 +57,7 @@ namespace ms
 		void load_key_textures();
 		void load_action_mappings();
 		void load_action_icons();
+		void load_item_icons();
 		void load_skill_icons();
 
 		void safe_close();
@@ -66,6 +67,7 @@ namespace ms
 		void clear();
 		void reset();
 
+		Texture get_item_texture(int32_t item_id) const;
 		Texture get_skill_texture(int32_t skill_id) const;
 		KeyConfig::Key key_by_position(Point<int16_t> position) const;
 		KeyAction::Id unbound_action_by_position(Point<int16_t> position) const;
@@ -112,6 +114,7 @@ namespace ms
 		EnumMap<KeyAction::Id, std::unique_ptr<Icon>> action_icons;
 		EnumMap<KeyAction::Id, Point<int16_t>> unbound_actions_pos;
 
+		std::map<int32_t, std::unique_ptr<Icon>> item_icons;
 		std::map<int32_t, std::unique_ptr<Icon>> skill_icons;
 
 		// Used to determine if mapping belongs to predefined action, e.g. attack, pick up, faces, etc.

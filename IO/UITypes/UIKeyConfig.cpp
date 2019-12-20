@@ -21,6 +21,7 @@
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
+#include "../Data/ItemData.h"
 #include "../Data/SkillData.h"
 #include "../UITypes/UINotice.h"
 #include "../UITypes/UILoginNotice.h"
@@ -65,6 +66,7 @@ namespace ms
 		load_key_textures();
 		load_action_mappings();
 		load_action_icons();
+		load_item_icons();
 		load_skill_icons();
 
 		bind_staged_action_keys();
@@ -480,6 +482,21 @@ namespace ms
 		action_icons[KeyAction::Id::TOSPOUSE] = std::make_unique<Icon>(std::make_unique<MappingIcon>(KeyAction::Id::TOSPOUSE), icon[1001], -1);
 	}
 
+	void UIKeyConfig::load_item_icons()
+	{
+		for (auto const& it : staged_mappings)
+		{
+			Keyboard::Mapping mapping = it.second;
+
+			if (mapping.type == KeyType::Id::ITEM)
+			{
+				int32_t item_id = mapping.action;
+				Texture tx = get_item_texture(item_id);
+				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
+			}
+		}
+	}
+
 	void UIKeyConfig::load_skill_icons()
 	{
 		for (auto const& it : staged_mappings)
@@ -508,7 +525,12 @@ namespace ms
 
 			Icon* ficon = NULL;
 
-			if (mapping.type == KeyType::Id::SKILL)
+			if (mapping.type == KeyType::Id::ITEM)
+			{
+				int32_t item_id = mapping.action;
+				ficon = item_icons.at(item_id).get();
+			}
+			else if (mapping.type == KeyType::Id::SKILL)
 			{
 				int32_t skill_id = mapping.action;
 				ficon = skill_icons.at(skill_id).get();
@@ -701,7 +723,12 @@ namespace ms
 			{
 				Icon* ficon = NULL;
 
-				if (mapping.type == KeyType::Id::SKILL)
+				if (mapping.type == KeyType::Id::ITEM)
+				{
+					int32_t item_id = mapping.action;
+					ficon = item_icons[item_id].get();
+				}
+				else if (mapping.type == KeyType::Id::SKILL)
 				{
 					int32_t skill_id = mapping.action;
 					ficon = skill_icons[skill_id].get();
@@ -861,7 +888,17 @@ namespace ms
 			staged_mappings[key] = mapping;
 		}
 
-		if (mapping.type == KeyType::Id::SKILL)
+		if (mapping.type == KeyType::Id::ITEM)
+		{
+			int32_t item_id = mapping.action;
+
+			if (item_icons.find(item_id) == item_icons.end())
+			{
+				Texture tx = get_item_texture(item_id);
+				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
+			}
+		}
+		else if (mapping.type == KeyType::Id::SKILL)
 		{
 			int32_t skill_id = mapping.action;
 
@@ -912,7 +949,12 @@ namespace ms
 					staged_mappings.erase(it.first);
 				}
 
-				if (staged_mapping.type == KeyType::Id::SKILL)
+				if (staged_mapping.type == KeyType::Id::ITEM)
+				{
+					int32_t item_id = staged_mapping.action;
+					item_icons.erase(item_id);
+				}
+				else if (staged_mapping.type == KeyType::Id::SKILL)
 				{
 					int32_t skill_id = staged_mapping.action;
 					skill_icons.erase(skill_id);
@@ -1000,6 +1042,7 @@ namespace ms
 
 	void UIKeyConfig::clear()
 	{
+		item_icons.clear();
 		skill_icons.clear();
 		bound_actions.clear();
 		staged_mappings = {};
@@ -1010,12 +1053,19 @@ namespace ms
 	{
 		clear();
 		staged_mappings = keyboard->get_maplekeys();
+		load_item_icons();
 		load_skill_icons();
 		bind_staged_action_keys();
 		dirty = false;
 	}
 
 	// Helpers
+
+	Texture UIKeyConfig::get_item_texture(int32_t item_id) const
+	{
+		const ItemData& data = ItemData::get(item_id);
+		return data.get_icon(false);
+	}
 
 	Texture UIKeyConfig::get_skill_texture(int32_t skill_id) const
 	{
@@ -1174,7 +1224,7 @@ namespace ms
 
 	void UIKeyConfig::MappingIcon::drop_on_stage() const
 	{
-		if (mapping.type == KeyType::Id::SKILL)
+		if (mapping.type == KeyType::Id::ITEM || mapping.type == KeyType::Id::SKILL)
 		{
 			auto keyconfig = UI::get().get_element<UIKeyConfig>();
 			keyconfig->unstage_mapping(mapping);

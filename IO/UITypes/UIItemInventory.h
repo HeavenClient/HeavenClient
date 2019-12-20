@@ -71,18 +71,19 @@ namespace ms
 		class ItemIcon : public Icon::Type
 		{
 		public:
-			ItemIcon(const UIItemInventory& parent, InventoryType::Id sourcetab, Equipslot::Id eqsource, int16_t source, int16_t count, bool untradable, bool cashitem);
+			ItemIcon(const UIItemInventory& parent, InventoryType::Id sourcetab, Equipslot::Id eqsource, int16_t source, int32_t item_id, int16_t count, bool untradable, bool cashitem);
 
 			void drop_on_stage() const override;
 			void drop_on_equips(Equipslot::Id eqslot) const override;
 			bool drop_on_items(InventoryType::Id tab, Equipslot::Id, int16_t slot, bool) const override;
-			void drop_on_bindings(Point<int16_t>, bool) const override {}
+			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 			void set_count(int16_t count) override;
 
 		private:
 			InventoryType::Id sourcetab;
 			Equipslot::Id eqsource;
 			int16_t source;
+			int32_t item_id;
 			int16_t count;
 			bool untradable;
 			bool cashitem;

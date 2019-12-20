@@ -28,6 +28,7 @@
 #include "../KeyType.h"
 #include "../IO/UI.h"
 
+#include "../IO/UITypes/UIKeyConfig.h"
 #include "../Net/Packets/PlayerPackets.h"
 
 #include <nlnx/nx.hpp>
