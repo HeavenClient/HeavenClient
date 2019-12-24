@@ -50,6 +50,14 @@ The default settings can be configured by editing the **Configuration.h** file. 
 - Networking:
 [Asio](http://think-async.com/) (optional)
 
+# In-Game Issues
+If you experience any kind of in-game glitches, UI rendering issues, or anything else that seems out of the ordinary that other developers are not experiences; Follow these steps in order to hopefully resolve aforementioned issues.
+1. Clean Solution
+2. Close Visual Studio
+3. Delete the following files/folders: **.vs**, **x64**, **debug.log**, **MapleStory.aps**, **Settings**
+4. Open Solution
+5. Rebuild Solution
+
 # Binaries (08.19.2019)
 The latest build ([ddd67c8](https://github.com/ryantpayton/HeavenClient/commit/ddd67c8693ef2ad352e8c2dc1e4628e625c49953)) can be found here: [HeavenClient.zip](https://drive.google.com/open?id=186fBZWcuK5uSB3CN6jeTJ_AdU6tK82Ey)
 
