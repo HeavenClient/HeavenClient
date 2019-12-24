@@ -174,7 +174,7 @@ namespace ms
 	void UIStatsinfo::send_key(int32_t keycode, bool pressed, bool escape)
 	{
 		if (pressed && escape)
-			active = false;
+			deactivate();
 	}
 
 	bool UIStatsinfo::is_in_range(Point<int16_t> cursorpos) const

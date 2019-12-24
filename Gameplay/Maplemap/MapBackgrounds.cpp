@@ -29,7 +29,7 @@ namespace ms
 		VWIDTH = Constants::Constants::get().get_viewwidth();
 		VHEIGHT = Constants::Constants::get().get_viewheight();
 		WOFFSET = VWIDTH / 2;
-		HOFFSET = VHEIGHT - Constants::VIEWYOFFSET;
+		HOFFSET = VHEIGHT;
 
 		nl::node backsrc = nl::nx::map["Back"];
 		animated = src["ani"].get_bool();

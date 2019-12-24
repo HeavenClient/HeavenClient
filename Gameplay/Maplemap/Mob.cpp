@@ -171,7 +171,8 @@ namespace ms
 
 		if (dead)
 		{
-			active = false;
+			deactivate();
+
 			return -1;
 		}
 
@@ -387,7 +388,7 @@ namespace ms
 		switch (animation)
 		{
 		case 0:
-			active = false;
+			deactivate();
 			break;
 		case 1:
 			dying = true;

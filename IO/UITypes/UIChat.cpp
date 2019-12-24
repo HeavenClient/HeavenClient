@@ -78,11 +78,6 @@ namespace ms
 		name_right.draw(position + origin_right + name_shift);
 	}
 
-	void UIChat::update()
-	{
-		UIElement::update();
-	}
-
 	void UIChat::send_key(int32_t keycode, bool pressed, bool escape)
 	{
 		if (pressed && escape)
@@ -111,7 +106,7 @@ namespace ms
 
 	void UIChat::close()
 	{
-		active = false;
+		deactivate();
 	}
 
 	UIRank::UIRank() : UIDragElement<PosMAPLECHAT>()
@@ -162,11 +157,6 @@ namespace ms
 		name_right.draw(position + origin_right + name_shift);
 	}
 
-	void UIRank::update()
-	{
-		UIElement::update();
-	}
-
 	void UIRank::send_key(int32_t keycode, bool pressed, bool escape)
 	{
 		if (pressed && escape)
@@ -189,6 +179,6 @@ namespace ms
 
 	void UIRank::close()
 	{
-		active = false;
+		deactivate();
 	}
 }

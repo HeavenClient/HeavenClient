@@ -217,7 +217,7 @@ namespace ms
 
 		const char* FILENAME = "Settings";
 		const char* TITLE = "MapleStory";
-		const char* VERSION = "209.2";
+		const char* VERSION = "210.1";
 		const char* JOINLINK = "https://www.nexon.com/account/en/create";
 		const char* WEBSITE = "http://maplestory.nexon.net/";
 		const char* FINDID = "https://www.nexon.com/account/en/login";
@@ -350,49 +350,49 @@ namespace ms
 	// The default position of the character stats inventory.
 	struct PosSTATS : public Configuration::PointEntry
 	{
-		PosSTATS() : PointEntry("PosSTATS", "(72,62)") {}
+		PosSTATS() : PointEntry("PosSTATS", "(72,72)") {}
 	};
 
 	// The default position of the equipment inventory.
 	struct PosEQINV : public Configuration::PointEntry
 	{
-		PosEQINV() : PointEntry("PosEQINV", "(250,150)") {}
+		PosEQINV() : PointEntry("PosEQINV", "(250,160)") {}
 	};
 
 	// The default position of the item inventory.
 	struct PosINV : public Configuration::PointEntry
 	{
-		PosINV() : PointEntry("PosINV", "(300,150)") {}
+		PosINV() : PointEntry("PosINV", "(300,160)") {}
 	};
 
 	// The default position of the skill inventory.
 	struct PosSKILL : public Configuration::PointEntry
 	{
-		PosSKILL() : PointEntry("PosSKILL", "(96,86)") {}
+		PosSKILL() : PointEntry("PosSKILL", "(96,96)") {}
 	};
 
 	// The default position of the quest log.
 	struct PosQUEST : public Configuration::PointEntry
 	{
-		PosQUEST() : PointEntry("PosQUEST", "(300,150)") {}
+		PosQUEST() : PointEntry("PosQUEST", "(300,160)") {}
 	};
 
 	// The default position of the world map.
 	struct PosMAP : public Configuration::PointEntry
 	{
-		PosMAP() : PointEntry("PosMAP", "(100,25)") {}
+		PosMAP() : PointEntry("PosMAP", "(100,35)") {}
 	};
 
 	// The default position of the userlist features.
 	struct PosUSERLIST : public Configuration::PointEntry
 	{
-		PosUSERLIST() : PointEntry("PosUSERLIST", "(104, 94)") {}
+		PosUSERLIST() : PointEntry("PosUSERLIST", "(104, 104)") {}
 	};
 
 	// The default position of the chatbar.
 	struct PosCHAT : public Configuration::PointEntry
 	{
-		PosCHAT() : PointEntry("PosCHAT", "(0, 562)") {}
+		PosCHAT() : PointEntry("PosCHAT", "(0, 572)") {}
 	};
 
 	// The default position of the mini map.
@@ -404,49 +404,49 @@ namespace ms
 	// The default position of shops.
 	struct PosSHOP : public Configuration::PointEntry
 	{
-		PosSHOP() : PointEntry("PosSHOP", "(146, 38)") {}
+		PosSHOP() : PointEntry("PosSHOP", "(146, 48)") {}
 	};
 
 	// The default position of the notice windows.
 	struct PosNOTICE : public Configuration::PointEntry
 	{
-		PosNOTICE() : PointEntry("PosNOTICE", "(400, 275)") {}
+		PosNOTICE() : PointEntry("PosNOTICE", "(400, 285)") {}
 	};
 
 	// The default position of the maple chat.
 	struct PosMAPLECHAT : public Configuration::PointEntry
 	{
-		PosMAPLECHAT() : PointEntry("PosMAPLECHAT", "(50, 36)") {}
+		PosMAPLECHAT() : PointEntry("PosMAPLECHAT", "(50, 46)") {}
 	};
 
 	// The default position of the channel change.
 	struct PosCHANNEL : public Configuration::PointEntry
 	{
-		PosCHANNEL() : PointEntry("PosCHANNEL", "(215, 90)") {}
+		PosCHANNEL() : PointEntry("PosCHANNEL", "(215, 100)") {}
 	};
 
 	// The default position of the joypad.
 	struct PosJOYPAD : public Configuration::PointEntry
 	{
-		PosJOYPAD() : PointEntry("PosJOYPAD", "(312, 124)") {}
+		PosJOYPAD() : PointEntry("PosJOYPAD", "(312, 134)") {}
 	};
 
 	// The default position of the event list.
 	struct PosEVENT : public Configuration::PointEntry
 	{
-		PosEVENT() : PointEntry("PosEVENT", "(99, 90)") {}
+		PosEVENT() : PointEntry("PosEVENT", "(99, 100)") {}
 	};
 
 	// The default position of the key bindings.
 	struct PosKEYCONFIG : public Configuration::PointEntry
 	{
-		PosKEYCONFIG() : PointEntry("PosKEYCONFIG", "(65, 40)") {}
+		PosKEYCONFIG() : PointEntry("PosKEYCONFIG", "(65, 50)") {}
 	};
 
 	// The default position of the option menu.
 	struct PosOPTIONMENU : public Configuration::PointEntry
 	{
-		PosOPTIONMENU() : PointEntry("PosUSERLIST", "(170, -11)") {}
+		PosOPTIONMENU() : PointEntry("PosUSERLIST", "(170, -1)") {}
 	};
 
 	struct MiniMapType : public Configuration::ByteEntry

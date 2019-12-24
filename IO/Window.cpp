@@ -171,7 +171,7 @@ namespace ms
 		glfwGetCursorPos(glwnd, &xpos, &ypos);
 		cursor_callback(glwnd, xpos, ypos);
 
-		glfwSetInputMode(glwnd, GLFW_STICKY_KEYS, 1);
+		glfwSetInputMode(glwnd, GLFW_STICKY_KEYS, GL_TRUE);
 		glfwSetKeyCallback(glwnd, key_callback);
 		glfwSetMouseButtonCallback(glwnd, mousekey_callback);
 		glfwSetCursorPosCallback(glwnd, cursor_callback);

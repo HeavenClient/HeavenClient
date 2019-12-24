@@ -36,27 +36,15 @@ namespace ms
 
 		buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(Loading["BtCancel"], Point<int16_t>(101, 106));
 
-		position = Point<int16_t>(276, 219);
+		position = Point<int16_t>(276, 229);
 		dimension = Texture(backgrnd).get_dimensions();
-		active = true;
 	}
 
 	UILoginwait::UILoginwait() : UILoginwait([]() {}) {}
 
-	void UILoginwait::draw(float alpha) const
-	{
-		UIElement::draw(alpha);
-	}
-
-	void UILoginwait::update()
-	{
-		UIElement::update();
-	}
-
 	void UILoginwait::close()
 	{
-		active = false;
-
+		deactivate();
 		okhandler();
 	}
 

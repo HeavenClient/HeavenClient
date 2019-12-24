@@ -178,7 +178,6 @@ namespace ms
 		change_tab(tab);
 
 		dimension = Point<int16_t>(276, 390);
-		active = true;
 	}
 
 	void UIUserList::draw(float alpha) const
@@ -252,7 +251,7 @@ namespace ms
 		{
 			if (escape)
 			{
-				active = false;
+				deactivate();
 			}
 			else if (keycode == KeyAction::Id::TAB)
 			{
@@ -273,7 +272,7 @@ namespace ms
 		switch (buttonid)
 		{
 		case Buttons::BT_CLOSE:
-			active = false;
+			deactivate();
 			break;
 		case Buttons::BT_TAB_FRIEND:
 		case Buttons::BT_TAB_PARTY:

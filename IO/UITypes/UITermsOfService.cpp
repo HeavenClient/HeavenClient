@@ -28,7 +28,7 @@
 
 namespace ms
 {
-	UITermsOfService::UITermsOfService(std::function<void()> oh) : UIElement(), okhandler(oh)
+	UITermsOfService::UITermsOfService(std::function<void()> oh) : okhandler(oh)
 	{
 		offset = 0;
 		unit_rows = 1;
@@ -1086,7 +1086,6 @@ namespace ms
 
 		position = Point<int16_t>(0, 0);
 		dimension = TOS_dimensions;
-		active = true;
 	}
 
 	void UITermsOfService::draw(float inter) const
@@ -1095,11 +1094,6 @@ namespace ms
 
 		text.draw(position + Point<int16_t>(226, 84 - offset * 50));
 		slider.draw(position);
-	}
-
-	void UITermsOfService::update()
-	{
-		UIElement::update();
 	}
 
 	bool UITermsOfService::remove_cursor(bool clicked, Point<int16_t> cursorpos)

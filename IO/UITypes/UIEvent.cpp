@@ -226,7 +226,7 @@ namespace ms
 
 	void UIEvent::close()
 	{
-		active = false;
+		deactivate();
 	}
 
 	std::string UIEvent::get_event_title(uint8_t id)

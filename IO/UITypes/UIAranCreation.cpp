@@ -54,33 +54,33 @@ namespace ms
 		sky = back["2"];
 		cloud = back["27"];
 
-		sprites.emplace_back(back["33"], Point<int16_t>(256, 289));
-		sprites.emplace_back(back["34"], Point<int16_t>(587, 147));
-		sprites_gender_select.emplace_back(board["genderTop"], Point<int16_t>(491, 158));
-		sprites_gender_select.emplace_back(board["boardMid"], Point<int16_t>(491, 210));
-		sprites_gender_select.emplace_back(board["boardBottom"], Point<int16_t>(491, 303));
-		sprites_lookboard.emplace_back(CustomizeChar["charSet"], Point<int16_t>(473, 93));
+		sprites.emplace_back(back["33"], Point<int16_t>(256, 299));
+		sprites.emplace_back(back["34"], Point<int16_t>(587, 157));
+		sprites_gender_select.emplace_back(board["genderTop"], Point<int16_t>(491, 168));
+		sprites_gender_select.emplace_back(board["boardMid"], Point<int16_t>(491, 220));
+		sprites_gender_select.emplace_back(board["boardBottom"], Point<int16_t>(491, 313));
+		sprites_lookboard.emplace_back(CustomizeChar["charSet"], Point<int16_t>(473, 103));
 
 		for (size_t i = 0; i <= 6; i++)
-			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(504, 177 + (i * 18)));
+			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(504, 187 + (i * 18)));
 
-		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(439, 96));
-		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(437, 96));
-		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(562, 177 + (2 * 18)));
-		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(699, 177 + (2 * 18)));
-		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(520, 387));
-		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(594, 387));
+		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(439, 106));
+		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(437, 106));
+		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(562, 187 + (2 * 18)));
+		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(699, 187 + (2 * 18)));
+		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(520, 397));
+		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(594, 397));
 
 		buttons[Buttons::BT_CHARC_SKINL]->set_active(false);
 		buttons[Buttons::BT_CHARC_SKINR]->set_active(false);
 
 		nameboard = CustomizeChar["charName"];
-		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(524, 186), Point<int16_t>(630, 243)), 12);
+		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(524, 196), Point<int16_t>(630, 253)), 12);
 
-		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
-		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
+		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, 0));
 
-		buttons[Buttons::BT_BACK] = std::make_unique<MapleButton>(Login["Common"]["BtStart"], Point<int16_t>(0, 505));
+		buttons[Buttons::BT_BACK] = std::make_unique<MapleButton>(Login["Common"]["BtStart"], Point<int16_t>(0, 515));
 
 		namechar.set_state(Textfield::DISABLED);
 
@@ -179,9 +179,9 @@ namespace ms
 				sky.draw(Point<int16_t>(k, (400 * i) - 100));
 
 		int16_t cloudx = static_cast<int16_t>(cloudfx) % 800;
-		cloud.draw(Point<int16_t>(cloudx - cloud.width(), 300));
-		cloud.draw(Point<int16_t>(cloudx, 300));
-		cloud.draw(Point<int16_t>(cloudx + cloud.width(), 300));
+		cloud.draw(Point<int16_t>(cloudx - cloud.width(), 310));
+		cloud.draw(Point<int16_t>(cloudx, 310));
+		cloud.draw(Point<int16_t>(cloudx + cloud.width(), 310));
 
 		if (!gender)
 		{
@@ -200,7 +200,7 @@ namespace ms
 
 			UIElement::draw(inter);
 
-			newchar.draw(Point<int16_t>(394, 329), inter);
+			newchar.draw(Point<int16_t>(394, 339), inter);
 		}
 		else
 		{
@@ -211,15 +211,15 @@ namespace ms
 				for (auto& sprite : sprites_lookboard)
 					sprite.draw(position, inter);
 
-				facename.draw(Point<int16_t>(643, 173 + (0 * 18)));
-				hairname.draw(Point<int16_t>(643, 173 + (1 * 18)));
-				bodyname.draw(Point<int16_t>(643, 173 + (2 * 18)));
-				topname.draw(Point<int16_t>(643, 173 + (3 * 18)));
-				botname.draw(Point<int16_t>(643, 173 + (4 * 18)));
-				shoename.draw(Point<int16_t>(643, 173 + (5 * 18)));
-				wepname.draw(Point<int16_t>(643, 173 + (6 * 18)));
+				facename.draw(Point<int16_t>(647, 183 + (0 * 18)));
+				hairname.draw(Point<int16_t>(647, 183 + (1 * 18)));
+				bodyname.draw(Point<int16_t>(647, 183 + (2 * 18)));
+				topname.draw(Point<int16_t>(647, 183 + (3 * 18)));
+				botname.draw(Point<int16_t>(647, 183 + (4 * 18)));
+				shoename.draw(Point<int16_t>(647, 183 + (5 * 18)));
+				wepname.draw(Point<int16_t>(647, 183 + (6 * 18)));
 
-				newchar.draw(Point<int16_t>(394, 329), inter);
+				newchar.draw(Point<int16_t>(394, 339), inter);
 
 				UIElement::draw_buttons(inter);
 			}
@@ -229,10 +229,10 @@ namespace ms
 				{
 					UIElement::draw_sprites(inter);
 
-					nameboard.draw(Point<int16_t>(489, 96));
+					nameboard.draw(Point<int16_t>(489, 106));
 
 					namechar.draw(position);
-					newchar.draw(Point<int16_t>(394, 329), inter);
+					newchar.draw(Point<int16_t>(394, 339), inter);
 
 					UIElement::draw_buttons(inter);
 				}
@@ -240,7 +240,7 @@ namespace ms
 				{
 					UIElement::draw_sprites(inter);
 
-					nameboard.draw(Point<int16_t>(489, 96));
+					nameboard.draw(Point<int16_t>(489, 106));
 
 					UIElement::draw_buttons(inter);
 
@@ -250,7 +250,7 @@ namespace ms
 			}
 		}
 
-		version.draw(position + Point<int16_t>(707, -9));
+		version.draw(position + Point<int16_t>(707, 1));
 	}
 
 	void UIAranCreation::update()
@@ -391,8 +391,8 @@ namespace ms
 				buttons[Buttons::BT_CHARC_SKINL]->set_active(true);
 				buttons[Buttons::BT_CHARC_SKINR]->set_active(true);
 
-				buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(533, 358));
-				buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(607, 358));
+				buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(533, 368));
+				buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(607, 368));
 
 				return Button::State::NORMAL;
 			}
@@ -405,8 +405,8 @@ namespace ms
 					buttons[Buttons::BT_CHARC_SKINL]->set_active(false);
 					buttons[Buttons::BT_CHARC_SKINR]->set_active(false);
 
-					buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(523, 233));
-					buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(597, 233));
+					buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(523, 243));
+					buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(597, 243));
 
 					namechar.set_state(Textfield::State::FOCUSED);
 
@@ -492,8 +492,8 @@ namespace ms
 				buttons[Buttons::BT_CHARC_SKINL]->set_active(true);
 				buttons[Buttons::BT_CHARC_SKINR]->set_active(true);
 
-				buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(533, 358));
-				buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(607, 358));
+				buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(533, 368));
+				buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(607, 368));
 
 				namechar.set_state(Textfield::State::DISABLED);
 
@@ -511,8 +511,8 @@ namespace ms
 					buttons[Buttons::BT_CHARC_SKINL]->set_active(false);
 					buttons[Buttons::BT_CHARC_SKINR]->set_active(false);
 
-					buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(520, 387));
-					buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(594, 387));
+					buttons[Buttons::BT_CHARC_OK]->set_position(Point<int16_t>(520, 397));
+					buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(594, 397));
 
 					return Button::State::NORMAL;
 				}

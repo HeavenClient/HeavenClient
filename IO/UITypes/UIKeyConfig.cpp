@@ -612,11 +612,6 @@ namespace ms
 		}
 	}
 
-	void UIKeyConfig::update()
-	{
-		UIElement::update();
-	}
-
 	void UIKeyConfig::close()
 	{
 		deactivate();

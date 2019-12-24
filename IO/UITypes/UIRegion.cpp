@@ -33,32 +33,22 @@ namespace ms
 		nl::node na = Gateway["BtButton0"];
 		nl::node eu = Gateway["BtButton1"];
 
-		sprites.emplace_back(Gateway["backgrnd2"], Point<int16_t>(0, -Constants::VIEWYOFFSET));
-		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
+		sprites.emplace_back(Gateway["backgrnd2"]);
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
-		int16_t pos_y = 74;
+		int16_t pos_y = 84;
 		Point<int16_t> na_pos = Point<int16_t>(155, pos_y);
 		Point<int16_t> eu_pos = Point<int16_t>(424, pos_y);
 
 		buttons[Buttons::NA] = std::make_unique<MapleButton>(na, na_pos);
 		buttons[Buttons::EU] = std::make_unique<MapleButton>(eu, eu_pos);
-		buttons[Buttons::EXIT] = std::make_unique<MapleButton>(Common["BtExit"], Point<int16_t>(0, 530));
+		buttons[Buttons::EXIT] = std::make_unique<MapleButton>(Common["BtExit"], Point<int16_t>(0, 540));
 
 		Point<int16_t> na_dim = Texture(na["normal"]["0"]).get_dimensions();
 		Point<int16_t> eu_dim = Texture(eu["normal"]["0"]).get_dimensions();
 
 		na_rect = Rectangle<int16_t>(na_pos, na_pos + na_dim);
 		eu_rect = Rectangle<int16_t>(eu_pos, eu_pos + eu_dim);
-	}
-
-	void UIRegion::draw(float inter) const
-	{
-		UIElement::draw(inter);
-	}
-
-	void UIRegion::update()
-	{
-		UIElement::update();
 	}
 
 	Cursor::State UIRegion::send_cursor(bool clicked, Point<int16_t> cursorpos)

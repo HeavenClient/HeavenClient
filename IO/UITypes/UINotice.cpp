@@ -156,17 +156,19 @@ namespace ms
 		if (keycode == KeyAction::Id::RETURN)
 		{
 			yesnohandler(true);
-			active = false;
+			deactivate();
 		}
 		else if (escape)
 		{
 			yesnohandler(false);
-			active = false;
+			deactivate();
 		}
 	}
 
 	Button::State UIYesNo::button_pressed(uint16_t buttonid)
 	{
+		deactivate();
+
 		switch (buttonid)
 		{
 		case Buttons::YES:
@@ -176,8 +178,6 @@ namespace ms
 			yesnohandler(false);
 			break;
 		}
-
-		active = false;
 
 		return Button::State::PRESSED;
 	}
@@ -209,7 +209,7 @@ namespace ms
 			KeyAction::Id::ESCAPE,
 			[&]()
 			{
-				active = false;
+				deactivate();
 			}
 		);
 
@@ -249,11 +249,11 @@ namespace ms
 		if (keycode == KeyAction::Id::RETURN)
 		{
 			handlestring(numfield.get_text());
-			active = false;
+			deactivate();
 		}
 		else if (escape)
 		{
-			active = false;
+			deactivate();
 		}
 	}
 
@@ -265,7 +265,7 @@ namespace ms
 			handlestring(numfield.get_text());
 			break;
 		case Buttons::CANCEL:
-			active = false;
+			deactivate();
 			break;
 		}
 
@@ -309,7 +309,7 @@ namespace ms
 		else
 		{
 			numhandler(num);
-			active = false;
+			deactivate();
 		}
 
 		buttons[Buttons::OK]->set_state(Button::State::NORMAL);
@@ -337,26 +337,26 @@ namespace ms
 			if (keycode == KeyAction::Id::RETURN)
 			{
 				okhandler(true);
-				active = false;
+				deactivate();
 			}
 			else if (escape)
 			{
 				okhandler(false);
-				active = false;
+				deactivate();
 			}
 		}
 	}
 
 	Button::State UIOk::button_pressed(uint16_t buttonid)
 	{
+		deactivate();
+
 		switch (buttonid)
 		{
 		case Buttons::OK:
 			okhandler(true);
 			break;
 		}
-
-		active = false;
 
 		return Button::State::NORMAL;
 	}

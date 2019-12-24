@@ -34,7 +34,7 @@
 
 namespace ms
 {
-	UIWorldSelect::UIWorldSelect() : UIElement(Point<int16_t>(), Point<int16_t>(800, 600))
+	UIWorldSelect::UIWorldSelect() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600))
 	{
 		worldcount = 0;
 		recommended_worldcount = 0;
@@ -49,8 +49,8 @@ namespace ms
 
 		recommended_message = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::JAMBALAYA, "", 100, true, 5);
 
-		Point<int16_t> background_pos = Point<int16_t>(400, 291);
-		channelsrc_pos = Point<int16_t>(203, 154);
+		Point<int16_t> background_pos = Point<int16_t>(400, 301);
+		channelsrc_pos = Point<int16_t>(203, 164);
 
 		worldid = Setting<DefaultWorld>::get().load();
 		channelid = Setting<DefaultChannel>::get().load();
@@ -67,7 +67,7 @@ namespace ms
 
 		sprites.emplace_back(obj["WorldSelect"]["default"][0], background_pos);
 
-		std::vector<std::string> backgrounds = { "glory" };
+		std::vector<std::string> backgrounds = { "cernium" };
 		auto backgrounds_size = backgrounds.size();
 
 		if (backgrounds_size > 0)
@@ -86,15 +86,15 @@ namespace ms
 			}
 		}
 
-		sprites.emplace_back(common["frame"], Point<int16_t>(400, 290));
-		sprites.emplace_back(common["step"]["1"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
+		sprites.emplace_back(common["frame"], Point<int16_t>(400, 300));
+		sprites.emplace_back(common["step"]["1"], Point<int16_t>(40, 0));
 
-		buttons[Buttons::BT_VIEWALL] = std::make_unique<MapleButton>(worldselect["BtViewAll"], Point<int16_t>(0, 43));
-		buttons[Buttons::BT_VIEWRECOMMENDED] = std::make_unique<MapleButton>(worldselect["BtViewChoice"], Point<int16_t>(0, 43));
-		buttons[Buttons::BT_VIEWRECOMMENDED_SELECT] = std::make_unique<MapleButton>(worldselect["alert"]["BtChoice"], Point<int16_t>(349, 317));
-		buttons[Buttons::BT_VIEWRECOMMENDED_CANCEL] = std::make_unique<MapleButton>(worldselect["alert"]["BtClose"], Point<int16_t>(407, 317));
-		buttons[Buttons::BT_VIEWRECOMMENDED_PREV] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowL"], Point<int16_t>(338, 234));
-		buttons[Buttons::BT_VIEWRECOMMENDED_NEXT] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowR"], Point<int16_t>(439, 234));
+		buttons[Buttons::BT_VIEWALL] = std::make_unique<MapleButton>(worldselect["BtViewAll"], Point<int16_t>(0, 53));
+		buttons[Buttons::BT_VIEWRECOMMENDED] = std::make_unique<MapleButton>(worldselect["BtViewChoice"], Point<int16_t>(0, 53));
+		buttons[Buttons::BT_VIEWRECOMMENDED_SELECT] = std::make_unique<MapleButton>(worldselect["alert"]["BtChoice"], Point<int16_t>(349, 327));
+		buttons[Buttons::BT_VIEWRECOMMENDED_CANCEL] = std::make_unique<MapleButton>(worldselect["alert"]["BtClose"], Point<int16_t>(407, 327));
+		buttons[Buttons::BT_VIEWRECOMMENDED_PREV] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowL"], Point<int16_t>(338, 244));
+		buttons[Buttons::BT_VIEWRECOMMENDED_NEXT] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowR"], Point<int16_t>(439, 244));
 
 		buttons[Buttons::BT_VIEWALL]->set_active(false);
 		buttons[Buttons::BT_VIEWRECOMMENDED]->set_active(use_recommended ? true : false);
@@ -107,8 +107,8 @@ namespace ms
 
 		recommended_textures.emplace_back(worldselect["alert"]["backgrd"]);
 
-		buttons[Buttons::BT_CHANGEREGION] = std::make_unique<MapleButton>(worldselect["BtRegion"], Point<int16_t>(3, 117));
-		buttons[Buttons::BT_QUITGAME] = std::make_unique<MapleButton>(common["BtExit"], Point<int16_t>(0, 505));
+		buttons[Buttons::BT_CHANGEREGION] = std::make_unique<MapleButton>(worldselect["BtRegion"], Point<int16_t>(3, 127));
+		buttons[Buttons::BT_QUITGAME] = std::make_unique<MapleButton>(common["BtExit"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < Buttons::BT_ENTERWORLD - Buttons::BT_CHANNEL0; i++)
 		{
@@ -149,9 +149,9 @@ namespace ms
 
 		if (show_recommended)
 		{
-			recommended_textures[0].draw(position + Point<int16_t>(302, 142));
-			recommended_world_textures[recommended_worldid].draw(position + Point<int16_t>(336, 177));
-			recommended_message.draw(position + Point<int16_t>(401, 249));
+			recommended_textures[0].draw(position + Point<int16_t>(302, 152));
+			recommended_world_textures[recommended_worldid].draw(position + Point<int16_t>(336, 187));
+			recommended_message.draw(position + Point<int16_t>(401, 259));
 		}
 
 		if (world_selected)
@@ -162,10 +162,10 @@ namespace ms
 
 		UIElement::draw_buttons(alpha);
 
-		version.draw(position + Point<int16_t>(707, -9));
+		version.draw(position + Point<int16_t>(707, 1));
 
 		if (draw_chatballoon)
-			chatballoon.draw(position + Point<int16_t>(503, 245));
+			chatballoon.draw(position + Point<int16_t>(503, 255));
 	}
 
 	Cursor::State UIWorldSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)
@@ -443,12 +443,14 @@ namespace ms
 
 	void UIWorldSelect::remove_selected()
 	{
-		active = false;
+		deactivate();
 
 		Sound(Sound::Name::SCROLLUP).play();
 
 		world_selected = false;
+
 		clear_selected_world();
+
 		draw_chatballoon = false;
 	}
 
@@ -465,7 +467,6 @@ namespace ms
 		worlds_background = region["layer:bg"];
 
 		worldsrc_pos = region["pos"];
-		worldsrc_pos.shift_y(-Constants::VIEWYOFFSET);
 
 		for (size_t i = Buttons::BT_WORLD0; i <= Buttons::BT_WORLD4; i++)
 		{

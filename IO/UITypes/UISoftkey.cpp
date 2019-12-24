@@ -65,7 +65,7 @@ namespace ms
 		shufflekeys();
 		show_text(tooltip_text);
 
-		position = Point<int16_t>(330, 150);
+		position = Point<int16_t>(330, 160);
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 

@@ -30,8 +30,6 @@ namespace ms
 
 		UIKeyConfirm(bool alternate, std::function<void()> oh, bool login);
 
-		void draw(float alpha) const override;
-
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 	protected:
@@ -58,8 +56,6 @@ namespace ms
 
 		UIKeySelect(std::function<void(bool)> okhandler, bool login);
 
-		void draw(float alpha) const override;
-
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 	protected:
@@ -85,8 +81,6 @@ namespace ms
 		static constexpr bool TOGGLED = false;
 
 		UIClassConfirm(uint8_t selected_class, bool unavailable, std::function<void()> okhandler);
-
-		void draw(float inter) const override;
 
 		bool remove_cursor(bool clicked, Point<int16_t> cursorpos) override;
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
@@ -144,8 +138,6 @@ namespace ms
 
 		UIQuitConfirm();
 
-		void draw(float alpha) const override;
-
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 	protected:
@@ -157,9 +149,6 @@ namespace ms
 			BT_OK,
 			BT_CANCEL
 		};
-
-		Texture background;
-		Sprite text;
 	};
 
 	class UILoginNotice : public UIElement
@@ -298,8 +287,6 @@ namespace ms
 		UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler);
 		UILoginNotice(uint16_t message, std::function<void()> okhandler);
 		UILoginNotice(uint16_t message);
-
-		void draw(float alpha) const override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 

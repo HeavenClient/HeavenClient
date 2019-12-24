@@ -289,7 +289,7 @@ namespace ms
 
 	void UIChannel::cancel()
 	{
-		active = false;
+		deactivate();
 
 		current_channel = 9; // TODO: Need to get current channel user is on
 		selected_channel = current_channel;

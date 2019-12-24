@@ -157,7 +157,6 @@ namespace ms
 		send_chatline("[Welcome] Welcome to MapleStory!!", LineType::YELLOW);
 
 		dimension = Point<int16_t>(410, DIMENSION_Y);
-		active = true;
 
 		/*if (chatopen)
 			dimension.shift_y(getchatbarheight());*/

@@ -27,7 +27,7 @@ namespace ms
 
 		VWIDTH = Constants::Constants::get().get_viewwidth();
 		VHEIGHT = Constants::Constants::get().get_viewheight();
-		SCREEN = Rectangle<int16_t>(0, VWIDTH, -Constants::VIEWYOFFSET, -Constants::VIEWYOFFSET + VHEIGHT);
+		SCREEN = Rectangle<int16_t>(0, VWIDTH, 0, VHEIGHT);
 	}
 
 	Error GraphicsGL::init()
@@ -252,12 +252,11 @@ namespace ms
 		{
 			VWIDTH = new_width;
 			VHEIGHT = new_height;
-			SCREEN = Rectangle<int16_t>(0, VWIDTH, -Constants::VIEWYOFFSET, -Constants::VIEWYOFFSET + VHEIGHT);
+			SCREEN = Rectangle<int16_t>(0, VWIDTH, 0, VHEIGHT);
 		}
 
 		glUseProgram(program);
 
-		glUniform1i(uniform_yoffset, Constants::VIEWYOFFSET);
 		glUniform1i(uniform_fontregion, fontymax);
 		glUniform2f(uniform_atlassize, ATLASW, ATLASH);
 		glUniform2f(uniform_screensize, VWIDTH, VHEIGHT);
@@ -726,7 +725,7 @@ namespace ms
 
 	void GraphicsGL::drawscreenfill(float r, float g, float b, float a)
 	{
-		drawrectangle(0, -Constants::VIEWYOFFSET, VWIDTH, VHEIGHT, r, g, b, a);
+		drawrectangle(0, 0, VWIDTH, VHEIGHT, r, g, b, a);
 	}
 
 	void GraphicsGL::lock()

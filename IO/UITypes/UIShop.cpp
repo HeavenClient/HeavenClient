@@ -466,7 +466,7 @@ namespace ms
 
 		changeselltab(InventoryType::Id::EQUIP);
 
-		active = true;
+		makeactive();
 		rightclicksell = Configuration::get().get_rightclicksell();
 	}
 

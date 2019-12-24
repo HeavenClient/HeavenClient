@@ -25,9 +25,8 @@
 
 namespace ms
 {
-	BuffIcon::BuffIcon(int32_t buff, int32_t dur)
-		: cover(IconCover::BUFF, dur - FLASH_TIME) {
-
+	BuffIcon::BuffIcon(int32_t buff, int32_t dur) : cover(IconCover::BUFF, dur - FLASH_TIME)
+	{
 		buffid = buff;
 		duration = dur;
 		opacity.set(1.0f);
@@ -41,14 +40,13 @@ namespace ms
 		}
 		else
 		{
-			icon = ItemData::get(-buffid)
-				.get_icon(true);
+			icon = ItemData::get(-buffid).get_icon(true);
 		}
 	}
 
 	void BuffIcon::draw(Point<int16_t> position, float alpha) const
 	{
-		icon.draw({ position, opacity.get(alpha) });
+		icon.draw(DrawArgument(position, opacity.get(alpha)));
 		cover.draw(position + Point<int16_t>(1, -31), alpha);
 	}
 
@@ -60,6 +58,7 @@ namespace ms
 
 			bool fadedout = opcstep < 0.0f && opacity.last() <= 0.0f;
 			bool fadedin = opcstep > 0.0f && opacity.last() >= 1.0f;
+
 			if (fadedout || fadedin)
 				opcstep = -opcstep;
 		}
@@ -67,19 +66,17 @@ namespace ms
 		cover.update();
 
 		duration -= Constants::TIMESTEP;
+
 		return duration < Constants::TIMESTEP;
 	}
 
-
-	UIBuffList::UIBuffList()
-	{
-		position = { 750, 40 };
-		active = true;
-	}
+	// TODO: This needs a dimension set on it in order to cancel active buffs and hover over icons
+	UIBuffList::UIBuffList() : UIElement(Point<int16_t>(750, 40), Point<int16_t>(0, 0)) {}
 
 	void UIBuffList::draw(float alpha) const
 	{
 		Point<int16_t> icpos = position;
+
 		for (auto& icon : icons)
 		{
 			icon.second.draw(icpos, alpha);
@@ -92,14 +89,11 @@ namespace ms
 		for (auto iter = icons.begin(); iter != icons.end();)
 		{
 			bool expired = iter->second.update();
+
 			if (expired)
-			{
 				iter = icons.erase(iter);
-			}
 			else
-			{
 				iter++;
-			}
 		}
 	}
 

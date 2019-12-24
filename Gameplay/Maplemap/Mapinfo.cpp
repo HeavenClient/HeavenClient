@@ -27,13 +27,8 @@ namespace ms
 
 		if (info["VRLeft"].data_type() == nl::node::type::integer)
 		{
-			mapwalls = { info["VRLeft"], info["VRRight"] };
-			mapborders = { info["VRTop"], info["VRBottom"] };
-
-			mapborders = {
-				mapborders.first() + Constants::VIEWYOFFSET,
-				mapborders.second() - Constants::VIEWYOFFSET
-			};
+			mapwalls = Range<int16_t>(info["VRLeft"], info["VRRight"]);
+			mapborders = Range<int16_t>(info["VRTop"], info["VRBottom"]);
 		}
 		else
 		{

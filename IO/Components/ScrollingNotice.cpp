@@ -23,7 +23,6 @@ namespace ms
 	{
 		width = 800;
 		background = ColorBox(width, 23, Color::Name::BLACK, 0.535f);
-		backposition = Point<int16_t>(0, -Constants::VIEWYOFFSET);
 		notice = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::YELLOW);
 
 		xpos.set(0.0);
@@ -42,9 +41,9 @@ namespace ms
 		if (active)
 		{
 			int16_t interx = static_cast<int16_t>(std::round(xpos.get(alpha)));
-			auto position = Point<int16_t>(interx, -Constants::VIEWYOFFSET - 1);
+			auto position = Point<int16_t>(interx, -1);
 
-			background.draw(backposition);
+			background.draw(Point<int16_t>(0, 0));
 			notice.draw(position);
 		}
 	}

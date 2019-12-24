@@ -34,7 +34,6 @@ namespace ms
 
 	private:
 		ColorBox background;
-		Point<int16_t> backposition;
 		Text notice;
 		Linear<double> xpos;
 		bool active;

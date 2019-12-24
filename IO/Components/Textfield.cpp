@@ -167,7 +167,7 @@ namespace ms
 
 			break;
 		case KeyType::Id::TEXT:
-			if (!pressed)
+			if (pressed)
 			{
 				int8_t c = static_cast<int8_t>(key);
 

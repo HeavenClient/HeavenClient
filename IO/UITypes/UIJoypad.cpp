@@ -65,11 +65,6 @@ namespace ms
 		UIElement::draw(inter);
 	}
 
-	void UIJoypad::update()
-	{
-		UIElement::update();
-	}
-
 	void UIJoypad::send_key(int32_t keycode, bool pressed, bool escape)
 	{
 		if (pressed)
@@ -102,7 +97,7 @@ namespace ms
 
 	void UIJoypad::cancel()
 	{
-		active = false;
+		deactivate();
 	}
 
 	void UIJoypad::save()

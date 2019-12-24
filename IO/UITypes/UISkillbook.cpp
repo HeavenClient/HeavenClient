@@ -819,8 +819,7 @@ namespace ms
 	void UISkillbook::close()
 	{
 		clear_tooltip();
-
-		active = false;
+		deactivate();
 	}
 
 	bool UISkillbook::check_required(int32_t id) const

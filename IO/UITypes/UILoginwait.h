@@ -31,9 +31,6 @@ namespace ms
 		UILoginwait();
 		UILoginwait(std::function<void()> okhandler);
 
-		void draw(float alpha) const override;
-		void update() override;
-
 		void close();
 		std::function<void()> get_handler();
 

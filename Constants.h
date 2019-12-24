@@ -27,8 +27,6 @@ namespace ms
 	{
 		// Timestep, e.g. the granularity in which the game advances.
 		constexpr uint16_t TIMESTEP = 8;
-		// View y offset.
-		constexpr int16_t VIEWYOFFSET = 10;
 
 		class Constants : public Singleton<Constants>
 		{

@@ -99,7 +99,6 @@ namespace ms
 		};
 
 		Text version;
-		Point<int16_t> screen_adj;
 		Point<int16_t> pos;
 		Point<int16_t> posZero;
 		nl::node order;

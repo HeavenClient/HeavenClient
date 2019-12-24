@@ -44,8 +44,6 @@ namespace ms
 		nl::node Common = Login["Common"];
 		nl::node RaceSelect = Login["RaceSelect_new"];
 
-		screen_adj = Point<int16_t>(0, -Constants::VIEWYOFFSET);
-
 		Point<int16_t> make_pos = RaceSelect["make"]["pos"];
 		Point<int16_t> make_posZero = RaceSelect["make"]["posZero"];
 
@@ -103,7 +101,7 @@ namespace ms
 		class_isdisabled[Classes::ILLIUM] = true;
 		class_isdisabled[Classes::ARK] = true;
 
-		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
 		back = RaceSelect["Back"]["1"]["0"];
 		backZero = RaceSelect["Back"]["2"]["0"];
@@ -124,10 +122,10 @@ namespace ms
 			class_title[i] = RaceSelect["Back3"][i]["0"];
 		}
 
-		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 505));
+		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 515));
 		buttons[Buttons::MAKE] = std::make_unique<MapleButton>(RaceSelect["make"]);
-		buttons[Buttons::LEFT] = std::make_unique<MapleButton>(RaceSelect["leftArrow"], Point<int16_t>(41, 448));
-		buttons[Buttons::RIGHT] = std::make_unique<MapleButton>(RaceSelect["rightArrow"], Point<int16_t>(718, 448));
+		buttons[Buttons::LEFT] = std::make_unique<MapleButton>(RaceSelect["leftArrow"], Point<int16_t>(41, 458));
+		buttons[Buttons::RIGHT] = std::make_unique<MapleButton>(RaceSelect["rightArrow"], Point<int16_t>(718, 458));
 
 		for (size_t i = 0; i <= Buttons::CLASS0; i++)
 			buttons[Buttons::CLASS0 + i] = std::make_unique<AreaButton>(get_class_pos(i), class_normal[0][true].get_dimensions());
@@ -144,44 +142,44 @@ namespace ms
 	void UIRaceSelect::draw(float inter) const
 	{
 		if (selected_class == Classes::ZERO)
-			backZero.draw(position + screen_adj);
+			backZero.draw(position);
 		else
-			back.draw(position + screen_adj);
+			back.draw(position);
 
 		UIElement::draw_sprites(inter);
 
-		version.draw(position + Point<int16_t>(707, -9));
+		version.draw(position + Point<int16_t>(707, 1));
 
 		if (selected_class == Classes::KANNA || selected_class == Classes::CHASE)
 		{
 			if (selected_class == Classes::ZERO)
-				class_details_backgroundZero.draw(position + screen_adj);
+				class_details_backgroundZero.draw(position);
 			else
-				class_details_background.draw(position + Point<int16_t>(0, -Constants::VIEWYOFFSET));
+				class_details_background.draw(position);
 
-			class_background[selected_class].draw(position + screen_adj);
+			class_background[selected_class].draw(position);
 		}
 		else
 		{
-			class_background[selected_class].draw(position + screen_adj);
+			class_background[selected_class].draw(position);
 
 			if (selected_class == Classes::ZERO)
-				class_details_backgroundZero.draw(position + screen_adj);
+				class_details_backgroundZero.draw(position);
 			else
-				class_details_background.draw(position + Point<int16_t>(0, -Constants::VIEWYOFFSET));
+				class_details_background.draw(position);
 		}
 
-		class_details[selected_class].draw(position + screen_adj);
-		class_title[selected_class].draw(position + screen_adj);
+		class_details[selected_class].draw(position);
+		class_title[selected_class].draw(position);
 
 		for each (auto node in hotlist)
 		{
 			if (node.get_integer() == selected_class)
 			{
 				if (selected_class == Classes::ZERO)
-					hotlabelZero.draw(position + screen_adj, inter);
+					hotlabelZero.draw(position, inter);
 				else
-					hotlabel.draw(position + screen_adj, inter);
+					hotlabel.draw(position, inter);
 
 				break;
 			}
@@ -191,7 +189,7 @@ namespace ms
 		{
 			if (node.get_integer() == selected_class)
 			{
-				newlabel.draw(position + screen_adj, inter);
+				newlabel.draw(position, inter);
 				break;
 			}
 		}
@@ -223,7 +221,7 @@ namespace ms
 
 		UIElement::draw_buttons(inter);
 
-		back_ani.draw(position + screen_adj, inter);
+		back_ani.draw(position, inter);
 	}
 
 	void UIRaceSelect::update()
@@ -237,9 +235,9 @@ namespace ms
 		newbtn.update();
 
 		if (selected_class == Classes::ZERO)
-			buttons[Buttons::MAKE]->set_position(position + posZero + screen_adj);
+			buttons[Buttons::MAKE]->set_position(position + posZero);
 		else
-			buttons[Buttons::MAKE]->set_position(position + pos + screen_adj);
+			buttons[Buttons::MAKE]->set_position(position + pos);
 
 		back_ani.update();
 
@@ -546,7 +544,7 @@ namespace ms
 	{
 		uint16_t x_adj = index * 126;
 
-		return Point<int16_t>(95 + x_adj, 420);
+		return Point<int16_t>(95 + x_adj, 430);
 	}
 
 	std::string UIRaceSelect::to_lower(std::string value) const

@@ -28,8 +28,8 @@
 
 namespace ms
 {
-	UIMiniMap::UIMiniMap(const CharStats& st) : UIDragElement<PosMINIMAP>(Point<int16_t>(128, 20)), stats(st),
-		big_map(true), has_map(false), listNpc_enabled(false), listNpc_dimensions(Point<int16_t>(150, 170)), listNpc_offset(0), selected(-1), hover_tooltip()
+	UIMiniMap::UIMiniMap(const CharStats& st) : UIDragElement<PosMINIMAP>(Point<int16_t>(128, 20)),
+		stats(st), big_map(true), has_map(false), listNpc_enabled(false), listNpc_dimensions(Point<int16_t>(150, 170)), listNpc_offset(0), selected(-1), hover_tooltip()
 	{
 		type = Setting<MiniMapType>::get().load();
 		simpleMode = Setting<MiniMapSimpleMode>::get().load();
@@ -53,8 +53,6 @@ namespace ms
 
 		player_marker = Animation(marker["user"]);
 		selected_marker = Animation(MiniMap["iconNpc"]);
-
-		position.shift_y(-Constants::VIEWYOFFSET);
 	}
 
 	void UIMiniMap::draw(float alpha) const

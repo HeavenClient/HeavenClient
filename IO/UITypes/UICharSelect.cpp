@@ -38,19 +38,20 @@
 
 namespace ms
 {
-	UICharSelect::UICharSelect(std::vector<CharEntry> c, int8_t char_count, int32_t s, int8_t rp) : characters(c), characters_count(char_count), slots(s), require_pic(rp)
+	UICharSelect::UICharSelect(std::vector<CharEntry> c, int8_t char_count, int32_t s, int8_t rp) : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600)),
+		characters(c), characters_count(char_count), slots(s), require_pic(rp)
 	{
 		burning_character = true;
 
 		std::string version_text = Configuration::get().get_version();
 		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
-		pagepos = Point<int16_t>(247, 452);
-		worldpos = Point<int16_t>(586, 36);
-		charinfopos = Point<int16_t>(671, 329);
-		Point<int16_t> character_sel_pos = Point<int16_t>(601, 383);
-		Point<int16_t> character_new_pos = Point<int16_t>(200, 485);
-		Point<int16_t> character_del_pos = Point<int16_t>(316, 485);
+		pagepos = Point<int16_t>(247, 462);
+		worldpos = Point<int16_t>(586, 46);
+		charinfopos = Point<int16_t>(671, 339);
+		Point<int16_t> character_sel_pos = Point<int16_t>(601, 393);
+		Point<int16_t> character_new_pos = Point<int16_t>(200, 495);
+		Point<int16_t> character_del_pos = Point<int16_t>(316, 495);
 
 		selected_character = Setting<DefaultCharacter>::get().load();
 		selected_page = selected_character / PAGESIZE;
@@ -87,24 +88,24 @@ namespace ms
 		uint16_t world;
 		uint8_t world_id = Configuration::get().get_worldid();
 		uint8_t channel_id = Configuration::get().get_channelid();
-		
+
 		if (auto worldselect = UI::get().get_element<UIWorldSelect>())
 			world = worldselect->get_worldbyid(world_id);
 
 		world_sprites.emplace_back(selectWorld, worldpos);
-		world_sprites.emplace_back(selectedWorld["icon"][world], worldpos - Point<int16_t>(14, -1));
+		world_sprites.emplace_back(selectedWorld["icon"][world], worldpos - Point<int16_t>(12, -1));
 		world_sprites.emplace_back(selectedWorld["name"][world], worldpos - Point<int16_t>(8, 1));
 		world_sprites.emplace_back(selectedWorld["ch"][channel_id], worldpos - Point<int16_t>(0, 1));
 
 		nl::node map = nl::nx::map001["Back"]["login.img"];
 		nl::node ani = map["ani"];
 
-		sprites.emplace_back(map["back"]["13"], Point<int16_t>(392, 287));
-		sprites.emplace_back(ani["17"], Point<int16_t>(151, 273));
-		sprites.emplace_back(ani["18"], Point<int16_t>(365, 242));
-		sprites.emplace_back(ani["19"], Point<int16_t>(191, 198));
-		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 290));
-		sprites.emplace_back(Common["step"]["2"], Point<int16_t>(40, -Constants::VIEWYOFFSET));
+		sprites.emplace_back(map["back"]["13"], Point<int16_t>(392, 297));
+		sprites.emplace_back(ani["17"], Point<int16_t>(151, 283));
+		sprites.emplace_back(ani["18"], Point<int16_t>(365, 252));
+		sprites.emplace_back(ani["19"], Point<int16_t>(191, 208));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
+		sprites.emplace_back(Common["step"]["2"], Point<int16_t>(40, 0));
 
 		nl::node Burning = Common["Burning"];
 
@@ -126,15 +127,15 @@ namespace ms
 		buttons[Buttons::CHARACTER_SELECT] = std::make_unique<MapleButton>(CharSelect["BtSelect"], character_sel_pos);
 		buttons[Buttons::CHARACTER_NEW] = std::make_unique<MapleButton>(CharSelect["BtNew"], character_new_pos);
 		buttons[Buttons::CHARACTER_DELETE] = std::make_unique<MapleButton>(CharSelect["BtDelete"], character_del_pos);
-		buttons[Buttons::PAGELEFT] = std::make_unique<MapleButton>(CharSelect["pageL"], Point<int16_t>(98, 481));
-		buttons[Buttons::PAGERIGHT] = std::make_unique<MapleButton>(CharSelect["pageR"], Point<int16_t>(485, 481));
-		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 35));
-		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"], Point<int16_t>(0, 75));
-		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"], Point<int16_t>(1, 115));
-		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 505));
+		buttons[Buttons::PAGELEFT] = std::make_unique<MapleButton>(CharSelect["pageL"], Point<int16_t>(98, 491));
+		buttons[Buttons::PAGERIGHT] = std::make_unique<MapleButton>(CharSelect["pageR"], Point<int16_t>(485, 491));
+		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 45));
+		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"], Point<int16_t>(0, 85));
+		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"], Point<int16_t>(-1, 118));
+		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < PAGESIZE; i++)
-			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144), Point<int16_t>(50, 80));
+			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144), Point<int16_t>(50, 90));
 
 		if (require_pic == 0)
 		{
@@ -163,10 +164,6 @@ namespace ms
 		chatslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::PORCELAIN, Color::Name::BROWNDERBY);
 		chatslotlabel.change_text(get_slot_text());
 
-		position = Point<int16_t>(0, 0);
-		dimension = Point<int16_t>(800, 600);
-		active = true;
-
 		update_buttons();
 
 		if (characters_count > 0)
@@ -190,9 +187,9 @@ namespace ms
 	{
 		UIElement::draw_sprites(inter);
 
-		version.draw(position + Point<int16_t>(707, -9));
-		charslot.draw(position + Point<int16_t>(589, 96 - charslot_y));
-		chatslotlabel.draw(position + Point<int16_t>(700, 100 - charslot_y));
+		version.draw(position + Point<int16_t>(707, 1));
+		charslot.draw(position + Point<int16_t>(589, 106 - charslot_y));
+		chatslotlabel.draw(position + Point<int16_t>(700, 110 - charslot_y));
 
 		for (auto sprite : world_sprites)
 			sprite.draw(position, inter);
@@ -210,7 +207,7 @@ namespace ms
 
 			if (index < characters_count)
 			{
-				Point<int16_t> charpos = get_character_slot_pos(i, 135, 224);
+				Point<int16_t> charpos = get_character_slot_pos(i, 135, 234);
 				DrawArgument chararg = DrawArgument(charpos, flip_character);
 
 				nametags[index].draw(charpos);
@@ -222,7 +219,7 @@ namespace ms
 					selectedslot_effect[1].draw(charpos + Point<int16_t>(-5, 16), inter);
 
 					int8_t lvy = -115;
-					Point<int16_t> pos_adj = Point<int16_t>(668, 355);
+					Point<int16_t> pos_adj = Point<int16_t>(668, 365);
 
 					charinfo.draw(position + charinfopos);
 
@@ -259,7 +256,7 @@ namespace ms
 			}
 			else if (i < slots)
 			{
-				Point<int16_t> emptyslotpos = get_character_slot_pos(i, 130, 224);
+				Point<int16_t> emptyslotpos = get_character_slot_pos(i, 130, 234);
 
 				emptyslot_effect.draw(emptyslotpos, inter);
 				emptyslot.draw(DrawArgument(emptyslotpos, flip_character));
@@ -273,8 +270,8 @@ namespace ms
 
 		if (burning_character)
 		{
-			burning_notice.draw(position + Point<int16_t>(190, 492), inter);
-			burning_count.draw(position + Point<int16_t>(149, 454));
+			burning_notice.draw(position + Point<int16_t>(190, 502), inter);
+			burning_count.draw(position + Point<int16_t>(149, 464));
 		}
 
 		pagebase.draw(position + pagepos);
@@ -874,15 +871,15 @@ namespace ms
 		switch (index)
 		{
 		case InfoLabel::JOB:
-			return Point<int16_t>(68, -74);
+			return Point<int16_t>(66, -74);
 		case InfoLabel::STR:
-			return Point<int16_t>(-3, -50);
+			return Point<int16_t>(-6, -50);
 		case InfoLabel::DEX:
-			return Point<int16_t>(-3, -27);
+			return Point<int16_t>(-6, -27);
 		case InfoLabel::INT:
-			return Point<int16_t>(68, -50);
+			return Point<int16_t>(65, -50);
 		case InfoLabel::LUK:
-			return Point<int16_t>(68, -27);
+			return Point<int16_t>(65, -27);
 		case InfoLabel::NUM_LABELS:
 			break;
 		default:

@@ -321,38 +321,38 @@ namespace ms
 
 		if (VWIDTH == 800)
 		{
-			position = Point<int16_t>(0, 470);
+			position = Point<int16_t>(0, 480);
 			position_x = 410;
 			position_y = position.y();
-			dimension = Point<int16_t>(VWIDTH - position_x, 130);
+			dimension = Point<int16_t>(VWIDTH - position_x, 140);
 		}
 		else if (VWIDTH == 1024)
 		{
-			position = Point<int16_t>(0, 638);
+			position = Point<int16_t>(0, 648);
 			position_x = 410;
 			position_y = position.y() + 42;
-			dimension = Point<int16_t>(VWIDTH - position_x, 65);
+			dimension = Point<int16_t>(VWIDTH - position_x, 75);
 		}
 		else if (VWIDTH == 1280)
 		{
-			position = Point<int16_t>(0, 590);
+			position = Point<int16_t>(0, 600);
 			position_x = 500;
 			position_y = position.y() + 42;
-			dimension = Point<int16_t>(VWIDTH - position_x, 65);
+			dimension = Point<int16_t>(VWIDTH - position_x, 75);
 		}
 		else if (VWIDTH == 1366)
 		{
-			position = Point<int16_t>(0, 638);
+			position = Point<int16_t>(0, 648);
 			position_x = 585;
 			position_y = position.y() + 42;
-			dimension = Point<int16_t>(VWIDTH - position_x, 65);
+			dimension = Point<int16_t>(VWIDTH - position_x, 75);
 		}
 		else if (VWIDTH == 1920)
 		{
-			position = Point<int16_t>(0, 950 + (VHEIGHT - 1080));
+			position = Point<int16_t>(0, 960 + (VHEIGHT - 1080));
 			position_x = 860;
 			position_y = position.y() + 40;
-			dimension = Point<int16_t>(VWIDTH - position_x, 70);
+			dimension = Point<int16_t>(VWIDTH - position_x, 80);
 		}
 	}
 
