@@ -512,7 +512,7 @@ namespace ms
 		}
 	}
 
-	// UI
+	// UI: General
 
 	void UIKeyConfig::draw(float inter) const
 	{
@@ -614,6 +614,7 @@ namespace ms
 
 	void UIKeyConfig::close()
 	{
+		clear_tooltip();
 		deactivate();
 		reset();
 	}
@@ -708,6 +709,8 @@ namespace ms
 			}
 		}
 
+		clear_tooltip();
+
 		KeyConfig::Key key_slot = key_by_position(cursorpos);
 
 		if (key_slot != KeyConfig::Key::LENGTH)
@@ -722,11 +725,15 @@ namespace ms
 				{
 					int32_t item_id = mapping.action;
 					ficon = item_icons[item_id].get();
+
+					show_item(item_id);
 				}
 				else if (mapping.type == KeyType::Id::SKILL)
 				{
 					int32_t skill_id = mapping.action;
 					ficon = skill_icons[skill_id].get();
+
+					show_skill(skill_id);
 				}
 				else if (is_action_mapping(mapping))
 				{
@@ -742,6 +749,8 @@ namespace ms
 				{
 					if (clicked)
 					{
+						clear_tooltip();
+
 						ficon->start_drag(cursorpos - position - keys_pos[key_slot]);
 						UI::get().drag_icon(ficon);
 
@@ -753,6 +762,10 @@ namespace ms
 					}
 				}
 			}
+		}
+		else
+		{
+			clear_tooltip();
 		}
 
 		return UIElement::send_cursor(clicked, cursorpos);
@@ -810,6 +823,28 @@ namespace ms
 		{
 			close();
 		}
+	}
+
+	// UI: Tooltip
+
+	void UIKeyConfig::show_item(int32_t item_id)
+	{
+		UI::get().show_item(Tooltip::Parent::KEYCONFIG, item_id);
+	}
+
+	void UIKeyConfig::show_skill(int32_t skill_id)
+	{
+		//int32_t skill_id = skill_id;
+		//int32_t level = skillbook.get_level(skill_id);
+		//int32_t masterlevel = skillbook.get_masterlevel(skill_id);
+		//int64_t expiration = skillbook.get_expiration(skill_id);
+
+		//UI::get().show_skill(Tooltip::Parent::KEYCONFIG, skill_id, level, masterlevel, expiration);
+	}
+
+	void UIKeyConfig::clear_tooltip()
+	{
+		UI::get().clear_tooltip(Tooltip::Parent::KEYCONFIG);
 	}
 
 	// Keymap Staging

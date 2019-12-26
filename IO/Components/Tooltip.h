@@ -37,7 +37,8 @@ namespace ms
 			SKILLBOOK,
 			SHOP,
 			EVENT,
-			TEXT
+			TEXT,
+			KEYCONFIG
 		};
 
 		virtual ~Tooltip() {}
