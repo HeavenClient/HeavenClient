@@ -101,7 +101,6 @@ namespace ms
 		void check_seats();
 		void check_ladders(bool up);
 		void check_drops();
-		bool check_reactors_near_player();
 
 		enum State
 		{

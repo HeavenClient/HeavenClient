@@ -71,7 +71,7 @@ namespace ms
 		);
 	}
 
-	void Combat::use_move(int32_t move_id, bool reactor_hit)
+	void Combat::use_move(int32_t move_id)
 	{
 		if (!player.can_attack())
 			return;
@@ -83,9 +83,6 @@ namespace ms
 		switch (reason)
 		{
 		case SpecialMove::ForbidReason::FBR_NONE:
-			/*if (reactor_hit)
-				apply_move(get_move(0), true);
-			else*/
 			apply_move(move);
 			break;
 		default:
@@ -94,11 +91,11 @@ namespace ms
 		}
 	}
 
-	void Combat::apply_move(const SpecialMove& move, bool reactor_hit)
+	void Combat::apply_move(const SpecialMove& move)
 	{
 		if (move.is_attack())
 		{
-			Attack attack = player.prepare_attack(move.is_skill(), reactor_hit);
+			Attack attack = player.prepare_attack(move.is_skill());
 
 			move.apply_useeffects(player);
 			move.apply_actions(player, attack.type);

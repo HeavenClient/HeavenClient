@@ -43,10 +43,6 @@ namespace ms
 		void remove(int32_t oid, int8_t state, Point<int16_t> position);
 		// Remove all reactors.
 		void clear();
-		// Check if reactor near player attack
-		using reactor_obj = std::pair<int32_t, Point<int16_t>>;
-		reactor_obj MapReactors::check_reactor_near(Point<int16_t> playerpos, bool facing_right);
-		Reactor& get_reactor_by_oid(int32_t oid);
 		MapObjects* MapReactors::get_reactors();
 
 	private:
