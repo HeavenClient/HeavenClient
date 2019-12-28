@@ -58,6 +58,8 @@ namespace ms
 
 		void draw(float inter) const override;
 		void update() override;
+		void update_screen(int16_t new_width, int16_t new_height) override;
+
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position) override;
 
 		void add_buff(int32_t buffid, int32_t duration);

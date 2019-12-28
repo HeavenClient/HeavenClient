@@ -69,7 +69,7 @@ namespace ms
 		underwater = false;
 
 		set_state(Char::State::STAND);
-		set_direction(false);
+		set_direction(true);
 	}
 
 	Player::Player() : Char(0, {}, "") {}

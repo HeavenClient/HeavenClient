@@ -70,8 +70,13 @@ namespace ms
 		return duration < Constants::TIMESTEP;
 	}
 
-	// TODO: This needs a dimension set on it in order to cancel active buffs and hover over icons
-	UIBuffList::UIBuffList() : UIElement(Point<int16_t>(750, 40), Point<int16_t>(0, 0)) {}
+	UIBuffList::UIBuffList()
+	{
+		int16_t height = Constants::Constants::get().get_viewheight();
+		int16_t width = Constants::Constants::get().get_viewwidth();
+
+		update_screen(width, height);
+	}
 
 	void UIBuffList::draw(float alpha) const
 	{
@@ -95,6 +100,12 @@ namespace ms
 			else
 				iter++;
 		}
+	}
+
+	void UIBuffList::update_screen(int16_t new_width, int16_t)
+	{
+		position = Point<int16_t>(new_width - 35, 55);
+		dimension = Point<int16_t>(position.x(), 32);
 	}
 
 	Cursor::State UIBuffList::send_cursor(bool pressed, Point<int16_t> cursorposition)

@@ -229,6 +229,10 @@ namespace ms
 				player.set_direction(true);
 				player.set_state(Char::State::WALK);
 			}
+			else if (player.is_key_down(KeyAction::Id::DOWN))
+			{
+				player.set_state(Char::State::PRONE);
+			}
 			else
 			{
 				player.set_state(Char::State::STAND);
@@ -253,11 +257,6 @@ namespace ms
 					play_jumpsound();
 					player.get_phobj().y = player.get_phobj().groundbelow;
 					player.set_state(Char::State::FALL);
-				}
-				else
-				{
-					player.set_state(Char::State::STAND);
-					player.send_action(ka, down);
 				}
 
 				break;

@@ -84,11 +84,13 @@ namespace ms
 
 	void UIStateGame::update()
 	{
+		bool update_screen = false;
 		int16_t new_width = Constants::Constants::get().get_viewwidth();
 		int16_t new_height = Constants::Constants::get().get_viewheight();
 
 		if (VWIDTH != new_width || VHEIGHT != new_height)
 		{
+			update_screen = true;
 			VWIDTH = new_width;
 			VHEIGHT = new_height;
 
@@ -103,7 +105,12 @@ namespace ms
 			auto& element = elements[type];
 
 			if (element && element->is_active())
+			{
 				element->update();
+
+				if (update_screen)
+					element->update_screen(new_width, new_height);
+			}
 		}
 	}
 

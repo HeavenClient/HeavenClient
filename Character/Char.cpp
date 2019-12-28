@@ -62,7 +62,8 @@ namespace ms
 			if (pet.get_itemid())
 				pet.draw(viewx, viewy, alpha);
 
-		namelabel.draw(absp);
+		// If ever changing code for namelabel confirm placements with map 10000
+		namelabel.draw(absp + Point<int16_t>(0, -4));
 		chatballoon.draw(absp - Point<int16_t>(0, 85));
 
 		effects.drawabove(absp, alpha);

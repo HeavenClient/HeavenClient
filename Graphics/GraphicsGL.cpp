@@ -657,11 +657,12 @@ namespace ms
 		switch (background)
 		{
 		case Text::Background::NAMETAG:
+			// If ever changing code in here confirm placements with map 10000
 			for (const Text::Layout::Line& line : layout)
 			{
-				GLshort left = x + line.position.x() - 2;
+				GLshort left = x + line.position.x() - 1;
 				GLshort right = left + w + 3;
-				GLshort top = y + line.position.y() - font.linespace() + 5;
+				GLshort top = y + line.position.y() - font.linespace() + 6;
 				GLshort bottom = top + h - 2;
 				Color ntcolor = Color(0.0f, 0.0f, 0.0f, 0.6f);
 

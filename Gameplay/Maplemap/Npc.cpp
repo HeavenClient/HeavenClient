@@ -84,7 +84,8 @@ namespace ms
 
 		if (!hidename)
 		{
-			namelabel.draw(absp);
+			// If ever changing code for namelabel confirm placements with map 10000
+			namelabel.draw(absp + Point<int16_t>(0, -4));
 			funclabel.draw(absp + Point<int16_t>(0, 18));
 		}
 	}

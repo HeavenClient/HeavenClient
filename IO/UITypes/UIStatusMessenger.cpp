@@ -47,7 +47,10 @@ namespace ms
 
 	UIStatusMessenger::UIStatusMessenger()
 	{
-		position = Point<int16_t>(790, 500);
+		int16_t height = Constants::Constants::get().get_viewheight();
+		int16_t width = Constants::Constants::get().get_viewwidth();
+
+		update_screen(width, height);
 	}
 
 	void UIStatusMessenger::draw(float inter) const
@@ -57,7 +60,7 @@ namespace ms
 		for (const StatusInfo& info : statusinfos)
 		{
 			info.draw(infopos, inter);
-			infopos.shift_y(-16);
+			infopos.shift_y(-14);
 		}
 	}
 
@@ -65,6 +68,13 @@ namespace ms
 	{
 		for (StatusInfo& info : statusinfos)
 			info.update();
+	}
+
+	void UIStatusMessenger::update_screen(int16_t new_width, int16_t new_height)
+	{
+		int16_t y_adj = (new_width > 800) ? 37 : 0;
+
+		position = Point<int16_t>(new_width - 6, new_height - 145 + y_adj);
 	}
 
 	void UIStatusMessenger::show_status(Color::Name color, const std::string& message)

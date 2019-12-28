@@ -80,9 +80,6 @@ namespace ms
 	Button::State UIElement::button_pressed(uint16_t) { return Button::State::DISABLED; }
 	bool UIElement::send_icon(const Icon&, Point<int16_t>) { return true; }
 
-	void UIElement::doubleclick(Point<int16_t>) {}
-	void UIElement::rightclick(Point<int16_t>) {}
-
 	bool UIElement::is_in_range(Point<int16_t> cursorpos) const
 	{
 		auto bounds = Rectangle<int16_t>(position, position + dimension);
@@ -146,7 +143,4 @@ namespace ms
 
 		return ret;
 	}
-
-	void UIElement::send_scroll(double) {}
-	void UIElement::send_key(int32_t, bool, bool) {}
 }
