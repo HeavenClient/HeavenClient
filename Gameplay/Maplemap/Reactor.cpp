@@ -69,7 +69,7 @@ namespace ms
 	{
 		/* TODO: hit/break sounds... */
 		if (hittable) {
-			animations[this->state] = src[this->state-1]["hit"];
+			animations[this->state] = src[this->state]["hit"];
 			animation_ended = false;
 		}
 		this->state = state;
@@ -78,9 +78,9 @@ namespace ms
 	void Reactor::destroy(int8_t, Point<int16_t>)
 	{
 		animations[this->state] = src[this->state]["hit"];
-		animation_ended = false;
-		dead = true;
 		state++;
+		dead = true;
+		animation_ended = false;
 	}
 
 	bool Reactor::is_hittable()
