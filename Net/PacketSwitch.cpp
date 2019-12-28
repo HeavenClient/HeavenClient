@@ -138,6 +138,7 @@ namespace ms
 		MAKE_NPC_SCRIPTED = 263,
 		DROP_LOOT = 268,
 		REMOVE_LOOT = 269,
+		HIT_REACTOR = 277,
 		SPAWN_REACTOR = 279,
 		REMOVE_REACTOR = 280,
 
@@ -185,6 +186,7 @@ namespace ms
 		emplace<KILL_MOB, KillMobHandler>();
 		emplace<DROP_LOOT, DropLootHandler>();
 		emplace<REMOVE_LOOT, RemoveLootHandler>();
+		emplace<HIT_REACTOR, HitReactorHandler>();
 		emplace<SPAWN_REACTOR, SpawnReactorHandler>();
 		emplace<REMOVE_REACTOR, RemoveReactorHandler>();
 

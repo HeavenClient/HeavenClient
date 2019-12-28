@@ -126,6 +126,13 @@ namespace ms
 		void handle(InPacket& recv) const override;
 	};
 
+	// Change state of reactor.
+	// Opcode: HIT_REACTOR(277)
+	class HitReactorHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
 	// Parse a ReactorSpawn and send it to the Stage spawn queue.
 	// Opcode: SPAWN_REACTOR(279)
 	class SpawnReactorHandler : public PacketHandler

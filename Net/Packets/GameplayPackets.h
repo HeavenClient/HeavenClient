@@ -177,4 +177,19 @@ namespace ms
 			write_int(oid);
 		}
 	};
+
+	// Requests damaging a reactor.
+	// Opcode: DAMAGE_REACTOR(205)
+	class DamageReactorPacket : public OutPacket
+	{
+	public:
+		DamageReactorPacket(int32_t oid, Point<int16_t> position, int16_t stance, int skillid) : OutPacket(OutPacket::Opcode::DAMAGE_REACTOR)
+		{
+			write_int(oid);
+			write_point(position);
+			write_short(stance);
+			skip(4);
+			write_int(skillid);
+		};
+	};
 }

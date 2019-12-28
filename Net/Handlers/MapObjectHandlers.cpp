@@ -420,6 +420,18 @@ namespace ms
 		Stage::get().get_drops().remove(oid, mode, looter.get());
 	}
 
+	void HitReactorHandler::handle(InPacket& recv) const
+	{
+		int32_t oid = recv.read_int();
+		int8_t state = recv.read_byte();
+		Point<int16_t> point = recv.read_point();
+		int8_t stance = recv.read_byte(); // TODO: when is this different than state..?
+		recv.skip(2); // TODO: Unused..
+		recv.skip(1); // "frame" delay but this is in wz..?
+
+		Stage::get().get_reactors().trigger(oid, state);
+	}
+
 	void SpawnReactorHandler::handle(InPacket& recv) const
 	{
 		int32_t oid = recv.read_int();

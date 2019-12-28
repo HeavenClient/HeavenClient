@@ -89,35 +89,8 @@ namespace ms
 			mob->send_movement(start, std::move(movements));
 	}
 
-	AttackResult MapMobs::send_attack(const Attack& attack)
+	void MapMobs::send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t> &targets, uint8_t mobcount)
 	{
-		Point<int16_t> origin = attack.origin;
-		Rectangle<int16_t> range = attack.range;
-		int16_t hrange = static_cast<int16_t>(range.l() * attack.hrange);
-
-		if (attack.toleft)
-		{
-			range = {
-				origin.x() + hrange,
-				origin.x() + range.r(),
-				origin.y() + range.t(),
-				origin.y() + range.b()
-			};
-		}
-		else
-		{
-			range = {
-				origin.x() - range.r(),
-				origin.x() - hrange,
-				origin.y() + range.t(),
-				origin.y() + range.b()
-			};
-		}
-
-		uint8_t mobcount = attack.mobcount;
-		AttackResult result = attack;
-		std::vector<int32_t> targets = find_closest(range, origin, mobcount);
-
 		for (auto& target : targets)
 		{
 			if (Optional<Mob> mob = mobs.get(target))
@@ -132,8 +105,6 @@ namespace ms
 					result.last_oid = target;
 			}
 		}
-
-		return result;
 	}
 
 	void MapMobs::apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move)
@@ -147,34 +118,7 @@ namespace ms
 		}
 	}
 
-	std::vector<int32_t> MapMobs::find_closest(Rectangle<int16_t> range, Point<int16_t> origin, uint8_t mobcount) const
-	{
-		std::multimap<uint16_t, int32_t> distances;
-
-		for (auto& mmo : mobs)
-		{
-			const Mob* mob = static_cast<const Mob*>(mmo.second.get());
-
-			if (mob && mob->is_alive() && mob->is_in_range(range))
-			{
-				int32_t oid = mob->get_oid();
-				uint16_t distance = mob->get_position().distance(origin);
-				distances.emplace(distance, oid);
-			}
-		}
-
-		std::vector<int32_t> targets;
-
-		for (auto& iter : distances)
-		{
-			if (targets.size() >= mobcount)
-				break;
-
-			targets.push_back(iter.second);
-		}
-
-		return targets;
-	}
+	
 
 	bool MapMobs::contains(int32_t oid) const
 	{
@@ -231,5 +175,10 @@ namespace ms
 			return mob->get_head_position();
 		else
 			return {};
+	}
+
+	MapObjects* MapMobs::get_mobs() 
+	{
+		return &mobs;
 	}
 }

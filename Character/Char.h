@@ -78,7 +78,7 @@ namespace ms
 		// Return the delay until applying an attack.
 		uint16_t get_attackdelay(size_t no) const;
 
-		// Set if the character sprite is mirrored (true = facing left)
+		// Set if the character sprite is mirrored (true = facing right)
 		virtual void set_direction(bool flipped);
 		// Change the character's state.
 		virtual void set_state(State newstate);

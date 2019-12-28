@@ -52,7 +52,7 @@ namespace ms
 		void send_movement(int32_t oid, Point<int16_t> start, std::vector<Movement>&& movements);
 
 		// Calculate the results of an attack.
-		AttackResult send_attack(const Attack& attack);
+		void send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t> &targets, uint8_t mobcount);
 		// Applies damage to a mob.
 		void apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move);
 
@@ -66,9 +66,10 @@ namespace ms
 		Point<int16_t> get_mob_position(int32_t oid) const;
 		// Return the head position of a mob.
 		Point<int16_t> get_mob_head_position(int32_t oid) const;
+		// Return all mob map objects
+		MapObjects* get_mobs();
 
 	private:
-		std::vector<int32_t> find_closest(Rectangle<int16_t> range, Point<int16_t> origin, uint8_t mobcount) const;
 
 		MapObjects mobs;
 

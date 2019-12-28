@@ -20,10 +20,11 @@
 #include "../Character/SkillId.h"
 #include "../IO/Messages.h"
 #include "../Net/Packets/AttackAndSkillPackets.h"
+#include "../Net/Packets/GameplayPackets.h"
 
 namespace ms
 {
-	Combat::Combat(Player& in_player, MapChars& in_chars, MapMobs& in_mobs) : player(in_player), chars(in_chars), mobs(in_mobs), attackresults([&](const AttackResult& attack) { apply_attack(attack); }), bulleteffects([&](const BulletEffect& effect) { apply_bullet_effect(effect); }), damageeffects([&](const DamageEffect& effect) { apply_damage_effect(effect); }) {}
+	Combat::Combat(Player& in_player, MapChars& in_chars, MapMobs& in_mobs, MapReactors& in_reactors) : player(in_player), chars(in_chars), mobs(in_mobs), reactors(in_reactors), attackresults([&](const AttackResult& attack) { apply_attack(attack); }), bulleteffects([&](const BulletEffect& effect) { apply_bullet_effect(effect); }), damageeffects([&](const DamageEffect& effect) { apply_damage_effect(effect); }) {}
 
 	void Combat::draw(double viewx, double viewy, float alpha) const
 	{
@@ -70,19 +71,21 @@ namespace ms
 		);
 	}
 
-	void Combat::use_move(int32_t move_id)
+	void Combat::use_move(int32_t move_id, bool reactor_hit)
 	{
 		if (!player.can_attack())
 			return;
 
 		const SpecialMove& move = get_move(move_id);
-
 		SpecialMove::ForbidReason reason = player.can_use(move);
 		Weapon::Type weapontype = player.get_stats().get_weapontype();
 
 		switch (reason)
 		{
 		case SpecialMove::ForbidReason::FBR_NONE:
+			/*if (reactor_hit)
+				apply_move(get_move(0), true);
+			else*/
 			apply_move(move);
 			break;
 		default:
@@ -91,11 +94,11 @@ namespace ms
 		}
 	}
 
-	void Combat::apply_move(const SpecialMove& move)
+	void Combat::apply_move(const SpecialMove& move, bool reactor_hit)
 	{
 		if (move.is_attack())
 		{
-			Attack attack = player.prepare_attack(move.is_skill());
+			Attack attack = player.prepare_attack(move.is_skill(), reactor_hit);
 
 			move.apply_useeffects(player);
 			move.apply_actions(player, attack.type);
@@ -104,7 +107,40 @@ namespace ms
 
 			move.apply_stats(player, attack);
 
-			AttackResult result = mobs.send_attack(attack);
+			Point<int16_t> origin = attack.origin;
+			Rectangle<int16_t> range = attack.range;
+			int16_t hrange = static_cast<int16_t>(range.l() * attack.hrange);
+
+			if (attack.toleft)
+			{
+				range = {
+					origin.x() + hrange,
+					origin.x() + range.r(),
+					origin.y() + range.t(),
+					origin.y() + range.b()
+				};
+			}
+			else
+			{
+				range = {
+					origin.x() - range.r(),
+					origin.x() - hrange,
+					origin.y() + range.t(),
+					origin.y() + range.b()
+				};
+			}
+			/* this approach should also make it easier to implement PvP.. */
+			
+			uint8_t mobcount = attack.mobcount;
+			AttackResult result = attack;
+
+			MapObjects* mob_objs = mobs.get_mobs();
+			MapObjects* reactor_objs = reactors.get_reactors();
+			
+			std::vector<int32_t> mob_targets = find_closest(mob_objs, range, origin, mobcount, true);
+			std::vector<int32_t> reactor_targets = find_closest(reactor_objs, range, origin, mobcount, false);
+
+			mobs.send_attack(result, attack, mob_targets, mobcount);
 			result.attacker = player.get_oid();
 			extract_effects(player, move, result);
 
@@ -112,6 +148,12 @@ namespace ms
 			apply_result_movement(move, result);
 
 			AttackPacket(result).dispatch();
+
+			if (reactor_targets.size()) {
+				if (Optional<Reactor> reactor = reactor_objs->get(reactor_targets.at(0))) {
+					DamageReactorPacket(reactor->get_oid(), player.get_position(), 0 , 0).dispatch();
+				}
+			}
 		}
 		else
 		{
@@ -122,6 +164,48 @@ namespace ms
 			int32_t level = player.get_skills().get_level(moveid);
 			UseSkillPacket(moveid, level).dispatch();
 		}
+	}
+
+	std::vector<int32_t> Combat::find_closest(MapObjects* objs, Rectangle<int16_t> range, Point<int16_t> origin, uint8_t objcount, bool use_mobs) const
+	{
+		std::multimap<uint16_t, int32_t> distances;
+
+		for (auto& mmo : *objs)
+		{
+			if (use_mobs) {
+				const Mob* mob = static_cast<const Mob*>(mmo.second.get());
+
+				if (mob && mob->is_alive() && mob->is_in_range(range))
+				{
+					int32_t oid = mob->get_oid();
+					uint16_t distance = mob->get_position().distance(origin);
+					distances.emplace(distance, oid);
+				}
+			}
+			else {
+				// assume reactor
+				const Reactor* reactor = static_cast<const Reactor*>(mmo.second.get());
+
+				if (reactor && reactor->is_in_range(range))
+				{
+					int32_t oid = reactor->get_oid();
+					uint16_t distance = reactor->get_position().distance(origin);
+					distances.emplace(distance, oid);
+				}
+			}
+		}
+
+		std::vector<int32_t> targets;
+
+		for (auto& iter : distances)
+		{
+			if (targets.size() >= objcount)
+				break;
+
+			targets.push_back(iter.second);
+		}
+
+		return targets;
 	}
 
 	void Combat::apply_use_movement(const SpecialMove& move)

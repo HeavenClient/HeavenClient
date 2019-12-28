@@ -20,8 +20,10 @@
 #include "MapObject.h"
 
 #include "../Graphics/Animation.h"
+#include "../Gameplay/Physics/Physics.h"
 
 #include <vector>
+#include <map>
 
 namespace ms
 {
@@ -31,13 +33,33 @@ namespace ms
 		Reactor(int32_t oid, int32_t rid, int8_t state, Point<int16_t> position);
 
 		void draw(double viewx, double viewy, float alpha) const override;
+		int8_t Reactor::update(const Physics& physics);
 
+		void set_state(int8_t state);
 		void destroy(int8_t state, Point<int16_t> position);
+
+		bool is_hittable();
+
+		// Check if this mob collides with the specified rectangle.
+		bool is_in_range(const Rectangle<int16_t>& range) const;
 
 	private:
 		int32_t oid;
 		int32_t rid;
 		int8_t state;
+		//int8_t stance; ??
+		// TODO: these are in gms client
+		//bool movable; /* snowball? */
+		//int32_t questid; 
+		//bool activates_by_touch; // 
+
+		nl::node src;
+		std::map<int8_t, Animation> animations;
+		bool animation_ended;
+
+		bool active;
+		bool hittable;
+		bool dead;
 
 		Animation normal;
 	};

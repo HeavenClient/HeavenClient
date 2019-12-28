@@ -25,6 +25,9 @@ namespace ms
 		reactors.draw(layer, viewx, viewy, alpha);
 	}
 
+	/*
+	 * Spawns all reactors to map with proper footholds.
+	 */
 	void MapReactors::update(const Physics& physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
@@ -42,6 +45,12 @@ namespace ms
 		reactors.update(physics);
 	}
 
+	void MapReactors::trigger(int32_t oid, int8_t state)
+	{
+		if (Optional<Reactor> reactor = reactors.get(oid)) {
+			reactor->set_state(state);
+		}
+	}
 	void MapReactors::spawn(ReactorSpawn&& spawn)
 	{
 		spawns.emplace(std::move(spawn));
@@ -56,5 +65,44 @@ namespace ms
 	void MapReactors::clear()
 	{
 		reactors.clear();
+	}
+
+	MapReactors::reactor_obj MapReactors::check_reactor_near(Point<int16_t> playerpos, bool facing_right)
+	{
+		for (auto& mmo : reactors)
+		{
+			Optional<const Reactor> reactor = mmo.second.get();
+			Point<int16_t> reactor_pos = reactor->get_position();
+			bool acceptable_distance = acceptable_distance = std::abs(reactor->get_position().x() - playerpos.x()) < 60;
+			bool facing_toward_reactor;
+			if (facing_right) {
+				facing_toward_reactor = reactor->get_position().x() > playerpos.x();
+			}
+			else {
+				facing_toward_reactor = reactor->get_position().x() < playerpos.x();
+			}
+			if (reactor && reactor->get_position().y() == playerpos.y() && acceptable_distance)
+			{
+				int32_t oid = mmo.first;
+				Point<int16_t> position = reactor->get_position();
+
+				return { oid, position };
+			}
+		}
+
+		return { 0, {} };
+	}
+
+	Reactor& MapReactors::get_reactor_by_oid(int32_t oid)
+	{
+		Optional<MapObject> reactor = reactors.get(oid);
+		if (reactor) {
+			return dynamic_cast<Reactor&>(*reactor);
+		}
+	}
+
+	MapObjects* MapReactors::get_reactors()
+	{
+		return &reactors;
 	}
 }

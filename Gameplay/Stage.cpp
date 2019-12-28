@@ -31,7 +31,7 @@
 
 namespace ms
 {
-	Stage::Stage() : combat(player, chars, mobs)
+	Stage::Stage() : combat(player, chars, mobs, reactors)
 	{
 		state = State::INACTIVE;
 	}
@@ -223,6 +223,18 @@ namespace ms
 			PickupItemPacket(loot.first, loot.second).dispatch();
 	}
 
+	bool Stage::check_reactors_near_player()
+	{
+		Point<int16_t> playerpos = player.get_position();
+		MapReactors::reactor_obj reactor = reactors.check_reactor_near(playerpos, player.getflip());
+
+		if (reactor.first) {
+			DamageReactorPacket(reactor.first, playerpos, 0 /*stance*/, 0 /*skillid*/).dispatch();
+			return true;
+		}
+		return false;
+	}
+
 	void Stage::send_key(KeyType::Id type, int32_t action, bool down)
 	{
 		if (state != State::ACTIVE || !playable)
@@ -246,7 +258,12 @@ namespace ms
 					check_seats();
 					break;
 				case KeyAction::Id::ATTACK:
+					/*if (check_reactors_near_player()) {
+						combat.use_move(0, true);
+					}
+					else {*/
 					combat.use_move(0);
+					//}
 					break;
 				case KeyAction::Id::PICKUP:
 					check_drops();

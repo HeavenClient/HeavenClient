@@ -252,7 +252,7 @@ namespace ms
 		return move.can_use(level, weapon, job, hp, mp, bullets);
 	}
 
-	Attack Player::prepare_attack(bool skill) const
+	Attack Player::prepare_attack(bool skill, bool reactor_hit) const
 	{
 		Attack::Type attacktype;
 		bool degenerate;
@@ -264,7 +264,11 @@ namespace ms
 		}
 		else
 		{
-			Weapon::Type weapontype = get_weapontype();
+			Weapon::Type weapontype; 
+			if (!reactor_hit)
+				weapontype = get_weapontype();
+			else
+				weapontype = Weapon::SWORD_1H;
 
 			switch (weapontype)
 			{

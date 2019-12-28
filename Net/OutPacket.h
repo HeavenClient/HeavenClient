@@ -89,6 +89,7 @@ namespace ms
 			PARTY_OPERATION = 124,
 			MOVE_MONSTER = 188,
 			PICKUP_ITEM = 202,
+			DAMAGE_REACTOR = 205,
 			PLAYER_MAP_TRANSFER = 207,
 
 			// Custom
