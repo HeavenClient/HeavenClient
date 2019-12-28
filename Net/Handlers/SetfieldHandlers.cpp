@@ -279,6 +279,7 @@ namespace ms
 
 	void SetfieldHandler::parse_minigame(InPacket& recv) const
 	{
+		recv.skip(2);
 		//int16_t mgsize = recv.read_short();
 
 		//for (int16_t i = 0; i < mgsize; i++) {}
