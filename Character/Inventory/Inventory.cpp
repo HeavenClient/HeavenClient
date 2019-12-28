@@ -299,7 +299,7 @@ namespace ms
 			counter++;
 		}
 
-		return counter < slotmaxima[type] ? counter : 0;
+		return counter <= slotmaxima[type] ? counter : 0;
 	}
 
 	int16_t Inventory::find_item(InventoryType::Id type, int32_t itemid) const
