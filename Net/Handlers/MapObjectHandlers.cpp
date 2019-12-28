@@ -29,6 +29,11 @@ namespace ms
 	void SpawnCharHandler::handle(InPacket& recv) const
 	{
 		int32_t cid = recv.read_int();
+
+		// We dont' need to spawn the player twice.
+		if (Stage::get().is_player(cid))
+			return;
+
 		uint8_t level = recv.read_byte();
 		std::string name = recv.read_string();
 
