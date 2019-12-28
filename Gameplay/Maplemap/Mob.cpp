@@ -92,7 +92,6 @@ namespace ms
 		dying = false;
 		dead = false;
 		fading = false;
-		awaitdeath = false;
 		set_stance(st);
 		flydirection = STRAIGHT;
 		counter = 0;
@@ -392,9 +391,7 @@ namespace ms
 			break;
 		case 1:
 			dying = true;
-
-			if (awaitdeath)
-				apply_death();
+			apply_death();
 
 			break;
 		case 2:
@@ -522,7 +519,6 @@ namespace ms
 		);
 
 		update_movement();
-		awaitdeath = false;
 
 		return result;
 	}
@@ -567,7 +563,6 @@ namespace ms
 			set_stance(Stance::HIT);
 
 			update_movement();
-			awaitdeath = true;
 		}
 	}
 

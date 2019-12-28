@@ -168,7 +168,6 @@ namespace ms
 		int8_t team;
 		bool dying;
 		bool dead;
-		bool awaitdeath;
 		bool control;
 		bool aggro;
 		Stance stance;
