@@ -32,7 +32,7 @@
 
 namespace ms
 {
-	UIKeyConfig::UIKeyConfig() : UIDragElement<PosKEYCONFIG>(), dirty(false)
+	UIKeyConfig::UIKeyConfig(const Skillbook& in_skillbook) : UIDragElement<PosKEYCONFIG>(), skillbook(in_skillbook), dirty(false)
 	{
 		keyboard = &UI::get().get_keyboard();
 		staged_mappings = keyboard->get_maplekeys();
@@ -763,10 +763,6 @@ namespace ms
 				}
 			}
 		}
-		else
-		{
-			clear_tooltip();
-		}
 
 		return UIElement::send_cursor(clicked, cursorpos);
 	}
@@ -834,12 +830,11 @@ namespace ms
 
 	void UIKeyConfig::show_skill(int32_t skill_id)
 	{
-		//int32_t skill_id = skill_id;
-		//int32_t level = skillbook.get_level(skill_id);
-		//int32_t masterlevel = skillbook.get_masterlevel(skill_id);
-		//int64_t expiration = skillbook.get_expiration(skill_id);
+		int32_t level = skillbook.get_level(skill_id);
+		int32_t masterlevel = skillbook.get_masterlevel(skill_id);
+		int64_t expiration = skillbook.get_expiration(skill_id);
 
-		//UI::get().show_skill(Tooltip::Parent::KEYCONFIG, skill_id, level, masterlevel, expiration);
+		UI::get().show_skill(Tooltip::Parent::KEYCONFIG, skill_id, level, masterlevel, expiration);
 	}
 
 	void UIKeyConfig::clear_tooltip()

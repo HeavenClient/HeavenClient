@@ -23,6 +23,7 @@
 #include "../Keyboard.h"
 #include "../KeyType.h"
 
+#include "../Character/Skillbook.h"
 #include "../Template/EnumMap.h"
 
 namespace ms
@@ -34,7 +35,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIKeyConfig();
+		UIKeyConfig(const Skillbook& skillbook);
 
 		void draw(float inter) const override;
 
@@ -103,6 +104,8 @@ namespace ms
 		private:
 			Keyboard::Mapping mapping;
 		};
+
+		const Skillbook& skillbook;
 
 		bool dirty;
 

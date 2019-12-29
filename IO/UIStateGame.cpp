@@ -257,7 +257,9 @@ namespace ms
 						auto keyconfig = UI::get().get_element<UIKeyConfig>();
 
 						if (!keyconfig || !keyconfig->is_active())
-							emplace<UIKeyConfig>();
+							emplace<UIKeyConfig>(
+								Stage::get().get_player().get_skills()
+								);
 						else if (keyconfig && keyconfig->is_active())
 							keyconfig->close();
 

@@ -614,7 +614,9 @@ namespace ms
 			remove_menus();
 			break;
 		case Buttons::BT_SETTING_KEYS:
-			UI::get().emplace<UIKeyConfig>();
+			UI::get().emplace<UIKeyConfig>(
+				Stage::get().get_player().get_skills()
+				);
 
 			remove_menus();
 			break;
