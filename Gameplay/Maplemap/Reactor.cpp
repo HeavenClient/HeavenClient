@@ -28,14 +28,15 @@ namespace ms
 		std::string strid = string_format::extend_id(rid, 7);
 		src = nl::nx::reactor[strid + ".img"];
 
-		normal = src["0"];
+		normal = src[0];
 		animation_ended = true;
 		dead = false;
 
 		hittable = false;
 		for (auto sub : src[0]) {
-			if (sub.name() == "hit") {
-				hittable = true;
+			if (sub.name() == "event") {
+				if (sub["0"]["type"].get_integer() == 0)
+					hittable = true;
 			}
 		}
 	}
@@ -43,7 +44,7 @@ namespace ms
 	void Reactor::draw(double viewx, double viewy, float alpha) const
 	{
 		Point<int16_t> absp = phobj.get_absolute(viewx, viewy, alpha);
-		Point<int16_t> shift = { 0, normal.get_dimensions().y() / 2 };
+		Point<int16_t> shift = { 0, normal.get_origin().y() };
 		if (animation_ended) {
 			/* TODO: handle 'default' animations (horntail reactor floating). */
 			normal.draw(absp - shift, alpha);
@@ -83,7 +84,7 @@ namespace ms
 		animation_ended = false;
 	}
 
-	bool Reactor::is_hittable()
+	bool Reactor::is_hittable() const
 	{
 		return hittable;
 	}
@@ -93,7 +94,7 @@ namespace ms
 		if (!active)
 			return false;
 
-		Rectangle<int16_t> bounds(Point<int16_t>(-40, -normal.get_dimensions().y()), Point<int16_t>(normal.get_dimensions().x()+20, 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
+		Rectangle<int16_t> bounds(Point<int16_t>(-30, -normal.get_dimensions().y()), Point<int16_t>(normal.get_dimensions().x()-10, 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
 		bounds.shift(get_position());
 
 		return range.overlaps(bounds);

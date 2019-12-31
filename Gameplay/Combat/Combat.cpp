@@ -183,7 +183,7 @@ namespace ms
 				// assume reactor
 				const Reactor* reactor = static_cast<const Reactor*>(mmo.second.get());
 
-				if (reactor && reactor->is_in_range(range))
+				if (reactor && reactor->is_hittable() && reactor->is_in_range(range))
 				{
 					int32_t oid = reactor->get_oid();
 					uint16_t distance = reactor->get_position().distance(origin);

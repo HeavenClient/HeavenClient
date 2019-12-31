@@ -152,7 +152,7 @@ namespace ms
 
 		State state;
 		bool attacking;
-		bool flip;
+		bool facing_right;
 
 	private:
 		Text namelabel;

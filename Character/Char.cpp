@@ -47,7 +47,7 @@ namespace ms
 
 		look.draw(DrawArgument(absp, color), alpha);
 
-		afterimage.draw(look.get_frame(), DrawArgument(absp, flip), alpha);
+		afterimage.draw(look.get_frame(), DrawArgument(absp, facing_right), alpha);
 
 		if (ironbody)
 		{
@@ -169,7 +169,7 @@ namespace ms
 	{
 		float attackspeed = get_real_attackspeed();
 
-		effects.add(toshow, DrawArgument(flip), z, attackspeed);
+		effects.add(toshow, DrawArgument(facing_right), z, attackspeed);
 	}
 
 	void Char::show_effect_id(CharEffect::Id toshow)
@@ -284,7 +284,7 @@ namespace ms
 
 	void Char::set_direction(bool f)
 	{
-		flip = f;
+		facing_right = f;
 		look.set_direction(f);
 	}
 
@@ -349,7 +349,7 @@ namespace ms
 
 	bool Char::getflip() const
 	{
-		return flip;
+		return facing_right;
 	}
 
 	std::string Char::get_name() const

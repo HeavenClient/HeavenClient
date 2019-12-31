@@ -38,7 +38,7 @@ namespace ms
 		void set_state(int8_t state);
 		void destroy(int8_t state, Point<int16_t> position);
 
-		bool is_hittable();
+		bool is_hittable() const;
 
 		// Check if this mob collides with the specified rectangle.
 		bool is_in_range(const Rectangle<int16_t>& range) const;
