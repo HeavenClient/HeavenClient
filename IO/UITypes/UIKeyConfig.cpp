@@ -532,10 +532,6 @@ namespace ms
 			{
 				int32_t item_id = mapping.action;
 				ficon = item_icons.at(item_id).get();
-
-				// TODO replace with more efficient InventoryHandlers solution
-				int16_t count = inventory.get_total_item_count(item_id);
-				ficon->set_count(count);
 			}
 			else if (mapping.type == KeyType::Id::SKILL)
 			{
@@ -1238,6 +1234,35 @@ namespace ms
 		case KeyAction::Id::LENGTH:
 		default:
 			return KeyType::Id::NONE;
+		}
+	}
+
+	// Item count
+
+	void UIKeyConfig::modify_item_count(InventoryType::Id type, int16_t slot, int8_t mode, int16_t arg)
+	{
+		int32_t item_id = inventory.get_item_id(type, slot);
+
+		if (item_icons.find(item_id) == item_icons.end())
+			return;
+
+		int16_t slot_count = inventory.get_item_count(type, slot);
+		int16_t item_count = item_icons[item_id]->get_count();
+
+		switch (mode)
+		{
+		case Inventory::Modification::ADD:
+			item_icons[item_id]->set_count(item_count + slot_count);
+			break;
+		case Inventory::Modification::CHANGECOUNT:
+		{
+			int16_t new_slot_count = arg;
+			item_icons[item_id]->set_count(item_count + (new_slot_count - slot_count));
+		}
+		break;
+		case Inventory::Modification::REMOVE:
+			item_icons[item_id]->set_count(item_count - slot_count);
+			break;
 		}
 	}
 

@@ -52,6 +52,8 @@ namespace ms
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping mapping);
 		void unstage_mapping(Keyboard::Mapping mapping);
 
+		void modify_item_count(InventoryType::Id type, int16_t slot, int8_t mode, int16_t arg);
+
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
 
