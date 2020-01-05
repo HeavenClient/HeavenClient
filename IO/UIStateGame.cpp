@@ -286,6 +286,7 @@ namespace ms
 
 						if (!keyconfig || !keyconfig->is_active())
 							emplace<UIKeyConfig>(
+								Stage::get().get_player().get_inventory(),
 								Stage::get().get_player().get_skills()
 								);
 						else if (keyconfig && keyconfig->is_active())

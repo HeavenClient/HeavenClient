@@ -32,7 +32,7 @@
 
 namespace ms
 {
-	UIKeyConfig::UIKeyConfig(const Skillbook& in_skillbook) : UIDragElement<PosKEYCONFIG>(), skillbook(in_skillbook), dirty(false)
+	UIKeyConfig::UIKeyConfig(const Inventory& in_inventory, const Skillbook& in_skillbook) : UIDragElement<PosKEYCONFIG>(), inventory(in_inventory), skillbook(in_skillbook), dirty(false)
 	{
 		keyboard = &UI::get().get_keyboard();
 		staged_mappings = keyboard->get_maplekeys();
@@ -491,8 +491,10 @@ namespace ms
 			if (mapping.type == KeyType::Id::ITEM)
 			{
 				int32_t item_id = mapping.action;
+				int16_t count = inventory.get_total_item_count(item_id);
 				Texture tx = get_item_texture(item_id);
-				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
+
+				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<CountableMappingIcon>(mapping, count), tx, count);
 			}
 		}
 	}
@@ -507,6 +509,7 @@ namespace ms
 			{
 				int32_t skill_id = mapping.action;
 				Texture tx = get_skill_texture(skill_id);
+
 				skill_icons[skill_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
 			}
 		}
@@ -529,6 +532,10 @@ namespace ms
 			{
 				int32_t item_id = mapping.action;
 				ficon = item_icons.at(item_id).get();
+
+				// TODO replace with more efficient InventoryHandlers solution
+				int16_t count = inventory.get_total_item_count(item_id);
+				ficon->set_count(count);
 			}
 			else if (mapping.type == KeyType::Id::SKILL)
 			{
@@ -918,8 +925,9 @@ namespace ms
 
 			if (item_icons.find(item_id) == item_icons.end())
 			{
+				int16_t count = inventory.get_total_item_count(item_id);
 				Texture tx = get_item_texture(item_id);
-				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<MappingIcon>(mapping), tx, -1);
+				item_icons[item_id] = std::make_unique<Icon>(std::make_unique<CountableMappingIcon>(mapping, count), tx, count);
 			}
 		}
 		else if (mapping.type == KeyType::Id::SKILL)
@@ -1265,5 +1273,12 @@ namespace ms
 	Icon::IconType UIKeyConfig::MappingIcon::get_type()
 	{
 		return Icon::IconType::KEY;
+	}
+
+	UIKeyConfig::CountableMappingIcon::CountableMappingIcon(Keyboard::Mapping m, int16_t c) : UIKeyConfig::MappingIcon(m), count(c) {}
+
+	void UIKeyConfig::CountableMappingIcon::set_count(int16_t c)
+	{
+		count = c;
 	}
 }

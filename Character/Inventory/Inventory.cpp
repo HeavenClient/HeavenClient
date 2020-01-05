@@ -321,6 +321,19 @@ namespace ms
 			return 0;
 	}
 
+	int16_t Inventory::get_total_item_count(int32_t itemid) const
+	{
+		InventoryType::Id type = InventoryType::by_item_id(itemid);
+
+		int16_t total_count = 0;
+
+		for (auto& iter : inventories[type])
+			if (iter.second.item_id == itemid)
+				total_count += iter.second.count;
+
+		return total_count;
+	}
+
 	int32_t Inventory::get_item_id(InventoryType::Id type, int16_t slot) const
 	{
 		auto iter = inventories[type].find(slot);

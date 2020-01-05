@@ -607,6 +607,7 @@ namespace ms
 			break;
 		case Buttons::BT_SETTING_KEYS:
 			UI::get().emplace<UIKeyConfig>(
+				Stage::get().get_player().get_inventory(),
 				Stage::get().get_player().get_skills()
 				);
 

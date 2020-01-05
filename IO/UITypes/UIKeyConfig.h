@@ -26,6 +26,8 @@
 #include "../Character/Skillbook.h"
 #include "../Template/EnumMap.h"
 
+#include "../Character/Inventory/Inventory.h"
+
 namespace ms
 {
 	class UIKeyConfig : public UIDragElement<PosKEYCONFIG>
@@ -35,7 +37,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIKeyConfig(const Skillbook& skillbook);
+		UIKeyConfig(const Inventory& inventory, const Skillbook& skillbook);
 
 		void draw(float inter) const override;
 
@@ -94,20 +96,33 @@ namespace ms
 		class MappingIcon : public Icon::Type
 		{
 		public:
-			MappingIcon(Keyboard::Mapping);
+			MappingIcon(Keyboard::Mapping mapping);
 			MappingIcon(KeyAction::Id keyId);
 
 			void drop_on_stage() const override;
 			void drop_on_equips(Equipslot::Id eqslot) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
-			void set_count(int16_t) override {}
+			void set_count(int16_t) override {};
 			Icon::IconType get_type() override;
 
 		private:
 			Keyboard::Mapping mapping;
 		};
 
+		// Used for displaying item counts
+		class CountableMappingIcon : public MappingIcon
+		{
+		public:
+			CountableMappingIcon(Keyboard::Mapping mapping, int16_t count);
+
+			void set_count(int16_t count) override;
+
+		private:
+			int16_t count;
+		};
+
+		const Inventory& inventory;
 		const Skillbook& skillbook;
 
 		bool dirty;

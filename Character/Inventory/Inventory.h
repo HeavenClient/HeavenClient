@@ -98,6 +98,8 @@ namespace ms
 		int16_t find_item(InventoryType::Id type, int32_t itemid) const;
 		// Return the count of an item. Returns 0 if the slot is empty.
 		int16_t get_item_count(InventoryType::Id type, int16_t slot) const;
+		// Return the total count of an item. Returns 0 if no instances of item found.
+		int16_t get_total_item_count(int32_t itemid) const;
 		// Return the id of an item. Returns 0 if the slot is empty.
 		int32_t get_item_id(InventoryType::Id type, int16_t slot) const;
 
