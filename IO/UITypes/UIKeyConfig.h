@@ -52,7 +52,7 @@ namespace ms
 		void stage_mapping(Point<int16_t> cursorposition, Keyboard::Mapping mapping);
 		void unstage_mapping(Keyboard::Mapping mapping);
 
-		void modify_item_count(InventoryType::Id type, int16_t slot, int8_t mode, int16_t arg);
+		void update_item_count(InventoryType::Id type, int16_t slot, int16_t change);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
@@ -105,7 +105,7 @@ namespace ms
 			void drop_on_equips(Equipslot::Id eqslot) const override {}
 			bool drop_on_items(InventoryType::Id, Equipslot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
-			void set_count(int16_t) override {};
+			void set_count(int16_t) override {}
 			Icon::IconType get_type() override;
 
 		private:

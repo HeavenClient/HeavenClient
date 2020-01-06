@@ -1239,31 +1239,15 @@ namespace ms
 
 	// Item count
 
-	void UIKeyConfig::modify_item_count(InventoryType::Id type, int16_t slot, int8_t mode, int16_t arg)
+	void UIKeyConfig::update_item_count(InventoryType::Id type, int16_t slot, int16_t change)
 	{
 		int32_t item_id = inventory.get_item_id(type, slot);
 
 		if (item_icons.find(item_id) == item_icons.end())
 			return;
 
-		int16_t slot_count = inventory.get_item_count(type, slot);
 		int16_t item_count = item_icons[item_id]->get_count();
-
-		switch (mode)
-		{
-		case Inventory::Modification::ADD:
-			item_icons[item_id]->set_count(item_count + slot_count);
-			break;
-		case Inventory::Modification::CHANGECOUNT:
-		{
-			int16_t new_slot_count = arg;
-			item_icons[item_id]->set_count(item_count + (new_slot_count - slot_count));
-		}
-		break;
-		case Inventory::Modification::REMOVE:
-			item_icons[item_id]->set_count(item_count - slot_count);
-			break;
-		}
+		item_icons[item_id]->set_count(item_count + change);
 	}
 
 	// MappingIcon
