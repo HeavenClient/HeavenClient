@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 //	This file is part of the continued Journey MMORPG client					//
-//	Copyright (C) 2015-2019  Daniel Allendorf, Ryan Payton						//
+//	Copyright (C) 2015-2019  Daniel Allendorf, Ryan Payton, lain3d				//
 //																				//
 //	This program is free software: you can redistribute it and/or modify		//
 //	it under the terms of the GNU Affero General Public License as published by	//
@@ -24,8 +24,28 @@
 #include <unordered_map>
 #include <cstdint>
 #include <string>
+#include <array>
 
 #include <nlnx/node.hpp>
+#include <AL/al.h>
+#include <AL/alure2.h>
+#include "membuf.h"
+
+class FileFactory final : public alure::FileIOFactory {
+private:
+    std::unordered_map<std::string, membuf*>* audiodb;
+public:
+    FileFactory(std::unordered_map<std::string, membuf*>* audiodb_in) : audiodb(audiodb_in) {}
+
+    alure::UniquePtr<std::istream> openFile(const alure::String &name) noexcept override
+    {
+        auto stream = alure::MakeUnique<std::istream>(audiodb->at(name));
+        if (stream->fail()) {
+			throw std::runtime_error("Failed to create stream.");
+        }
+        return std::move(stream);
+    }
+};
 
 namespace ms
 {
@@ -69,41 +89,54 @@ namespace ms
 		Sound(int32_t itemid);
 		Sound(nl::node src);
 		Sound();
+		//~Sound();
 
-		void play() const;
+		void play();
 
 		static Error init();
 		static void close();
 		static bool set_sfxvolume(uint8_t volume);
 
+
 	private:
 		size_t id;
 
-		static void play(size_t id);
 
 		static size_t add_sound(nl::node src);
 		static void add_sound(Sound::Name name, nl::node src);
 		static void add_sound(std::string itemid, nl::node src);
+		void create_alure_source();
 
 		static std::string format_id(int32_t itemid);
 
-		static std::unordered_map<size_t, uint64_t> samples;
 		static EnumMap<Name, size_t> soundids;
 		static std::unordered_map<std::string, size_t> itemids;
+		alure::Source sound_src;
+		static size_t source_inc;
+		static alure::Source sound_srcs[100];
 	};
 
-	class Music
-	{
-	public:
-		Music(std::string path);
+    class Music
+    {
+    public:
+        Music(std::string path);
 
-		void play() const;
-		void play_once() const;
+        void play() const;
+        void play_once() const;
 
-		static Error init();
-		static bool set_bgmvolume(uint8_t volume);
+        static Error init();
+        static bool set_bgmvolume(uint8_t volume);
+        static void update_context();
 
-	private:
-		std::string path;
-	};
+    private:
+        std::string path;
+        static std::unordered_map<std::string, membuf*> audiodb;
+		static alure::DeviceManager devMgr;
+		static alure::Device dev;
+		static alure::Context ctx;
+		static alure::Source music_src;
+		static alure::Buffer music_buff;
+
+        friend Sound;
+    };
 }

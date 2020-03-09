@@ -33,6 +33,7 @@
 #include "Gameplay/Combat/DamageNumber.h"
 
 #include <iostream>
+#include <AL/alure2.h>
 
 namespace ms
 {
@@ -47,12 +48,13 @@ namespace ms
 		if (Error error = Window::get().init())
 			return error;
 
-		if (Error error = Sound::init())
-			return error;
-
 		// TODO: (rich) fix
 		if (Error error = Music::init())
 			return error;
+
+		if (Error error = Sound::init())
+			return error;
+
 
 		Char::init();
 		DamageNumber::init();
@@ -70,6 +72,7 @@ namespace ms
 		Stage::get().update();
 		UI::get().update();
 		Session::get().read();
+		Music::update_context();
 	}
 
 	void draw(float alpha)

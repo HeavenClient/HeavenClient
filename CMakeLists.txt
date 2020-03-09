@@ -436,7 +436,7 @@ add_executable(HeavenClient
         MapleStory.cpp
         MapleStory.h
         resource.h
-        Timer.h)
+        Timer.h Audio/membuf.cpp Audio/membuf.h)
 
 target_link_libraries(HeavenClient /home/rich/HeavenClient/HeavenClient/nlnx/build/libNoLifeNx.a)
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/nlnx)
@@ -456,6 +456,13 @@ TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/glad/build/
 
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/glfw-3.3.2)
 target_link_libraries(HeavenClient glfw3)
+
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC /home/rich/openal-soft/include)
+TARGET_LINK_LIBRARIES(HeavenClient "/home/rich/openal-soft/build/libopenal.so")
+
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC /home/rich/alure/include)
+TARGET_LINK_LIBRARIES(HeavenClient "/home/rich/alure/build/libalure2.so")
+
 target_link_libraries(HeavenClient GL)
 #target_link_libraries(HeavenClient GLEW)
 target_link_libraries(HeavenClient X11)
