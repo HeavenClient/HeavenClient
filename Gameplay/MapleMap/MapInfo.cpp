@@ -29,8 +29,7 @@ namespace ms
 		{
 			mapwalls = Range<int16_t>(info["VRLeft"], info["VRRight"]);
 			mapborders = Range<int16_t>(info["VRTop"], info["VRBottom"]);
-		}
-		else
+		} else
 		{
 			mapwalls = walls;
 			mapborders = borders;
@@ -54,7 +53,8 @@ namespace ms
 			ladders.push_back(ladder);
 	}
 
-	MapInfo::MapInfo() {}
+	MapInfo::MapInfo()
+	{}
 
 	bool MapInfo::is_underwater() const
 	{
@@ -78,7 +78,7 @@ namespace ms
 
 	Optional<const Seat> MapInfo::findseat(Point<int16_t> position) const
 	{
-		for (auto& seat : seats)
+		for (auto &seat : seats)
 			if (seat.inrange(position))
 				return seat;
 
@@ -87,7 +87,7 @@ namespace ms
 
 	Optional<const Ladder> MapInfo::findladder(Point<int16_t> position, bool upwards) const
 	{
-		for (auto& ladder : ladders)
+		for (auto &ladder : ladders)
 			if (ladder.inrange(position, upwards))
 				return ladder;
 
@@ -131,8 +131,8 @@ namespace ms
 		auto ver = Range<int16_t>(y1, y2);
 
 		int16_t y = upwards ?
-			position.y() - 5 :
-			position.y() + 5;
+					position.y() - 5 :
+					position.y() + 5;
 
 		return hor.contains(x) && ver.contains(y);
 	}

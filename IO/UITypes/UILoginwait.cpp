@@ -45,7 +45,9 @@ namespace ms
 		return TYPE;
 	}
 
-	UILoginwait::UILoginwait() : UILoginwait([]() {}) {}
+	UILoginwait::UILoginwait() : UILoginwait([]()
+											 {})
+	{}
 
 	void UILoginwait::close()
 	{

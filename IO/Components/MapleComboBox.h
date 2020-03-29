@@ -43,15 +43,24 @@ namespace ms
 			GREENNEG
 		};
 
-		MapleComboBox(Type type, std::vector<std::string> options, uint16_t default_option, Point<int16_t> parentpos, Point<int16_t> position, int64_t width);
+		MapleComboBox(Type type, std::vector<std::string> options, uint16_t default_option, Point<int16_t> parentpos,
+					  Point<int16_t> position, int64_t width);
 
 		void draw(Point<int16_t> parentpos) const override;
-		void update() {}
+
+		void update()
+		{}
+
 		Rectangle<int16_t> bounds(Point<int16_t> parentpos) const override;
+
 		int16_t width() const override;
+
 		Point<int16_t> origin() const override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		bool in_combobox(Point<int16_t> cursorpos) override;
+
 		uint16_t get_selected() const override;
 
 	protected:

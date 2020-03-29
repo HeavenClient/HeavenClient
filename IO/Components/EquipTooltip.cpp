@@ -110,31 +110,31 @@ namespace ms
 		invpos = ivp;
 		invpos_preview = 0;
 
-		const Player& player = Stage::get().get_player();
+		const Player &player = Stage::get().get_player();
 
 		InventoryType::Id invtype;
 
 		switch (parent)
 		{
-		case Tooltip::Parent::ITEMINVENTORY:
-		case Tooltip::Parent::SHOP:
-			invtype = InventoryType::Id::EQUIP;
-			break;
-		case Tooltip::Parent::EQUIPINVENTORY:
-			invtype = InventoryType::Id::EQUIPPED;
-			break;
-		default:
-			invtype = InventoryType::Id::NONE;
+			case Tooltip::Parent::ITEMINVENTORY:
+			case Tooltip::Parent::SHOP:
+				invtype = InventoryType::Id::EQUIP;
+				break;
+			case Tooltip::Parent::EQUIPINVENTORY:
+				invtype = InventoryType::Id::EQUIPPED;
+				break;
+			default:
+				invtype = InventoryType::Id::NONE;
 		}
 
-		const Inventory& inventory = player.get_inventory();
+		const Inventory &inventory = player.get_inventory();
 		auto oequip = inventory.get_equip(invtype, invpos);
-		const CharStats& stats = player.get_stats();
+		const CharStats &stats = player.get_stats();
 
 		if (invtype == InventoryType::Id::EQUIP)
 		{
 			const int32_t item_id = oequip.get()->get_item_id();
-			const EquipData& equipdata = EquipData::get(item_id);
+			const EquipData &equipdata = EquipData::get(item_id);
 			Equipslot::Id eqslot = equipdata.get_eqslot();
 
 			if (inventory.has_equipped(eqslot));
@@ -143,18 +143,18 @@ namespace ms
 
 				if (eequip)
 				{
-					const Equip& equip = *eequip;
+					const Equip &equip = *eequip;
 
 					int32_t item_id = equip.get_item_id();
 
-					const EquipData& equipdata = EquipData::get(item_id);
-					const ItemData& itemdata = equipdata.get_itemdata();
+					const EquipData &equipdata = EquipData::get(item_id);
+					const ItemData &itemdata = equipdata.get_itemdata();
 
 					height_preview = 540;
 
 					itemicon_preview = itemdata.get_icon(false);
 
-					for (auto& ms : requirements)
+					for (auto &ms : requirements)
 					{
 						canequip_preview[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 						std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
@@ -169,91 +169,92 @@ namespace ms
 
 					switch (equipdata.get_reqstat(Maplestat::Id::JOB))
 					{
-					case 0:
-						okjobs_preview.push_back(0);
-						okjobs_preview.push_back(1);
-						okjobs_preview.push_back(2);
-						okjobs_preview.push_back(3);
-						okjobs_preview.push_back(4);
-						okjobs_preview.push_back(5);
-						canequip_preview[Maplestat::Id::JOB] = true;
-						break;
-					case 1:
-						okjobs_preview.push_back(1);
-						canequip_preview[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) || (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
-						break;
-					case 2:
-						okjobs_preview.push_back(2);
-						canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
-						break;
-					case 4:
-						okjobs_preview.push_back(3);
-						canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
-						break;
-					case 8:
-						okjobs_preview.push_back(4);
-						canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
-						break;
-					case 16:
-						okjobs_preview.push_back(5);
-						canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
-						break;
-					default:
-						canequip_preview[Maplestat::Id::JOB] = false;
-						break;
+						case 0:
+							okjobs_preview.push_back(0);
+							okjobs_preview.push_back(1);
+							okjobs_preview.push_back(2);
+							okjobs_preview.push_back(3);
+							okjobs_preview.push_back(4);
+							okjobs_preview.push_back(5);
+							canequip_preview[Maplestat::Id::JOB] = true;
+							break;
+						case 1:
+							okjobs_preview.push_back(1);
+							canequip_preview[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) ||
+																   (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
+							break;
+						case 2:
+							okjobs_preview.push_back(2);
+							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
+							break;
+						case 4:
+							okjobs_preview.push_back(3);
+							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
+							break;
+						case 8:
+							okjobs_preview.push_back(4);
+							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
+							break;
+						case 16:
+							okjobs_preview.push_back(5);
+							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
+							break;
+						default:
+							canequip_preview[Maplestat::Id::JOB] = false;
+							break;
 					}
 
 					prank_preview = equip.get_potrank();
 
 					switch (prank_preview)
 					{
-					case Equip::Potential::POT_HIDDEN:
-						potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::RED);
-						potflag_preview.change_text("(Hidden Potential)");
-						break;
-					case Equip::Potential::POT_RARE:
-						potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-						potflag_preview.change_text("(Rare Item)");
-						break;
-					case Equip::Potential::POT_EPIC:
-						potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-						potflag_preview.change_text("(Epic Item)");
-						break;
-					case Equip::Potential::POT_UNIQUE:
-						potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-						potflag_preview.change_text("(Unique Item)");
-						break;
-					case Equip::Potential::POT_LEGENDARY:
-						potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-						potflag_preview.change_text("(Legendary Item)");
-						break;
-					default:
-						height_preview -= 16;
-						break;
+						case Equip::Potential::POT_HIDDEN:
+							potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::RED);
+							potflag_preview.change_text("(Hidden Potential)");
+							break;
+						case Equip::Potential::POT_RARE:
+							potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+							potflag_preview.change_text("(Rare Item)");
+							break;
+						case Equip::Potential::POT_EPIC:
+							potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+							potflag_preview.change_text("(Epic Item)");
+							break;
+						case Equip::Potential::POT_UNIQUE:
+							potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+							potflag_preview.change_text("(Unique Item)");
+							break;
+						case Equip::Potential::POT_LEGENDARY:
+							potflag_preview = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+							potflag_preview.change_text("(Legendary Item)");
+							break;
+						default:
+							height_preview -= 16;
+							break;
 					}
 
 					Color::Name namecolor;
 
 					switch (equip.get_quality())
 					{
-					case EquipQuality::Id::GREY:
-						namecolor = Color::Name::LIGHTGREY;
-						break;
-					case EquipQuality::Id::ORANGE:
-						namecolor = Color::Name::ORANGE;
-						break;
-					case EquipQuality::Id::BLUE:
-						namecolor = Color::Name::MEDIUMBLUE;
-						break;
-					case EquipQuality::Id::VIOLET:
-						namecolor = Color::Name::VIOLET;
-						break;
-					case EquipQuality::Id::GOLD:
-						namecolor = Color::Name::YELLOW;
-						break;
-					default:
-						namecolor = Color::Name::WHITE;
-						break;
+						case EquipQuality::Id::GREY:
+							namecolor = Color::Name::LIGHTGREY;
+							break;
+						case EquipQuality::Id::ORANGE:
+							namecolor = Color::Name::ORANGE;
+							break;
+						case EquipQuality::Id::BLUE:
+							namecolor = Color::Name::MEDIUMBLUE;
+							break;
+						case EquipQuality::Id::VIOLET:
+							namecolor = Color::Name::VIOLET;
+							break;
+						case EquipQuality::Id::GOLD:
+							namecolor = Color::Name::YELLOW;
+							break;
+						default:
+							namecolor = Color::Name::WHITE;
+							break;
 					}
 
 					std::string namestr = itemdata.get_name();
@@ -262,15 +263,15 @@ namespace ms
 
 					switch (reqGender)
 					{
-					case 0: // Male
-						namestr += " (M)";
-						break;
-					case 1: // Female
-						namestr += " (F)";
-						break;
-					case 2: // Unisex
-					default:
-						break;
+						case 0: // Male
+							namestr += " (M)";
+							break;
+						case 1: // Female
+							namestr += " (F)";
+							break;
+						case 2: // Unisex
+						default:
+							break;
 					}
 
 					if (equip.get_level() > 0)
@@ -281,7 +282,8 @@ namespace ms
 					}
 
 					name_preview = Text(Text::Font::A12B, Text::Alignment::LEFT, namecolor, namestr, 400);
-					atkinc_preview = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::DUSTYGRAY, "ATT INCREASE");
+					atkinc_preview = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::DUSTYGRAY,
+										  "ATT INCREASE");
 
 					std::string desctext = itemdata.get_desc();
 					hasdesc_preview = desctext.size() > 0;
@@ -292,16 +294,17 @@ namespace ms
 						height_preview += desc_preview.height() + 10;
 					}
 
-					category_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Type: " + equipdata.get_type());
+					category_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+											"Type: " + equipdata.get_type());
 
 					is_weapon_preview = equipdata.is_weapon();
 
 					if (is_weapon_preview)
 					{
-						const WeaponData& weapon = WeaponData::get(item_id);
-						wepspeed_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Attack Speed: " + weapon.getspeedstring());
-					}
-					else
+						const WeaponData &weapon = WeaponData::get(item_id);
+						wepspeed_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+												"Attack Speed: " + weapon.getspeedstring());
+					} else
 					{
 						height_preview -= 18;
 					}
@@ -310,23 +313,25 @@ namespace ms
 
 					if (hasslots_preview)
 					{
-						slots_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Remaining Enhancements: " + std::to_string(equip.get_slots()));
+						slots_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+											 "Remaining Enhancements: " + std::to_string(equip.get_slots()));
 
 						std::string vicious = std::to_string(equip.get_vicious());
 
 						if (equip.get_vicious() > 1)
 							vicious.append(" (MAX) ");
 
-						hammers_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Hammers Applied: " + vicious);
-					}
-					else
+						hammers_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+											   "Hammers Applied: " + vicious);
+					} else
 					{
 						height_preview -= 36;
 					}
 
 					statlabels_preview.clear();
 
-					for (Equipstat::Id es = Equipstat::Id::STR; es <= Equipstat::Id::JUMP; es = static_cast<Equipstat::Id>(es + 1))
+					for (Equipstat::Id es = Equipstat::Id::STR;
+						 es <= Equipstat::Id::JUMP; es = static_cast<Equipstat::Id>(es + 1))
 					{
 						if (equip.get_stat(es) > 0)
 						{
@@ -340,9 +345,9 @@ namespace ms
 								statstr.append(std::to_string(abs(delta)) + ")");
 							}
 
-							statlabels_preview[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, Equipstat::names[es] + std::string(": ") + statstr);
-						}
-						else
+							statlabels_preview[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+														  Equipstat::names[es] + std::string(": ") + statstr);
+						} else
 						{
 							height_preview -= 18;
 						}
@@ -356,18 +361,18 @@ namespace ms
 		if (!oequip)
 			return;
 
-		const Equip& equip = *oequip;
+		const Equip &equip = *oequip;
 
 		int32_t item_id = equip.get_item_id();
 
-		const EquipData& equipdata = EquipData::get(item_id);
-		const ItemData& itemdata = equipdata.get_itemdata();
+		const EquipData &equipdata = EquipData::get(item_id);
+		const ItemData &itemdata = equipdata.get_itemdata();
 
 		height = 540;
 
 		itemicon = itemdata.get_icon(false);
 
-		for (auto& ms : requirements)
+		for (auto &ms : requirements)
 		{
 			canequip[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 			std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
@@ -382,91 +387,92 @@ namespace ms
 
 		switch (equipdata.get_reqstat(Maplestat::Id::JOB))
 		{
-		case 0:
-			okjobs.push_back(0);
-			okjobs.push_back(1);
-			okjobs.push_back(2);
-			okjobs.push_back(3);
-			okjobs.push_back(4);
-			okjobs.push_back(5);
-			canequip[Maplestat::Id::JOB] = true;
-			break;
-		case 1:
-			okjobs.push_back(1);
-			canequip[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) || (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
-			break;
-		case 2:
-			okjobs.push_back(2);
-			canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
-			break;
-		case 4:
-			okjobs.push_back(3);
-			canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
-			break;
-		case 8:
-			okjobs.push_back(4);
-			canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
-			break;
-		case 16:
-			okjobs.push_back(5);
-			canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
-			break;
-		default:
-			canequip[Maplestat::Id::JOB] = false;
-			break;
+			case 0:
+				okjobs.push_back(0);
+				okjobs.push_back(1);
+				okjobs.push_back(2);
+				okjobs.push_back(3);
+				okjobs.push_back(4);
+				okjobs.push_back(5);
+				canequip[Maplestat::Id::JOB] = true;
+				break;
+			case 1:
+				okjobs.push_back(1);
+				canequip[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) ||
+											   (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
+				break;
+			case 2:
+				okjobs.push_back(2);
+				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
+				break;
+			case 4:
+				okjobs.push_back(3);
+				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
+				break;
+			case 8:
+				okjobs.push_back(4);
+				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
+				break;
+			case 16:
+				okjobs.push_back(5);
+				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
+				break;
+			default:
+				canequip[Maplestat::Id::JOB] = false;
+				break;
 		}
 
 		prank = equip.get_potrank();
 
 		switch (prank)
 		{
-		case Equip::Potential::POT_HIDDEN:
-			potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::RED);
-			potflag.change_text("(Hidden Potential)");
-			break;
-		case Equip::Potential::POT_RARE:
-			potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-			potflag.change_text("(Rare Item)");
-			break;
-		case Equip::Potential::POT_EPIC:
-			potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-			potflag.change_text("(Epic Item)");
-			break;
-		case Equip::Potential::POT_UNIQUE:
-			potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-			potflag.change_text("(Unique Item)");
-			break;
-		case Equip::Potential::POT_LEGENDARY:
-			potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
-			potflag.change_text("(Legendary Item)");
-			break;
-		default:
-			height -= 16;
-			break;
+			case Equip::Potential::POT_HIDDEN:
+				potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::RED);
+				potflag.change_text("(Hidden Potential)");
+				break;
+			case Equip::Potential::POT_RARE:
+				potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+				potflag.change_text("(Rare Item)");
+				break;
+			case Equip::Potential::POT_EPIC:
+				potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+				potflag.change_text("(Epic Item)");
+				break;
+			case Equip::Potential::POT_UNIQUE:
+				potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+				potflag.change_text("(Unique Item)");
+				break;
+			case Equip::Potential::POT_LEGENDARY:
+				potflag = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::WHITE);
+				potflag.change_text("(Legendary Item)");
+				break;
+			default:
+				height -= 16;
+				break;
 		}
 
 		Color::Name namecolor;
 
 		switch (equip.get_quality())
 		{
-		case EquipQuality::Id::GREY:
-			namecolor = Color::Name::LIGHTGREY;
-			break;
-		case EquipQuality::Id::ORANGE:
-			namecolor = Color::Name::ORANGE;
-			break;
-		case EquipQuality::Id::BLUE:
-			namecolor = Color::Name::MEDIUMBLUE;
-			break;
-		case EquipQuality::Id::VIOLET:
-			namecolor = Color::Name::VIOLET;
-			break;
-		case EquipQuality::Id::GOLD:
-			namecolor = Color::Name::YELLOW;
-			break;
-		default:
-			namecolor = Color::Name::WHITE;
-			break;
+			case EquipQuality::Id::GREY:
+				namecolor = Color::Name::LIGHTGREY;
+				break;
+			case EquipQuality::Id::ORANGE:
+				namecolor = Color::Name::ORANGE;
+				break;
+			case EquipQuality::Id::BLUE:
+				namecolor = Color::Name::MEDIUMBLUE;
+				break;
+			case EquipQuality::Id::VIOLET:
+				namecolor = Color::Name::VIOLET;
+				break;
+			case EquipQuality::Id::GOLD:
+				namecolor = Color::Name::YELLOW;
+				break;
+			default:
+				namecolor = Color::Name::WHITE;
+				break;
 		}
 
 		std::string namestr = itemdata.get_name();
@@ -475,15 +481,15 @@ namespace ms
 
 		switch (reqGender)
 		{
-		case 0: // Male
-			namestr += " (M)";
-			break;
-		case 1: // Female
-			namestr += " (F)";
-			break;
-		case 2: // Unisex
-		default:
-			break;
+			case 0: // Male
+				namestr += " (M)";
+				break;
+			case 1: // Female
+				namestr += " (F)";
+				break;
+			case 2: // Unisex
+			default:
+				break;
 		}
 
 		if (equip.get_level() > 0)
@@ -511,10 +517,10 @@ namespace ms
 
 		if (is_weapon)
 		{
-			const WeaponData& weapon = WeaponData::get(item_id);
-			wepspeed = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Attack Speed: " + weapon.getspeedstring());
-		}
-		else
+			const WeaponData &weapon = WeaponData::get(item_id);
+			wepspeed = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+							"Attack Speed: " + weapon.getspeedstring());
+		} else
 		{
 			height -= 18;
 		}
@@ -523,7 +529,8 @@ namespace ms
 
 		if (hasslots)
 		{
-			slots = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Remaining Enhancements: " + std::to_string(equip.get_slots()));
+			slots = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+						 "Remaining Enhancements: " + std::to_string(equip.get_slots()));
 
 			std::string vicious = std::to_string(equip.get_vicious());
 
@@ -531,8 +538,7 @@ namespace ms
 				vicious.append(" (MAX) ");
 
 			hammers = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Hammers Applied: " + vicious);
-		}
-		else
+		} else
 		{
 			height -= 36;
 		}
@@ -553,9 +559,9 @@ namespace ms
 					statstr.append(std::to_string(abs(delta)) + ")");
 				}
 
-				statlabels[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, Equipstat::names[es] + std::string(": ") + statstr);
-			}
-			else
+				statlabels[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
+									  Equipstat::names[es] + std::string(": ") + statstr);
+			} else
 			{
 				height -= 18;
 			}
@@ -625,18 +631,15 @@ namespace ms
 			{
 				atkincstr = "m" + atkincstr;
 				atkinc_pos = false;
-			}
-			else if (atkincnum > 0)
+			} else if (atkincnum > 0)
 			{
 				atkincstr = "p" + atkincstr;
 				atkinc_pos = true;
-			}
-			else
+			} else
 			{
 				atkinc_pos = true;
 			}
-		}
-		else
+		} else
 		{
 			atkincstr = "m";
 			atkinc_pos = false;
@@ -663,7 +666,7 @@ namespace ms
 		Point<int16_t> job_position(pos + Point<int16_t>(10, 14));
 		jobsback.draw(job_position);
 
-		for (auto& jbit : okjobs)
+		for (auto &jbit : okjobs)
 			jobs[canequip[Maplestat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
@@ -683,7 +686,7 @@ namespace ms
 			pos.shift_y(stat_y);
 		}
 
-		for (const Text& label : statlabels.values())
+		for (const Text &label : statlabels.values())
 		{
 			if (label.empty())
 				continue;
@@ -763,18 +766,15 @@ namespace ms
 			{
 				atkincstr = "m" + atkincstr;
 				atkinc_pos = false;
-			}
-			else if (atkincnum > 0)
+			} else if (atkincnum > 0)
 			{
 				atkincstr = "p" + atkincstr;
 				atkinc_pos = true;
-			}
-			else
+			} else
 			{
 				atkinc_pos = true;
 			}
-		}
-		else
+		} else
 		{
 			atkincstr = "m";
 			atkinc_pos = false;
@@ -801,7 +801,7 @@ namespace ms
 		Point<int16_t> job_position(pos + Point<int16_t>(10, 14));
 		jobsback.draw(job_position);
 
-		for (auto& jbit : okjobs_preview)
+		for (auto &jbit : okjobs_preview)
 			jobs[canequip_preview[Maplestat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
@@ -821,7 +821,7 @@ namespace ms
 			pos.shift_y(stat_y);
 		}
 
-		for (const Text& label : statlabels_preview.values())
+		for (const Text &label : statlabels_preview.values())
 		{
 			if (label.empty())
 				continue;

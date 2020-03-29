@@ -33,6 +33,7 @@ namespace ms
 		Seat(nl::node source);
 
 		bool inrange(Point<int16_t> position) const;
+
 		Point<int16_t> getpos() const;
 
 	private:
@@ -45,8 +46,11 @@ namespace ms
 		Ladder(nl::node source);
 
 		bool is_ladder() const;
+
 		bool inrange(Point<int16_t> position, bool upwards) const;
+
 		bool felloff(int16_t y, bool downwards) const;
+
 		int16_t get_x() const;
 
 	private:
@@ -60,15 +64,20 @@ namespace ms
 	{
 	public:
 		MapInfo(nl::node src, Range<int16_t> walls, Range<int16_t> borders);
+
 		MapInfo();
 
 		bool is_underwater() const;
+
 		std::string get_bgm() const;
+
 		Range<int16_t> get_walls() const;
+
 		Range<int16_t> get_borders() const;
 
 		// Find a seat the player's position.
 		Optional<const Seat> findseat(Point<int16_t> position) const;
+
 		// Find a ladder at the player's position. upwards = false implies downwards.
 		Optional<const Ladder> findladder(Point<int16_t> position, bool upwards) const;
 

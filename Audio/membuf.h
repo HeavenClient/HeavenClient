@@ -11,21 +11,26 @@
 class membuf : public std::streambuf
 {
 public:
-    membuf(const char *data, unsigned int len);
+	membuf(const char *data, unsigned int len);
 
 private:
-    int_type underflow();
-    int_type uflow();
-    int_type pbackfail(int_type ch);
-    std::streamsize showmanyc();
-    pos_type seekoff(off_type off,
-                     std::ios_base::seekdir dir,
-                     std::ios_base::openmode which);
-    pos_type seekpos(pos_type sp_, std::ios_base::openmode which_);
+	int_type underflow();
 
-    const char * const begin_;
-    const char * const end_;
-    const char * current_;
+	int_type uflow();
+
+	int_type pbackfail(int_type ch);
+
+	std::streamsize showmanyc();
+
+	pos_type seekoff(off_type off,
+					 std::ios_base::seekdir dir,
+					 std::ios_base::openmode which);
+
+	pos_type seekpos(pos_type sp_, std::ios_base::openmode which_);
+
+	const char *const begin_;
+	const char *const end_;
+	const char *current_;
 };
 
 

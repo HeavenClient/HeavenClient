@@ -26,17 +26,24 @@ namespace ms
 	class RegularAttack : public SpecialMove
 	{
 	public:
-		void apply_useeffects(Char& user) const override;
-		void apply_actions(Char& user, Attack::Type type) const override;
-		void apply_stats(const Char& user, Attack& attack) const override;
-		void apply_hiteffects(const AttackUser& user, Mob& target) const override;
-		Animation get_bullet(const Char& user, int32_t bulletid) const override;
+		void apply_useeffects(Char &user) const override;
+
+		void apply_actions(Char &user, Attack::Type type) const override;
+
+		void apply_stats(const Char &user, Attack &attack) const override;
+
+		void apply_hiteffects(const AttackUser &user, Mob &target) const override;
+
+		Animation get_bullet(const Char &user, int32_t bulletid) const override;
 
 		bool is_attack() const override;
+
 		bool is_skill() const override;
+
 		int32_t get_id() const override;
 
-		ForbidReason can_use(int32_t level, Weapon::Type weapon, const Job& job, uint16_t hp, uint16_t mp, uint16_t bullets) const override;
+		ForbidReason can_use(int32_t level, Weapon::Type weapon, const Job &job, uint16_t hp, uint16_t mp,
+							 uint16_t bullets) const override;
 
 	private:
 		RegularAction action;

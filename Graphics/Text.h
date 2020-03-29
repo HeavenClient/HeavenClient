@@ -70,17 +70,25 @@ namespace ms
 				Point<int16_t> position;
 			};
 
-			Layout(const std::vector<Line>& lines, const std::vector<int16_t>& advances, int16_t width, int16_t height, int16_t endx, int16_t endy);
+			Layout(const std::vector<Line> &lines, const std::vector<int16_t> &advances, int16_t width, int16_t height,
+				   int16_t endx, int16_t endy);
+
 			Layout();
 
 			int16_t width() const;
+
 			int16_t height() const;
+
 			int16_t advance(size_t index) const;
+
 			Point<int16_t> get_dimensions() const;
+
 			Point<int16_t> get_endoffset() const;
 
 			using iterator = std::vector<Line>::const_iterator;
+
 			iterator begin() const;
+
 			iterator end() const;
 
 		private:
@@ -90,25 +98,39 @@ namespace ms
 			Point<int16_t> endoffset;
 		};
 
-		Text(Font font, Alignment alignment, Color::Name color, Background background, const std::string& text = "", uint16_t maxwidth = 0, bool formatted = true, int16_t line_adj = 0);
-		Text(Font font, Alignment alignment, Color::Name color, const std::string& text = "", uint16_t maxwidth = 0, bool formatted = true, int16_t line_adj = 0);
+		Text(Font font, Alignment alignment, Color::Name color, Background background, const std::string &text = "",
+			 uint16_t maxwidth = 0, bool formatted = true, int16_t line_adj = 0);
+
+		Text(Font font, Alignment alignment, Color::Name color, const std::string &text = "", uint16_t maxwidth = 0,
+			 bool formatted = true, int16_t line_adj = 0);
+
 		Text();
 
-		void draw(const DrawArgument& args) const;
-		void draw(const DrawArgument& args, const Range<int16_t>& vertical) const;
+		void draw(const DrawArgument &args) const;
 
-		void change_text(const std::string& text);
+		void draw(const DrawArgument &args, const Range<int16_t> &vertical) const;
+
+		void change_text(const std::string &text);
+
 		void change_color(Color::Name color);
+
 		void set_background(Background background);
 
 		bool empty() const;
+
 		size_t length() const;
+
 		int16_t width() const;
+
 		int16_t height() const;
+
 		uint16_t advance(size_t pos) const;
+
 		Point<int16_t> dimensions() const;
+
 		Point<int16_t> endoffset() const;
-		const std::string& get_text() const;
+
+		const std::string &get_text() const;
 
 	private:
 		void reset_layout();

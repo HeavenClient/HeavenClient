@@ -31,20 +31,23 @@
 #include <AL/alure2.h>
 #include "membuf.h"
 
-class FileFactory final : public alure::FileIOFactory {
+class FileFactory final : public alure::FileIOFactory
+{
 private:
-    std::unordered_map<std::string, membuf*>* audiodb;
+	std::unordered_map<std::string, membuf *> *audiodb;
 public:
-    FileFactory(std::unordered_map<std::string, membuf*>* audiodb_in) : audiodb(audiodb_in) {}
+	FileFactory(std::unordered_map<std::string, membuf *> *audiodb_in) : audiodb(audiodb_in)
+	{}
 
-    alure::UniquePtr<std::istream> openFile(const alure::String &name) noexcept override
-    {
-        auto stream = alure::MakeUnique<std::istream>(audiodb->at(name));
-        if (stream->fail()) {
+	alure::UniquePtr<std::istream> openFile(const alure::String &name) noexcept override
+	{
+		auto stream = alure::MakeUnique<std::istream>(audiodb->at(name));
+		if (stream->fail())
+		{
 			throw std::runtime_error("Failed to create stream.");
-        }
-        return std::move(stream);
-    }
+		}
+		return std::move(stream);
+	}
 };
 
 namespace ms
@@ -56,7 +59,7 @@ namespace ms
 		enum Name
 		{
 			// UI
-			BUTTONCLICK,
+					BUTTONCLICK,
 			BUTTONOVER,
 			CHARSELECT,
 			DLGNOTICE,
@@ -73,10 +76,10 @@ namespace ms
 			WORLDMAPCLOSE,
 
 			// Login
-			GAMESTART,
+					GAMESTART,
 
 			// Game
-			JUMP,
+					JUMP,
 			DROP,
 			PICKUP,
 			PORTAL,
@@ -86,15 +89,20 @@ namespace ms
 		};
 
 		Sound(Name name);
+
 		Sound(int32_t itemid);
+
 		Sound(nl::node src);
+
 		Sound();
 		//~Sound();
 
 		void play();
 
 		static Error init();
+
 		static void close();
+
 		static bool set_sfxvolume(uint8_t volume);
 
 
@@ -103,8 +111,11 @@ namespace ms
 
 
 		static size_t add_sound(nl::node src);
+
 		static void add_sound(Sound::Name name, nl::node src);
+
 		static void add_sound(std::string itemid, nl::node src);
+
 		void create_alure_source();
 
 		static std::string format_id(int32_t itemid);
@@ -116,27 +127,30 @@ namespace ms
 		static alure::Source sound_srcs[100];
 	};
 
-    class Music
-    {
-    public:
-        Music(std::string path);
+	class Music
+	{
+	public:
+		Music(std::string path);
 
-        void play() const;
-        void play_once() const;
+		void play() const;
 
-        static Error init();
-        static bool set_bgmvolume(uint8_t volume);
-        static void update_context();
+		void play_once() const;
 
-    private:
-        std::string path;
-        static std::unordered_map<std::string, membuf*> audiodb;
+		static Error init();
+
+		static bool set_bgmvolume(uint8_t volume);
+
+		static void update_context();
+
+	private:
+		std::string path;
+		static std::unordered_map<std::string, membuf *> audiodb;
 		static alure::DeviceManager devMgr;
 		static alure::Device dev;
 		static alure::Context ctx;
 		static alure::Source music_src;
 		static alure::Buffer music_buff;
 
-        friend Sound;
-    };
+		friend Sound;
+	};
 }

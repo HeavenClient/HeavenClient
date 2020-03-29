@@ -30,48 +30,53 @@
 namespace ms
 {
 
-    alure::DeviceManager Music::devMgr;
+	alure::DeviceManager Music::devMgr;
 	alure::Device Music::dev;
 	alure::Context Music::ctx;
-    alure::Source Music::music_src;
-    alure::Buffer Music::music_buff;
-	std::unordered_map<std::string, membuf*> Music::audiodb;
+	alure::Source Music::music_src;
+	alure::Buffer Music::music_buff;
+	std::unordered_map<std::string, membuf *> Music::audiodb;
 	size_t Sound::source_inc;
-    alure::Source Sound::sound_srcs[100];
+	alure::Source Sound::sound_srcs[100];
 
-	void Sound::create_alure_source() {
-        /* TODO: create interface to batch sounds. If a large amount of sounds are queued up by say all the
-         * monsters in a map being set to die in the next "update" cycle then more than the max number of sounds
-         * will be required for the next few game ticks. AKA OpenAL will throw an uncatchable error. Below will
-         * prevent this error but may not be ideal...
-        */
-	    //while (source_inc > 200); /* openal limits to 256 concurrent sources */
+	void Sound::create_alure_source()
+	{
+		/* TODO: create interface to batch sounds. If a large amount of sounds are queued up by say all the
+		 * monsters in a map being set to die in the next "update" cycle then more than the max number of sounds
+		 * will be required for the next few game ticks. AKA OpenAL will throw an uncatchable error. Below will
+		 * prevent this error but may not be ideal...
+		*/
+		//while (source_inc > 200); /* openal limits to 256 concurrent sources */
 
-	    bool create = true;
+		bool create = true;
 
-        while (sound_srcs[source_inc-1] != nullptr && !sound_srcs[source_inc-1].isPlaying()) {
-            sound_srcs[source_inc-1].destroy();
-            sound_srcs[source_inc-1] = NULL;
-            source_inc--;
-        }
+		while (sound_srcs[source_inc - 1] != nullptr && !sound_srcs[source_inc - 1].isPlaying())
+		{
+			sound_srcs[source_inc - 1].destroy();
+			sound_srcs[source_inc - 1] = NULL;
+			source_inc--;
+		}
 
-		if (sound_srcs[source_inc]) {
-			if (source_inc > 99) {
+		if (sound_srcs[source_inc])
+		{
+			if (source_inc > 99)
+			{
 				create = false;
 			}
 		}
 
-		if (create) {
+		if (create)
+		{
 			sound_src = Music::ctx.createSource();
 			sound_srcs[source_inc] = sound_src;
-            source_inc++;
+			source_inc++;
 		}
 	}
 
 	//Sound::~Sound()
-    //{
+	//{
 	//    source_inc--;
-    //}
+	//}
 
 	Sound::Sound(Name name)
 	{
@@ -86,8 +91,7 @@ namespace ms
 		if (itemids.find(fitemid) != itemids.end())
 		{
 			id = itemids.at(fitemid);
-		}
-		else
+		} else
 		{
 			auto pid = (10000 * (itemid / 10000));
 			auto fpid = format_id(pid);
@@ -114,11 +118,12 @@ namespace ms
 
 	void Sound::play()
 	{
-		if (id > 0) {
+		if (id > 0)
+		{
 			std::string id_s = std::to_string((uint32_t) id);
 			alure::Buffer buff = Music::ctx.getBuffer(id_s);
 			if (sound_src)
-			    sound_src.play(buff);
+				sound_src.play(buff);
 		}
 	}
 
@@ -171,14 +176,14 @@ namespace ms
 
 	void Sound::close()
 	{
-        sound_srcs[source_inc-1].destroy();
-        sound_srcs[source_inc-1] = NULL;
+		sound_srcs[source_inc - 1].destroy();
+		sound_srcs[source_inc - 1] = NULL;
 		//BASS_Free();
 	}
 
 	bool Sound::set_sfxvolume(uint8_t vol)
 	{
-	    // TODO: implement in-game volume
+		// TODO: implement in-game volume
 		return false;
 	}
 
@@ -186,18 +191,17 @@ namespace ms
 	{
 		nl::audio ad = src;
 
-		auto data = reinterpret_cast<const char*>(ad.data());
+		auto data = reinterpret_cast<const char *>(ad.data());
 
 		if (data)
 		{
 			size_t id = ad.id();
 
 			std::string id_s = std::to_string((uint32_t) id);
-			Music::audiodb[id_s] = new membuf (data+82, ad.length()-82);
+			Music::audiodb[id_s] = new membuf(data + 82, ad.length() - 82);
 
 			return id;
-		}
-		else
+		} else
 		{
 			return 0;
 		}
@@ -242,14 +246,16 @@ namespace ms
 		if (path == bgmpath)
 			return;
 
-        /* will throw std::out:of:range if not used before. */
-        try {
-            audiodb.at(path);
-        } catch (std::out_of_range e) {
-            nl::audio ad = nl::nx::sound.resolve(path);
-            auto data = reinterpret_cast<const char*>(ad.data());
-            audiodb[path] = new membuf( data+82, ad.length()-82);
-        }
+		/* will throw std::out:of:range if not used before. */
+		try
+		{
+			audiodb.at(path);
+		} catch (std::out_of_range e)
+		{
+			nl::audio ad = nl::nx::sound.resolve(path);
+			auto data = reinterpret_cast<const char *>(ad.data());
+			audiodb[path] = new membuf(data + 82, ad.length() - 82);
+		}
 
 		music_buff = Music::ctx.getBuffer(path);
 		music_src.setLooping(true);
@@ -266,12 +272,14 @@ namespace ms
 			return;
 
 		/* will throw std::out:of:range if not used before. */
-		try {
+		try
+		{
 			audiodb.at(path);
-		} catch (std::out_of_range e) {
+		} catch (std::out_of_range e)
+		{
 			nl::audio ad = nl::nx::sound.resolve(path);
-			auto data = reinterpret_cast<const char*>(ad.data());
-			audiodb[path] = new membuf( data+82, ad.length()-82);
+			auto data = reinterpret_cast<const char *>(ad.data());
+			audiodb[path] = new membuf(data + 82, ad.length() - 82);
 		}
 
 		//alure::Context::MakeCurrent(ctx);
@@ -287,14 +295,14 @@ namespace ms
 
 		uint8_t volume = Setting<BGMVolume>::get().load();
 
-        devMgr = alure::DeviceManager::getInstance();
-        dev = devMgr.openPlayback();
-        ctx = dev.createContext();
-        alure::Context::MakeCurrent(ctx);
+		devMgr = alure::DeviceManager::getInstance();
+		dev = devMgr.openPlayback();
+		ctx = dev.createContext();
+		alure::Context::MakeCurrent(ctx);
 		music_src = ctx.createSource();
 
 		alure::FileIOFactory::set(alure::MakeUnique<FileFactory>(&audiodb));
-        /*TODO: add checks*/
+		/*TODO: add checks*/
 
 		//if (!set_bgmvolume(volume))
 		//	return Error::Code::AUDIO;

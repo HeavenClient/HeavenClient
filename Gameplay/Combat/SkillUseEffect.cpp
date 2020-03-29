@@ -21,16 +21,18 @@
 
 namespace ms
 {
-	SingleUseEffect::SingleUseEffect(nl::node src) : effect(src["effect"]) {}
+	SingleUseEffect::SingleUseEffect(nl::node src) : effect(src["effect"])
+	{}
 
-	void SingleUseEffect::apply(Char& target) const
+	void SingleUseEffect::apply(Char &target) const
 	{
 		effect.apply(target);
 	}
 
-	TwoHUseEffect::TwoHUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"]) {}
+	TwoHUseEffect::TwoHUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"])
+	{}
 
-	void TwoHUseEffect::apply(Char& target) const
+	void TwoHUseEffect::apply(Char &target) const
 	{
 		bool twohanded = target.is_twohanded();
 		effects[twohanded].apply(target);
@@ -50,9 +52,9 @@ namespace ms
 		}
 	}
 
-	void MultiUseEffect::apply(Char& target) const
+	void MultiUseEffect::apply(Char &target) const
 	{
-		for (auto& effect : effects)
+		for (auto &effect : effects)
 			effect.apply(target);
 	}
 
@@ -65,14 +67,15 @@ namespace ms
 		}
 	}
 
-	void ByLevelUseEffect::apply(Char& target) const
+	void ByLevelUseEffect::apply(Char &target) const
 	{
 		if (effects.empty())
 			return;
 
 		uint16_t level = target.get_level();
 		auto iter = effects.begin();
-		for (; iter != effects.end() && level > iter->first; ++iter) {}
+		for (; iter != effects.end() && level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;
@@ -80,7 +83,7 @@ namespace ms
 		iter->second.apply(target);
 	}
 
-	void IronBodyUseEffect::apply(Char& target) const
+	void IronBodyUseEffect::apply(Char &target) const
 	{
 		target.show_iron_body();
 	}

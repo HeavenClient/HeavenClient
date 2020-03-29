@@ -83,7 +83,9 @@ namespace ms
 		int16_t party_height = party_y + 168;
 		int16_t party_unitrows = 6;
 		int16_t party_rowmax = 6;
-		party_slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(party_y, party_height), party_x, party_unitrows, party_rowmax, [](bool) {});
+		party_slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(party_y, party_height), party_x, party_unitrows,
+							  party_rowmax, [](bool)
+							  {});
 
 		// Buddy Tab
 		nl::node Friend = Main["Friend"];
@@ -93,18 +95,22 @@ namespace ms
 		friend_sprites.emplace_back(Friend["CbCondition"]["text"]);
 		friend_sprites.emplace_back(UserList["line"], DrawArgument(Point<int16_t>(132, 115), Point<int16_t>(230, 0)));
 
-		buttons[Buttons::BT_FRIEND_GROUP_0] = std::make_unique<MapleButton>(UserList["BtSheetIClose"], Point<int16_t>(13, 118));
+		buttons[Buttons::BT_FRIEND_GROUP_0] = std::make_unique<MapleButton>(UserList["BtSheetIClose"],
+																			Point<int16_t>(13, 118));
 		buttons[Buttons::BT_FRIEND_GROUP_0]->set_active(false);
 
 		for (size_t i = 0; i <= 3; i++)
 			friend_grid[i] = UserList["Sheet1"][i];
 
-		std::string text = "(" + std::to_string(friend_count) + std::string("/") + std::to_string(friend_total) + std::string(")");
+		std::string text =
+				"(" + std::to_string(friend_count) + std::string("/") + std::to_string(friend_total) + std::string(")");
 		friends_online_text = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, text, 0);
 
-		friends_cur_location = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY, "My Location - " + get_cur_location(), 0);
+		friends_cur_location = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY,
+									"My Location - " + get_cur_location(), 0);
 		friends_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BLACK, "none", 0);
-		friends_group_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Default Group (0/0)", 0);
+		friends_group_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Default Group (0/0)",
+								  0);
 
 		buttons[Buttons::BT_FRIEND_ADD] = std::make_unique<MapleButton>(Friend["BtAddFriend"]);
 		buttons[Buttons::BT_FRIEND_ADD_GROUP] = std::make_unique<MapleButton>(Friend["BtAddGroup"]);
@@ -123,7 +129,9 @@ namespace ms
 		int16_t friends_height = friends_y + 148;
 		int16_t friends_unitrows = 6;
 		int16_t friends_rowmax = 6;
-		friends_slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(friends_y, friends_height), friends_x, friends_unitrows, friends_rowmax, [](bool) {});
+		friends_slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(friends_y, friends_height), friends_x,
+								friends_unitrows, friends_rowmax, [](bool)
+								{});
 
 		// Boss tab
 		nl::node Boss = Main["Boss"];
@@ -132,11 +140,16 @@ namespace ms
 		boss_sprites.emplace_back(Boss["base3"]);
 		boss_sprites.emplace_back(Boss["base2"]);
 
-		buttons[Buttons::BT_BOSS_0] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["0"]["icon"]["disabled"]["0"], Boss["BossList"]["0"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_1] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["1"]["icon"]["disabled"]["0"], Boss["BossList"]["1"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_2] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["2"]["icon"]["disabled"]["0"], Boss["BossList"]["2"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_3] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["3"]["icon"]["disabled"]["0"], Boss["BossList"]["3"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_4] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["4"]["icon"]["disabled"]["0"], Boss["BossList"]["4"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_0] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["0"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["0"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_1] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["1"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["1"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_2] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["2"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["2"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_3] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["3"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["3"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_4] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["4"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["4"]["icon"]["normal"]["0"]);
 		buttons[Buttons::BT_BOSS_L] = std::make_unique<MapleButton>(Boss["BtArrow"]["Left"]);
 		buttons[Buttons::BT_BOSS_R] = std::make_unique<MapleButton>(Boss["BtArrow"]["Right"]);
 		buttons[Buttons::BT_BOSS_DIFF_L] = std::make_unique<MapleButton>(Boss["BtArrow2"]["Left"]);
@@ -195,16 +208,14 @@ namespace ms
 				party_mine_grid[0].draw(position + Point<int16_t>(10, 115));
 				party_mine_grid[4].draw(position + Point<int16_t>(10, 133));
 				party_mine_name.draw(position + Point<int16_t>(27, 130));
-			}
-			else if (party_tab == Buttons::BT_TAB_PARTY_SEARCH)
+			} else if (party_tab == Buttons::BT_TAB_PARTY_SEARCH)
 			{
 				party_search_grid[0].draw(position);
 				party_search_grid[1].draw(position);
 				party_search_grid[2].draw(position);
 				party_slider.draw(position);
 			}
-		}
-		else if (tab == Buttons::BT_TAB_FRIEND)
+		} else if (tab == Buttons::BT_TAB_FRIEND)
 		{
 			for (auto sprite : friend_sprites)
 				sprite.draw(position, alpha);
@@ -216,13 +227,11 @@ namespace ms
 			friends_name.draw(position + Point<int16_t>(24, 134));
 			friends_group_name.draw(position + Point<int16_t>(29, 114));
 			friends_slider.draw(position);
-		}
-		else if (tab == Buttons::BT_TAB_BOSS)
+		} else if (tab == Buttons::BT_TAB_BOSS)
 		{
 			for (auto sprite : boss_sprites)
 				sprite.draw(position, alpha);
-		}
-		else if (tab == Buttons::BT_TAB_BLACKLIST)
+		} else if (tab == Buttons::BT_TAB_BLACKLIST)
 		{
 			blacklist_title.draw(position + Point<int16_t>(24, 104));
 			blacklist_grid[0].draw(position + Point<int16_t>(24, 134));
@@ -252,8 +261,7 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			}
-			else if (keycode == KeyAction::Id::TAB)
+			} else if (keycode == KeyAction::Id::TAB)
 			{
 				uint16_t new_tab = tab;
 
@@ -276,29 +284,29 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::BT_CLOSE:
-			deactivate();
-			break;
-		case Buttons::BT_TAB_FRIEND:
-		case Buttons::BT_TAB_PARTY:
-		case Buttons::BT_TAB_BOSS:
-		case Buttons::BT_TAB_BLACKLIST:
-			change_tab(buttonid);
-			return Button::State::PRESSED;
-		case Buttons::BT_TAB_PARTY_MINE:
-		case Buttons::BT_TAB_PARTY_SEARCH:
-			change_party_tab(buttonid);
-			return Button::State::PRESSED;
-		case Buttons::BT_TAB_FRIEND_ALL:
-		case Buttons::BT_TAB_FRIEND_ONLINE:
-			change_friend_tab(buttonid);
-			return Button::State::PRESSED;
-		case Buttons::BT_TAB_BLACKLIST_INDIVIDUAL:
-		case Buttons::BT_TAB_BLACKLIST_GUILD:
-			change_blacklist_tab(buttonid);
-			return Button::State::PRESSED;
-		default:
-			return Button::State::NORMAL;
+			case Buttons::BT_CLOSE:
+				deactivate();
+				break;
+			case Buttons::BT_TAB_FRIEND:
+			case Buttons::BT_TAB_PARTY:
+			case Buttons::BT_TAB_BOSS:
+			case Buttons::BT_TAB_BLACKLIST:
+				change_tab(buttonid);
+				return Button::State::PRESSED;
+			case Buttons::BT_TAB_PARTY_MINE:
+			case Buttons::BT_TAB_PARTY_SEARCH:
+				change_party_tab(buttonid);
+				return Button::State::PRESSED;
+			case Buttons::BT_TAB_FRIEND_ALL:
+			case Buttons::BT_TAB_FRIEND_ONLINE:
+				change_friend_tab(buttonid);
+				return Button::State::PRESSED;
+			case Buttons::BT_TAB_BLACKLIST_INDIVIDUAL:
+			case Buttons::BT_TAB_BLACKLIST_GUILD:
+				change_blacklist_tab(buttonid);
+				return Button::State::PRESSED;
+			default:
+				return Button::State::NORMAL;
 		}
 
 		return Button::State::NORMAL;
@@ -309,7 +317,8 @@ namespace ms
 		uint8_t oldtab = tab;
 		tab = tabid;
 
-		background = tabid == Buttons::BT_TAB_BOSS ? UserList["Main"]["Boss"]["backgrnd3"] : UserList["Main"]["backgrnd2"];
+		background =
+				tabid == Buttons::BT_TAB_BOSS ? UserList["Main"]["Boss"]["backgrnd3"] : UserList["Main"]["backgrnd2"];
 
 		if (oldtab != tab)
 			buttons[Buttons::BT_TAB_FRIEND + oldtab]->set_state(Button::State::NORMAL);
@@ -324,8 +333,7 @@ namespace ms
 			buttons[Buttons::BT_TAB_PARTY_SEARCH]->set_active(true);
 
 			change_party_tab(Tab::PARTY_MINE);
-		}
-		else
+		} else
 		{
 			buttons[Buttons::BT_PARTY_CREATE]->set_active(false);
 			buttons[Buttons::BT_PARTY_INVITE]->set_active(false);
@@ -344,8 +352,7 @@ namespace ms
 			buttons[Buttons::BT_FRIEND_GROUP_0]->set_active(true);
 
 			change_friend_tab(Tab::FRIEND_ALL);
-		}
-		else
+		} else
 		{
 			buttons[Buttons::BT_FRIEND_ADD]->set_active(false);
 			buttons[Buttons::BT_FRIEND_ADD_GROUP]->set_active(false);
@@ -372,8 +379,7 @@ namespace ms
 			buttons[Buttons::BT_BOSS_GO]->set_state(Button::State::DISABLED);
 			buttons[Buttons::BT_BOSS_DIFF_L]->set_state(Button::State::DISABLED);
 			buttons[Buttons::BT_BOSS_DIFF_R]->set_state(Button::State::DISABLED);
-		}
-		else
+		} else
 		{
 			buttons[Buttons::BT_BOSS_0]->set_active(false);
 			buttons[Buttons::BT_BOSS_1]->set_active(false);
@@ -393,8 +399,7 @@ namespace ms
 			buttons[Buttons::BT_BLACKLIST_DELETE]->set_active(true);
 			buttons[Buttons::BT_TAB_BLACKLIST_INDIVIDUAL]->set_active(true);
 			buttons[Buttons::BT_TAB_BLACKLIST_GUILD]->set_active(true);
-		}
-		else
+		} else
 		{
 			buttons[Buttons::BT_BLACKLIST_ADD]->set_active(false);
 			buttons[Buttons::BT_BLACKLIST_DELETE]->set_active(false);

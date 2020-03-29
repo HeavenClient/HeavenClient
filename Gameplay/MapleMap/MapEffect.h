@@ -25,9 +25,11 @@ namespace ms
 	{
 	public:
 		MapEffect(std::string path);
+
 		MapEffect();
 
 		void draw() const;
+
 		void update();
 
 	private:

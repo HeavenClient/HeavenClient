@@ -21,7 +21,9 @@
 
 namespace ms
 {
-	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name color, Rectangle<int16_t> bnd, size_t lim) : textlabel(font, alignment, color, "", 0, false), marker(font, alignment, color, "|")
+	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name color, Rectangle<int16_t> bnd,
+						 size_t lim) : textlabel(font, alignment, color, "", 0, false),
+									   marker(font, alignment, color, "|")
 	{
 		bounds = bnd;
 		limit = lim;
@@ -36,7 +38,8 @@ namespace ms
 		text = "";
 	}
 
-	Textfield::~Textfield() {}
+	Textfield::~Textfield()
+	{}
 
 	void Textfield::draw(Point<int16_t> parent) const
 	{
@@ -80,8 +83,7 @@ namespace ms
 			{
 				elapsed = 0;
 				showmarker = true;
-			}
-			else
+			} else
 			{
 				UI::get().remove_textfield();
 			}
@@ -91,7 +93,7 @@ namespace ms
 		}
 	}
 
-	void Textfield::set_enter_callback(std::function<void(std::string)> orr )
+	void Textfield::set_enter_callback(std::function<void(std::string)> orr)
 	{
 		onreturn = orr;
 	}
@@ -105,85 +107,85 @@ namespace ms
 	{
 		switch (type)
 		{
-		case KeyType::Id::ACTION:
-			if (pressed)
-			{
-				switch (key)
+			case KeyType::Id::ACTION:
+				if (pressed)
 				{
-				case KeyAction::Id::LEFT:
-					if (markerpos > 0)
-						markerpos--;
-
-					break;
-				case KeyAction::Id::RIGHT:
-					if (markerpos < text.size())
-						markerpos++;
-
-					break;
-				case KeyAction::Id::BACK:
-					if (text.size() > 0 && markerpos > 0)
+					switch (key)
 					{
-						text.erase(markerpos - 1, 1);
-						markerpos--;
-						modifytext(text);
+						case KeyAction::Id::LEFT:
+							if (markerpos > 0)
+								markerpos--;
+
+							break;
+						case KeyAction::Id::RIGHT:
+							if (markerpos < text.size())
+								markerpos++;
+
+							break;
+						case KeyAction::Id::BACK:
+							if (text.size() > 0 && markerpos > 0)
+							{
+								text.erase(markerpos - 1, 1);
+								markerpos--;
+								modifytext(text);
+							}
+
+							break;
+						case KeyAction::Id::RETURN:
+							if (onreturn)
+								onreturn(text);
+
+							break;
+						case KeyAction::Id::SPACE:
+							if (belowlimit())
+							{
+								text.insert(markerpos, 1, ' ');
+								markerpos++;
+								modifytext(text);
+							}
+
+							break;
+						case KeyAction::Id::HOME:
+							markerpos = 0;
+							break;
+						case KeyAction::Id::END:
+							markerpos = text.size();
+							break;
+						case KeyAction::Id::DELETE:
+							if (text.size() > 0 && markerpos < text.size())
+							{
+								text.erase(markerpos, 1);
+								modifytext(text);
+							}
+
+							break;
+						default:
+							if (callbacks.count(key))
+								callbacks.at(key)();
+
+							break;
 					}
+				}
 
-					break;
-				case KeyAction::Id::RETURN:
-					if (onreturn)
-						onreturn(text);
+				break;
+			case KeyType::Id::TEXT:
+				if (pressed)
+				{
+					int8_t c = static_cast<int8_t>(key);
 
-					break;
-				case KeyAction::Id::SPACE:
 					if (belowlimit())
 					{
-						text.insert(markerpos, 1, ' ');
+						text.insert(markerpos, 1, c);
 						markerpos++;
 						modifytext(text);
 					}
-
-					break;
-				case KeyAction::Id::HOME:
-					markerpos = 0;
-					break;
-				case KeyAction::Id::END:
-					markerpos = text.size();
-					break;
-				case KeyAction::Id::DELETE:
-					if (text.size() > 0 && markerpos < text.size())
-					{
-						text.erase(markerpos, 1);
-						modifytext(text);
-					}
-
-					break;
-				default:
-					if (callbacks.count(key))
-						callbacks.at(key)();
-
-					break;
 				}
-			}
 
-			break;
-		case KeyType::Id::TEXT:
-			if (pressed)
-			{
-				int8_t c = static_cast<int8_t>(key);
-
-				if (belowlimit())
-				{
-					text.insert(markerpos, 1, c);
-					markerpos++;
-					modifytext(text);
-				}
-			}
-
-			break;
+				break;
 		}
 	}
 
-	void Textfield::add_string(const std::string& str)
+	void Textfield::add_string(const std::string &str)
 	{
 		for (char c : str)
 		{
@@ -196,15 +198,14 @@ namespace ms
 		}
 	}
 
-	void Textfield::modifytext(const std::string& t)
+	void Textfield::modifytext(const std::string &t)
 	{
 		if (crypt > 0)
 		{
 			std::string crypted;
 			crypted.insert(0, t.size(), crypt);
 			textlabel.change_text(crypted);
-		}
-		else
+		} else
 		{
 			textlabel.change_text(t);
 		}
@@ -225,27 +226,25 @@ namespace ms
 			{
 				switch (state)
 				{
-				case State::NORMAL:
-					set_state(State::FOCUSED);
-					break;
+					case State::NORMAL:
+						set_state(State::FOCUSED);
+						break;
 				}
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CANCLICK;
 			}
-		}
-		else
+		} else
 		{
 			if (clicked)
 			{
 				switch (state)
 				{
-				case State::FOCUSED:
-					set_state(State::NORMAL);
-					break;
+					case State::FOCUSED:
+						set_state(State::NORMAL);
+						break;
 				}
 			}
 
@@ -253,7 +252,7 @@ namespace ms
 		}
 	}
 
-	void Textfield::change_text(const std::string& t)
+	void Textfield::change_text(const std::string &t)
 	{
 		modifytext(t);
 		markerpos = text.size();
@@ -269,8 +268,7 @@ namespace ms
 		if (limit > 0)
 		{
 			return text.size() < limit;
-		}
-		else
+		} else
 		{
 			uint16_t advance = textlabel.advance(text.size());
 
@@ -278,7 +276,7 @@ namespace ms
 		}
 	}
 
-	const std::string& Textfield::get_text() const
+	const std::string &Textfield::get_text() const
 	{
 		return text;
 	}
@@ -296,8 +294,8 @@ namespace ms
 	Rectangle<int16_t> Textfield::get_bounds() const
 	{
 		return Rectangle<int16_t>(
-			bounds.get_left_top() + parentpos,
-			bounds.get_right_bottom() + parentpos
-			);
+				bounds.get_left_top() + parentpos,
+				bounds.get_right_bottom() + parentpos
+		);
 	}
 }

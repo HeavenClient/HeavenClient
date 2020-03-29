@@ -23,14 +23,14 @@
 
 namespace ms
 {
-	Hair::Hair(int32_t hairid, const BodyDrawinfo& drawinfo)
+	Hair::Hair(int32_t hairid, const BodyDrawinfo &drawinfo)
 	{
 		nl::node hairnode = nl::nx::character["Hair"]["000" + std::to_string(hairid) + ".img"];
 
 		for (auto stance_iter : Stance::names)
 		{
 			Stance::Id stance = stance_iter.first;
-			const std::string& stancename = stance_iter.second;
+			const std::string &stancename = stance_iter.second;
 
 			nl::node stancenode = hairnode[stancename];
 
@@ -56,8 +56,8 @@ namespace ms
 					Point<int16_t> shift = drawinfo.gethairpos(stance, frame) - brow;
 
 					stances[stance][layer]
-						.emplace(frame, layernode)
-						.first->second.shift(shift);
+							.emplace(frame, layernode)
+							.first->second.shift(shift);
 				}
 			}
 		}
@@ -66,16 +66,16 @@ namespace ms
 
 		constexpr size_t NUM_COLORS = 8;
 
-		constexpr char* haircolors[NUM_COLORS] =
-		{
-			"Black", "Red", "Orange", "Blonde", "Green", "Blue", "Violet", "Brown"
-		};
+		constexpr char *haircolors[NUM_COLORS] =
+				{
+						"Black", "Red", "Orange", "Blonde", "Green", "Blue", "Violet", "Brown"
+				};
 
 		size_t index = hairid % 10;
 		color = (index < NUM_COLORS) ? haircolors[index] : "";
 	}
 
-	void Hair::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const
+	void Hair::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const
 	{
 		auto frameit = stances[stance][layer].find(frame);
 
@@ -85,23 +85,23 @@ namespace ms
 		frameit->second.draw(args);
 	}
 
-	const std::string& Hair::get_name() const
+	const std::string &Hair::get_name() const
 	{
 		return name;
 	}
 
-	const std::string& Hair::getcolor() const
+	const std::string &Hair::getcolor() const
 	{
 		return color;
 	}
 
 	const std::unordered_map<std::string, Hair::Layer> Hair::layers_by_name =
-	{
-		{ "hair", Hair::Layer::DEFAULT },
-		{ "hairBelowBody", Hair::Layer::BELOWBODY },
-		{ "hairOverHead", Hair::Layer::OVERHEAD },
-		{ "hairShade", Hair::Layer::SHADE },
-		{ "backHair", Hair::Layer::BACK },
-		{ "backHairBelowCap", Hair::Layer::BELOWCAP }
-	};
+			{
+					{"hair",             Hair::Layer::DEFAULT},
+					{"hairBelowBody",    Hair::Layer::BELOWBODY},
+					{"hairOverHead",     Hair::Layer::OVERHEAD},
+					{"hairShade",        Hair::Layer::SHADE},
+					{"backHair",         Hair::Layer::BACK},
+					{"backHairBelowCap", Hair::Layer::BELOWCAP}
+			};
 }

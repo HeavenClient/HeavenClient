@@ -21,16 +21,18 @@
 
 namespace ms
 {
-	SingleHitEffect::SingleHitEffect(nl::node src) : effect(src["hit"]["0"]) {}
+	SingleHitEffect::SingleHitEffect(nl::node src) : effect(src["hit"]["0"])
+	{}
 
-	void SingleHitEffect::apply(const AttackUser& user, Mob& target) const
+	void SingleHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		effect.apply(target, user.flip);
 	}
 
-	TwoHHitEffect::TwoHHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"]) {}
+	TwoHHitEffect::TwoHHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"])
+	{}
 
-	void TwoHHitEffect::apply(const AttackUser& user, Mob& target) const
+	void TwoHHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		effects[user.secondweapon].apply(target, user.flip);
 	}
@@ -44,13 +46,14 @@ namespace ms
 		}
 	}
 
-	void ByLevelHitEffect::apply(const AttackUser& user, Mob& target) const
+	void ByLevelHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		if (effects.empty())
 			return;
 
 		auto iter = effects.begin();
-		for (; iter != effects.end() && user.level > iter->first; ++iter) {}
+		for (; iter != effects.end() && user.level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;
@@ -65,19 +68,20 @@ namespace ms
 			auto level = string_conversion::or_zero<uint16_t>(sub.name());
 
 			effects.emplace(std::piecewise_construct,
-				std::forward_as_tuple(level),
-				std::forward_as_tuple(sub["hit"]["0"], sub["hit"]["1"])
+							std::forward_as_tuple(level),
+							std::forward_as_tuple(sub["hit"]["0"], sub["hit"]["1"])
 			);
 		}
 	}
 
-	void ByLevelTwoHHitEffect::apply(const AttackUser& user, Mob& target) const
+	void ByLevelTwoHHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		if (effects.empty())
 			return;
 
 		auto iter = effects.begin();
-		for (; iter != effects.end() && user.level > iter->first; ++iter) {}
+		for (; iter != effects.end() && user.level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;
@@ -94,7 +98,7 @@ namespace ms
 		}
 	}
 
-	void BySkillLevelHitEffect::apply(const AttackUser& user, Mob& target) const
+	void BySkillLevelHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		auto iter = effects.find(user.skilllevel);
 

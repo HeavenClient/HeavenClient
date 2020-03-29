@@ -21,22 +21,22 @@
 
 namespace ms
 {
-	void RegularAction::apply(Char& target, Attack::Type atype) const
+	void RegularAction::apply(Char &target, Attack::Type atype) const
 	{
 		Weapon::Type weapontype = target.get_weapontype();
 		bool degenerate;
 
 		switch (weapontype)
 		{
-		case Weapon::BOW:
-		case Weapon::CROSSBOW:
-		case Weapon::CLAW:
-		case Weapon::GUN:
-			degenerate = atype != Attack::RANGED;
-			break;
-		default:
-			degenerate = false;
-			break;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+			case Weapon::CLAW:
+			case Weapon::GUN:
+				degenerate = atype != Attack::RANGED;
+				break;
+			default:
+				degenerate = false;
+				break;
 		}
 
 		target.attack(degenerate);
@@ -47,7 +47,7 @@ namespace ms
 		action = std::string(src["action"]["0"]);
 	}
 
-	void SingleAction::apply(Char& target, Attack::Type) const
+	void SingleAction::apply(Char &target, Attack::Type) const
 	{
 		target.attack(action);
 	}
@@ -58,7 +58,7 @@ namespace ms
 		actions[true] = std::string(src["action"]["1"]);
 	}
 
-	void TwoHAction::apply(Char& target, Attack::Type) const
+	void TwoHAction::apply(Char &target, Attack::Type) const
 	{
 		bool twohanded = target.is_twohanded();
 		std::string action = actions[twohanded];
@@ -77,7 +77,7 @@ namespace ms
 		skillid = id;
 	}
 
-	void ByLevelAction::apply(Char& target, Attack::Type) const
+	void ByLevelAction::apply(Char &target, Attack::Type) const
 	{
 		int32_t level = target.get_skilllevel(skillid);
 		auto iter = actions.find(level);

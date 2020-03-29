@@ -27,6 +27,7 @@ namespace ms
 	{
 	public:
 		void addlocation(int32_t);
+
 		void addviplocation(int32_t);
 
 	private:

@@ -61,76 +61,74 @@ namespace ms
 
 		if (index < NON_WEAPON_TYPES)
 		{
-			constexpr char* types[NON_WEAPON_TYPES] =
-			{
-				"HAT",
-				"FACE ACCESSORY",
-				"EYE ACCESSORY",
-				"EARRINGS",
-				"TOP",
-				"OVERALL",
-				"BOTTOM",
-				"SHOES",
-				"GLOVES",
-				"SHIELD",
-				"CAPE",
-				"RING",
-				"PENDANT",
-				"BELT",
-				"MEDAL"
-			};
+			constexpr char *types[NON_WEAPON_TYPES] =
+					{
+							"HAT",
+							"FACE ACCESSORY",
+							"EYE ACCESSORY",
+							"EARRINGS",
+							"TOP",
+							"OVERALL",
+							"BOTTOM",
+							"SHOES",
+							"GLOVES",
+							"SHIELD",
+							"CAPE",
+							"RING",
+							"PENDANT",
+							"BELT",
+							"MEDAL"
+					};
 
 			constexpr Equipslot::Id equipslots[NON_WEAPON_TYPES] =
-			{
-				Equipslot::Id::HAT,
-				Equipslot::Id::FACE,
-				Equipslot::Id::EYEACC,
-				Equipslot::Id::EARACC,
-				Equipslot::Id::TOP,
-				Equipslot::Id::TOP,
-				Equipslot::Id::BOTTOM,
-				Equipslot::Id::SHOES,
-				Equipslot::Id::GLOVES,
-				Equipslot::Id::SHIELD,
-				Equipslot::Id::CAPE,
-				Equipslot::Id::RING1,
-				Equipslot::Id::PENDANT1,
-				Equipslot::Id::BELT,
-				Equipslot::Id::MEDAL
-			};
+					{
+							Equipslot::Id::HAT,
+							Equipslot::Id::FACE,
+							Equipslot::Id::EYEACC,
+							Equipslot::Id::EARACC,
+							Equipslot::Id::TOP,
+							Equipslot::Id::TOP,
+							Equipslot::Id::BOTTOM,
+							Equipslot::Id::SHOES,
+							Equipslot::Id::GLOVES,
+							Equipslot::Id::SHIELD,
+							Equipslot::Id::CAPE,
+							Equipslot::Id::RING1,
+							Equipslot::Id::PENDANT1,
+							Equipslot::Id::BELT,
+							Equipslot::Id::MEDAL
+					};
 
 			type = types[index];
 			eqslot = equipslots[index];
-		}
-		else if (index >= WEAPON_OFFSET && index < WEAPON_OFFSET + WEAPON_TYPES)
+		} else if (index >= WEAPON_OFFSET && index < WEAPON_OFFSET + WEAPON_TYPES)
 		{
-			constexpr char* types[WEAPON_TYPES] =
-			{
-				"ONE-HANDED SWORD",
-				"ONE-HANDED AXE",
-				"ONE-HANDED MACE",
-				"DAGGER",
-				"", "", "",
-				"WAND",
-				"STAFF",
-				"",
-				"TWO-HANDED SWORD",
-				"TWO-HANDED AXE",
-				"TWO-HANDED MACE",
-				"SPEAR",
-				"POLEARM",
-				"BOW",
-				"CROSSBOW",
-				"CLAW",
-				"KNUCKLE",
-				"GUN"
-			};
+			constexpr char *types[WEAPON_TYPES] =
+					{
+							"ONE-HANDED SWORD",
+							"ONE-HANDED AXE",
+							"ONE-HANDED MACE",
+							"DAGGER",
+							"", "", "",
+							"WAND",
+							"STAFF",
+							"",
+							"TWO-HANDED SWORD",
+							"TWO-HANDED AXE",
+							"TWO-HANDED MACE",
+							"SPEAR",
+							"POLEARM",
+							"BOW",
+							"CROSSBOW",
+							"CLAW",
+							"KNUCKLE",
+							"GUN"
+					};
 
 			size_t weaponindex = index - WEAPON_OFFSET;
 			type = types[weaponindex];
 			eqslot = Equipslot::Id::WEAPON;
-		}
-		else
+		} else
 		{
 			type = "CASH";
 			eqslot = Equipslot::Id::NONE;
@@ -167,12 +165,12 @@ namespace ms
 		return eqslot;
 	}
 
-	const std::string& EquipData::get_type() const
+	const std::string &EquipData::get_type() const
 	{
 		return type;
 	}
 
-	const ItemData& EquipData::get_itemdata() const
+	const ItemData &EquipData::get_itemdata() const
 	{
 		return itemdata;
 	}

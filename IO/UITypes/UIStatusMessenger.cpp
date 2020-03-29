@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	StatusInfo::StatusInfo(const std::string& str, Color::Name color)
+	StatusInfo::StatusInfo(const std::string &str, Color::Name color)
 	{
 		text = Text(Text::Font::A12M, Text::Alignment::RIGHT, color, str);
 		shadow = Text(Text::Font::A12M, Text::Alignment::RIGHT, Color::Name::BLACK, str);
@@ -57,7 +57,7 @@ namespace ms
 	{
 		Point<int16_t> infopos = Point<int16_t>(position.x(), position.y());
 
-		for (const StatusInfo& info : statusinfos)
+		for (const StatusInfo &info : statusinfos)
 		{
 			info.draw(infopos, inter);
 			infopos.shift_y(-14);
@@ -66,7 +66,7 @@ namespace ms
 
 	void UIStatusMessenger::update()
 	{
-		for (StatusInfo& info : statusinfos)
+		for (StatusInfo &info : statusinfos)
 			info.update();
 	}
 
@@ -82,7 +82,7 @@ namespace ms
 		return TYPE;
 	}
 
-	void UIStatusMessenger::show_status(Color::Name color, const std::string& message)
+	void UIStatusMessenger::show_status(Color::Name color, const std::string &message)
 	{
 		statusinfos.push_front(StatusInfo(message, color));
 

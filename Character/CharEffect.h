@@ -34,6 +34,6 @@ namespace ms
 			LENGTH
 		};
 
-		extern const EnumMap<Id, const char*> PATHS;
+		extern const EnumMap<Id, const char *> PATHS;
 	}
 }

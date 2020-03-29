@@ -34,6 +34,7 @@ namespace ms
 		UIUserList(uint16_t tab);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
@@ -53,6 +54,7 @@ namespace ms
 		};
 
 		void change_tab(uint8_t tabid);
+
 		uint16_t get_tab();
 
 	protected:
@@ -60,8 +62,11 @@ namespace ms
 
 	private:
 		void change_party_tab(uint8_t tabid);
+
 		void change_friend_tab(uint8_t tabid);
+
 		void change_blacklist_tab(uint8_t tabid);
+
 		std::string get_cur_location();
 
 		enum Buttons

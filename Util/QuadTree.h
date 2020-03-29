@@ -32,13 +32,14 @@ namespace ms
 			LEFT, RIGHT, UP, DOWN
 		};
 
-		QuadTree(std::function<Direction(const V&, const V&)> c)
+		QuadTree(std::function<Direction(const V &, const V &)> c)
 		{
 			root = 0;
 			comparator = c;
 		}
 
-		QuadTree() : QuadTree(nullptr) {}
+		QuadTree() : QuadTree(nullptr)
+		{}
 
 		void clear()
 		{
@@ -60,16 +61,15 @@ namespace ms
 					parent = current;
 					current = nodes[parent].addornext(key, value, comparator);
 				}
-			}
-			else
+			} else
 			{
 				root = key;
 			}
 
 			nodes.emplace(
-				std::piecewise_construct,
-				std::forward_as_tuple(key),
-				std::forward_as_tuple(value, parent, 0, 0, 0, 0)
+					std::piecewise_construct,
+					std::forward_as_tuple(key),
+					std::forward_as_tuple(value, parent, 0, 0, 0, 0)
 			);
 		}
 
@@ -78,7 +78,7 @@ namespace ms
 			if (!nodes.count(key))
 				return;
 
-			Node& toerase = nodes[key];
+			Node &toerase = nodes[key];
 
 			std::vector<K> leaves;
 
@@ -99,36 +99,35 @@ namespace ms
 
 			nodes.erase(key);
 
-			for (auto& leaf : leaves)
+			for (auto &leaf : leaves)
 				readd(parent, leaf);
 		}
 
-		K findnode(const V& value, std::function<bool(const V&, const V&)> predicate)
+		K findnode(const V &value, std::function<bool(const V &, const V &)> predicate)
 		{
 			if (root)
 			{
 				K key = findfrom(root, value, predicate);
 
 				return predicate(value, nodes[key].value) ? key : 0;
-			}
-			else
+			} else
 			{
 				return 0;
 			}
 		}
 
-		V& operator [](K key)
+		V &operator[](K key)
 		{
 			return nodes[key].value;
 		}
 
-		const V& operator [](K key) const
+		const V &operator[](K key) const
 		{
 			return nodes.at(key).value;
 		}
 
 	private:
-		K findfrom(K start, const V& value, std::function<bool(const V&, const V&)> predicate)
+		K findfrom(K start, const V &value, std::function<bool(const V &, const V &)> predicate)
 		{
 			if (!start)
 				return 0;
@@ -144,20 +143,17 @@ namespace ms
 					return right;
 				else
 					return start;
-			}
-			else if (dir == DOWN)
+			} else if (dir == DOWN)
 			{
 				K bottom = findfrom(nodes[start].bottom, value, predicate);
 
 				if (bottom && predicate(value, nodes[bottom].value))
 				{
 					return bottom;
-				}
-				else if (fulfilled)
+				} else if (fulfilled)
 				{
 					return start;
-				}
-				else
+				} else
 				{
 					K right = findfrom(nodes[start].right, value, predicate);
 
@@ -166,20 +162,17 @@ namespace ms
 					else
 						return start;
 				}
-			}
-			else if (dir == UP)
+			} else if (dir == UP)
 			{
 				K top = findfrom(nodes[start].top, value, predicate);
 
 				if (top && predicate(value, nodes[top].value))
 				{
 					return top;
-				}
-				else if (fulfilled)
+				} else if (fulfilled)
 				{
 					return start;
-				}
-				else
+				} else
 				{
 					K right = findfrom(nodes[start].right, value, predicate);
 
@@ -188,8 +181,7 @@ namespace ms
 					else
 						return start;
 				}
-			}
-			else
+			} else
 			{
 				K left = findfrom(nodes[start].left, value, predicate);
 
@@ -235,14 +227,12 @@ namespace ms
 				}
 
 				nodes[key].parent = parent;
-			}
-			else if (start == root)
+			} else if (start == root)
 			{
 				root = key;
 
 				nodes[key].parent = 0;
-			}
-			else if (root)
+			} else if (root)
 			{
 				readd(root, key);
 			}
@@ -257,8 +247,11 @@ namespace ms
 			K top;
 			K bottom;
 
-			Node(const V& v, K p, K l, K r, K t, K b) : value(v), parent(p), left(l), right(r), top(t), bottom(b) {}
-			Node() : Node(V(), 0, 0, 0, 0, 0) {}
+			Node(const V &v, K p, K l, K r, K t, K b) : value(v), parent(p), left(l), right(r), top(t), bottom(b)
+			{}
+
+			Node() : Node(V(), 0, 0, 0, 0, 0)
+			{}
 
 			void erase(K key)
 			{
@@ -272,7 +265,7 @@ namespace ms
 					bottom = 0;
 			}
 
-			K addornext(K key, V val, std::function<Direction(const V&, const V&)> comparator)
+			K addornext(K key, V val, std::function<Direction(const V &, const V &)> comparator)
 			{
 				Direction dir = comparator(val, value);
 				K dirkey = leaf(dir);
@@ -281,18 +274,18 @@ namespace ms
 				{
 					switch (dir)
 					{
-					case LEFT:
-						left = key;
-						break;
-					case RIGHT:
-						right = key;
-						break;
-					case UP:
-						top = key;
-						break;
-					case DOWN:
-						bottom = key;
-						break;
+						case LEFT:
+							left = key;
+							break;
+						case RIGHT:
+							right = key;
+							break;
+						case UP:
+							top = key;
+							break;
+						case DOWN:
+							bottom = key;
+							break;
 					}
 				}
 
@@ -303,20 +296,20 @@ namespace ms
 			{
 				switch (dir)
 				{
-				case LEFT:
-					return left;
-				case RIGHT:
-					return right;
-				case UP:
-					return top;
-				case DOWN:
-					return bottom;
-				default:
-					return 0;
+					case LEFT:
+						return left;
+					case RIGHT:
+						return right;
+					case UP:
+						return top;
+					case DOWN:
+						return bottom;
+					default:
+						return 0;
 				}
 			}
 
-			K operator [](size_t d)
+			K operator[](size_t d)
 			{
 				auto dir = static_cast<Direction>(d);
 
@@ -324,7 +317,7 @@ namespace ms
 			}
 		};
 
-		std::function<Direction(const V&, const V&)> comparator;
+		std::function<Direction(const V &, const V &)> comparator;
 		std::unordered_map<K, Node> nodes;
 		K root;
 	};

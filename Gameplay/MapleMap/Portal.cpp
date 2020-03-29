@@ -19,12 +19,14 @@
 
 namespace ms
 {
-	Portal::Portal(const Animation* a, Type t, std::string nm, bool intramap, Point<int16_t> p, int32_t tid, std::string tnm) : animation(a), type(t), name(nm), position(p), warpinfo(tid, intramap, tnm, nm)
+	Portal::Portal(const Animation *a, Type t, std::string nm, bool intramap, Point<int16_t> p, int32_t tid,
+				   std::string tnm) : animation(a), type(t), name(nm), position(p), warpinfo(tid, intramap, tnm, nm)
 	{
 		touched = false;
 	}
 
-	Portal::Portal() : Portal(nullptr, SPAWN, "", false, Point<int16_t>(), 0, "") {}
+	Portal::Portal() : Portal(nullptr, SPAWN, "", false, Point<int16_t>(), 0, "")
+	{}
 
 	void Portal::update(Point<int16_t> playerpos)
 	{

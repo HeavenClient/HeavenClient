@@ -26,7 +26,8 @@
 
 namespace ms
 {
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler) : okhandler(okhandler), cancelhandler(cancelhandler)
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler)
+			: okhandler(okhandler), cancelhandler(cancelhandler)
 	{
 		multiple = false;
 
@@ -35,15 +36,15 @@ namespace ms
 
 		switch (message)
 		{
-		case Message::NAME_IN_USE:
-		case Message::ILLEGAL_NAME:
-		case Message::BLOCKED_ID:
-		case Message::INCORRECT_PIC:
-			backgrnd = Notice["backgrnd"]["1"];
-			break;
-		default:
-			backgrnd = Notice["backgrnd"]["0"];
-			break;
+			case Message::NAME_IN_USE:
+			case Message::ILLEGAL_NAME:
+			case Message::BLOCKED_ID:
+			case Message::INCORRECT_PIC:
+				backgrnd = Notice["backgrnd"]["1"];
+				break;
+			default:
+				backgrnd = Notice["backgrnd"]["0"];
+				break;
 		}
 
 		sprites.emplace_back(backgrnd);
@@ -55,8 +56,7 @@ namespace ms
 
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(70, 106));
 			buttons[Buttons::NO] = std::make_unique<MapleButton>(Notice["BtNo"], Point<int16_t>(130, 106));
-		}
-		else
+		} else
 		{
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(100, 106));
 		}
@@ -65,8 +65,14 @@ namespace ms
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler, []() {}) {}
-	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []() {}) {}
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler,
+																									[]()
+																									{})
+	{}
+
+	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []()
+	{})
+	{}
 
 	void UILoginNotice::send_key(int32_t keycode, bool pressed, bool escape)
 	{
@@ -80,8 +86,7 @@ namespace ms
 					cancelhandler();
 
 				deactivate();
-			}
-			else if (keycode == KeyAction::RETURN)
+			} else if (keycode == KeyAction::RETURN)
 			{
 				okhandler();
 				deactivate();
@@ -128,8 +133,7 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			}
-			else if (keycode == KeyAction::RETURN)
+			} else if (keycode == KeyAction::RETURN)
 			{
 				UI::get().quit();
 				deactivate();
@@ -152,7 +156,8 @@ namespace ms
 		return Button::PRESSED;
 	}
 
-	UIClassConfirm::UIClassConfirm(uint8_t selected_class, bool unavailable, std::function<void()> okhandler) : okhandler(okhandler)
+	UIClassConfirm::UIClassConfirm(uint8_t selected_class, bool unavailable, std::function<void()> okhandler)
+			: okhandler(okhandler)
 	{
 		nl::node RaceSelect = nl::nx::ui["Login.img"]["RaceSelect_new"];
 		nl::node type = unavailable ? RaceSelect["deny"] : RaceSelect["confirm"];
@@ -164,92 +169,91 @@ namespace ms
 		// TODO: Calculate position based on width of race?
 		switch (selected_class)
 		{
-		case Classes::RESISTANCE:
-			race_pos = Point<int16_t>(57, 10);
-			break;
-		case Classes::EXPLORER:
-			race_pos = Point<int16_t>(71, 10);
-			break;
-		case Classes::CYGNUSKNIGHTS:
-			race_pos = Point<int16_t>(32, 10);
-			break;
-		case Classes::ARAN:
-			race_pos = Point<int16_t>(95, 10);
-			break;
-		case Classes::EVAN:
-			race_pos = Point<int16_t>(93, 10);
-			break;
-		case Classes::MERCEDES:
-			race_pos = Point<int16_t>(65, 10);
-			break;
-		case Classes::DEMON:
-			race_pos = Point<int16_t>(85, 10);
-			break;
-		case Classes::PHANTOM:
-			race_pos = Point<int16_t>(71, 10);
-			break;
-		case Classes::DUALBLADE:
-			race_pos = Point<int16_t>(54, 10);
-			break;
-		case Classes::MIHILE:
-			race_pos = Point<int16_t>(85, 10);
-			break;
-		case Classes::LUMINOUS:
-			race_pos = Point<int16_t>(66, 10);
-			break;
-		case Classes::KAISER:
-			race_pos = Point<int16_t>(87, 10);
-			break;
-		case Classes::ANGELICBUSTER:
-			race_pos = Point<int16_t>(41, 10);
-			break;
-		case Classes::CANNONEER:
-			race_pos = Point<int16_t>(57, 10);
-			break;
-		case Classes::XENON:
-			race_pos = Point<int16_t>(88, 10);
-			break;
-		case Classes::ZERO:
-			break;
-		case Classes::SHADE:
-			race_pos = Point<int16_t>(86, 10);
-			break;
-		case Classes::JETT:
-			race_pos = Point<int16_t>(101, 10);
-			break;
-		case Classes::HAYATO:
-			race_pos = Point<int16_t>(81, 10);
-			break;
-		case Classes::KANNA:
-			race_pos = Point<int16_t>(86, 10);
-			break;
-		case Classes::CHASE:
-		case Classes::PINKBEAN:
-			break;
-		case Classes::KINESIS:
-			race_pos = Point<int16_t>(84, 10);
-			break;
-		case Classes::CADENA:
-			race_pos = Point<int16_t>(77, 10);
-			break;
-		case Classes::ILLIUM:
-			race_pos = Point<int16_t>(92, 10);
-			break;
-		case Classes::ARK:
-			race_pos = Point<int16_t>(100, 10);
-			break;
-		default:
-			break;
+			case Classes::RESISTANCE:
+				race_pos = Point<int16_t>(57, 10);
+				break;
+			case Classes::EXPLORER:
+				race_pos = Point<int16_t>(71, 10);
+				break;
+			case Classes::CYGNUSKNIGHTS:
+				race_pos = Point<int16_t>(32, 10);
+				break;
+			case Classes::ARAN:
+				race_pos = Point<int16_t>(95, 10);
+				break;
+			case Classes::EVAN:
+				race_pos = Point<int16_t>(93, 10);
+				break;
+			case Classes::MERCEDES:
+				race_pos = Point<int16_t>(65, 10);
+				break;
+			case Classes::DEMON:
+				race_pos = Point<int16_t>(85, 10);
+				break;
+			case Classes::PHANTOM:
+				race_pos = Point<int16_t>(71, 10);
+				break;
+			case Classes::DUALBLADE:
+				race_pos = Point<int16_t>(54, 10);
+				break;
+			case Classes::MIHILE:
+				race_pos = Point<int16_t>(85, 10);
+				break;
+			case Classes::LUMINOUS:
+				race_pos = Point<int16_t>(66, 10);
+				break;
+			case Classes::KAISER:
+				race_pos = Point<int16_t>(87, 10);
+				break;
+			case Classes::ANGELICBUSTER:
+				race_pos = Point<int16_t>(41, 10);
+				break;
+			case Classes::CANNONEER:
+				race_pos = Point<int16_t>(57, 10);
+				break;
+			case Classes::XENON:
+				race_pos = Point<int16_t>(88, 10);
+				break;
+			case Classes::ZERO:
+				break;
+			case Classes::SHADE:
+				race_pos = Point<int16_t>(86, 10);
+				break;
+			case Classes::JETT:
+				race_pos = Point<int16_t>(101, 10);
+				break;
+			case Classes::HAYATO:
+				race_pos = Point<int16_t>(81, 10);
+				break;
+			case Classes::KANNA:
+				race_pos = Point<int16_t>(86, 10);
+				break;
+			case Classes::CHASE:
+			case Classes::PINKBEAN:
+				break;
+			case Classes::KINESIS:
+				race_pos = Point<int16_t>(84, 10);
+				break;
+			case Classes::CADENA:
+				race_pos = Point<int16_t>(77, 10);
+				break;
+			case Classes::ILLIUM:
+				race_pos = Point<int16_t>(92, 10);
+				break;
+			case Classes::ARK:
+				race_pos = Point<int16_t>(100, 10);
+				break;
+			default:
+				break;
 		}
 
 		sprites.emplace_back(backgrnd);
-		sprites.emplace_back(race, race_pos + (Point<int16_t>)race["origin"]);
+		sprites.emplace_back(race, race_pos + (Point<int16_t>) race["origin"]);
 
 		if (unavailable)
 		{
 			buttons[Buttons::OK] = std::make_unique<MapleButton>(type["BtOK"]);
-		}
-		else
+		} else
 		{
 			buttons[Buttons::OK] = std::make_unique<MapleButton>(type["BtOK"], Point<int16_t>(62, 107));
 			buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(type["BtCancel"], Point<int16_t>(137, 107));
@@ -261,7 +265,7 @@ namespace ms
 
 	Cursor::State UIClassConfirm::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -270,8 +274,7 @@ namespace ms
 					Sound(Sound::Name::BUTTONOVER).play();
 
 					btit.second->set_state(Button::State::MOUSEOVER);
-				}
-				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -280,8 +283,7 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 					}
 				}
-			}
-			else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}
@@ -350,29 +352,29 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		default:
-		case Buttons::CLOSE:
-			deactivate();
-			break;
-		case Buttons::TYPEA:
-		case Buttons::TYPEB:
-		{
-			bool alternate = (buttonid == Buttons::TYPEA) ? false : true;
-
-			if (alternate)
-				buttons[Buttons::TYPEA]->set_state(Button::State::DISABLED);
-			else
-				buttons[Buttons::TYPEB]->set_state(Button::State::DISABLED);
-
-			auto onok = [&, alternate]()
-			{
-				okhandler(alternate);
+			default:
+			case Buttons::CLOSE:
 				deactivate();
-			};
+				break;
+			case Buttons::TYPEA:
+			case Buttons::TYPEB:
+			{
+				bool alternate = (buttonid == Buttons::TYPEA) ? false : true;
 
-			UI::get().emplace<UIKeyConfirm>(alternate, onok, login);
-			break;
-		}
+				if (alternate)
+					buttons[Buttons::TYPEA]->set_state(Button::State::DISABLED);
+				else
+					buttons[Buttons::TYPEB]->set_state(Button::State::DISABLED);
+
+				auto onok = [&, alternate]()
+				{
+					okhandler(alternate);
+					deactivate();
+				};
+
+				UI::get().emplace<UIKeyConfirm>(alternate, onok, login);
+				break;
+			}
 		}
 
 		return Button::State::DISABLED;
@@ -398,8 +400,7 @@ namespace ms
 			if (keycode == KeyAction::Id::RETURN)
 			{
 				confirm();
-			}
-			else if (!login && escape)
+			} else if (!login && escape)
 			{
 				deactivate();
 

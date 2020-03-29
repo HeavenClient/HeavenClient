@@ -35,6 +35,7 @@ namespace ms
 		IconCover(Type type, int32_t duration);
 
 		void draw(Point<int16_t> position, float alpha) const;
+
 		void update();
 
 	private:

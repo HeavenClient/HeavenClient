@@ -32,11 +32,12 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIQuestLog(const Questlog& questLog);
+		UIQuestLog(const Questlog &questLog);
 
 		void draw(float inter) const override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
+
 		Cursor::State send_cursor(bool clicking, Point<int16_t> cursorpos) override;
 
 		UIElement::Type get_type() const override;
@@ -58,7 +59,7 @@ namespace ms
 			MY_LOCATION
 		};
 
-		const Questlog& questlog;
+		const Questlog &questlog;
 
 		uint16_t tab;
 		std::vector<Sprite> notice_sprites;

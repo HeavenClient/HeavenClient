@@ -31,10 +31,12 @@
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
+
 #include <unistd.h>
 //#include <GL/gl.h>
 #define GetCurrentDir getcwd
 #endif
+
 #include<iostream>
 
 namespace ms
@@ -43,19 +45,27 @@ namespace ms
 	{
 	public:
 		Window();
+
 		~Window();
 
 		Error init();
+
 		Error initwindow();
 
 		bool not_closed() const;
+
 		void update();
+
 		void begin() const;
+
 		void end() const;
+
 		void fadeout(float step, std::function<void()> fadeprocedure);
+
 		void check_events();
 
-		void setclipboard(const std::string& text) const;
+		void setclipboard(const std::string &text) const;
+
 		std::string getclipboard() const;
 
 		void toggle_fullscreen();
@@ -63,14 +73,15 @@ namespace ms
 	private:
 		void updateopc();
 
-		GLFWwindow* glwnd;
-		GLFWwindow* context;
+		GLFWwindow *glwnd;
+		GLFWwindow *context;
 		bool fullscreen;
 		float opacity;
 		float opcstep;
 		std::function<void()> fadeprocedure;
 		int16_t width;
 		int16_t height;
-        std::string GetCurrentWorkingDir(void);
+
+		std::string GetCurrentWorkingDir(void);
 	};
 }

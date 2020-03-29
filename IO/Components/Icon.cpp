@@ -33,7 +33,8 @@ namespace ms
 		dragged = false;
 	}
 
-	Icon::Icon() : Icon(std::make_unique<NullType>(), {}, -1) {}
+	Icon::Icon() : Icon(std::make_unique<NullType>(), {}, -1)
+	{}
 
 	void Icon::draw(Point<int16_t> position) const
 	{

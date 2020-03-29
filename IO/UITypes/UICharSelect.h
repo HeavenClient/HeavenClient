@@ -39,33 +39,47 @@ namespace ms
 		UICharSelect(std::vector<CharEntry> characters, int8_t characters_count, int32_t slots, int8_t require_pic);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void doubleclick(Point<int16_t> cursorpos) override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
-		void add_character(CharEntry&& character);
+		void add_character(CharEntry &&character);
+
 		void post_add_character();
+
 		void remove_character(int32_t id);
 
-		const CharEntry& get_character(int32_t id);
+		const CharEntry &get_character(int32_t id);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
 
 	private:
 		void update_buttons();
+
 		void update_selected_character();
+
 		void select_last_slot();
+
 		std::string get_slot_text();
+
 		std::string pad_number_with_leading_zero(uint8_t value) const;
+
 		Point<int16_t> get_character_slot_pos(size_t index, uint16_t x_adj, uint16_t y_adj) const;
+
 		Point<int16_t> get_infolabel_pos(size_t index) const;
+
 		std::string get_infolabel(size_t index, StatsEntry character_stats) const;
+
 		void request_pic();
+
 		void check_pic(const std::string entered_pic) const;
 
 		static constexpr uint8_t PAGESIZE = 8;

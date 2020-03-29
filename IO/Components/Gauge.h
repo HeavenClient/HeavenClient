@@ -25,11 +25,15 @@ namespace ms
 	{
 	public:
 		Gauge(Texture front, int16_t max, float percent);
+
 		Gauge(Texture front, Texture mid, int16_t max, float percent);
+
 		Gauge(Texture front, Texture mid, Texture end, int16_t maximum, float percentage);
+
 		Gauge();
 
-		void draw(const DrawArgument& args) const;
+		void draw(const DrawArgument &args) const;
+
 		void update(float target);
 
 	private:

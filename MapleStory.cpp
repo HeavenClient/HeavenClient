@@ -86,8 +86,8 @@ namespace ms
 	bool running()
 	{
 		return Session::get().is_connected()
-			&& UI::get().not_quitted()
-			&& Window::get().not_closed();
+			   && UI::get().not_quitted()
+			   && Window::get().not_closed();
 	}
 
 	void loop()
@@ -119,8 +119,7 @@ namespace ms
 				{
 					period += elapsed;
 					samples++;
-				}
-				else if (period)
+				} else if (period)
 				{
 					int64_t fps = (samples * 1000000) / period;
 					std::cout << "FPS: " << fps << std::endl;
@@ -139,8 +138,8 @@ namespace ms
 		// Initialize and check for errors.
 		if (Error error = init())
 		{
-			const char* message = error.get_message();
-			const char* args = error.get_args();
+			const char *message = error.get_message();
+			const char *args = error.get_args();
 			bool can_retry = error.can_retry();
 
 			std::cout << "Error: " << message << std::endl;
@@ -156,8 +155,7 @@ namespace ms
 
 			if (can_retry && command == "retry")
 				start();
-		}
-		else
+		} else
 		{
 			loop();
 		}

@@ -85,16 +85,16 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::DEFAULT:
-			break;
-		case Buttons::CANCEL:
-			cancel();
-			break;
-		case Buttons::OK:
-			save();
-			break;
-		default:
-			break;
+			case Buttons::DEFAULT:
+				break;
+			case Buttons::CANCEL:
+				cancel();
+				break;
+			case Buttons::OK:
+				save();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

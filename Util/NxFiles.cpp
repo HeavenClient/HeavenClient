@@ -29,21 +29,21 @@ namespace ms
 	Error NxFiles::init()
 	{
 		for (auto filename : NxFiles::filenames)
-			if (std::ifstream{ filename }.good() == false)
+			if (std::ifstream{filename}.good() == false)
 				return Error(Error::Code::MISSING_FILE, filename);
 
 		try
 		{
 			nl::nx::load_all();
 		}
-		catch (const std::exception& ex)
+		catch (const std::exception &ex)
 		{
 			static const std::string message = ex.what();
 
 			return Error(Error::Code::NLNX, message.c_str());
 		}
 
-		constexpr const char* POSTCHAOS_BITMAP = "Login.img/WorldSelect/BtChannel/layer:bg";
+		constexpr const char *POSTCHAOS_BITMAP = "Login.img/WorldSelect/BtChannel/layer:bg";
 
 		if (nl::nx::ui.resolve(POSTCHAOS_BITMAP).data_type() != nl::node::type::bitmap)
 			return Error::Code::WRONG_UI_FILE;

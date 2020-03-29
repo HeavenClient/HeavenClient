@@ -31,12 +31,11 @@ namespace ms
 		{
 			switch (type)
 			{
-			case -1:
-				typestr = "dead";
-				break;
+				case -1:
+					typestr = "dead";
+					break;
 			}
-		}
-		else
+		} else
 		{
 			typestr = std::to_string(type);
 		}
@@ -51,9 +50,10 @@ namespace ms
 		duration = 0;
 	}
 
-	ChatBalloon::ChatBalloon() : ChatBalloon(0) {}
+	ChatBalloon::ChatBalloon() : ChatBalloon(0)
+	{}
 
-	void ChatBalloon::change_text(const std::string& text)
+	void ChatBalloon::change_text(const std::string &text)
 	{
 		textlabel.change_text(text);
 
@@ -141,7 +141,7 @@ namespace ms
 		textlabel.draw(DrawArgument(left + 6, top - 5));
 	}
 
-	void ChatBalloonHorizontal::change_text(const std::string& text)
+	void ChatBalloonHorizontal::change_text(const std::string &text)
 	{
 		textlabel.change_text(text);
 	}

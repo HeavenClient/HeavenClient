@@ -29,19 +29,24 @@ namespace ms
 	class UISoftKey : public UIElement
 	{
 	public:
-		using OkCallback = std::function<void(const std::string& entered)>;
+		using OkCallback = std::function<void(const std::string &entered)>;
 		using CancelCallback = std::function<void()>;
 
 		static constexpr Type TYPE = UIElement::Type::SOFTKEYBOARD;
 		static constexpr bool FOCUSED = true;
 		static constexpr bool TOGGLED = false;
 
-		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text, Point<int16_t> tooltip_pos);
+		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text,
+				  Point<int16_t> tooltip_pos);
+
 		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text);
+
 		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback);
+
 		UISoftKey(OkCallback ok_callback);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
@@ -53,8 +58,11 @@ namespace ms
 
 	private:
 		void shufflekeys();
+
 		void show_text(std::string text);
+
 		void clear_tooltip();
+
 		Point<int16_t> keypos(uint8_t num) const;
 
 		enum Buttons : uint16_t

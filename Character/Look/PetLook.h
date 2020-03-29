@@ -49,16 +49,21 @@ namespace ms
 		}
 
 		PetLook(int32_t iid, std::string name, int32_t uniqueid, Point<int16_t> pos, uint8_t stance, int32_t fhid);
+
 		PetLook();
 
 		void draw(double viewx, double viewy, float alpha) const;
-		void update(const Physics& physics, Point<int16_t> charpos);
+
+		void update(const Physics &physics, Point<int16_t> charpos);
 
 		void set_position(int16_t xpos, int16_t ypos);
+
 		void set_stance(Stance stance);
+
 		void set_stance(uint8_t stancebyte);
 
 		int32_t get_itemid() const;
+
 		Stance get_stance() const;
 
 	private:

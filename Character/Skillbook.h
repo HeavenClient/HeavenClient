@@ -30,8 +30,11 @@ namespace ms
 		void set_skill(int32_t id, int32_t level, int32_t masterlevel, int64_t expiration);
 
 		bool has_skill(int32_t id) const;
+
 		int32_t get_level(int32_t id) const;
+
 		int32_t get_masterlevel(int32_t id) const;
+
 		int64_t get_expiration(int32_t id) const;
 
 		// Return id and level of all passive skills.

@@ -29,25 +29,25 @@ namespace ms
 		return value;
 	}
 
-	const char* Equipstat::names[Id::LENGTH] =
-	{
-		"STR",
-		"DEX",
-		"INT",
-		"LUK",
-		"MaxHP",
-		"MaxMP",
-		"Attack Power",
-		"Magic Attack",
-		"Defense",
+	const char *Equipstat::names[Id::LENGTH] =
+			{
+					"STR",
+					"DEX",
+					"INT",
+					"LUK",
+					"MaxHP",
+					"MaxMP",
+					"Attack Power",
+					"Magic Attack",
+					"Defense",
 
-		// TODO: Does curret GMS use these anymore?
-		"MAGIC DEFENSE",
-		"ACCURACY",
-		"AVOID",
-		"HANDS",
+					// TODO: Does curret GMS use these anymore?
+					"MAGIC DEFENSE",
+					"ACCURACY",
+					"AVOID",
+					"HANDS",
 
-		"Speed",
-		"Jump"
-	};
+					"Speed",
+					"Jump"
+			};
 }

@@ -25,7 +25,7 @@ namespace ms
 		active = true;
 	}
 
-	int8_t MapObject::update(const Physics& physics)
+	int8_t MapObject::update(const Physics &physics)
 	{
 		physics.move_object(phobj);
 

@@ -31,18 +31,27 @@ namespace ms
 	{
 	public:
 		Frame(nl::node src);
+
 		Frame();
 
-		void draw(const DrawArgument& args) const;
+		void draw(const DrawArgument &args) const;
 
 		uint8_t start_opacity() const;
+
 		uint16_t start_scale() const;
+
 		uint16_t get_delay() const;
+
 		Point<int16_t> get_origin() const;
+
 		Point<int16_t> get_dimensions() const;
+
 		Point<int16_t> get_head() const;
+
 		Rectangle<int16_t> get_bounds() const;
+
 		float opcstep(uint16_t timestep) const;
+
 		float scalestep(uint16_t timestep) const;
 
 	private:
@@ -59,23 +68,31 @@ namespace ms
 	{
 	public:
 		Animation(nl::node source);
+
 		Animation();
 
 		bool update();
+
 		bool update(uint16_t timestep);
+
 		void reset();
 
-		void draw(const DrawArgument& arguments, float alpha) const;
+		void draw(const DrawArgument &arguments, float alpha) const;
 
 		uint16_t get_delay(int16_t frame) const;
+
 		uint16_t getdelayuntil(int16_t frame) const;
+
 		Point<int16_t> get_origin() const;
+
 		Point<int16_t> get_dimensions() const;
+
 		Point<int16_t> get_head() const;
+
 		Rectangle<int16_t> get_bounds() const;
 
 	private:
-		const Frame& get_frame() const;
+		const Frame &get_frame() const;
 
 		std::vector<Frame> frames;
 		bool animated;

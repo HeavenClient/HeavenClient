@@ -24,9 +24,9 @@ namespace ms
 	InventoryType::Id InventoryType::by_item_id(int32_t item_id)
 	{
 		constexpr Id values_by_id[6] =
-		{
-			NONE, EQUIP, USE, SETUP, ETC, CASH
-		};
+				{
+						NONE, EQUIP, USE, SETUP, ETC, CASH
+				};
 
 		int32_t prefix = item_id / 1000000;
 		return (prefix > Id::NONE && prefix <= Id::CASH) ? values_by_id[prefix] : Id::NONE;
@@ -36,18 +36,18 @@ namespace ms
 	{
 		switch (value)
 		{
-		case -1:
-			return Id::EQUIPPED;
-		case 1:
-			return Id::EQUIP;
-		case 2:
-			return Id::USE;
-		case 3:
-			return Id::SETUP;
-		case 4:
-			return Id::ETC;
-		case 5:
-			return Id::CASH;
+			case -1:
+				return Id::EQUIPPED;
+			case 1:
+				return Id::EQUIP;
+			case 2:
+				return Id::USE;
+			case 3:
+				return Id::SETUP;
+			case 4:
+				return Id::ETC;
+			case 5:
+				return Id::CASH;
 		}
 
 		Console::get().print("Unknown inventory type: " + std::to_string(value));

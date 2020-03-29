@@ -26,11 +26,11 @@ namespace ms
 	}
 
 	// Spawns all reactors to map with proper footholds
-	void MapReactors::update(const Physics& physics)
+	void MapReactors::update(const Physics &physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
 		{
-			const ReactorSpawn& spawn = spawns.front();
+			const ReactorSpawn &spawn = spawns.front();
 
 			int32_t oid = spawn.get_oid();
 
@@ -49,7 +49,7 @@ namespace ms
 			reactor->set_state(state);
 	}
 
-	void MapReactors::spawn(ReactorSpawn&& spawn)
+	void MapReactors::spawn(ReactorSpawn &&spawn)
 	{
 		spawns.emplace(std::move(spawn));
 	}
@@ -65,7 +65,7 @@ namespace ms
 		reactors.clear();
 	}
 
-	MapObjects* MapReactors::get_reactors()
+	MapObjects *MapReactors::get_reactors()
 	{
 		return &reactors;
 	}

@@ -23,7 +23,7 @@
 
 namespace ms
 {
-	template <typename T>
+	template<typename T>
 	// Base class for UI Windows which can be moved with the mouse cursor.
 	class UIDragElement : public UIElement
 	{
@@ -49,16 +49,14 @@ namespace ms
 					position = cursorpos - cursoroffset;
 
 					return Cursor::State::CLICKING;
-				}
-				else if (indragrange(cursorpos))
+				} else if (indragrange(cursorpos))
 				{
 					cursoroffset = cursorpos - position;
 					dragged = true;
 
 					return UIElement::send_cursor(clicked, cursorpos);
 				}
-			}
-			else
+			} else
 			{
 				if (dragged)
 				{
@@ -72,7 +70,8 @@ namespace ms
 		}
 
 	protected:
-		UIDragElement() : UIDragElement(Point<int16_t>(0, 0)) {}
+		UIDragElement() : UIDragElement(Point<int16_t>(0, 0))
+		{}
 
 		UIDragElement(Point<int16_t> d) : dragarea(d)
 		{

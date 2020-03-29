@@ -45,19 +45,19 @@ namespace ms
 	{
 		switch (state)
 		{
-		case State::INACTIVE:
-			load_map(mapid);
-			respawn(portalid);
-			break;
-		case State::TRANSITION:
-			respawn(portalid);
-			break;
+			case State::INACTIVE:
+				load_map(mapid);
+				respawn(portalid);
+				break;
+			case State::TRANSITION:
+				respawn(portalid);
+				break;
 		}
 
 		state = State::ACTIVE;
 	}
 
-	void Stage::loadplayer(const CharEntry& entry)
+	void Stage::loadplayer(const CharEntry &entry)
 	{
 		player = entry;
 		playable = player;
@@ -183,12 +183,11 @@ namespace ms
 			Point<int16_t> startpos = physics.get_y_below(spawnpoint);
 
 			player.respawn(startpos, mapinfo.is_underwater());
-		}
-		else if (warpinfo.valid)
+		} else if (warpinfo.valid)
 		{
 			ChangeMapPacket(false, -1, warpinfo.name, false).dispatch();
 
-			CharStats& stats = Stage::get().get_player().get_stats();
+			CharStats &stats = Stage::get().get_player().get_stats();
 
 			stats.set_mapid(warpinfo.mapid);
 
@@ -230,41 +229,41 @@ namespace ms
 
 		switch (type)
 		{
-		case KeyType::Id::ACTION:
-			if (down)
-			{
-				switch (action)
+			case KeyType::Id::ACTION:
+				if (down)
 				{
-				case KeyAction::Id::UP:
-					check_ladders(true);
-					check_portals();
-					break;
-				case KeyAction::Id::DOWN:
-					check_ladders(false);
-					break;
-				case KeyAction::Id::SIT:
-					check_seats();
-					break;
-				case KeyAction::Id::ATTACK:
-					combat.use_move(0);
-					break;
-				case KeyAction::Id::PICKUP:
-					check_drops();
-					break;
+					switch (action)
+					{
+						case KeyAction::Id::UP:
+							check_ladders(true);
+							check_portals();
+							break;
+						case KeyAction::Id::DOWN:
+							check_ladders(false);
+							break;
+						case KeyAction::Id::SIT:
+							check_seats();
+							break;
+						case KeyAction::Id::ATTACK:
+							combat.use_move(0);
+							break;
+						case KeyAction::Id::PICKUP:
+							check_drops();
+							break;
+					}
 				}
-			}
 
-			playable->send_action(KeyAction::actionbyid(action), down);
-			break;
-		case KeyType::Id::SKILL:
-			combat.use_move(action);
-			break;
-		case KeyType::Id::ITEM:
-			player.use_item(action);
-			break;
-		case KeyType::Id::FACE:
-			player.set_expression(action);
-			break;
+				playable->send_action(KeyAction::actionbyid(action), down);
+				break;
+			case KeyType::Id::SKILL:
+				combat.use_move(action);
+				break;
+			case KeyType::Id::ITEM:
+				player.use_item(action);
+				break;
+			case KeyType::Id::FACE:
+				player.set_expression(action);
+				break;
 		}
 	}
 
@@ -292,37 +291,37 @@ namespace ms
 		return cid == player.get_oid();
 	}
 
-	MapNpcs& Stage::get_npcs()
+	MapNpcs &Stage::get_npcs()
 	{
 		return npcs;
 	}
 
-	MapChars& Stage::get_chars()
+	MapChars &Stage::get_chars()
 	{
 		return chars;
 	}
 
-	MapMobs& Stage::get_mobs()
+	MapMobs &Stage::get_mobs()
 	{
 		return mobs;
 	}
 
-	MapReactors& Stage::get_reactors()
+	MapReactors &Stage::get_reactors()
 	{
 		return reactors;
 	}
 
-	MapDrops& Stage::get_drops()
+	MapDrops &Stage::get_drops()
 	{
 		return drops;
 	}
 
-	Player& Stage::get_player()
+	Player &Stage::get_player()
 	{
 		return player;
 	}
 
-	Combat& Stage::get_combat()
+	Combat &Stage::get_combat()
 	{
 		return combat;
 	}

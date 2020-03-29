@@ -49,14 +49,16 @@ namespace ms
 
 		// Loads the map to display. 
 		void load(int32_t mapid, int8_t portalid);
+
 		// Remove all map objects and graphics.
 		void clear();
 
 		// Construct the player from a character entry.
-		void loadplayer(const CharEntry& entry);
+		void loadplayer(const CharEntry &entry);
 
 		// Call 'draw()' of all objects on stage.
 		void draw(float alpha) const;
+
 		// Calls 'update()' of all objects on stage.
 		void update();
 
@@ -65,6 +67,7 @@ namespace ms
 
 		// Send key input to the stage.
 		void send_key(KeyType::Id keytype, int32_t keycode, bool pressed);
+
 		// Send mouse input to the stage.
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position);
 
@@ -72,19 +75,26 @@ namespace ms
 		bool is_player(int32_t cid) const;
 
 		// Returns a reference to the NPCs on the current map.
-		MapNpcs& get_npcs();
+		MapNpcs &get_npcs();
+
 		// Returns a reference to the other characters on the current map.
-		MapChars& get_chars();
+		MapChars &get_chars();
+
 		// Returns a reference to the mobs on the current map.
-		MapMobs& get_mobs();
+		MapMobs &get_mobs();
+
 		// Returns a reference to the reactors on the current map.
-		MapReactors& get_reactors();
+		MapReactors &get_reactors();
+
 		// Returns a reference to the drops on the current map.
-		MapDrops& get_drops();
+		MapDrops &get_drops();
+
 		// Returns a reference to the Player.
-		Player& get_player();
+		Player &get_player();
+
 		// Return a reference to the attack and buff component.
-		Combat& get_combat();
+		Combat &get_combat();
+
 		// Returns the current map ID.
 		int32_t get_mapid();
 
@@ -96,10 +106,15 @@ namespace ms
 
 	private:
 		void load_map(int32_t mapid);
+
 		void respawn(int8_t portalid);
+
 		void check_portals();
+
 		void check_seats();
+
 		void check_ladders(bool up);
+
 		void check_drops();
 
 		enum State

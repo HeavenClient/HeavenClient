@@ -20,13 +20,22 @@
 
 namespace ms
 {
-	Text::Text(Font f, Alignment a, Color::Name c, Background b, const std::string& t, uint16_t mw, bool fm, int16_t la) : font(f), alignment(a), color(c), background(b), maxwidth(mw), formatted(fm), line_adj(la)
+	Text::Text(Font f, Alignment a, Color::Name c, Background b, const std::string &t, uint16_t mw, bool fm, int16_t la)
+			: font(f), alignment(a), color(c), background(b), maxwidth(mw), formatted(fm), line_adj(la)
 	{
 		change_text(t);
 	}
 
-	Text::Text(Font f, Alignment a, Color::Name c, const std::string& t, uint16_t mw, bool fm, int16_t la) : Text(f, a, c, Background::NONE, t, mw, fm, la) {}
-	Text::Text() : Text(Font::A11M, Alignment::LEFT, Color::BLACK) {}
+	Text::Text(Font f, Alignment a, Color::Name c, const std::string &t, uint16_t mw, bool fm, int16_t la) : Text(f, a,
+																												  c,
+																												  Background::NONE,
+																												  t, mw,
+																												  fm,
+																												  la)
+	{}
+
+	Text::Text() : Text(Font::A11M, Alignment::LEFT, Color::BLACK)
+	{}
 
 	void Text::reset_layout()
 	{
@@ -36,7 +45,7 @@ namespace ms
 		layout = GraphicsGL::get().createlayout(text, font, alignment, maxwidth, formatted, line_adj);
 	}
 
-	void Text::change_text(const std::string& t)
+	void Text::change_text(const std::string &t)
 	{
 		if (text == t)
 			return;
@@ -61,12 +70,12 @@ namespace ms
 		background = b;
 	}
 
-	void Text::draw(const DrawArgument& args) const
+	void Text::draw(const DrawArgument &args) const
 	{
 		draw(args, Range<int16_t>(0, 0));
 	}
 
-	void Text::draw(const DrawArgument& args, const Range<int16_t>& vertical) const
+	void Text::draw(const DrawArgument &args, const Range<int16_t> &vertical) const
 	{
 		GraphicsGL::get().drawtext(args, vertical, text, layout, font, color, background);
 	}
@@ -106,13 +115,17 @@ namespace ms
 		return layout.get_endoffset();
 	}
 
-	const std::string& Text::get_text() const
+	const std::string &Text::get_text() const
 	{
 		return text;
 	}
 
-	Text::Layout::Layout(const std::vector<Layout::Line>& l, const std::vector<int16_t>& a, int16_t w, int16_t h, int16_t ex, int16_t ey) : lines(l), advances(a), dimensions(w, h), endoffset(ex, ey) {}
-	Text::Layout::Layout() : Layout(std::vector<Layout::Line>(), std::vector<int16_t>(), 0, 0, 0, 0) {}
+	Text::Layout::Layout(const std::vector<Layout::Line> &l, const std::vector<int16_t> &a, int16_t w, int16_t h,
+						 int16_t ex, int16_t ey) : lines(l), advances(a), dimensions(w, h), endoffset(ex, ey)
+	{}
+
+	Text::Layout::Layout() : Layout(std::vector<Layout::Line>(), std::vector<int16_t>(), 0, 0, 0, 0)
+	{}
 
 	int16_t Text::Layout::width() const
 	{

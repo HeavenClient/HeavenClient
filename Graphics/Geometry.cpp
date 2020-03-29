@@ -24,13 +24,16 @@ namespace ms
 		if (w == 0 || h == 0 || opacity <= 0.0f)
 			return;
 
-		const float* color = Color::colors[cid];
+		const float *color = Color::colors[cid];
 
 		GraphicsGL::get().drawrectangle(x, y, w, h, color[0], color[1], color[2], opacity);
 	}
 
-	ColorBox::ColorBox(int16_t w, int16_t h, Color::Name c, float o) : width(w), height(h), color(c), opacity(o) {}
-	ColorBox::ColorBox() : ColorBox(0, 0, Color::Name::BLACK, 0.0f) {}
+	ColorBox::ColorBox(int16_t w, int16_t h, Color::Name c, float o) : width(w), height(h), color(c), opacity(o)
+	{}
+
+	ColorBox::ColorBox() : ColorBox(0, 0, Color::Name::BLACK, 0.0f)
+	{}
 
 	void ColorBox::setwidth(int16_t w)
 	{
@@ -52,7 +55,7 @@ namespace ms
 		opacity = o;
 	}
 
-	void ColorBox::draw(const DrawArgument& args) const
+	void ColorBox::draw(const DrawArgument &args) const
 	{
 		Point<int16_t> absp = args.getpos();
 		int16_t absw = args.getstretch().x();
@@ -73,8 +76,11 @@ namespace ms
 		Geometry::draw(absp.x(), absp.y(), absw, absh, color, absopc);
 	}
 
-	ColorLine::ColorLine(int16_t w, Color::Name c, float o) : width(w), color(c), opacity(o) {}
-	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f) {}
+	ColorLine::ColorLine(int16_t w, Color::Name c, float o) : width(w), color(c), opacity(o)
+	{}
+
+	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f)
+	{}
 
 	void ColorLine::setwidth(int16_t w)
 	{
@@ -91,7 +97,7 @@ namespace ms
 		opacity = o;
 	}
 
-	void ColorLine::draw(const DrawArgument& args) const
+	void ColorLine::draw(const DrawArgument &args) const
 	{
 		Point<int16_t> absp = args.getpos();
 		int16_t absw = args.getstretch().x();

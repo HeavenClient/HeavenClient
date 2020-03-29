@@ -38,6 +38,7 @@ namespace ms
 
 		// Return the inventory type by item id.
 		Id by_item_id(int32_t item_id);
+
 		// Return the inventory type by value.
 		Id by_value(int8_t value);
 	}

@@ -31,7 +31,9 @@
 #ifdef WIN32
 #include <Windows.h>
 #elif __linux__
+
 #include "stb/stb_image.h"
+
 #endif
 
 namespace ms
@@ -51,55 +53,55 @@ namespace ms
 		glfwTerminate();
 	}
 
-	void error_callback(int no, const char* description)
+	void error_callback(int no, const char *description)
 	{
 		Console::get().print("glfw error: " + std::string(description) + " (" + std::to_string(no) + ")");
 	}
 
-	void key_callback(GLFWwindow*, int key, int, int action, int)
+	void key_callback(GLFWwindow *, int key, int, int action, int)
 	{
 		UI::get().send_key(key, action != GLFW_RELEASE);
 	}
 
 	std::chrono::time_point<std::chrono::steady_clock> start = ContinuousTimer::get().start();
 
-	void mousekey_callback(GLFWwindow*, int button, int action, int)
+	void mousekey_callback(GLFWwindow *, int button, int action, int)
 	{
 		switch (button)
 		{
-		case GLFW_MOUSE_BUTTON_LEFT:
-			switch (action)
-			{
-			case GLFW_PRESS:
-				UI::get().send_cursor(true);
+			case GLFW_MOUSE_BUTTON_LEFT:
+				switch (action)
+				{
+					case GLFW_PRESS:
+						UI::get().send_cursor(true);
+						break;
+					case GLFW_RELEASE:
+					{
+						auto diff_ms = ContinuousTimer::get().stop(start) / 1000;
+						start = ContinuousTimer::get().start();
+
+						if (diff_ms > 10 && diff_ms < 200)
+							UI::get().doubleclick();
+
+						UI::get().send_cursor(false);
+					}
+						break;
+				}
+
 				break;
-			case GLFW_RELEASE:
-			{
-				auto diff_ms = ContinuousTimer::get().stop(start) / 1000;
-				start = ContinuousTimer::get().start();
+			case GLFW_MOUSE_BUTTON_RIGHT:
+				switch (action)
+				{
+					case GLFW_PRESS:
+						UI::get().rightclick();
+						break;
+				}
 
-				if (diff_ms > 10 && diff_ms < 200)
-					UI::get().doubleclick();
-
-				UI::get().send_cursor(false);
-			}
-			break;
-			}
-
-			break;
-		case GLFW_MOUSE_BUTTON_RIGHT:
-			switch (action)
-			{
-			case GLFW_PRESS:
-				UI::get().rightclick();
 				break;
-			}
-
-			break;
 		}
 	}
 
-	void cursor_callback(GLFWwindow*, double xpos, double ypos)
+	void cursor_callback(GLFWwindow *, double xpos, double ypos)
 	{
 		int16_t x = static_cast<int16_t>(xpos);
 		int16_t y = static_cast<int16_t>(ypos);
@@ -107,17 +109,17 @@ namespace ms
 		UI::get().send_cursor(pos);
 	}
 
-	void focus_callback(GLFWwindow*, int focused)
+	void focus_callback(GLFWwindow *, int focused)
 	{
 		UI::get().send_focus(focused);
 	}
 
-	void scroll_callback(GLFWwindow*, double xoffset, double yoffset)
+	void scroll_callback(GLFWwindow *, double xoffset, double yoffset)
 	{
 		UI::get().send_scroll(yoffset);
 	}
 
-	void close_callback(GLFWwindow* window)
+	void close_callback(GLFWwindow *window)
 	{
 		UI::get().send_close();
 
@@ -150,11 +152,11 @@ namespace ms
 			glfwDestroyWindow(glwnd);
 
 		glwnd = glfwCreateWindow(
-			width,
-			height,
-			Configuration::get().get_title().c_str(),
-			fullscreen ? glfwGetPrimaryMonitor() : nullptr,
-			context
+				width,
+				height,
+				Configuration::get().get_title().c_str(),
+				fullscreen ? glfwGetPrimaryMonitor() : nullptr,
+				context
 		);
 
 		if (!glwnd)
@@ -227,8 +229,7 @@ namespace ms
 			{
 				opacity = 1.0f;
 				opcstep = 0.0f;
-			}
-			else if (opacity <= 0.0f)
+			} else if (opacity <= 0.0f)
 			{
 				opacity = 0.0f;
 				opcstep = -opcstep;
@@ -276,14 +277,14 @@ namespace ms
 		fadeprocedure = fadeproc;
 	}
 
-	void Window::setclipboard(const std::string& text) const
+	void Window::setclipboard(const std::string &text) const
 	{
 		glfwSetClipboardString(glwnd, text.c_str());
 	}
 
 	std::string Window::getclipboard() const
 	{
-		const char* text = glfwGetClipboardString(glwnd);
+		const char *text = glfwGetClipboardString(glwnd);
 
 		return text ? text : "";
 	}
@@ -303,9 +304,10 @@ namespace ms
 		}
 	}
 
-	std::string Window::GetCurrentWorkingDir( void ) {
+	std::string Window::GetCurrentWorkingDir(void)
+	{
 		char buff[FILENAME_MAX];
-		GetCurrentDir( buff, FILENAME_MAX );
+		GetCurrentDir(buff, FILENAME_MAX);
 		std::string current_working_dir(buff);
 		return current_working_dir;
 	}

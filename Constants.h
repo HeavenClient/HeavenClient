@@ -37,7 +37,8 @@ namespace ms
 				VIEWHEIGHT = 600;
 			};
 
-			~Constants() {};
+			~Constants()
+			{};
 
 			int16_t get_viewwidth()
 			{

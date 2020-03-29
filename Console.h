@@ -36,21 +36,22 @@ namespace ms
 		void print(const std::string&) {}
 	};
 #else
+
 	class Console : public Singleton<Console>
 	{
 	public:
-		void print(const char* func, const std::string& msg)
+		void print(const char *func, const std::string &msg)
 		{
 			static const std::string delim = ", ";
 			print(func + delim + msg);
 		}
 
-		void print(const char* func, const std::exception& ex)
+		void print(const char *func, const std::exception &ex)
 		{
-			print(func, { ex.what() });
+			print(func, {ex.what()});
 		}
 
-		void print(const std::string& str)
+		void print(const std::string &str)
 		{
 			if (!printed.count(str))
 			{
@@ -62,5 +63,6 @@ namespace ms
 	private:
 		std::unordered_set<std::string> printed;
 	};
+
 #endif
 }

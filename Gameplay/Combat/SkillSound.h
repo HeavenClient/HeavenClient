@@ -23,9 +23,11 @@ namespace ms
 	class SkillSound
 	{
 	public:
-		virtual ~SkillSound() {}
+		virtual ~SkillSound()
+		{}
 
 		virtual void play_use() = 0;
+
 		virtual void play_hit() = 0;
 	};
 
@@ -33,8 +35,11 @@ namespace ms
 	class NoSkillSound : public SkillSound
 	{
 	public:
-		void play_use() override {}
-		void play_hit() override {}
+		void play_use() override
+		{}
+
+		void play_hit() override
+		{}
 	};
 
 	// Plays one use and one hit sound.
@@ -44,6 +49,7 @@ namespace ms
 		SingleSkillSound(std::string strid);
 
 		void play_use() override;
+
 		void play_hit() override;
 
 	private:

@@ -32,16 +32,18 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIStatsinfo(const CharStats& stats);
+		UIStatsinfo(const CharStats &stats);
 
 		void draw(float alpha) const override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
+
 		bool is_in_range(Point<int16_t> cursorpos) const override;
 
 		UIElement::Type get_type() const override;
 
 		void update_all_stats();
+
 		void update_stat(Maplestat::Id stat);
 
 	protected:
@@ -51,18 +53,47 @@ namespace ms
 		enum StatLabel
 		{
 			// Normal
-			NAME, JOB, GUILD, FAME, DAMAGE, HP, MP, AP, STR, DEX, INT, LUK, NUM_NORMAL,
+					NAME,
+			JOB,
+			GUILD,
+			FAME,
+			DAMAGE,
+			HP,
+			MP,
+			AP,
+			STR,
+			DEX,
+			INT,
+			LUK,
+			NUM_NORMAL,
 			// Detailed
-			DAMAGE_DETAILED, DAMAGE_BONUS, BOSS_DAMAGE, FINAL_DAMAGE, IGNORE_DEFENSE, CRITICAL_RATE, CRITICAL_DAMAGE, STATUS_RESISTANCE, KNOCKBACK_RESISTANCE, DEFENSE, SPEED, JUMP, HONOR,
+					DAMAGE_DETAILED,
+			DAMAGE_BONUS,
+			BOSS_DAMAGE,
+			FINAL_DAMAGE,
+			IGNORE_DEFENSE,
+			CRITICAL_RATE,
+			CRITICAL_DAMAGE,
+			STATUS_RESISTANCE,
+			KNOCKBACK_RESISTANCE,
+			DEFENSE,
+			SPEED,
+			JUMP,
+			HONOR,
 			// Total
-			NUM_LABELS
+					NUM_LABELS
 		};
 
 		void update_ap();
+
 		void update_simple(StatLabel label, Maplestat::Id stat);
+
 		void update_basevstotal(StatLabel label, Maplestat::Id bstat, Equipstat::Id tstat);
+
 		void update_buffed(StatLabel label, Equipstat::Id stat);
+
 		void send_apup(Maplestat::Id stat) const;
+
 		void set_detail(bool enabled);
 
 		enum Buttons
@@ -83,7 +114,7 @@ namespace ms
 			BT_DETAIL_DETAILCLOSE
 		};
 
-		const CharStats& stats;
+		const CharStats &stats;
 
 		enum Ability
 		{
