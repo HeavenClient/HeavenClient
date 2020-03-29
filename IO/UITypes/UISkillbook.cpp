@@ -832,7 +832,6 @@ namespace ms
 
 		auto iter = skills.data() + skill_idx;
 
-
 		// TODO: (rich) see if works properly.
 		return iter;
 	}

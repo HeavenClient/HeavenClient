@@ -344,7 +344,7 @@ namespace ms
 					types.emplace_back(UIElement::Type::USERLIST);
 				}
 
-				/*if (types.size() > 0)
+				if (types.size() > 0)
 				{
 					auto element = state->get_front(types);
 
@@ -353,7 +353,7 @@ namespace ms
 						element->send_key(mapping.action, pressed, escape);
 						sent = true;
 					}
-				}*/
+				}
 				// TODO: (rich) fix
 			}
 

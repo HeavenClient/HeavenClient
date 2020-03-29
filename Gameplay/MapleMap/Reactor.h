@@ -58,7 +58,6 @@ namespace ms
 		std::map<int8_t, Animation> animations;
 		bool animation_ended;
 
-		bool active;
 		bool hittable;
 		bool dead;
 

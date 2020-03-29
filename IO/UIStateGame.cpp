@@ -613,7 +613,7 @@ namespace ms
 		return elements[type].get();
 	}
 
-	/*UIElement* UIStateGame::get_front(std::list<UIElement::Type> types)
+	UIElement* UIStateGame::get_front(std::list<UIElement::Type> types)
 	{
 		auto begin = elementorder.rbegin();
 		auto end = elementorder.rend();
@@ -630,7 +630,7 @@ namespace ms
 		}
 
 		return nullptr;
-	}*/
+	}
 	// TODO: (rich) fix
 
 	UIElement* UIStateGame::get_front(Point<int16_t> pos)

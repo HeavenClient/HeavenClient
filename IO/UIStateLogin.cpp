@@ -206,7 +206,6 @@ namespace ms
 		return front;
 	}
 
-	/*
 	UIElement* UIStateLogin::get_front(std::list<UIElement::Type> types)
 	{
 		auto begin = types.rbegin();
@@ -221,7 +220,7 @@ namespace ms
 		}
 
 		return nullptr;
-	}*/
+	}
 	// TODO: (rich) fix
 
 	UIElement* UIStateLogin::get_front(Point<int16_t> pos)

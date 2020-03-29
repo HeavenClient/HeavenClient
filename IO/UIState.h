@@ -26,6 +26,7 @@
 #include "../Template/EnumMap.h"
 
 #include <memory>
+#include <list>
 
 namespace ms
 {
@@ -58,7 +59,7 @@ namespace ms
 		virtual void remove(UIElement::Type type) = 0;
 		virtual UIElement* get(UIElement::Type type) = 0;
 		// TODO: (rich) fix... lool
-		//virtual UIElement* get_front(std::list<UIElement::Type> types) = 0;
+		virtual UIElement* get_front(std::list<UIElement::Type> types) = 0;
 		virtual UIElement* get_front(Point<int16_t> pos) = 0;
 		virtual int64_t get_uptime() = 0;
 		virtual uint16_t get_uplevel() = 0;
@@ -85,7 +86,8 @@ namespace ms
 		Iterator pre_add(UIElement::Type, bool, bool) override { return { nullptr, UIElement::Type::NUM_TYPES }; }
 		void remove(UIElement::Type) override {}
 		UIElement* get(UIElement::Type) override { return nullptr; }
-		//UIElement* get_front(std::list<UIElement::Type>) override { return nullptr; }
+		// todo: (rich) fix
+		UIElement* get_front(std::list<UIElement::Type>) override { return nullptr; }
 		UIElement* get_front(Point<int16_t>) override { return nullptr; }
 		int64_t get_uptime() override { return 0; }
 		uint16_t get_uplevel() override { return 0; }
