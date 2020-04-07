@@ -438,7 +438,7 @@ add_executable(HeavenClient
         resource.h
         Timer.h Audio/membuf.cpp Audio/membuf.h)
 
-target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/NoLifeNx/build/libNoLifeNx.a)
+target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/NoLifeNx/nlnx/build/libNoLifeNx.a)
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/NoLifeNx)
 target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/lz4/lib/liblz4.a)
 
