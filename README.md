@@ -14,16 +14,11 @@ The build can be configured by editing the **MapleStory.h** file. The following 
 The default settings can be configured by editing the **Configuration.h** file. These are also generated after a game session in a file called **Settings**. These can be altered in the same way as **Configuration.h**, although, these do not persist if you delete the file, unlike **Configuration.h**.
 
 # Building
-1. Open **MapleStory.sln** in Visual Studio 2017 CE
-2. Make sure to use **Windows SDK Version: 8.1** and **Platform Toolset: v140** (If you don't have these, download them)
-   * [Windows 8.1 SDK](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
-3. Press **Build** > **Build Solution** or **Ctrl + Shift + B**
-4. After a successful build, you can now run the program by pressing **Debug** > **Start Debugging** or **F5**
-5. Make sure all nx files are present in the parent folder. To convert wz files to nx you can use [NoLifeStory.zip](https://drive.google.com/file/d/1Mk3Kq1lY4NTMqylN5sn0-DQNAcoZZRYH/view?usp=sharing)
-   - Extract the zip
-   - Place your wz files in the **files** folder
-   - Run **start.bat**
-   - See **Required Files** for a list of required nx files
+1. Run ```./build-deps.sh```. We try to build each dependency from source -- if any dependencies fail to build, you could try and find the corresponding package for your linux distro if it exists.
+2. ```mkdir build```
+3. ```cd build```
+4. ```cmake ..```
+5. ```make -j$CORES``` where $CORES is your number of CPU cores
 
 # Required Files
 *Always check **NxFiles.h** for an updated list of required nx files*
@@ -38,10 +33,11 @@ The default settings can be configured by editing the **Configuration.h** file. 
 [NoLifeNX](https://github.com/ryantpayton/NoLifeNx)
 
 - Graphics:
-[GLFW3](http://www.glfw.org/download.html), [GLEW](http://glew.sourceforge.net/), [FreeType](http://www.freetype.org/)
+[GLFW3](http://www.glfw.org/download.html), [GLAD](https://github.com/Dav1dde/glad), [FreeType](http://www.freetype.org/)
 
 - Audio:
-[Bass](http://www.un4seen.com/)
+[OpenAL-soft](https://github.com/kcat/openal-soft)
+[Alure](https://github.com/kcat/alure)
 
 - Networking:
 [Asio](http://think-async.com/) (optional)
@@ -53,9 +49,6 @@ If you experience any kind of in-game glitches, UI rendering issues, or anything
 3. Delete the following files/folders: **.vs**, **x64**, **debug.log**, **MapleStory.aps**, **Settings**
 4. Open Solution
 5. Rebuild Solution
-
-# Binaries (08.19.2019)
-The latest build ([4fc96b0](https://github.com/ryantpayton/HeavenClient/commit/4fc96b0d8a2d23216501b00cc2be8e1fd4d28af3)) can be found here: [HeavenClient.zip](https://drive.google.com/file/d/14BiqOHtBiHZOsjrYnwU8twx6r5U7g0p8/view?usp=sharing)
 
 # Donations
 If you feel obligated to donate, to further help and support all parties involved in the development of the HeavenClient project, you can donate using [this](https://paypal.me/pools/c/8frYNoobcY) link.
