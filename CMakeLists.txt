@@ -440,7 +440,7 @@ add_executable(HeavenClient
 
 target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/NoLifeNx/build/libNoLifeNx.a)
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/NoLifeNx)
-target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/lz4/lz4)
+target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/lz4/lib/liblz4.a)
 
 INCLUDE(FindFreetype)
 IF(NOT FREETYPE_FOUND)
@@ -453,16 +453,16 @@ TARGET_LINK_LIBRARIES(HeavenClient ${FREETYPE_LIBRARIES})
 TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glad/build/libglad.a)
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glad/build/include)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/glfw/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/glfw/build/src/libglfw3.a)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glfw/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glfw/build/src/libglfw3.a)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/openal-soft/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/openal-soft/build/libopenal.so)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/openal-soft/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/openal-soft/build/libopenal.so)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/alure/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/alure/build/libalure2.so)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/alure/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/alure/build/libalure2.so)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/stb)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/stb)
 
 target_link_libraries(HeavenClient GL)
 target_link_libraries(HeavenClient X11)

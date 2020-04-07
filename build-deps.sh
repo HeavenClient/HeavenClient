@@ -34,7 +34,7 @@ cd glad && mkdir build && cd build && cmake .. && make -j$CORES && cd ../../ && 
 cd lz4 && make -j$CORES && cd ../ && \
 \
 git clone https://github.com/lain3d/NoLifeNx && \
-cd NoLifeNx && mkdir build && cd build && cmake .. && make -j$CORES && \
+cd NoLifeNx && mkdir build && cd build && cmake .. && make -j$CORES && cd ../../ && \
 \
 git clone https://github.com/glfw/glfw && cd glfw && git checkout 0a49ef0 && \
 mkdir build && cd build && cmake .. && make -j$CORES

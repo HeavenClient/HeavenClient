@@ -32,7 +32,7 @@
 #include <Windows.h>
 #elif __linux__
 
-#include "stb/stb_image.h"
+#include "stb_image.h"
 
 #endif
 
