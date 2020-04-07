@@ -17,10 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Session.h"
 
-#include "PacketError.h"
-
 #include "../Configuration.h"
-#include "../Console.h"
 
 namespace ms
 {
@@ -39,12 +36,12 @@ namespace ms
 
 	bool Session::init(const char* host, const char* port)
 	{
-		// Connect to the server.
+		// Connect to the server
 		connected = socket.open(host, port);
 
 		if (connected)
 		{
-			// Read keys necessary for communicating with the server.
+			// Read keys necessary for communicating with the server
 			cryptography = { socket.get_buffer() };
 		}
 
@@ -64,7 +61,7 @@ namespace ms
 
 	void Session::reconnect(const char* address, const char* port)
 	{
-		// Close the current connection and open a new one.
+		// Close the current connection and open a new one
 		bool success = socket.close();
 
 		if (success)
@@ -77,7 +74,7 @@ namespace ms
 	{
 		if (pos == 0)
 		{
-			// Pos is 0, meaning this is the start of a new packet. Start by determining length.
+			// Position is zero, meaning this is the start of a new packet. Start by determining length.
 			length = cryptography.check_length(bytes);
 			// Reading the length means we processed the header. Move forward by the header length.
 			bytes = bytes + HEADER_LENGTH;
@@ -93,7 +90,7 @@ namespace ms
 		memcpy(buffer + pos, bytes, towrite);
 		pos += towrite;
 
-		// Check if the current packet has been fully processed.
+		// Check if the current packet has been fully processed
 		if (pos >= length)
 		{
 			cryptography.decrypt(buffer, length);
@@ -104,13 +101,13 @@ namespace ms
 			}
 			catch (const PacketError& err)
 			{
-				Console::get().print(err.what());
+				std::cout << err.what() << std::endl;
 			}
 
 			pos = 0;
 			length = 0;
 
-			// Check if there is more available.
+			// Check if there is more available
 			size_t remaining = available - towrite;
 
 			if (remaining >= MIN_PACKET_LENGTH)
@@ -136,12 +133,12 @@ namespace ms
 
 	void Session::read()
 	{
-		// Check if a packet has arrived. Handle if data is sufficient: 4 bytes(header) + 2 bytes(opcode) = 6.
+		// Check if a packet has arrived. Handle if data is sufficient: 4 bytes (header) + 2 bytes (opcode) = 6 bytes.
 		size_t result = socket.receive(&connected);
 
 		if (result >= MIN_PACKET_LENGTH || length > 0)
 		{
-			// Retrieve buffer from the socket and process it.
+			// Retrieve buffer from the socket and process it
 			const int8_t* bytes = socket.get_buffer();
 			process(bytes, result);
 		}

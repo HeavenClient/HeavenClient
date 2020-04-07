@@ -20,7 +20,7 @@
 #include "../Cursor.h"
 #include "../Keyboard.h"
 
-#include "../Graphics/Text.h"
+#include "../../Graphics/Text.h"
 
 #include <functional>
 
@@ -40,8 +40,6 @@ namespace ms
 				  size_t limit);
 
 		Textfield();
-
-		~Textfield();
 
 		void draw(Point<int16_t> position) const;
 

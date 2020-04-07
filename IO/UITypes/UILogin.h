@@ -20,7 +20,8 @@
 #include "../UIElement.h"
 
 #include "../Components/Textfield.h"
-#include "../Template/BoolPair.h"
+
+#include "../../Template/BoolPair.h"
 
 namespace ms
 {

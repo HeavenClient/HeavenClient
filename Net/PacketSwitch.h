@@ -19,44 +19,43 @@
 
 #include "PacketHandler.h"
 
-#include <type_traits>
 #include <memory>
 
 namespace ms
 {
-	// Class which contains the array of handler classes to use.
+	// Class which contains the array of handler classes to use
 	class PacketSwitch
 	{
 	public:
-		// Register all handlers.
+		// Register all handlers
 		PacketSwitch();
 
-		// Forward a packet to the correct handler.
+		// Forward a packet to the correct handler
 		void forward(const int8_t* bytes, size_t length) const;
 
 	private:
-		// Print a warning.
+		// Print a warning
 		void warn(const std::string& message, size_t opcode) const;
 
-		// Opcodes for which handlers can be registered.
+		// Opcodes for which handlers can be registered
 		enum Opcode : uint16_t;
 
-		// Message when an unhandled packet is received.
+		// Message when an unhandled packet is received
 		static constexpr const char* MSG_UNHANDLED = "Unhandled packet detected";
-		// Message when a packet with a larger opcode than the array size is received.
+		// Message when a packet with a larger opcode than the array size is received
 		static constexpr const char* MSG_OUTOFBOUNDS = "Large opcode detected";
-		// Message when a packet with a larger opcode than the array size is received.
+		// Message when a packet with a larger opcode than the array size is received
 		static constexpr const char* MSG_REREGISTER = "Handler was registered twice";
-		// Maximum number of handlers needed.
+		// Maximum number of handlers needed
 		static constexpr const size_t NUM_HANDLERS = 500;
 
 		std::unique_ptr<PacketHandler> handlers[NUM_HANDLERS];
 
-		// Register a handler for the specified opcode.
+		// Register a handler for the specified opcode
 		template <size_t O, typename T, typename...Args>
 		void emplace(Args&& ...args)
 		{
-			static_assert(O < NUM_HANDLERS, "PacketSwitch::emplace - Opcode out of array bounds.");
+			static_assert(O < NUM_HANDLERS, "PacketSwitch::emplace - Opcode out of array bounds");
 			static_assert(std::is_base_of<PacketHandler, T>::value, "Error: Packet handlers must derive from PacketHandler");
 
 			if (handlers[O])

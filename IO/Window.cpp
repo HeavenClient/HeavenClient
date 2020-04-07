@@ -16,14 +16,11 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "Window.h"
+
 #include "UI.h"
 
-#include "../Console.h"
-#include "../Constants.h"
 #include "../Configuration.h"
 #include "../Timer.h"
-
-#include "../Graphics/GraphicsGL.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 // TODO: (rich) is needed?
@@ -55,7 +52,7 @@ namespace ms
 
 	void error_callback(int no, const char *description)
 	{
-		Console::get().print("glfw error: " + std::string(description) + " (" + std::to_string(no) + ")");
+		std::cout << "GLFW error [" << no << "]: " << description << std::endl;
 	}
 
 	void key_callback(GLFWwindow *, int key, int, int action, int)

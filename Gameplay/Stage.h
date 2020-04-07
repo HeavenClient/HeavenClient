@@ -17,9 +17,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Camera.h"
-#include "Spawn.h"
-
 #include "Combat/Combat.h"
 #include "MapleMap/MapInfo.h"
 #include "MapleMap/MapTilesObjs.h"
@@ -35,8 +32,6 @@
 
 #include "../Character/Player.h"
 #include "../IO/KeyType.h"
-#include "../Template/TimedQueue.h"
-#include "../Template/Singleton.h"
 
 namespace ms
 {
@@ -47,7 +42,7 @@ namespace ms
 
 		void init();
 
-		// Loads the map to display. 
+		// Loads the map to display
 		void load(int32_t mapid, int8_t portalid);
 
 		// Remove all map objects and graphics.
@@ -56,22 +51,22 @@ namespace ms
 		// Construct the player from a character entry.
 		void loadplayer(const CharEntry &entry);
 
-		// Call 'draw()' of all objects on stage.
+		// Call 'draw()' of all objects on stage
 		void draw(float alpha) const;
 
 		// Calls 'update()' of all objects on stage.
 		void update();
 
-		// Show a character effect.
+		// Show a character effect
 		void show_character_effect(int32_t cid, CharEffect::Id effect);
 
-		// Send key input to the stage.
+		// Send key input to the stage
 		void send_key(KeyType::Id keytype, int32_t keycode, bool pressed);
 
 		// Send mouse input to the stage.
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position);
 
-		// Check if the specified id is the player's id.
+		// Check if the specified id is the player's id
 		bool is_player(int32_t cid) const;
 
 		// Returns a reference to the NPCs on the current map.
@@ -103,6 +98,16 @@ namespace ms
 
 		// Set a map effect
 		void add_effect(std::string path);
+
+		// Get the total up time of the client
+		int64_t get_uptime();
+		// Get the level at the start of the client
+		uint16_t get_uplevel();
+		// Get the EXP at the start of the client
+		int64_t get_upexp();
+
+		// Notify the server that the player has moved maps
+		void transfer_player();
 
 	private:
 		void load_map(int32_t mapid);
@@ -144,5 +149,9 @@ namespace ms
 		MapEffect effect;
 
 		Combat combat;
+
+		std::chrono::time_point<std::chrono::steady_clock> start;
+		uint16_t levelBefore;
+		int64_t expBefore;
 	};
 }

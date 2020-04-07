@@ -17,10 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "UIElement.h"
 #include "Keyboard.h"
+#include "UIElement.h"
 
-#include "Components/Icon.h"
 #include "Components/Tooltip.h"
 
 #include "../Template/EnumMap.h"
@@ -73,91 +72,35 @@ namespace ms
 		virtual Iterator pre_add(UIElement::Type type, bool toggled, bool focused) = 0;
 
 		virtual void remove(UIElement::Type type) = 0;
+		
+		virtual UIElement* get(UIElement::Type type) = 0;
 
-		virtual UIElement *get(UIElement::Type type) = 0;
+		virtual UIElement* get_front(std::list<UIElement::Type> types) = 0;
 
-		// TODO: (rich) fix... lool
-		virtual UIElement *get_front(std::list<UIElement::Type> types) = 0;
-
-		virtual UIElement *get_front(Point<int16_t> pos) = 0;
-
-		virtual int64_t get_uptime() = 0;
-
-		virtual uint16_t get_uplevel() = 0;
-
-		virtual int64_t get_upexp() = 0;
+		virtual UIElement* get_front(Point<int16_t> pos) = 0;
 	};
 
 	class UIStateNull : public UIState
 	{
-		void draw(float, Point<int16_t>) const override
-		{}
-
-		void update() override
-		{}
-
-		void doubleclick(Point<int16_t>) override
-		{}
-
-		void rightclick(Point<int16_t>) override
-		{}
-
-		void send_key(KeyType::Id, int32_t, bool, bool) override
-		{}
-
-		Cursor::State send_cursor(Cursor::State, Point<int16_t>) override
-		{ return Cursor::State::IDLE; }
-
-		void send_scroll(double yoffset) override
-		{}
-
-		void send_close() override
-		{}
-
-		void drag_icon(Icon *) override
-		{}
-
-		void clear_tooltip(Tooltip::Parent) override
-		{}
-
-		void show_equip(Tooltip::Parent, int16_t) override
-		{}
-
-		void show_item(Tooltip::Parent, int32_t) override
-		{}
-
-		void show_skill(Tooltip::Parent, int32_t, int32_t, int32_t, int64_t) override
-		{}
-
-		void show_text(Tooltip::Parent, std::string) override
-		{}
-
-		void show_map(Tooltip::Parent, std::string, std::string, int32_t, bool) override
-		{}
-
-		Iterator pre_add(UIElement::Type, bool, bool) override
-		{ return {nullptr, UIElement::Type::NUM_TYPES}; }
-
-		void remove(UIElement::Type) override
-		{}
-
-		UIElement *get(UIElement::Type) override
-		{ return nullptr; }
-
-		// todo: (rich) fix
-		UIElement *get_front(std::list<UIElement::Type>) override
-		{ return nullptr; }
-
-		UIElement *get_front(Point<int16_t>) override
-		{ return nullptr; }
-
-		int64_t get_uptime() override
-		{ return 0; }
-
-		uint16_t get_uplevel() override
-		{ return 0; }
-
-		int64_t get_upexp() override
-		{ return 0; }
+		void draw(float, Point<int16_t>) const override {}
+		void update() override {}
+		void doubleclick(Point<int16_t>) override {}
+		void rightclick(Point<int16_t>) override {}
+		void send_key(KeyType::Id, int32_t, bool, bool) override {}
+		Cursor::State send_cursor(Cursor::State, Point<int16_t>) override { return Cursor::State::IDLE; }
+		void send_scroll(double yoffset) override {}
+		void send_close() override {}
+		void drag_icon(Icon*) override {}
+		void clear_tooltip(Tooltip::Parent) override {}
+		void show_equip(Tooltip::Parent, int16_t) override {}
+		void show_item(Tooltip::Parent, int32_t) override {}
+		void show_skill(Tooltip::Parent, int32_t, int32_t, int32_t, int64_t) override {}
+		void show_text(Tooltip::Parent, std::string) override {}
+		void show_map(Tooltip::Parent, std::string, std::string, int32_t, bool) override {}
+		Iterator pre_add(UIElement::Type, bool, bool) override { return { nullptr, UIElement::Type::NUM_TYPES }; }
+		void remove(UIElement::Type) override {}
+		UIElement* get(UIElement::Type) override { return nullptr; }
+		UIElement* get_front(std::list<UIElement::Type>) override { return nullptr; }
+		UIElement* get_front(Point<int16_t>) override { return nullptr; }
 	};
 }

@@ -55,11 +55,11 @@ namespace ms
 	class Sound
 	{
 	public:
-		// Preloaded sounds.
+		// Preloaded sounds
 		enum Name
 		{
-			// UI
-					BUTTONCLICK,
+			/// UI
+			BUTTONCLICK,
 			BUTTONOVER,
 			CHARSELECT,
 			DLGNOTICE,
@@ -75,11 +75,11 @@ namespace ms
 			WORLDMAPOPEN,
 			WORLDMAPCLOSE,
 
-			// Login
-					GAMESTART,
+			/// Login
+			GAMESTART,
 
-			// Game
-					JUMP,
+			/// Game
+			JUMP,
 			DROP,
 			PICKUP,
 			PORTAL,
@@ -112,7 +112,7 @@ namespace ms
 
 		static size_t add_sound(nl::node src);
 
-		static void add_sound(Sound::Name name, nl::node src);
+		static void add_sound(Name name, nl::node src);
 
 		static void add_sound(std::string itemid, nl::node src);
 

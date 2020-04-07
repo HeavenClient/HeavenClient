@@ -16,7 +16,6 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "MapReactors.h"
-#include "Reactor.h"
 
 namespace ms
 {

@@ -17,10 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UISoftKey.h"
 
-#include "../Constants.h"
-
 #include "../Components/MapleButton.h"
 #include "../Components/TwoSpriteButton.h"
+
+#include "../../Constants.h"
 
 #include <nlnx/nx.hpp>
 
@@ -71,17 +71,9 @@ namespace ms
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text) : UISoftKey(
-			ok_callback, cancel_callback, tooltip_text, Point<int16_t>(0, 0))
-	{}
-
-	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback) : UISoftKey(ok_callback,
-																							 cancel_callback, "")
-	{}
-
-	UISoftKey::UISoftKey(OkCallback ok_callback) : UISoftKey(ok_callback, []()
-	{})
-	{}
+	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text) : UISoftKey(ok_callback, cancel_callback, tooltip_text, Point<int16_t>(0, 0)) {}
+	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback) : UISoftKey(ok_callback, cancel_callback, "") {}
+	UISoftKey::UISoftKey(OkCallback ok_callback) : UISoftKey(ok_callback, []() {}) {}
 
 	void UISoftKey::draw(float inter) const
 	{

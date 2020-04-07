@@ -17,15 +17,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIQuit.h"
 
+#include "Timer.h"
 #include "../UI.h"
-#include "../Timer.h"
 #include "../Window.h"
-#include "../Constants.h"
 
-#include "../Net/Session.h"
-#include "../Gameplay/Stage.h"
 #include "../Components/MapleButton.h"
-#include "../Character/ExpTable.h"
+
+#include "../../Character/ExpTable.h"
+#include "../../Gameplay/Stage.h"
+#include "../../Net/Session.h"
 
 #include <nlnx/nx.hpp>
 
@@ -45,10 +45,14 @@ namespace ms
 		buttons[Buttons::NO] = std::make_unique<MapleButton>(askReward["btNo"], Point<int16_t>(0, 37));
 		buttons[Buttons::YES] = std::make_unique<MapleButton>(askReward["btYes"], Point<int16_t>(0, 37));
 
-		// Time
-		int64_t uptime = UI::get().get_uptime() / 1000 / 1000;
+		Stage& stage = Stage::get();
+
+		/// Time
+		int64_t uptime = stage.get_uptime() / 1000 / 1000;
 		minutes = uptime / 60;
 		hours = minutes / 60;
+
+		minutes -= hours * 60;
 
 		time_minutes = Charset(time["number"], Charset::Alignment::LEFT);
 		time_minutes_pos = time["posM"];
@@ -63,16 +67,16 @@ namespace ms
 		time_lt = time["tooltip"]["lt"];
 		time_rb = time["tooltip"]["rb"];
 
-		// Level
+		/// Level
 		levelupEffect = level["levelupEffect"];
 
-		uplevel = UI::get().get_uplevel();
+		uplevel = stage.get_uplevel();
 
 		levelBefore = Charset(level["number"], Charset::Alignment::LEFT);
 		levelBeforePos = level["posBefore"];
 		levelBeforeText = std::to_string(uplevel);
 
-		cur_level = stats.get_stat(Maplestat::Id::LEVEL);
+		cur_level = stats.get_stat(MapleStat::Id::LEVEL);
 
 		levelAfter = Charset(level["number"], Charset::Alignment::LEFT);
 		levelAfterPos = level["posAfter"];
@@ -82,8 +86,8 @@ namespace ms
 
 		level_adj = Point<int16_t>(40, 0);
 
-		// Experience
-		int64_t upexp = UI::get().get_upexp();
+		/// Experience
+		int64_t upexp = stage.get_upexp();
 		float expPercentBefore = getexppercent(uplevel, upexp);
 		std::string expBeforeString = std::to_string(100 * expPercentBefore);
 		std::string expBeforeText = expBeforeString.substr(0, expBeforeString.find('.') + 3) + '%';
@@ -156,7 +160,7 @@ namespace ms
 		if (pressed)
 		{
 			if (escape)
-				deactivate();
+				close();
 			else if (keycode == KeyAction::Id::RETURN)
 				button_pressed(Buttons::YES);
 		}
@@ -212,7 +216,12 @@ namespace ms
 	std::string UIQuit::pad_time(int64_t time)
 	{
 		std::string ctime = std::to_string(time);
-		return std::string(2 - ctime.length(), '0') + ctime;
+		size_t length = ctime.length();
+
+		if (length > 2)
+			return "99";
+
+		return std::string(2 - length, '0') + ctime;
 	}
 
 	float UIQuit::getexppercent(uint16_t level, int64_t exp) const
@@ -223,5 +232,12 @@ namespace ms
 		return static_cast<float>(
 				static_cast<double>(exp) / ExpTable::values[level]
 		);
+	}
+
+	void UIQuit::close()
+	{
+		deactivate();
+
+		UI::get().clear_tooltip(Tooltip::Parent::TEXT);
 	}
 }

@@ -21,7 +21,8 @@
 
 #include "../Components/Textfield.h"
 #include "../Components/TextTooltip.h"
-#include "../Util/Randomizer.h"
+
+#include "../../Util/Randomizer.h"
 
 namespace ms
 {

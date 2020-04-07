@@ -22,9 +22,6 @@
 #ifndef USE_ASIO
 #include "NetConstants.h"
 
-#include <cstdlib>
-#include <cstdint>
-
 namespace ms
 {
 #ifdef USE_CRYPTO

@@ -17,8 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "MapPortals.h"
 
-#include "../Constants.h"
-#include "../Util/Misc.h"
+#include "../../Constants.h"
+
+#include "../../Util/Misc.h"
 
 #include <nlnx/nx.hpp>
 

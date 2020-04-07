@@ -17,11 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Combat.h"
 
-#include "../Character/SkillId.h"
-#include "../IO/Messages.h"
+#include "../../Character/SkillId.h"
+#include "../../IO/Messages.h"
 
-#include "../Net/Packets/AttackAndSkillPackets.h"
-#include "../Net/Packets/GameplayPackets.h"
+#include "../../Net/Packets/AttackAndSkillPackets.h"
+#include "../../Net/Packets/GameplayPackets.h"
 
 namespace ms
 {

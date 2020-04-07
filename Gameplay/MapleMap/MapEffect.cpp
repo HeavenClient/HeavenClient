@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "MapEffect.h"
 
-#include "../Constants.h"
+#include "../../Constants.h"
 
 #include <nlnx/nx.hpp>
 

@@ -19,12 +19,12 @@
 
 #include "CharStats.h"
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
 namespace ms
 {
-	// Interface for passive buffs.
+	// Interface for passive buffs
 	class PassiveBuff
 	{
 	public:
@@ -36,14 +36,14 @@ namespace ms
 		virtual void apply_to(CharStats &stats, nl::node level) const = 0;
 	};
 
-	// Abstract base for passives without conditions.
+	// Abstract base for passives without conditions
 	class ConditionlessBuff : public PassiveBuff
 	{
 	public:
 		bool is_applicable(CharStats &stats, nl::node level) const final override;
 	};
 
-	// Buff for angel blessing/blessing of the spirit.
+	// Buff for angel blessing/blessing of the spirit
 	class AngelBlessingBuff : public ConditionlessBuff
 	{
 	public:
@@ -60,14 +60,14 @@ namespace ms
 		void apply_to(CharStats &stats, nl::node level) const override;
 	};
 
-	// Buff for Achilles.
+	// Buff for Achilles
 	class AchillesBuff : public ConditionlessBuff
 	{
 	public:
 		void apply_to(CharStats &stats, nl::node level) const override;
 	};
 
-	// Buff for Berserk.
+	// Buff for Berserk
 	class BerserkBuff : public PassiveBuff
 	{
 	public:
@@ -76,11 +76,11 @@ namespace ms
 		void apply_to(CharStats &stats, nl::node level) const override;
 	};
 
-	// Collection of passive buffs.
+	// Collection of passive buffs
 	class PassiveBuffs
 	{
 	public:
-		// Register all effects.
+		// Register all effects
 		PassiveBuffs();
 
 		// Apply a passive skill effect to the character stats.

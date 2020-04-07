@@ -17,11 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Inventory.h"
 
-#include "../Console.h"
+#include "../../Data/BulletData.h"
+#include "../../Data/EquipData.h"
 
-#include "../Data/BulletData.h"
-#include "../Data/EquipData.h"
-#include "../Data/ItemData.h"
+#include <iostream>
 
 namespace ms
 {
@@ -30,7 +29,7 @@ namespace ms
 		bulletslot = 0;
 		meso = 0;
 		running_uid = 0;
-		slotmaxima[InventoryType::Id::EQUIPPED] = Equipslot::Id::LENGTH;
+		slotmaxima[InventoryType::Id::EQUIPPED] = EquipSlot::Id::LENGTH;
 	}
 
 	void Inventory::recalc_stats(Weapon::Type type)
@@ -88,7 +87,7 @@ namespace ms
 		}
 
 		if (int32_t bulletid = get_bulletid())
-			totalstats[Equipstat::Id::WATK] += BulletData::get(bulletid).get_watk();
+			totalstats[EquipStat::Id::WATK] += BulletData::get(bulletid).get_watk();
 	}
 
 	void Inventory::set_meso(int64_t m)
@@ -122,7 +121,7 @@ namespace ms
 	}
 
 	void Inventory::add_equip(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire,
-							  uint8_t slots, uint8_t level, const EnumMap<Equipstat::Id, uint16_t> &stats,
+							  uint8_t slots, uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats,
 							  const std::string &owner, int16_t flag, uint8_t ilevel, uint16_t iexp, int32_t vicious)
 	{
 		equips.emplace(
@@ -229,7 +228,7 @@ namespace ms
 		return slotmaxima[type];
 	}
 
-	uint16_t Inventory::get_stat(Equipstat::Id type) const
+	uint16_t Inventory::get_stat(EquipStat::Id type) const
 	{
 		return totalstats[type];
 	}
@@ -244,7 +243,7 @@ namespace ms
 		return bulletslot > 0;
 	}
 
-	bool Inventory::has_equipped(Equipslot::Id slot) const
+	bool Inventory::has_equipped(EquipSlot::Id slot) const
 	{
 		return inventories[InventoryType::Id::EQUIPPED].count(slot) > 0;
 	}
@@ -264,27 +263,27 @@ namespace ms
 		return get_item_id(InventoryType::Id::USE, bulletslot);
 	}
 
-	Equipslot::Id Inventory::find_equipslot(int32_t itemid) const
+	EquipSlot::Id Inventory::find_equipslot(int32_t itemid) const
 	{
 		const EquipData &cloth = EquipData::get(itemid);
 
 		if (!cloth.is_valid())
-			return Equipslot::Id::NONE;
+			return EquipSlot::Id::NONE;
 
-		Equipslot::Id eqslot = cloth.get_eqslot();
+		EquipSlot::Id eqslot = cloth.get_eqslot();
 
-		if (eqslot == Equipslot::Id::RING1)
+		if (eqslot == EquipSlot::Id::RING1)
 		{
-			if (!has_equipped(Equipslot::Id::RING2))
-				return Equipslot::Id::RING2;
+			if (!has_equipped(EquipSlot::Id::RING2))
+				return EquipSlot::Id::RING2;
 
-			if (!has_equipped(Equipslot::Id::RING3))
-				return Equipslot::Id::RING3;
+			if (!has_equipped(EquipSlot::Id::RING3))
+				return EquipSlot::Id::RING3;
 
-			if (!has_equipped(Equipslot::Id::RING4))
-				return Equipslot::Id::RING4;
+			if (!has_equipped(EquipSlot::Id::RING4))
+				return EquipSlot::Id::RING4;
 
-			return Equipslot::Id::RING1;
+			return EquipSlot::Id::RING1;
 		} else
 		{
 			return eqslot;
@@ -371,7 +370,7 @@ namespace ms
 		if (value >= Inventory::Movement::MOVE_INTERNAL && value <= Inventory::Movement::MOVE_EQUIP)
 			return static_cast<Movement>(value);
 
-		Console::get().print("Unknown move type: " + std::to_string(value));
+		std::cout << "Unknown Inventory::Movement value: [" << value << "]" << std::endl;
 
 		return Inventory::Movement::MOVE_NONE;
 	}

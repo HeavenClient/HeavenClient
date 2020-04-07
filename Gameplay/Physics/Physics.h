@@ -17,11 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Footholdtree.h"
+#include "FootholdTree.h"
 
 namespace ms
 {
-	// Class that uses physics engines and the collection of platforms to determine object movement.
+	// Class that uses physics engines and the collection of platforms to determine object movement
 	class Physics
 	{
 	public:
@@ -36,7 +36,7 @@ namespace ms
 		Point<int16_t> get_y_below(Point<int16_t> position) const;
 
 		// Return a reference to the collection of platforms.
-		const Footholdtree &get_fht() const;
+		const FootholdTree &get_fht() const;
 
 	private:
 		void move_normal(PhysicsObject &) const;
@@ -45,6 +45,6 @@ namespace ms
 
 		void move_swimming(PhysicsObject &) const;
 
-		Footholdtree fht;
+		FootholdTree fht;
 	};
 }

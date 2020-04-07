@@ -17,9 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Mob.h"
 
-#include "../Util/Misc.h"
+#include "../../Util/Misc.h"
 
-#include "../Net/Packets/GameplayPackets.h"
+#include "../../Net/Packets/GameplayPackets.h"
 
 #include <nlnx/nx.hpp>
 

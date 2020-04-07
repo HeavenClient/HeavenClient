@@ -17,22 +17,22 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "Equip.h"
 #include "InventoryType.h"
 #include "Item.h"
-#include "Equip.h"
 #include "Pet.h"
 #include "Weapon.h"
 
-#include "../Look/Equipslot.h"
-#include "../Template/EnumMap.h"
-#include "../Template/Optional.h"
+#include "../Look/EquipSlot.h"
+
+#include "../../Template/Optional.h"
 
 #include <map>
 #include <unordered_map>
 
 namespace ms
 {
-	// The player's inventory.
+	// The player's inventory
 	class Inventory
 	{
 	public:
@@ -53,12 +53,12 @@ namespace ms
 			ADDCOUNT
 		};
 
-		// Return the move type by value.
+		// Return the move type by value
 		static Movement movementbyvalue(int8_t value);
 
 		Inventory();
 
-		// Recalculate sums of equip stats.
+		// Recalculate sums of equip stats
 		void recalc_stats(Weapon::Type weapontype);
 
 		// Set the meso amount.
@@ -67,7 +67,7 @@ namespace ms
 		// Set the number of slots for a given inventory.
 		void set_slotmax(InventoryType::Id type, uint8_t value);
 
-		// Modify the inventory with info from a packet.
+		// Modify the inventory with info from a packet
 		void modify(InventoryType::Id type, int16_t pos, int8_t mode, int16_t arg, Movement movement);
 
 		// Add a general item.
@@ -80,14 +80,14 @@ namespace ms
 
 		// Add an equip item.
 		void add_equip(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint8_t slots,
-					   uint8_t level, const EnumMap<Equipstat::Id, uint16_t> &stats, const std::string &owner,
+					   uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, const std::string &owner,
 					   int16_t flag, uint8_t itemlevel, uint16_t itemexp, int32_t vicious);
 
-		// Check if the use inventory contains at least one projectile.
+		// Check if the use inventory contains at least one projectile
 		bool has_projectile() const;
 
 		// Return if an equip is equipped in the specfied slot.
-		bool has_equipped(Equipslot::Id slot) const;
+		bool has_equipped(EquipSlot::Id slot) const;
 
 		// Return the currently active projectile slot.
 		int16_t get_bulletslot() const;
@@ -102,13 +102,13 @@ namespace ms
 		uint8_t get_slotmax(InventoryType::Id type) const;
 
 		// Return a total stat.
-		uint16_t get_stat(Equipstat::Id type) const;
+		uint16_t get_stat(EquipStat::Id type) const;
 
 		// Return the amount of meso.
 		int64_t get_meso() const;
 
 		// Find a free slot for the specified equip.
-		Equipslot::Id find_equipslot(int32_t itemid) const;
+		EquipSlot::Id find_equipslot(int32_t itemid) const;
 
 		// Find a free slot in the specified inventory.
 		int16_t find_free_slot(InventoryType::Id type) const;
@@ -125,11 +125,11 @@ namespace ms
 		// Return the id of an item. Returns 0 if the slot is empty.
 		int32_t get_item_id(InventoryType::Id type, int16_t slot) const;
 
-		// Return a pointer to an equip.
+		// Return a pointer to an equip
 		Optional<const Equip> get_equip(InventoryType::Id type, int16_t slot) const;
 
 	private:
-		// Add an inventory slot and return the unique_id.
+		// Add an inventory slot and return the unique_id
 		int32_t add_slot(InventoryType::Id type, int16_t slot, int32_t item_id, int16_t count, bool cash);
 
 		// Change the quantity of an item.
@@ -155,7 +155,7 @@ namespace ms
 		std::unordered_map<int32_t, Pet> pets;
 		int32_t running_uid;
 
-		EnumMap<Equipstat::Id, uint16_t> totalstats;
+		EnumMap<EquipStat::Id, uint16_t> totalstats;
 		EnumMap<InventoryType::Id, uint8_t> slotmaxima;
 		int64_t meso;
 		int16_t bulletslot;

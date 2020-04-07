@@ -20,7 +20,8 @@
 #include "../UIElement.h"
 
 #include "../Components/ChatBalloon.h"
-#include "../Net/Login.h"
+
+#include "../../Net/Login.h"
 
 namespace ms
 {

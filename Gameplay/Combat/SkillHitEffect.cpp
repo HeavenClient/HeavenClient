@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "SkillHitEffect.h"
 
-#include "../Util/Misc.h"
+#include "../../Util/Misc.h"
 
 namespace ms
 {
@@ -29,10 +29,9 @@ namespace ms
 		effect.apply(target, user.flip);
 	}
 
-	TwoHHitEffect::TwoHHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"])
-	{}
+	TwoHandedHitEffect::TwoHandedHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"]) {}
 
-	void TwoHHitEffect::apply(const AttackUser &user, Mob &target) const
+	void TwoHandedHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		effects[user.secondweapon].apply(target, user.flip);
 	}
@@ -61,7 +60,7 @@ namespace ms
 		iter->second.apply(target, user.flip);
 	}
 
-	ByLevelTwoHHitEffect::ByLevelTwoHHitEffect(nl::node src)
+	ByLevelTwoHandedHitEffect::ByLevelTwoHandedHitEffect(nl::node src)
 	{
 		for (auto sub : src["CharLevel"])
 		{
@@ -74,7 +73,7 @@ namespace ms
 		}
 	}
 
-	void ByLevelTwoHHitEffect::apply(const AttackUser &user, Mob &target) const
+	void ByLevelTwoHandedHitEffect::apply(const AttackUser &user, Mob &target) const
 	{
 		if (effects.empty())
 			return;

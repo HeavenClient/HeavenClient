@@ -18,27 +18,26 @@
 #pragma once
 
 #include <unordered_map>
-#include <cstdint>
 
 namespace ms
 {
 	// Externalising this for easier configurability.
-	const std::unordered_map<Equipstat::Id, int32_t> EQSTAT_CAPS =
+	const std::unordered_map<EquipStat::Id, int32_t> EQSTAT_CAPS =
 			{
-					{Equipstat::Id::STR,   999},
-					{Equipstat::Id::DEX,   999},
-					{Equipstat::Id::INT,   999},
-					{Equipstat::Id::LUK,   999},
-					{Equipstat::Id::HP,    30000},
-					{Equipstat::Id::MP,    30000},
-					{Equipstat::Id::WATK,  999},
-					{Equipstat::Id::MAGIC, 2000},
-					{Equipstat::Id::WDEF,  999},
-					{Equipstat::Id::MDEF,  999},
-					{Equipstat::Id::ACC,   999},
-					{Equipstat::Id::AVOID, 999},
-					{Equipstat::Id::HANDS, 999},
-					{Equipstat::Id::SPEED, 140},
-					{Equipstat::Id::JUMP,  123},
+					{EquipStat::Id::STR,   999},
+					{EquipStat::Id::DEX,   999},
+					{EquipStat::Id::INT,   999},
+					{EquipStat::Id::LUK,   999},
+					{EquipStat::Id::HP,    30000},
+					{EquipStat::Id::MP,    30000},
+					{EquipStat::Id::WATK,  999},
+					{EquipStat::Id::MAGIC, 2000},
+					{EquipStat::Id::WDEF,  999},
+					{EquipStat::Id::MDEF,  999},
+					{EquipStat::Id::ACC,   999},
+					{EquipStat::Id::AVOID, 999},
+					{EquipStat::Id::HANDS, 999},
+					{EquipStat::Id::SPEED, 140},
+					{EquipStat::Id::JUMP,  123},
 			};
 }

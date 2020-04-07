@@ -20,9 +20,10 @@
 #include "../UIElement.h"
 
 #include "../Components/Textfield.h"
-#include "../Template/BoolPair.h"
 
-#include "../Character/Look/CharLook.h"
+#include "../../Template/BoolPair.h"
+
+#include "../../Character/Look/CharLook.h"
 
 namespace ms
 {
@@ -36,11 +37,9 @@ namespace ms
 		UICygnusCreation();
 
 		void draw(float inter) const override;
-
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
-
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -52,8 +51,7 @@ namespace ms
 
 	private:
 		void randomize_look();
-
-		const std::string &get_equipname(Equipslot::Id slot) const;
+		const std::string& get_equipname(EquipSlot::Id slot) const;
 
 		enum Buttons : uint16_t
 		{

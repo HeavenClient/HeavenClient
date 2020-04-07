@@ -21,6 +21,7 @@
 
 #include "Components/EquipTooltip.h"
 #include "Components/ItemTooltip.h"
+#include "Components/MapTooltip.h"
 #include "Components/SkillTooltip.h"
 #include "Components/TextTooltip.h"
 #include "Components/MapTooltip.h"
@@ -29,10 +30,7 @@
 
 #include "../Template/EnumMap.h"
 #include "../Template/Optional.h"
-#include "Character/CharStats.h"
-
-#include <list>
-#include <memory>
+#include "../Character/CharStats.h"
 
 namespace ms
 {
@@ -79,16 +77,10 @@ namespace ms
 
 		UIElement *get(UIElement::Type type) override;
 
-		// TODO: (rich) fix
 		UIElement *get_front(std::list<UIElement::Type> types) override;
 
 		UIElement *get_front(Point<int16_t> pos) override;
 
-		int64_t get_uptime() override;
-
-		uint16_t get_uplevel() override;
-
-		int64_t get_upexp() override;
 
 	private:
 		const CharStats &stats;
@@ -130,8 +122,5 @@ namespace ms
 
 		int16_t VWIDTH;
 		int16_t VHEIGHT;
-		std::chrono::time_point<std::chrono::steady_clock> start;
-		uint16_t levelBefore;
-		int64_t expBefore;
 	};
 }

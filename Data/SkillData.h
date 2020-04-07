@@ -17,22 +17,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Character/Inventory/Weapon.h"
 #include "../Graphics/Texture.h"
-#include "../Template/Rectangle.h"
 #include "../Template/Cache.h"
 
-#include <string>
-#include <array>
-#include <unordered_map>
+#include "../Character/Inventory/Weapon.h"
 
 namespace ms
 {
-	// Contains information about a skill.
+	// Contains information about a skill
 	class SkillData : public Cache<SkillData>
 	{
 	public:
-		// The stats of one level.
+		// The stats of one level
 		struct Stats
 		{
 			float damage;
@@ -61,7 +57,7 @@ namespace ms
 			{}
 		};
 
-		// Skill flags, unfortunately these just have to be hardcoded
+		// Skill flags, unfortunately these just have to be hard-coded
 		enum Flags
 		{
 			NONE = 0x0000,
@@ -78,7 +74,7 @@ namespace ms
 			NUM_ICONS
 		};
 
-		// Return whether the skill is passive.
+		// Return whether the skill is passive
 		bool is_passive() const;
 
 		// Return whether the skill is an attack skill.
@@ -115,13 +111,13 @@ namespace ms
 		const std::unordered_map<int32_t, int32_t> &get_reqskills() const;
 
 	private:
-		// Allow the cache to use the constructor.
+		// Allow the cache to use the constructor
 		friend Cache<SkillData>;
 
 		// Load a skill from the game files.
 		SkillData(int32_t id);
 
-		// Get some hardcoded information.
+		// Get some hard-coded information
 		int32_t flags_of(int32_t id) const;
 
 		std::unordered_map<int32_t, Stats> stats;
@@ -137,6 +133,6 @@ namespace ms
 		std::unordered_map<int32_t, std::string> levels;
 		std::unordered_map<int32_t, int32_t> reqskills;
 
-		std::array<Texture, SkillData::Icon::NUM_ICONS> icons;
+		std::array<Texture, Icon::NUM_ICONS> icons;
 	};
 }

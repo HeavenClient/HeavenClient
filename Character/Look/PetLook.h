@@ -17,11 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Graphics/Text.h"
-#include "../Graphics/Animation.h"
-#include "../Template/EnumMap.h"
+#include "../../Graphics/Animation.h"
+#include "../../Graphics/Text.h"
+#include "../../Template/EnumMap.h"
 
-#include "../Gameplay/Physics/Physics.h"
+#include "../../Gameplay/Physics/Physics.h"
 
 namespace ms
 {
@@ -45,7 +45,7 @@ namespace ms
 		{
 			uint8_t valueh = value / 2;
 
-			return valueh >= Stance::LENGTH ? Stance::STAND : static_cast<Stance>(valueh);
+			return valueh >= LENGTH ? STAND : static_cast<Stance>(valueh);
 		}
 
 		PetLook(int32_t iid, std::string name, int32_t uniqueid, Point<int16_t> pos, uint8_t stance, int32_t fhid);

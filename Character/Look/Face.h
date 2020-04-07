@@ -17,10 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "BodyDrawinfo.h"
+#include "BodyDrawInfo.h"
 
-#include "../Graphics/Texture.h"
-#include "../Template/EnumMap.h"
+#include "../../Graphics/Texture.h"
 
 namespace ms
 {

@@ -20,11 +20,12 @@
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
-#include "../Data/ItemData.h"
-#include "../Audio/Audio.h"
+#include "../UITypes/UIItemInventory.h"
 
-#include "../Net/Packets/InventoryPackets.h"
-#include "../IO/UITypes/UIItemInventory.h"
+#include "../../Audio/Audio.h"
+#include "../../Data/ItemData.h"
+
+#include "../../Net/Packets/InventoryPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -35,48 +36,48 @@ namespace ms
 			  hasPocketSlot(false)
 	{
 		// Column 1
-		iconpositions[Equipslot::Id::RING1] = Point<int16_t>(14, 50);
-		iconpositions[Equipslot::Id::RING2] = Point<int16_t>(14, 91);
-		iconpositions[Equipslot::Id::RING3] = Point<int16_t>(14, 132);
-		iconpositions[Equipslot::Id::RING4] = Point<int16_t>(14, 173);
-		iconpositions[Equipslot::Id::POCKET] = Point<int16_t>(14, 214);
-		iconpositions[Equipslot::Id::BOOK] = Point<int16_t>(14, 255);
+		iconpositions[EquipSlot::Id::RING1] = Point<int16_t>(14, 50);
+		iconpositions[EquipSlot::Id::RING2] = Point<int16_t>(14, 91);
+		iconpositions[EquipSlot::Id::RING3] = Point<int16_t>(14, 132);
+		iconpositions[EquipSlot::Id::RING4] = Point<int16_t>(14, 173);
+		iconpositions[EquipSlot::Id::POCKET] = Point<int16_t>(14, 214);
+		iconpositions[EquipSlot::Id::BOOK] = Point<int16_t>(14, 255);
 
 		// Column 2
-		//iconpositions[Equipslot::Id::NONE] = Point<int16_t>(55, 50);
-		iconpositions[Equipslot::Id::PENDANT2] = Point<int16_t>(55, 91);
-		iconpositions[Equipslot::Id::PENDANT1] = Point<int16_t>(55, 132);
-		iconpositions[Equipslot::Id::WEAPON] = Point<int16_t>(55, 173);
-		iconpositions[Equipslot::Id::BELT] = Point<int16_t>(55, 214);
-		//iconpositions[Equipslot::Id::NONE] = Point<int16_t>(55, 255);
+		//iconpositions[EquipSlot::Id::NONE] = Point<int16_t>(55, 50);
+		iconpositions[EquipSlot::Id::PENDANT2] = Point<int16_t>(55, 91);
+		iconpositions[EquipSlot::Id::PENDANT1] = Point<int16_t>(55, 132);
+		iconpositions[EquipSlot::Id::WEAPON] = Point<int16_t>(55, 173);
+		iconpositions[EquipSlot::Id::BELT] = Point<int16_t>(55, 214);
+		//iconpositions[EquipSlot::Id::NONE] = Point<int16_t>(55, 255);
 
 		// Column 3
-		iconpositions[Equipslot::Id::HAT] = Point<int16_t>(96, 50);
-		iconpositions[Equipslot::Id::FACE] = Point<int16_t>(96, 91);
-		iconpositions[Equipslot::Id::EYEACC] = Point<int16_t>(96, 132);
-		iconpositions[Equipslot::Id::TOP] = Point<int16_t>(96, 173);
-		iconpositions[Equipslot::Id::BOTTOM] = Point<int16_t>(96, 214);
-		iconpositions[Equipslot::Id::SHOES] = Point<int16_t>(96, 255);
+		iconpositions[EquipSlot::Id::HAT] = Point<int16_t>(96, 50);
+		iconpositions[EquipSlot::Id::FACE] = Point<int16_t>(96, 91);
+		iconpositions[EquipSlot::Id::EYEACC] = Point<int16_t>(96, 132);
+		iconpositions[EquipSlot::Id::TOP] = Point<int16_t>(96, 173);
+		iconpositions[EquipSlot::Id::BOTTOM] = Point<int16_t>(96, 214);
+		iconpositions[EquipSlot::Id::SHOES] = Point<int16_t>(96, 255);
 
 		// Column 4
-		//iconpositions[Equipslot::Id::NONE] = Point<int16_t>(137, 50);
-		//iconpositions[Equipslot::Id::NONE] = Point<int16_t>(137, 91);
-		iconpositions[Equipslot::Id::EARACC] = Point<int16_t>(137, 132);
-		iconpositions[Equipslot::Id::SHOULDER] = Point<int16_t>(137, 173);
-		iconpositions[Equipslot::Id::GLOVES] = Point<int16_t>(137, 214);
-		iconpositions[Equipslot::Id::ANDROID] = Point<int16_t>(137, 255);
+		//iconpositions[EquipSlot::Id::NONE] = Point<int16_t>(137, 50);
+		//iconpositions[EquipSlot::Id::NONE] = Point<int16_t>(137, 91);
+		iconpositions[EquipSlot::Id::EARACC] = Point<int16_t>(137, 132);
+		iconpositions[EquipSlot::Id::SHOULDER] = Point<int16_t>(137, 173);
+		iconpositions[EquipSlot::Id::GLOVES] = Point<int16_t>(137, 214);
+		iconpositions[EquipSlot::Id::ANDROID] = Point<int16_t>(137, 255);
 
 		// Column 5
-		iconpositions[Equipslot::Id::EMBLEM] = Point<int16_t>(178, 50);
-		iconpositions[Equipslot::Id::BADGE] = Point<int16_t>(178, 91);
-		iconpositions[Equipslot::Id::MEDAL] = Point<int16_t>(178, 132);
-		iconpositions[Equipslot::Id::SUBWEAPON] = Point<int16_t>(178, 173);
-		iconpositions[Equipslot::Id::CAPE] = Point<int16_t>(178, 214);
-		iconpositions[Equipslot::Id::HEART] = Point<int16_t>(178, 255);
+		iconpositions[EquipSlot::Id::EMBLEM] = Point<int16_t>(178, 50);
+		iconpositions[EquipSlot::Id::BADGE] = Point<int16_t>(178, 91);
+		iconpositions[EquipSlot::Id::MEDAL] = Point<int16_t>(178, 132);
+		iconpositions[EquipSlot::Id::SUBWEAPON] = Point<int16_t>(178, 173);
+		iconpositions[EquipSlot::Id::CAPE] = Point<int16_t>(178, 214);
+		iconpositions[EquipSlot::Id::HEART] = Point<int16_t>(178, 255);
 
-		//iconpositions[Equipslot::Id::SHIELD] = Point<int16_t>(142, 124);
-		//iconpositions[Equipslot::Id::TAMEDMOB] = Point<int16_t>(142, 91);
-		//iconpositions[Equipslot::Id::SADDLE] = Point<int16_t>(76, 124);
+		//iconpositions[EquipSlot::Id::SHIELD] = Point<int16_t>(142, 124);
+		//iconpositions[EquipSlot::Id::TAMEDMOB] = Point<int16_t>(142, 91);
+		//iconpositions[EquipSlot::Id::SADDLE] = Point<int16_t>(76, 124);
 
 		tab_source[Buttons::BT_TAB0] = "Equip";
 		tab_source[Buttons::BT_TAB1] = "Cash";
@@ -98,10 +99,13 @@ namespace ms
 
 		nl::node EquipGL = nl::nx::ui["UIWindowGL.img"]["Equip"];
 		nl::node backgrnd = Equip["backgrnd"];
+		nl::node totem_backgrnd = EquipGL["Totem"]["backgrnd"];
 
 		Point<int16_t> bg_dimensions = Texture(backgrnd).get_dimensions();
+		totem_dimensions = Texture(totem_backgrnd).get_dimensions();
+		totem_adj = Point<int16_t>(-totem_dimensions.x() + 4, 0);
 
-		sprites.emplace_back(EquipGL["Totem"]["backgrnd"], Point<int16_t>(-56, 0));
+		sprites.emplace_back(totem_backgrnd, totem_adj);
 		sprites.emplace_back(backgrnd);
 		sprites.emplace_back(Equip["backgrnd2"]);
 
@@ -149,10 +153,10 @@ namespace ms
 		if (tab == Buttons::BT_TAB0)
 		{
 			if (!hasPendantSlot)
-				disabled.draw(position + iconpositions[Equipslot::Id::PENDANT2]);
+				disabled.draw(position + iconpositions[EquipSlot::Id::PENDANT2]);
 
 			if (!hasPocketSlot)
-				disabled.draw(position + iconpositions[Equipslot::Id::POCKET]);
+				disabled.draw(position + iconpositions[EquipSlot::Id::POCKET]);
 
 			for (auto iter : icons)
 				if (iter.second)
@@ -186,7 +190,7 @@ namespace ms
 		return Button::State::NORMAL;
 	}
 
-	void UIEquipInventory::update_slot(Equipslot::Id slot)
+	void UIEquipInventory::update_slot(EquipSlot::Id slot)
 	{
 		if (int32_t item_id = inventory.get_item_id(InventoryType::Id::EQUIPPED, slot))
 		{
@@ -209,7 +213,7 @@ namespace ms
 	{
 		icons.clear();
 
-		for (auto iter : Equipslot::values)
+		for (auto iter : EquipSlot::values)
 			update_slot(iter);
 	}
 
@@ -224,7 +228,7 @@ namespace ms
 			return dstate;
 		}
 
-		Equipslot::Id slot = slot_by_position(cursorpos);
+		EquipSlot::Id slot = slot_by_position(cursorpos);
 
 		if (auto icon = icons[slot].get())
 		{
@@ -277,16 +281,26 @@ namespace ms
 
 	void UIEquipInventory::doubleclick(Point<int16_t> cursorpos)
 	{
-		Equipslot::Id slot = slot_by_position(cursorpos);
+		EquipSlot::Id slot = slot_by_position(cursorpos);
 
 		if (icons[slot])
 			if (int16_t freeslot = inventory.find_free_slot(InventoryType::Id::EQUIP))
 				UnequipItemPacket(slot, freeslot).dispatch();
 	}
 
-	bool UIEquipInventory::send_icon(const Icon &icon, Point<int16_t> cursorpos)
+	bool UIEquipInventory::is_in_range(Point<int16_t> cursorpos) const
 	{
-		if (Equipslot::Id slot = slot_by_position(cursorpos))
+		Rectangle<int16_t> bounds = Rectangle<int16_t>(position, position + dimension);
+
+		Rectangle<int16_t> totem_bounds = Rectangle<int16_t>(position, position + totem_dimensions);
+		totem_bounds.shift(totem_adj);
+
+		return bounds.contains(cursorpos) || totem_bounds.contains(cursorpos);
+	}
+
+	bool UIEquipInventory::send_icon(const Icon& icon, Point<int16_t> cursorpos)
+	{
+		if (EquipSlot::Id slot = slot_by_position(cursorpos))
 			icon.drop_on_equips(slot);
 
 		return true;
@@ -301,8 +315,8 @@ namespace ms
 
 	void UIEquipInventory::modify(int16_t pos, int8_t mode, int16_t arg)
 	{
-		Equipslot::Id eqpos = Equipslot::by_id(pos);
-		Equipslot::Id eqarg = Equipslot::by_id(arg);
+		EquipSlot::Id eqpos = EquipSlot::by_id(pos);
+		EquipSlot::Id eqarg = EquipSlot::by_id(arg);
 
 		switch (mode)
 		{
@@ -317,7 +331,7 @@ namespace ms
 		}
 	}
 
-	void UIEquipInventory::show_equip(Equipslot::Id slot)
+	void UIEquipInventory::show_equip(EquipSlot::Id slot)
 	{
 		UI::get().show_equip(Tooltip::Parent::EQUIPINVENTORY, slot);
 	}
@@ -327,10 +341,10 @@ namespace ms
 		UI::get().clear_tooltip(Tooltip::Parent::EQUIPINVENTORY);
 	}
 
-	Equipslot::Id UIEquipInventory::slot_by_position(Point<int16_t> cursorpos) const
+	EquipSlot::Id UIEquipInventory::slot_by_position(Point<int16_t> cursorpos) const
 	{
 		if (tab != Buttons::BT_TAB0)
-			return Equipslot::Id::NONE;
+			return EquipSlot::Id::NONE;
 
 		for (auto iter : iconpositions)
 		{
@@ -343,7 +357,7 @@ namespace ms
 				return iter.first;
 		}
 
-		return Equipslot::Id::NONE;
+		return EquipSlot::Id::NONE;
 	}
 
 	void UIEquipInventory::change_tab(uint16_t tabid)
@@ -390,14 +404,13 @@ namespace ms
 		Sound(Sound::Name::DRAGEND).play();
 	}
 
-	void UIEquipInventory::EquipIcon::drop_on_equips(Equipslot::Id slot) const
+	void UIEquipInventory::EquipIcon::drop_on_equips(EquipSlot::Id slot) const
 	{
 		if (source == slot)
 			Sound(Sound::Name::DRAGEND).play();
 	}
 
-	bool UIEquipInventory::EquipIcon::drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot,
-													bool equip) const
+	bool UIEquipInventory::EquipIcon::drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const
 	{
 		if (tab != InventoryType::Id::EQUIP)
 		{

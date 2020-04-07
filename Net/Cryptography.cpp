@@ -270,7 +270,8 @@ namespace ms
 
 	void Cryptography::addroundkey(uint8_t* bytes, uint8_t round) const
 	{
-		// This key is pre-expanded. Works only for lower versions.
+		// This key is already expanded
+		// Only works for versions lower than version 118
 		static const uint8_t maplekey[256] =
 		{
 			0x13, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0xB4, 0x00, 0x00, 0x00,
@@ -299,7 +300,7 @@ namespace ms
 
 	void Cryptography::subbytes(uint8_t* bytes) const
 	{
-		// Rijndael substitution box.
+		// Rijndael substitution box
 		static const uint8_t subbox[256] =
 		{
 			0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,

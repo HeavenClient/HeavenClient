@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	// Packet which requests a dialogue with a server-sided npc.
+	// Packet which requests a dialog with a server-sided NPC
 	// Opcode: TALK_TO_NPC(58)
 	class TalkToNPCPacket : public OutPacket
 	{
@@ -32,7 +32,7 @@ namespace ms
 		}
 	};
 
-	// Packet which sends a response to an npc dialogue to the server.
+	// Packet which sends a response to an NPC dialog to the server
 	// Opcode: NPC_TALK_MORE(60)
 	class NpcTalkMorePacket : public OutPacket
 	{
@@ -54,12 +54,12 @@ namespace ms
 		}
 	};
 
-	// Packet which tells the server of an interaction with an npc shop.
+	// Packet which tells the server of an interaction with an NPC shop
 	// Opcode: NPC_SHOP_ACTION(61)
 	class NpcShopActionPacket : public OutPacket
 	{
 	public:
-		// Requests that an item should be bought from or sold to a npc shop.
+		// Requests that an item should be bought from or sold to a NPC shop
 		NpcShopActionPacket(int16_t slot, int32_t itemid, int16_t qty, bool buy) : NpcShopActionPacket(buy ? Mode::BUY : Mode::SELL)
 		{
 			write_short(slot);
@@ -67,13 +67,13 @@ namespace ms
 			write_short(qty);
 		}
 
-		// Requests that an item should be recharged at a npc shop.
+		// Requests that an item should be recharged at a NPC shop
 		NpcShopActionPacket(int16_t slot) : NpcShopActionPacket(Mode::RECHARGE)
 		{
 			write_short(slot);
 		}
 
-		// Requests exiting from a npc shop.
+		// Requests exiting from a NPC shop
 		NpcShopActionPacket() : NpcShopActionPacket(Mode::LEAVE) {}
 
 	protected:

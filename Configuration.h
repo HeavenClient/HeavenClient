@@ -17,29 +17,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Template/Point.h"
 #include "Template/Singleton.h"
 #include "Template/TypeMap.h"
 #include "Util/Misc.h"
 
-#include <cstdint>
-#include <string>
-#include <type_traits>
-#include <functional>
-
 namespace ms
 {
-	// Manages the 'Settings' file which contains configurations set by user behaviour.
+	// Manages the 'Settings' file which contains configurations set by user behavior
 	class Configuration : public Singleton<Configuration>
 	{
 	public:
-		// Add the settings which will be used and load them.
+		// Add the settings which will be used and load them
 		Configuration();
 
 		// Save.
 		~Configuration();
 
-		// Load all settings. If something is missing, set the default value. Can be used for reloading.
+		// Load all settings
+		// If something is missing, set the default value.
+		// Can be used for reloading
 		void load();
 
 		// Save the current settings.
@@ -92,6 +88,9 @@ namespace ms
 
 		// Get private member RESETPIC
 		std::string get_resetpic() const;
+
+		// Get private member CHARGENX
+		std::string get_chargenx() const;
 
 		// Set private member MACS
 		void set_macs(char *macs);
@@ -149,8 +148,12 @@ namespace ms
 
 		// Set the character's selected channel
 		void set_channelid(uint8_t id);
+		// Check if the current account is an admin account
+		bool get_admin();
+		// Check whether the current account is an admin account
+		void set_admin(bool value);
 
-		// Base class for an entry in the settings file.
+		// Base class for an entry in the settings file
 		class Entry
 		{
 		protected:
@@ -169,7 +172,7 @@ namespace ms
 			}
 		};
 
-		// Setting which converts to a bool.
+		// Setting which converts to a boolean
 		class BoolEntry : public Entry
 		{
 		public:
@@ -181,7 +184,7 @@ namespace ms
 			using Entry::Entry;
 		};
 
-		// Setting which uses the raw string.
+		// Setting which uses the raw string
 		class StringEntry : public Entry
 		{
 		public:
@@ -193,7 +196,7 @@ namespace ms
 			using Entry::Entry;
 		};
 
-		// Setting which converts to a Point<int16_t>.
+		// Setting which converts to a Point<int16_t>
 		class PointEntry : public Entry
 		{
 		public:
@@ -224,28 +227,28 @@ namespace ms
 			using Entry::Entry;
 		};
 
-		// Setting which converts to a byte.
+		// Setting which converts to a byte
 		class ByteEntry : public IntegerEntry<uint8_t>
 		{
 		protected:
 			using IntegerEntry::IntegerEntry;
 		};
 
-		// Setting which converts to a short.
+		// Setting which converts to a short
 		class ShortEntry : public IntegerEntry<uint16_t>
 		{
 		protected:
 			using IntegerEntry::IntegerEntry;
 		};
 
-		// Setting which converts to an int.
+		// Setting which converts to an int
 		class IntEntry : public IntegerEntry<uint32_t>
 		{
 		protected:
 			using IntegerEntry::IntegerEntry;
 		};
 
-		// Setting which converts to a long.
+		// Setting which converts to a long
 		class LongEntry : public IntegerEntry<uint64_t>
 		{
 		protected:
@@ -253,18 +256,18 @@ namespace ms
 		};
 
 	private:
-		template<typename T>
-		friend
-		struct Setting;
+		template <typename T>
+		friend struct Setting;
 
-		const char *FILENAME = "Settings";
-		const char *TITLE = "MapleStory";
-		const char *VERSION = "210.1";
-		const char *JOINLINK = "https://www.nexon.com/account/en/create";
-		const char *WEBSITE = "http://maplestory.nexon.net/";
-		const char *FINDID = "https://www.nexon.com/account/en/login";
-		const char *FINDPASS = "https://www.nexon.com/account/en/reset-password";
-		const char *RESETPIC = "https://www.nexon.com/account/en/login";
+		const char* FILENAME = "Settings";
+		const char* TITLE = "MapleStory";
+		const char* VERSION = "212.1";
+		const char* JOINLINK = "https://www.nexon.com/account/en/create";
+		const char* WEBSITE = "http://maplestory.nexon.net/";
+		const char* FINDID = "https://www.nexon.com/account/en/login";
+		const char* FINDPASS = "https://www.nexon.com/account/en/reset-password";
+		const char* RESETPIC = "https://www.nexon.com/account/en/login";
+		const char* CHARGENX = "https://billing.nexon.net/PurchaseNX";
 		const bool SHOW_FPS = false;
 		const bool SHOW_PACKETS = true;
 		const bool AUTO_LOGIN = false;
@@ -284,24 +287,25 @@ namespace ms
 		std::string VolumeSerialNumber;
 		uint8_t worldid;
 		uint8_t channelid;
+		bool admin;
 		TypeMap<Entry> settings;
 	};
 
-	// IP Address which the client will connect to.
+	// IP Address which the client will connect to
 	struct ServerIP : public Configuration::StringEntry
 	{
 		ServerIP() : StringEntry("ServerIP", "127.0.0.1")
 		{}
 	};
 
-	// Port which the client will connect to.
+	// Port which the client will connect to
 	struct ServerPort : public Configuration::StringEntry
 	{
 		ServerPort() : StringEntry("ServerPort", "8484")
 		{}
 	};
 
-	// Whether to start in fullscreen mode.
+	// Whether to start in full screen mode
 	struct Fullscreen : public Configuration::BoolEntry
 	{
 		Fullscreen() : BoolEntry("Fullscreen", "false")
@@ -322,221 +326,232 @@ namespace ms
 		{}
 	};
 
-	// Whether to use VSync.
+	// Whether to use VSync
 	struct VSync : public Configuration::BoolEntry
 	{
 		VSync() : BoolEntry("VSync", "true")
 		{}
 	};
 
-	// The normal font which will be used.
+	// The normal font which will be used
 	struct FontPathNormal : public Configuration::StringEntry
 	{
 		FontPathNormal() : StringEntry("FontPathNormal", "fonts/Roboto/Roboto-Regular.ttf")
 		{}
 	};
 
-	// The bold font which will be used.
+	// The bold font which will be used
 	struct FontPathBold : public Configuration::StringEntry
 	{
 		FontPathBold() : StringEntry("FontPathBold", "fonts/Roboto/Roboto-Bold.ttf")
 		{}
 	};
 
-	// Music Volume, a number from 0 to 100.
+	// Music Volume
+	// Number from 0 to 100
 	struct BGMVolume : public Configuration::ByteEntry
 	{
 		BGMVolume() : ByteEntry("BGMVolume", "50")
 		{}
 	};
 
-	// Sound Volume, a number from 0 to 100.
+	// Sound Volume
+	// Number from 0 to 100
 	struct SFXVolume : public Configuration::ByteEntry
 	{
 		SFXVolume() : ByteEntry("SFXVolume", "50")
 		{}
 	};
 
-	// Whether to save the last used account name.
+	// Whether to save the last used account name
 	struct SaveLogin : public Configuration::BoolEntry
 	{
 		SaveLogin() : BoolEntry("SaveLogin", "false")
 		{}
 	};
 
-	// The last used account name.
+	// The last used account name
 	struct DefaultAccount : public Configuration::StringEntry
 	{
 		DefaultAccount() : StringEntry("Account", "")
 		{}
 	};
 
-	// The last used world.
+	// The last used world
 	struct DefaultWorld : public Configuration::ByteEntry
 	{
 		DefaultWorld() : ByteEntry("World", "0")
 		{}
 	};
 
-	// The last used channel.
+	// The last used channel
 	struct DefaultChannel : public Configuration::ByteEntry
 	{
 		DefaultChannel() : ByteEntry("Channel", "0")
 		{}
 	};
 
-	// The last used region.
+	// The last used region
 	struct DefaultRegion : public Configuration::ByteEntry
 	{
 		DefaultRegion() : ByteEntry("Region", "5")
 		{}
 	};
 
-	// The last used character.
+	// The last used character
 	struct DefaultCharacter : public Configuration::ByteEntry
 	{
 		DefaultCharacter() : ByteEntry("Character", "0")
 		{}
 	};
 
-	// Whether to show the chatbar.
+	// Whether to show UIChatBar
 	struct Chatopen : public Configuration::BoolEntry
 	{
 		Chatopen() : BoolEntry("Chatopen", "false")
 		{}
 	};
 
-	// The default position of the character stats inventory.
+	// The default position of UIStatsInfo
 	struct PosSTATS : public Configuration::PointEntry
 	{
 		PosSTATS() : PointEntry("PosSTATS", "(72,72)")
 		{}
 	};
 
-	// The default position of the equipment inventory.
+	// The default position of UIEquipInventory
 	struct PosEQINV : public Configuration::PointEntry
 	{
 		PosEQINV() : PointEntry("PosEQINV", "(250,160)")
 		{}
 	};
 
-	// The default position of the item inventory.
+	// The default position of UIItemInventory
 	struct PosINV : public Configuration::PointEntry
 	{
 		PosINV() : PointEntry("PosINV", "(300,160)")
 		{}
 	};
 
-	// The default position of the skill inventory.
+	// The default position of UISkillBook
 	struct PosSKILL : public Configuration::PointEntry
 	{
 		PosSKILL() : PointEntry("PosSKILL", "(96,96)")
 		{}
 	};
 
-	// The default position of the quest log.
+	// The default position of UIQuestLog
 	struct PosQUEST : public Configuration::PointEntry
 	{
 		PosQUEST() : PointEntry("PosQUEST", "(300,160)")
 		{}
 	};
 
-	// The default position of the world map.
+	// The default position of UIWorldMap
 	struct PosMAP : public Configuration::PointEntry
 	{
 		PosMAP() : PointEntry("PosMAP", "(100,35)")
 		{}
 	};
 
-	// The default position of the userlist features.
+	// The default position of UIUserList
 	struct PosUSERLIST : public Configuration::PointEntry
 	{
 		PosUSERLIST() : PointEntry("PosUSERLIST", "(104, 104)")
 		{}
 	};
 
-	// The default position of the chatbar.
+	// The default position of UIChatBar
 	struct PosCHAT : public Configuration::PointEntry
 	{
 		PosCHAT() : PointEntry("PosCHAT", "(0, 572)")
 		{}
 	};
 
-	// The default position of the mini map.
+	// The default position of UIMiniMap
 	struct PosMINIMAP : public Configuration::PointEntry
 	{
 		PosMINIMAP() : PointEntry("PosMINIMAP", "(0, 0)")
 		{}
 	};
 
-	// The default position of shops.
+	// The default position of UIShop
 	struct PosSHOP : public Configuration::PointEntry
 	{
 		PosSHOP() : PointEntry("PosSHOP", "(146, 48)")
 		{}
 	};
 
-	// The default position of the notice windows.
+	// The default position of UINotice
 	struct PosNOTICE : public Configuration::PointEntry
 	{
 		PosNOTICE() : PointEntry("PosNOTICE", "(400, 285)")
 		{}
 	};
 
-	// The default position of the maple chat.
+	// The default position of UIChat and UIRank
 	struct PosMAPLECHAT : public Configuration::PointEntry
 	{
 		PosMAPLECHAT() : PointEntry("PosMAPLECHAT", "(50, 46)")
 		{}
 	};
 
-	// The default position of the channel change.
+	// The default position of UIChannel
 	struct PosCHANNEL : public Configuration::PointEntry
 	{
 		PosCHANNEL() : PointEntry("PosCHANNEL", "(215, 100)")
 		{}
 	};
 
-	// The default position of the joypad.
+	// The default position of UIJoypad
 	struct PosJOYPAD : public Configuration::PointEntry
 	{
 		PosJOYPAD() : PointEntry("PosJOYPAD", "(312, 134)")
 		{}
 	};
 
-	// The default position of the event list.
+	// The default position of UIEvent
 	struct PosEVENT : public Configuration::PointEntry
 	{
 		PosEVENT() : PointEntry("PosEVENT", "(99, 100)")
 		{}
 	};
 
-	// The default position of the key bindings.
+	// The default position of UIKeyConfig
 	struct PosKEYCONFIG : public Configuration::PointEntry
 	{
 		PosKEYCONFIG() : PointEntry("PosKEYCONFIG", "(65, 50)")
 		{}
 	};
 
-	// The default position of the option menu.
+	// The default position of UIOptionMenu
 	struct PosOPTIONMENU : public Configuration::PointEntry
 	{
 		PosOPTIONMENU() : PointEntry("PosUSERLIST", "(170, -1)")
 		{}
 	};
 
+	// The default position of UICharInfo
+	struct PosCHARINFO : public Configuration::PointEntry
+	{
+		PosCHARINFO() : PointEntry("PosCHARINFO", "(264, 264)") {}
+	};
+
+	// The default type of UIMiniMap
 	struct MiniMapType : public Configuration::ByteEntry
 	{
 		MiniMapType() : ByteEntry("MiniMapType", "0")
 		{}
 	};
 
+	// Whether to use a simple version of UIMiniMap
 	struct MiniMapSimpleMode : public Configuration::BoolEntry
 	{
 		MiniMapSimpleMode() : BoolEntry("MiniMapSimpleMode", "false")
 		{}
 	};
 
+	// Whether to use default helpers for UIMiniMap
 	struct MiniMapDefaultHelpers : public Configuration::BoolEntry
 	{
 		MiniMapDefaultHelpers() : BoolEntry("MiniMapDefaultHelpers", "false")

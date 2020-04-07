@@ -46,4 +46,24 @@ namespace ms
 	{
 		return animation.update();
 	}
+
+	int16_t Sprite::width() const
+	{
+		return get_dimensions().x();
+	}
+
+	int16_t Sprite::height() const
+	{
+		return get_dimensions().y();
+	}
+
+	Point<int16_t> Sprite::get_origin() const
+	{
+		return animation.get_origin();
+	}
+
+	Point<int16_t> Sprite::get_dimensions() const
+	{
+		return animation.get_dimensions();
+	}
 }

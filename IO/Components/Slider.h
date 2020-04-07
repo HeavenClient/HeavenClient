@@ -19,12 +19,7 @@
 
 #include "TwoSpriteButton.h"
 
-#include "../Cursor.h"
-
-#include "../Graphics/Texture.h"
-
 #include <functional>
-#include <memory>
 
 namespace ms
 {
@@ -45,6 +40,7 @@ namespace ms
 		void setrows(int16_t unitrows, int16_t rowmax);
 
 		void setvertical(Range<int16_t> vertical);
+		Range<int16_t> getvertical() const;
 
 		void draw(Point<int16_t> position) const;
 
@@ -56,32 +52,34 @@ namespace ms
 
 		enum Type
 		{
-			BLUE,
-			BROWN = 2,
-			ICE,
-			BLUE2,
-			BLUE3,
-			GOLD,
-			GOLD2,
-			BROWN2,
-			DEFAULT,
-			GOLD3,
-			DEFAULT2,
-			BROWN3,
-			BROWN4,
-			RED,
-			THIN,
-			THIN2,
-			THIN3,
-			THIN4,
-			THIN5,
-			ICE2,
-			DEFAULT3 = 100,
-			THIN6,
-			ARROW,
-			THIN7,
-			ICE3,
-			THIN8,
+			/// Default
+			LINE_CYAN,
+			LINE_CONTESSA = 2,
+			SMALL_HAVELOCKBLUE,
+			NORMAL_CALYPSO,
+			NORMAL_ROCKBLUE,
+			LINE_PUNGA,
+			LINE_YELLOWMETAL,
+			NORMAL_JUDGEGRAY,
+			DEFAULT_SILVER,
+			LINE_MINESHAFT,
+			DEFAULT_ALTO,
+			DEFAULT_SANDAL,
+			DEFAULT_QUICKSAND,
+			LINE_HOTCINNAMON,
+			THIN_DUSTYGRAY_LIGHT,
+			THIN_MINESHAFT,
+			THIN_DUSTYGRAY,
+			THIN_MINESHAFT_LIGHT,
+			THIN_WOODYBROWN,
+			BLIZZARDBLUE,
+			DEFAULT_ARROWTOWN = 100,
+			THIN_ZORBA,
+			ARROWS_IRISHCOFFEE,
+			THIN_MIKADO,
+			ARROWS_TORYBLUE,
+			THIN_SLATEGRAY,
+			/// Custom
 			CHATBAR
 		};
 

@@ -17,10 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "PassiveBuffs.h"
 
-#include "../Character/SkillId.h"
+#include "SkillId.h"
+
 #include "../Util/Misc.h"
 
-#include <nlnx/node.hpp>
 #include <nlnx/nx.hpp>
 
 namespace ms
@@ -32,10 +32,10 @@ namespace ms
 
 	void AngelBlessingBuff::apply_to(CharStats &stats, nl::node level) const
 	{
-		stats.add_value(Equipstat::Id::WATK, level["x"]);
-		stats.add_value(Equipstat::Id::MAGIC, level["y"]);
-		stats.add_value(Equipstat::Id::ACC, level["z"]);
-		stats.add_value(Equipstat::Id::AVOID, level["z"]);
+		stats.add_value(EquipStat::Id::WATK, level["x"]);
+		stats.add_value(EquipStat::Id::MAGIC, level["y"]);
+		stats.add_value(EquipStat::Id::ACC, level["z"]);
+		stats.add_value(EquipStat::Id::AVOID, level["z"]);
 	}
 
 	template<Weapon::Type W1, Weapon::Type W2>
@@ -61,7 +61,7 @@ namespace ms
 	{
 		float mastery = static_cast<float>(level["mastery"]) / 100;
 		stats.set_mastery(mastery);
-		stats.add_value(Equipstat::ACC, level["x"]);
+		stats.add_value(EquipStat::Id::ACC, level["x"]);
 	}
 
 	void AchillesBuff::apply_to(CharStats &stats, nl::node level) const
@@ -73,8 +73,8 @@ namespace ms
 	bool BerserkBuff::is_applicable(CharStats &stats, nl::node level) const
 	{
 		float hp_percent = static_cast<float>(level["x"]) / 100;
-		int32_t hp_threshold = static_cast<int32_t>(stats.get_total(Equipstat::HP) * hp_percent);
-		int32_t hp_current = stats.get_stat(Maplestat::HP);
+		int32_t hp_threshold = static_cast<int32_t>(stats.get_total(EquipStat::Id::HP) * hp_percent);
+		int32_t hp_current = stats.get_stat(MapleStat::Id::HP);
 
 		return hp_current <= hp_threshold;
 	}

@@ -17,12 +17,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "EquipQuality.h"
 
-#include "../Data/EquipData.h"
+#include "../../Data/EquipData.h"
 
 namespace ms
 {
 	EquipQuality::Id
-	EquipQuality::check_quality(int32_t item_id, bool scrolled, const EnumMap<Equipstat::Id, uint16_t> &stats)
+	EquipQuality::check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t> &stats)
 	{
 		const EquipData &data = EquipData::get(item_id);
 
@@ -30,7 +30,7 @@ namespace ms
 
 		for (auto iter : stats)
 		{
-			Equipstat::Id es = iter.first;
+			EquipStat::Id es = iter.first;
 			uint16_t stat = iter.second;
 			uint16_t defstat = data.get_defstat(es);
 			delta += stat - defstat;

@@ -69,6 +69,8 @@ namespace ms
 			KEYCONFIG,
 			OPTIONMENU,
 			QUIT,
+			CHARINFO,
+			CASHSHOP,
 			NUM_TYPES
 		};
 

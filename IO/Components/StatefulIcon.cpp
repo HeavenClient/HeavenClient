@@ -16,9 +16,6 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "StatefulIcon.h"
-#include "Icon.h"
-
-#include "../Graphics/Texture.h"
 
 namespace ms
 {
@@ -34,9 +31,6 @@ namespace ms
 
 		state = State::NORMAL;
 	}
-
-	StatefulIcon::StatefulIcon() : StatefulIcon(std::make_unique<NullType>(), {}, {}, {})
-	{};
 
 	Texture StatefulIcon::get_texture() const
 	{

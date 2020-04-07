@@ -19,13 +19,15 @@
 
 #include "../Configuration.h"
 
+#ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
-//#include <bass.h>
+#include <bass.h>
+#else
+#include <AL/alc.h>
+#endif
 
 #include <nlnx/nx.hpp>
 #include <nlnx/audio.hpp>
-
-#include <AL/alc.h>
 
 namespace ms
 {

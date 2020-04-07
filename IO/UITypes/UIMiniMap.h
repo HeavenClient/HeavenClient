@@ -19,13 +19,9 @@
 
 #include "../UIDragElement.h"
 
-#include "../Graphics/Text.h"
-#include "Character/CharStats.h"
-#include "../Gameplay/Stage.h"
-
-#include "../Components/MapleButton.h"
-#include "../Components/AreaButton.h"
 #include "../Components/Slider.h"
+
+#include "../../Gameplay/Stage.h"
 
 namespace ms
 {
@@ -45,9 +41,7 @@ namespace ms
 		void remove_cursor() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> pos) override;
-
 		void send_scroll(double yoffset) override;
-
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -105,7 +99,7 @@ namespace ms
 			MAX
 		};
 
-		// Constants
+		/// Constants
 		int32_t mapid;
 		int8_t type;
 		int8_t user_type;

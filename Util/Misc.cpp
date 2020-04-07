@@ -38,6 +38,17 @@ namespace ms
 
 			return strid;
 		}
+
+		void format_with_ellipsis(Text& input, size_t length)
+		{
+			std::string text = input.get_text();
+
+			while (input.width() > length)
+			{
+				text.pop_back();
+				input.change_text(text + "..");
+			}
+		}
 	}
 
 	namespace bytecode

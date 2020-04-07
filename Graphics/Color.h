@@ -17,22 +17,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-//#include "GL/glew.h"
+#ifdef __linux__
 #include <glad/glad.h>
+#elif
+#include <glew.h>
+#endif
 
 #include <array>
 #include <algorithm>
 
 namespace ms
 {
-	// Simple color class which stores r-g-b-a components.
+	// Simple color class which stores RGBA components
 	class Color
 	{
 	public:
 		static constexpr size_t LENGTH = 4;
 		using underlying_t = std::array<float, LENGTH>;
 
-		// Codes of predefined colors.
+		// Codes of predefined colors
 		enum Code : uint32_t
 		{
 			CNONE = 0x00000000,
@@ -46,7 +49,7 @@ namespace ms
 			CPURPLE = 0xFF00FFFF
 		};
 
-		// Name of predefined colors.
+		// Name of predefined colors
 		enum Name : uint32_t
 		{
 			BLACK,
@@ -84,6 +87,9 @@ namespace ms
 			SUPERNOVA,
 			CHARTREUSE,
 			MALIBU,
+			SILVERCHALICE,
+			GRAY,
+			TORCHRED,
 			NUM_COLORS
 		};
 
@@ -148,7 +154,7 @@ namespace ms
 		)
 		{}
 
-		// Create a color by code.
+		// Create a color by code
 		constexpr Color(uint32_t code) : Color(
 				static_cast<uint8_t>(code >> 24),
 				static_cast<uint8_t>(code >> 16),
@@ -164,31 +170,31 @@ namespace ms
 		constexpr Color() : Color(Code::CNONE)
 		{}
 
-		// Check whether the color is completely invisble.
+		// Check whether the color is completely invisible
 		constexpr bool invisible() const
 		{
 			return rgba[3] <= 0.0f;
 		}
 
-		// Return the red component.
+		// Return the red component
 		constexpr float r() const
 		{
 			return rgba[0];
 		}
 
-		// Return the green component.
+		// Return the green component
 		constexpr float g() const
 		{
 			return rgba[1];
 		}
 
-		// Return the blue component.
+		// Return the blue component
 		constexpr float b() const
 		{
 			return rgba[2];
 		}
 
-		// Return the alpha (opacity) component.
+		// Return the alpha (opacity) component
 		constexpr float a() const
 		{
 			return rgba[3];
@@ -197,10 +203,10 @@ namespace ms
 		// Return all components.
 		const float *data() const;
 
-		// Return a begin iterator.
+		// Return a begin iterator
 		underlying_t::const_iterator begin() const;
 
-		// Return an end iterator.
+		// Return an end iterator
 		underlying_t::const_iterator end() const;
 
 		// Blend the second color into the first.

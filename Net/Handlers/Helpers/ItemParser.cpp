@@ -21,10 +21,10 @@ namespace ms
 {
 	namespace ItemParser
 	{
-		// Parse a normal item from a packet.
+		// Parse a normal item from a packet
 		void add_item(InPacket& recv, InventoryType::Id invtype, int16_t slot, int32_t id, Inventory& inventory)
 		{
-			// Read all item stats.
+			// Read all item stats
 			bool cash = recv.read_bool();
 
 			if (cash)
@@ -42,10 +42,10 @@ namespace ms
 			inventory.add_item(invtype, slot, id, cash, expire, count, owner, flag);
 		}
 
-		// Parse a pet from a packet.
+		// Parse a pet from a packet
 		void add_pet(InPacket& recv, InventoryType::Id invtype, int16_t slot, int32_t id, Inventory& inventory)
 		{
-			// Read all pet stats.
+			// Read all pet stats
 			bool cash = recv.read_bool();
 
 			if (cash)
@@ -57,16 +57,16 @@ namespace ms
 			int16_t closeness = recv.read_short();
 			int8_t fullness = recv.read_byte();
 
-			// Some unused bytes.
+			// Some unused bytes
 			recv.skip(18);
 
 			inventory.add_pet(invtype, slot, id, cash, expire, petname, petlevel, closeness, fullness);
 		}
 
-		// Parse an equip from a packet.
+		// Parse an equip from a packet
 		void add_equip(InPacket& recv, InventoryType::Id invtype, int16_t slot, int32_t id, Inventory& inventory)
 		{
-			// Read equip information.
+			// Read equip information
 			bool cash = recv.read_bool();
 
 			if (cash)
@@ -76,13 +76,13 @@ namespace ms
 			uint8_t slots = recv.read_byte();
 			uint8_t level = recv.read_byte();
 
-			// Read equip stats.
-			EnumMap<Equipstat::Id, uint16_t> stats;
+			// Read equip stats
+			EnumMap<EquipStat::Id, uint16_t> stats;
 
 			for (auto iter : stats)
 				iter.second = recv.read_short();
 
-			// Some more information.
+			// Some more information
 			std::string owner = recv.read_string();
 			int16_t flag = recv.read_short();
 			uint8_t itemlevel = 0;
@@ -91,7 +91,7 @@ namespace ms
 
 			if (cash)
 			{
-				// Some unused bytes.
+				// Some unused bytes
 				recv.skip(10);
 			}
 			else
@@ -117,23 +117,23 @@ namespace ms
 
 		void parse_item(InPacket& recv, InventoryType::Id invtype, int16_t slot, Inventory& inventory)
 		{
-			// Read type and item id.
+			// Read type and item id
 			recv.read_byte(); // 'type' byte
 			int32_t iid = recv.read_int();
 
 			if (invtype == InventoryType::Id::EQUIP || invtype == InventoryType::Id::EQUIPPED)
 			{
-				// Parse an equip.
+				// Parse an equip
 				add_equip(recv, invtype, slot, iid, inventory);
 			}
 			else if (iid >= 5000000 && iid <= 5000102)
 			{
-				// Parse a pet.
+				// Parse a pet
 				add_pet(recv, invtype, slot, iid, inventory);
 			}
 			else
 			{
-				// Parse a normal item.
+				// Parse a normal item
 				add_item(recv, invtype, slot, iid, inventory);
 			}
 		}

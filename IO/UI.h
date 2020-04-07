@@ -17,18 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Cursor.h"
-#include "Keyboard.h"
 #include "UIState.h"
 
-#include "Components/Icon.h"
-#include "Components/Textfield.h"
 #include "Components/ScrollingNotice.h"
-
-#include "../Template/Singleton.h"
-#include "../Template/Optional.h"
-
-#include <unordered_map>
+#include "Components/Textfield.h"
 
 namespace ms
 {
@@ -38,7 +30,8 @@ namespace ms
 		enum State
 		{
 			LOGIN,
-			GAME
+			GAME,
+			CASHSHOP
 		};
 
 		UI();

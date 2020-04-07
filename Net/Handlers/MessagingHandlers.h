@@ -19,11 +19,11 @@
 
 #include "../PacketHandler.h"
 
-#include "../Graphics/Text.h"
+#include "../../Graphics/Text.h"
 
 namespace ms
 {
-	// Show a status message.
+	// Show a status message
 	// Opcode: SHOW_STATUS_INFO(39)
 	class ShowStatusInfoHandler : public PacketHandler
 	{
@@ -33,35 +33,35 @@ namespace ms
 		void show_status(Color::Name color, const std::string& message) const;
 	};
 
-	// Show a server message.
+	// Show a server message
 	// Opcode: SERVER_MESSAGE(68)
 	class ServerMessageHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Show another type of server message.
+	// Show another type of server message
 	// Opcode: WEEK_EVENT_MESSAGE(77)
 	class WeekEventMessageHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Show a chat message.
+	// Show a chat message
 	// CHAT_RECEIVED(162)
 	class ChatReceivedHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Shows the effect of a scroll.
+	// Shows the effect of a scroll
 	// Opcode: SCROLL_RESULT(167)
 	class ScrollResultHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Can contain numerous different effects and messages.
+	// Can contain numerous different effects and messages
 	// Opcode: SHOW_ITEM_GAIN_INCHAT(206)
 	class ShowItemGainInChatHandler : public PacketHandler
 	{

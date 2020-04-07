@@ -17,14 +17,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Constants.h"
+#include "../../Constants.h"
 
-#include "../Template/Interpolated.h"
-#include "../Template/Point.h"
+#include "../../Template/Interpolated.h"
+#include "../../Template/Point.h"
 
 namespace ms
 {
-	// Struct that contains all properties for movement calculations.
+	// Structure that contains all properties for movement calculations
 	struct MovingObject
 	{
 		Linear<double> x;
@@ -172,10 +172,10 @@ namespace ms
 		}
 	};
 
-	// Struct that contains all properties necessary for physics calculations.
+	// Structure that contains all properties necessary for physics calculations
 	struct PhysicsObject : public MovingObject
 	{
-		// Determines which physics engine to use.
+		// Determines which physics engine to use
 		enum Type
 		{
 			NORMAL,
@@ -192,7 +192,7 @@ namespace ms
 			CHECKBELOW = 0x0004
 		};
 
-		Type type = NORMAL;
+		Type type = Type::NORMAL;
 		int32_t flags = 0;
 		uint16_t fhid = 0;
 		double fhslope = 0.0;

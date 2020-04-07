@@ -17,15 +17,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Attack.h"
 #include "RegularAttack.h"
-#include "Skill.h"
 
 #include "../MapleMap/MapChars.h"
 #include "../MapleMap/MapMobs.h"
 #include "../MapleMap/MapReactors.h"
-#include "../Character/Player.h"
-#include "../Template/TimedQueue.h"
+
+#include "../../Character/Player.h"
+#include "../../Template/TimedQueue.h"
 
 namespace ms
 {
@@ -40,7 +39,7 @@ namespace ms
 		// Poll attacks, damage effects, etc.
 		void update();
 
-		// Make the player use a special move.
+		// Make the player use a special move
 		void use_move(int32_t move_id);
 
 		// Add an attack to the attack queue.

@@ -26,6 +26,7 @@ namespace ms
 		itemid = iid;
 		name = nm;
 		uniqueid = uqid;
+
 		set_position(pos.x(), pos.y());
 		set_stance(st);
 
@@ -33,7 +34,6 @@ namespace ms
 						 name);
 
 		std::string strid = std::to_string(iid);
-
 		nl::node src = nl::nx::item["Pet"][strid + ".img"];
 
 		animations[Stance::MOVE] = src["move"];

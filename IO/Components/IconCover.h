@@ -17,12 +17,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Graphics/Geometry.h"
-#include "../Template/Interpolated.h"
+#include "../../Graphics/Geometry.h"
+#include "../../Template/Interpolated.h"
 
 namespace ms
 {
-	// A transparent rectangle with icon size (30x30).
+	// A transparent rectangle with icon size (30x30)
 	class IconCover
 	{
 	public:

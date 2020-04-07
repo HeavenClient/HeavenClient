@@ -17,8 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Net/InPacket.h"
-#include "../Net/Login.h"
+#include "../../InPacket.h"
+#include "../../Login.h"
 
 namespace ms
 {
@@ -30,5 +30,6 @@ namespace ms
 		CharEntry parse_charentry(InPacket& recv);
 		StatsEntry parse_stats(InPacket& recv);
 		LookEntry parse_look(InPacket& recv);
+		void parse_login(InPacket& recv);
 	}
 }

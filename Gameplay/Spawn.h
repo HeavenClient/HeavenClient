@@ -22,7 +22,6 @@
 #include "../Graphics/Animation.h"
 #include "../Net/Login.h"
 
-#include <cstdint>
 #include <memory>
 
 namespace ms

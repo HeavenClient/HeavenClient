@@ -17,10 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "WeaponData.h"
 
-#include "../Console.h"
-
 #include <nlnx/nx.hpp>
-#include <nlnx/node.hpp>
 
 namespace ms
 {

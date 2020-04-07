@@ -17,12 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Equipstat.h"
+#include "EquipStat.h"
 
 #include "Inventory/Weapon.h"
-
-#include <cstdint>
-#include <string>
 
 namespace ms
 {
@@ -69,11 +66,11 @@ namespace ms
 
 		Level get_level() const;
 
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
-		Equipstat::Id get_primary(Weapon::Type weapontype) const;
+		EquipStat::Id get_primary(Weapon::Type weapontype) const;
 
-		Equipstat::Id get_secondary(Weapon::Type weapontype) const;
+		EquipStat::Id get_secondary(Weapon::Type weapontype) const;
 
 	private:
 		std::string get_name(uint16_t id) const;

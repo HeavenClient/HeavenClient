@@ -17,13 +17,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Template/Range.h"
+#include "../../Template/Range.h"
 
 #include <nlnx/node.hpp>
 
 namespace ms
 {
-	// Represents a platform part on a maple-map.
+	// Represents a platform part on a maple map
 	class Foothold
 	{
 	public:
@@ -31,7 +31,7 @@ namespace ms
 
 		Foothold();
 
-		// Returns the foothold id aka the identifier in game data of this platform.
+		// Returns the foothold id aka the identifier in game data of this platform
 		uint16_t id() const;
 
 		// Returns the platform left to this.
@@ -49,7 +49,7 @@ namespace ms
 		// Returns the vertical component.
 		const Range<int16_t> &vertical() const;
 
-		// Return the left edge.
+		// Return the left edge
 		int16_t l() const;
 
 		// Return the right edge.

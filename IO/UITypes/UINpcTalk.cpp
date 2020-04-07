@@ -373,7 +373,7 @@ namespace ms
 				unitrows = 1;
 
 				int16_t slider_y = top.height() - 7;
-				slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(slider_y, slider_y + height - 20),
+				slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(slider_y, slider_y + height - 20),
 								top.width() - 26, unitrows, rowmax, onmoved);
 			} else
 			{

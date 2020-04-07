@@ -20,16 +20,13 @@
 #include "../Character/SkillId.h"
 #include "../Util/Misc.h"
 
-#include <unordered_set>
-
 #include <nlnx/nx.hpp>
-#include <nlnx/node.hpp>
 
 namespace ms
 {
 	SkillData::SkillData(int32_t id)
 	{
-		// Locate sources
+		/// Locate sources
 		std::string strid = string_format::extend_id(id, 7);
 		std::string jobid = strid.substr(0, 3);
 		nl::node src = nl::nx::skill[jobid + ".img"]["skill"][strid];
@@ -45,7 +42,7 @@ namespace ms
 		for (int32_t level = 1; nl::node sub = strsrc["h" + std::to_string(level)]; level++)
 			levels.emplace(level, sub);
 
-		// Load stats
+		/// Load stats
 		nl::node levelsrc = src["level"];
 
 		for (auto sub : levelsrc)
@@ -87,7 +84,7 @@ namespace ms
 		flags = flags_of(id);
 		invisible = src["invisible"].get_bool();
 
-		// Load required skills
+		/// Load required skills
 		nl::node reqsrc = src["req"];
 
 		for (auto sub : reqsrc)

@@ -45,16 +45,16 @@ add_executable(HeavenClient
         Character/Look/Afterimage.h
         Character/Look/Body.cpp
         Character/Look/Body.h
-        Character/Look/BodyDrawinfo.cpp
-        Character/Look/BodyDrawinfo.h
+        Character/Look/BodyDrawInfo.cpp
+        Character/Look/BodyDrawInfo.h
         Character/Look/CharEquips.cpp
         Character/Look/CharEquips.h
         Character/Look/CharLook.cpp
         Character/Look/CharLook.h
         Character/Look/Clothing.cpp
         Character/Look/Clothing.h
-        Character/Look/Equipslot.cpp
-        Character/Look/Equipslot.h
+        Character/Look/EquipSlot.cpp
+        Character/Look/EquipSlot.h
         Character/Look/Face.cpp
         Character/Look/Face.h
         Character/Look/Hair.cpp
@@ -73,16 +73,16 @@ add_executable(HeavenClient
         Character/CharEffect.h
         Character/CharStats.cpp
         Character/CharStats.h
-        Character/Equipstat.cpp
-        Character/Equipstat.h
+        Character/EquipStat.cpp
+        Character/EquipStat.h
         Character/ExpTable.cpp
         Character/ExpTable.h
         Character/Job.cpp
         Character/Job.h
-        Character/Maplestat.cpp
-        Character/Maplestat.h
-        Character/Monsterbook.cpp
-        Character/Monsterbook.h
+        Character/MapleStat.cpp
+        Character/MapleStat.h
+        Character/MonsterBook.cpp
+        Character/MonsterBook.h
         Character/OtherChar.cpp
         Character/OtherChar.h
         Character/PassiveBuffs.cpp
@@ -91,14 +91,14 @@ add_executable(HeavenClient
         Character/Player.h
         Character/PlayerStates.cpp
         Character/PlayerStates.h
-        Character/Questlog.cpp
-        Character/Questlog.h
-        Character/Skillbook.cpp
-        Character/Skillbook.h
+        Character/QuestLog.cpp
+        Character/QuestLog.h
+        Character/SkillBook.cpp
+        Character/SkillBook.h
         Character/SkillId.h
         Character/StatCaps.h
-        Character/Telerock.cpp
-        Character/Telerock.h
+        Character/TeleportRock.cpp
+        Character/TeleportRock.h
         Data/BulletData.cpp
         Data/BulletData.h
         Data/EquipData.cpp
@@ -178,8 +178,8 @@ add_executable(HeavenClient
         Gameplay/MapleMap/Tile.h
         Gameplay/Physics/Foothold.cpp
         Gameplay/Physics/Foothold.h
-        Gameplay/Physics/Footholdtree.cpp
-        Gameplay/Physics/Footholdtree.h
+        Gameplay/Physics/FootholdTree.cpp
+        Gameplay/Physics/FootholdTree.h
         Gameplay/Physics/Physics.cpp
         Gameplay/Physics/Physics.h
         Gameplay/Physics/PhysicsObject.h
@@ -235,9 +235,9 @@ add_executable(HeavenClient
         IO/Components/MapleFrame.h
         IO/Components/MapTooltip.cpp
         IO/Components/MapTooltip.h
-        IO/Components/Nametag.cpp
-        IO/Components/Nametag.h
-        IO/Components/Npctext.cpp
+        IO/Components/NameTag.cpp
+        IO/Components/NameTag.h
+        IO/Components/NpcText.cpp
         IO/Components/ScrollingNotice.cpp
         IO/Components/ScrollingNotice.h
         IO/Components/SkillTooltip.cpp
@@ -257,14 +257,18 @@ add_executable(HeavenClient
         IO/UITypes/UIAranCreation.h
         IO/UITypes/UIBuffList.cpp
         IO/UITypes/UIBuffList.h
+        IO/UITypes/UICashShop.cpp
+        IO/UITypes/UICashShop.h
         IO/UITypes/UIChannel.cpp
         IO/UITypes/UIChannel.h
+        IO/UITypes/UICharInfo.cpp
+        IO/UITypes/UICharInfo.h
         IO/UITypes/UICharSelect.cpp
         IO/UITypes/UICharSelect.h
         IO/UITypes/UIChat.cpp
         IO/UITypes/UIChat.h
-        IO/UITypes/UIChatbar.cpp
-        IO/UITypes/UIChatbar.h
+        IO/UITypes/UIChatBar.cpp
+        IO/UITypes/UIChatBar.h
         IO/UITypes/UICygnusCreation.cpp
         IO/UITypes/UICygnusCreation.h
         IO/UITypes/UIEquipInventory.cpp
@@ -285,8 +289,8 @@ add_executable(HeavenClient
         IO/UITypes/UILogin.h
         IO/UITypes/UILoginNotice.cpp
         IO/UITypes/UILoginNotice.h
-        IO/UITypes/UILoginwait.cpp
-        IO/UITypes/UILoginwait.h
+        IO/UITypes/UILoginWait.cpp
+        IO/UITypes/UILoginWait.h
         IO/UITypes/UILogo.cpp
         IO/UITypes/UILogo.h
         IO/UITypes/UIMiniMap.cpp
@@ -307,14 +311,14 @@ add_executable(HeavenClient
         IO/UITypes/UIRegion.h
         IO/UITypes/UIShop.cpp
         IO/UITypes/UIShop.h
-        IO/UITypes/UISkillbook.cpp
-        IO/UITypes/UISkillbook.h
+        IO/UITypes/UISkillBook.cpp
+        IO/UITypes/UISkillBook.h
         IO/UITypes/UISoftKey.cpp
         IO/UITypes/UISoftKey.h
-        IO/UITypes/UIStatsinfo.cpp
-        IO/UITypes/UIStatsinfo.h
-        IO/UITypes/UIStatusbar.cpp
-        IO/UITypes/UIStatusbar.h
+        IO/UITypes/UIStatsInfo.cpp
+        IO/UITypes/UIStatsInfo.h
+        IO/UITypes/UIStatusBar.cpp
+        IO/UITypes/UIStatusBar.h
         IO/UITypes/UIStatusMessenger.cpp
         IO/UITypes/UIStatusMessenger.h
         IO/UITypes/UITermsOfService.cpp
@@ -340,12 +344,18 @@ add_executable(HeavenClient
         IO/UIElement.cpp
         IO/UIElement.h
         IO/UIState.h
+        IO/UIStateCashShop.cpp
+        IO/UIStateCashShop.h
         IO/UIStateGame.cpp
         IO/UIStateGame.h
         IO/UIStateLogin.cpp
         IO/UIStateLogin.h
         IO/Window.cpp
         IO/Window.h
+        Net/Handlers/Helpers/CashShopParser.cpp
+        Net/Handlers/Helpers/CashShopParser.h
+        Net/Handlers/Helpers/CharacterParser.cpp
+        Net/Handlers/Helpers/CharacterParser.h
         Net/Handlers/Helpers/ItemParser.cpp
         Net/Handlers/Helpers/ItemParser.h
         Net/Handlers/Helpers/LoginParser.cpp
@@ -354,10 +364,10 @@ add_executable(HeavenClient
         Net/Handlers/Helpers/MovementParser.h
         Net/Handlers/AttackHandlers.cpp
         Net/Handlers/AttackHandlers.h
+        Net/Handlers/CashShopHandlers.cpp
+        Net/Handlers/CashShopHandlers.h
         Net/Handlers/CommonHandlers.cpp
         Net/Handlers/CommonHandlers.h
-        Net/Handlers/CustomHandlers.cpp
-        Net/Handlers/CustomHandlers.h
         Net/Handlers/InventoryHandlers.cpp
         Net/Handlers/InventoryHandlers.h
         Net/Handlers/LoginHandlers.cpp
@@ -370,14 +380,15 @@ add_executable(HeavenClient
         Net/Handlers/NpcInteractionHandlers.h
         Net/Handlers/PlayerHandlers.cpp
         Net/Handlers/PlayerHandlers.h
-        Net/Handlers/SetfieldHandlers.cpp
-        Net/Handlers/SetfieldHandlers.h
+        Net/Handlers/PlayerInteractionHandlers.cpp
+        Net/Handlers/PlayerInteractionHandlers.h
+        Net/Handlers/SetFieldHandlers.cpp
+        Net/Handlers/SetFieldHandlers.h
         Net/Handlers/TestingHandlers.cpp
         Net/Handlers/TestingHandlers.h
         Net/Packets/AttackAndSkillPackets.h
         Net/Packets/CharCreationPackets.h
         Net/Packets/CommonPackets.h
-        Net/Packets/CustomPackets.h
         Net/Packets/GameplayPackets.h
         Net/Packets/InventoryPackets.h
         Net/Packets/LoginPackets.h
@@ -417,8 +428,6 @@ add_executable(HeavenClient
         Template/TimedQueue.h
         Template/TypeMap.h
         Util/HardwareInfo.h
-        Util/HashUtility.cpp
-        Util/HashUtility.h
         Util/Lerp.h
         Util/Misc.cpp
         Util/Misc.h
@@ -430,7 +439,6 @@ add_executable(HeavenClient
         Util/TimedBool.h
         Configuration.cpp
         Configuration.h
-        Console.h
         Constants.h
         Error.h
         MapleStory.cpp

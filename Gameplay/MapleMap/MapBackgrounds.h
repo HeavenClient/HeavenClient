@@ -17,14 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Console.h"
-#include "../Constants.h"
-
 #include "../Physics/PhysicsObject.h"
-#include "../Graphics/Texture.h"
-#include "../Graphics/Animation.h"
 
-#include <vector>
+#include "../../Graphics/Animation.h"
+
+#include <iostream>
 
 namespace ms
 {
@@ -52,12 +49,12 @@ namespace ms
 
 		static Type typebyid(int32_t id)
 		{
-			if (id >= Type::NORMAL && id <= Type::VMOVEB)
+			if (id >= NORMAL && id <= VMOVEB)
 				return static_cast<Type>(id);
 
-			Console::get().print("Unhandled background type: " + std::to_string(id));
+			std::cout << "Unknown Background::Type id: [" << id << "]" << std::endl;
 
-			return Type::NORMAL;
+			return NORMAL;
 		}
 
 		void settype(Type type);

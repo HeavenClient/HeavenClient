@@ -19,16 +19,13 @@
 
 #include "Portal.h"
 
-#include "../Template/Optional.h"
-
 #include <unordered_map>
-
-#include <nlnx/node.hpp>
 
 namespace ms
 {
-	// Collection of portals on a map. Draws and updates portals.
-	// Also contains methods for using portals and obtaining spawn points.
+	// Collection of portals on a map
+	// Draws and updates portals
+	// Also contains methods for using portals and obtaining spawn points
 	class MapPortals
 	{
 	public:

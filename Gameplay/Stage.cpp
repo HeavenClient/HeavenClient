@@ -17,13 +17,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Stage.h"
 
-#include "../Audio/Audio.h"
-#include "../Character/SkillId.h"
-#include "../IO/Messages.h"
+#include "../Configuration.h"
+#include "Timer.h"
+
 #include "../IO/UI.h"
 #include "../Util/Misc.h"
 
-#include "../IO/UITypes/UIStatusbar.h"
+#include "../IO/UITypes/UIStatusBar.h"
 #include "../Net/Packets/AttackAndSkillPackets.h"
 #include "../Net/Packets/GameplayPackets.h"
 
@@ -61,6 +61,12 @@ namespace ms
 	{
 		player = entry;
 		playable = player;
+
+		start = ContinuousTimer::get().start();
+
+		CharStats stats = player.get_stats();
+		levelBefore = stats.get_stat(MapleStat::Id::LEVEL);
+		expBefore = stats.get_exp();
 	}
 
 	void Stage::clear()
@@ -72,16 +78,16 @@ namespace ms
 		mobs.clear();
 		drops.clear();
 		reactors.clear();
-
-		PlayerMapTransferPacket().dispatch();
 	}
 
 	void Stage::load_map(int32_t mapid)
 	{
 		Stage::mapid = mapid;
+
 		std::string strid = string_format::extend_id(mapid, 9);
 		std::string prefix = std::to_string(mapid / 100000000);
-		nl::node src = nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
+
+		nl::node src = mapid == -1 ? nl::nx::ui["CashShopPreview.img"] : nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
 
 		tilesobjs = MapTilesObjs(src);
 		backgrounds = MapBackgrounds(src["back"]);
@@ -269,18 +275,15 @@ namespace ms
 
 	Cursor::State Stage::send_cursor(bool pressed, Point<int16_t> position)
 	{
-		auto statusbar = UI::get().get_element<UIStatusbar>();
+		auto statusbar = UI::get().get_element<UIStatusBar>();
 
 		if (statusbar && statusbar->is_menu_active())
 		{
 			if (pressed)
-			{
 				statusbar->remove_menus();
 
-				return npcs.send_cursor(pressed, position, camera.position());
-			}
-
-			return statusbar->send_cursor(pressed, position);
+			if (statusbar->is_in_range(position))
+				return statusbar->send_cursor(pressed, position);
 		}
 
 		return npcs.send_cursor(pressed, position, camera.position());
@@ -342,5 +345,28 @@ namespace ms
 	void Stage::add_effect(std::string path)
 	{
 		effect = MapEffect(path);
+	}
+
+	int64_t Stage::get_uptime()
+	{
+		return ContinuousTimer::get().stop(start);
+	}
+
+	uint16_t Stage::get_uplevel()
+	{
+		return levelBefore;
+	}
+
+	int64_t Stage::get_upexp()
+	{
+		return expBefore;
+	}
+
+	void Stage::transfer_player()
+	{
+		PlayerMapTransferPacket().dispatch();
+
+		if (Configuration::get().get_admin())
+			AdminEnterMapPacket(AdminEnterMapPacket::Operation::ALERT_ADMINS).dispatch();
 	}
 }

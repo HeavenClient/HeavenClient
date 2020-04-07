@@ -17,8 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "EquipTooltip.h"
 
-#include "../Gameplay/Stage.h"
-#include "../Data/WeaponData.h"
+#include "../../Data/WeaponData.h"
+#include "../../Gameplay/Stage.h"
 
 #include <nlnx/nx.hpp>
 
@@ -50,30 +50,30 @@ namespace ms
 		potential[Equip::Potential::POT_UNIQUE] = ItemIcon["3"];
 		potential[Equip::Potential::POT_LEGENDARY] = ItemIcon["4"];
 
-		requirements.push_back(Maplestat::Id::LEVEL);
-		requirements.push_back(Maplestat::Id::STR);
-		requirements.push_back(Maplestat::Id::DEX);
-		requirements.push_back(Maplestat::Id::INT);
-		requirements.push_back(Maplestat::Id::LUK);
+		requirements.push_back(MapleStat::Id::LEVEL);
+		requirements.push_back(MapleStat::Id::STR);
+		requirements.push_back(MapleStat::Id::DEX);
+		requirements.push_back(MapleStat::Id::INT);
+		requirements.push_back(MapleStat::Id::LUK);
 
-		reqstattextures[Maplestat::Id::LEVEL][false] = EquipCannot["reqLEV"];
-		reqstattextures[Maplestat::Id::LEVEL][true] = EquipCan["reqLEV"];
-		reqstattextures[Maplestat::Id::FAME][false] = EquipCannot["reqPOP"];
-		reqstattextures[Maplestat::Id::FAME][true] = EquipCan["reqPOP"];
-		reqstattextures[Maplestat::Id::STR][false] = EquipCannot["reqSTR"];
-		reqstattextures[Maplestat::Id::STR][true] = EquipCan["reqSTR"];
-		reqstattextures[Maplestat::Id::DEX][false] = EquipCannot["reqDEX"];
-		reqstattextures[Maplestat::Id::DEX][true] = EquipCan["reqDEX"];
-		reqstattextures[Maplestat::Id::INT][false] = EquipCannot["reqINT"];
-		reqstattextures[Maplestat::Id::INT][true] = EquipCan["reqINT"];
-		reqstattextures[Maplestat::Id::LUK][false] = EquipCannot["reqLUK"];
-		reqstattextures[Maplestat::Id::LUK][true] = EquipCan["reqLUK"];
+		reqstattextures[MapleStat::Id::LEVEL][false] = EquipCannot["reqLEV"];
+		reqstattextures[MapleStat::Id::LEVEL][true] = EquipCan["reqLEV"];
+		reqstattextures[MapleStat::Id::FAME][false] = EquipCannot["reqPOP"];
+		reqstattextures[MapleStat::Id::FAME][true] = EquipCan["reqPOP"];
+		reqstattextures[MapleStat::Id::STR][false] = EquipCannot["reqSTR"];
+		reqstattextures[MapleStat::Id::STR][true] = EquipCan["reqSTR"];
+		reqstattextures[MapleStat::Id::DEX][false] = EquipCannot["reqDEX"];
+		reqstattextures[MapleStat::Id::DEX][true] = EquipCan["reqDEX"];
+		reqstattextures[MapleStat::Id::INT][false] = EquipCannot["reqINT"];
+		reqstattextures[MapleStat::Id::INT][true] = EquipCan["reqINT"];
+		reqstattextures[MapleStat::Id::LUK][false] = EquipCannot["reqLUK"];
+		reqstattextures[MapleStat::Id::LUK][true] = EquipCan["reqLUK"];
 
-		reqstatpositions[Maplestat::Id::LEVEL] = Point<int16_t>(97, 47);
-		reqstatpositions[Maplestat::Id::STR] = Point<int16_t>(97, 62);
-		reqstatpositions[Maplestat::Id::LUK] = Point<int16_t>(177, 62);
-		reqstatpositions[Maplestat::Id::DEX] = Point<int16_t>(97, 71);
-		reqstatpositions[Maplestat::Id::INT] = Point<int16_t>(177, 71);
+		reqstatpositions[MapleStat::Id::LEVEL] = Point<int16_t>(97, 47);
+		reqstatpositions[MapleStat::Id::STR] = Point<int16_t>(97, 62);
+		reqstatpositions[MapleStat::Id::LUK] = Point<int16_t>(177, 62);
+		reqstatpositions[MapleStat::Id::DEX] = Point<int16_t>(97, 71);
+		reqstatpositions[MapleStat::Id::INT] = Point<int16_t>(177, 71);
 
 		reqset[false] = Charset(EquipCannot, Charset::Alignment::LEFT);
 		reqset[true] = Charset(EquipCan, Charset::Alignment::LEFT);
@@ -135,7 +135,7 @@ namespace ms
 		{
 			const int32_t item_id = oequip.get()->get_item_id();
 			const EquipData &equipdata = EquipData::get(item_id);
-			Equipslot::Id eqslot = equipdata.get_eqslot();
+			EquipSlot::Id eqslot = equipdata.get_eqslot();
 
 			if (inventory.has_equipped(eqslot));
 			{
@@ -159,7 +159,7 @@ namespace ms
 						canequip_preview[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 						std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
 
-						if (ms != Maplestat::Id::LEVEL)
+						if (ms != MapleStat::Id::LEVEL)
 							reqstr.insert(0, 3 - reqstr.size(), '0');
 
 						reqstatstrings_preview[ms] = reqstr;
@@ -167,7 +167,7 @@ namespace ms
 
 					okjobs_preview.clear();
 
-					switch (equipdata.get_reqstat(Maplestat::Id::JOB))
+					switch (equipdata.get_reqstat(MapleStat::Id::JOB))
 					{
 						case 0:
 							okjobs_preview.push_back(0);
@@ -176,31 +176,31 @@ namespace ms
 							okjobs_preview.push_back(3);
 							okjobs_preview.push_back(4);
 							okjobs_preview.push_back(5);
-							canequip_preview[Maplestat::Id::JOB] = true;
+							canequip_preview[MapleStat::Id::JOB] = true;
 							break;
 						case 1:
 							okjobs_preview.push_back(1);
-							canequip_preview[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) ||
-																   (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
+							canequip_preview[MapleStat::Id::JOB] = (stats.get_stat(MapleStat::Id::JOB) / 100 == 1) ||
+																   (stats.get_stat(MapleStat::Id::JOB) / 100 >= 20);
 							break;
 						case 2:
 							okjobs_preview.push_back(2);
-							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
+							canequip_preview[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 2;
 							break;
 						case 4:
 							okjobs_preview.push_back(3);
-							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
+							canequip_preview[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 3;
 							break;
 						case 8:
 							okjobs_preview.push_back(4);
-							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
+							canequip_preview[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 4;
 							break;
 						case 16:
 							okjobs_preview.push_back(5);
-							canequip_preview[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
+							canequip_preview[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 5;
 							break;
 						default:
-							canequip_preview[Maplestat::Id::JOB] = false;
+							canequip_preview[MapleStat::Id::JOB] = false;
 							break;
 					}
 
@@ -330,8 +330,8 @@ namespace ms
 
 					statlabels_preview.clear();
 
-					for (Equipstat::Id es = Equipstat::Id::STR;
-						 es <= Equipstat::Id::JUMP; es = static_cast<Equipstat::Id>(es + 1))
+					for (EquipStat::Id es = EquipStat::Id::STR;
+						 es <= EquipStat::Id::JUMP; es = static_cast<EquipStat::Id>(es + 1))
 					{
 						if (equip.get_stat(es) > 0)
 						{
@@ -346,7 +346,7 @@ namespace ms
 							}
 
 							statlabels_preview[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
-														  Equipstat::names[es] + std::string(": ") + statstr);
+														  EquipStat::names[es] + std::string(": ") + statstr);
 						} else
 						{
 							height_preview -= 18;
@@ -377,7 +377,7 @@ namespace ms
 			canequip[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 			std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
 
-			if (ms != Maplestat::Id::LEVEL)
+			if (ms != MapleStat::Id::LEVEL)
 				reqstr.insert(0, 3 - reqstr.size(), '0');
 
 			reqstatstrings[ms] = reqstr;
@@ -385,7 +385,7 @@ namespace ms
 
 		okjobs.clear();
 
-		switch (equipdata.get_reqstat(Maplestat::Id::JOB))
+		switch (equipdata.get_reqstat(MapleStat::Id::JOB))
 		{
 			case 0:
 				okjobs.push_back(0);
@@ -394,31 +394,31 @@ namespace ms
 				okjobs.push_back(3);
 				okjobs.push_back(4);
 				okjobs.push_back(5);
-				canequip[Maplestat::Id::JOB] = true;
+				canequip[MapleStat::Id::JOB] = true;
 				break;
 			case 1:
 				okjobs.push_back(1);
-				canequip[Maplestat::Id::JOB] = (stats.get_stat(Maplestat::Id::JOB) / 100 == 1) ||
-											   (stats.get_stat(Maplestat::Id::JOB) / 100 >= 20);
+				canequip[MapleStat::Id::JOB] = (stats.get_stat(MapleStat::Id::JOB) / 100 == 1) ||
+											   (stats.get_stat(MapleStat::Id::JOB) / 100 >= 20);
 				break;
 			case 2:
 				okjobs.push_back(2);
-				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 2;
+				canequip[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 2;
 				break;
 			case 4:
 				okjobs.push_back(3);
-				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 3;
+				canequip[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 3;
 				break;
 			case 8:
 				okjobs.push_back(4);
-				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 4;
+				canequip[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 4;
 				break;
 			case 16:
 				okjobs.push_back(5);
-				canequip[Maplestat::Id::JOB] = stats.get_stat(Maplestat::Id::JOB) / 100 == 5;
+				canequip[MapleStat::Id::JOB] = stats.get_stat(MapleStat::Id::JOB) / 100 == 5;
 				break;
 			default:
-				canequip[Maplestat::Id::JOB] = false;
+				canequip[MapleStat::Id::JOB] = false;
 				break;
 		}
 
@@ -545,7 +545,7 @@ namespace ms
 
 		statlabels.clear();
 
-		for (Equipstat::Id es = Equipstat::Id::STR; es <= Equipstat::Id::JUMP; es = static_cast<Equipstat::Id>(es + 1))
+		for (EquipStat::Id es = EquipStat::Id::STR; es <= EquipStat::Id::JUMP; es = static_cast<EquipStat::Id>(es + 1))
 		{
 			if (equip.get_stat(es) > 0)
 			{
@@ -560,7 +560,7 @@ namespace ms
 				}
 
 				statlabels[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
-									  Equipstat::names[es] + std::string(": ") + statstr);
+									  EquipStat::names[es] + std::string(": ") + statstr);
 			} else
 			{
 				height -= 18;
@@ -625,7 +625,7 @@ namespace ms
 		std::string atkincstr = std::to_string(atkincnum);
 		bool atkinc_pos = true;
 
-		if (canequip[Maplestat::Id::JOB])
+		if (canequip[MapleStat::Id::JOB])
 		{
 			if (atkincnum < 0)
 			{
@@ -649,13 +649,13 @@ namespace ms
 
 		pos.shift_y(12);
 
-		for (Maplestat::Id ms : requirements)
+		for (MapleStat::Id ms : requirements)
 		{
 			Point<int16_t> reqpos = reqstatpositions[ms];
 			bool reqok = canequip[ms];
 			reqstattextures[ms][reqok].draw(pos + reqpos);
 
-			if (ms != Maplestat::Id::LEVEL)
+			if (ms != MapleStat::Id::LEVEL)
 				reqset[reqok].draw(reqstatstrings[ms], 6, pos + reqpos + Point<int16_t>(54, 0));
 			else
 				lvset[reqok].draw(reqstatstrings[ms], 6, pos + reqpos + Point<int16_t>(54, 0));
@@ -667,7 +667,7 @@ namespace ms
 		jobsback.draw(job_position);
 
 		for (auto &jbit : okjobs)
-			jobs[canequip[Maplestat::Id::JOB]].at(jbit).draw(job_position);
+			jobs[canequip[MapleStat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
 
@@ -760,7 +760,7 @@ namespace ms
 		std::string atkincstr = std::to_string(atkincnum);
 		bool atkinc_pos = true;
 
-		if (canequip_preview[Maplestat::Id::JOB])
+		if (canequip_preview[MapleStat::Id::JOB])
 		{
 			if (atkincnum < 0)
 			{
@@ -784,13 +784,13 @@ namespace ms
 
 		pos.shift_y(12);
 
-		for (Maplestat::Id ms : requirements)
+		for (MapleStat::Id ms : requirements)
 		{
 			Point<int16_t> reqpos = reqstatpositions[ms];
 			bool reqok = canequip_preview[ms];
 			reqstattextures[ms][reqok].draw(pos + reqpos);
 
-			if (ms != Maplestat::Id::LEVEL)
+			if (ms != MapleStat::Id::LEVEL)
 				reqset[reqok].draw(reqstatstrings_preview[ms], 6, pos + reqpos + Point<int16_t>(54, 0));
 			else
 				lvset[reqok].draw(reqstatstrings_preview[ms], 6, pos + reqpos + Point<int16_t>(54, 0));
@@ -802,7 +802,7 @@ namespace ms
 		jobsback.draw(job_position);
 
 		for (auto &jbit : okjobs_preview)
-			jobs[canequip_preview[Maplestat::Id::JOB]].at(jbit).draw(job_position);
+			jobs[canequip_preview[MapleStat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
 

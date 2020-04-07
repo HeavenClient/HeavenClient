@@ -39,17 +39,17 @@ namespace ms
 		Session();
 		~Session();
 
-		// Connect using host and port from the configuration file.
+		// Connect using host and port from the configuration file
 		Error init();
-		// Send a packet to the server.
+		// Send a packet to the server
 		void write(int8_t* bytes, size_t length);
-		// Check for incoming packets and handle them.
+		// Check for incoming packets and handle them
 		void read();
-		// Closes the current connection and opens a new one with default connection settings.
+		// Closes the current connection and opens a new one with default connection settings
 		void reconnect();
-		// Closes the current connection and opens a new one.
+		// Closes the current connection and opens a new one
 		void reconnect(const char* address, const char* port);
-		// Check if the connection is alive.
+		// Check if the connection is alive
 		bool is_connected() const;
 
 	private:

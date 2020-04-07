@@ -36,7 +36,7 @@ namespace ms
 		};
 
 		Equip(int32_t item_id, int64_t expiration, const std::string &owner, int16_t flags, uint8_t slots,
-			  uint8_t level, const EnumMap<Equipstat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
+			  uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
 			  int32_t vicious);
 
 		int32_t get_item_id() const;
@@ -53,7 +53,7 @@ namespace ms
 
 		uint8_t get_itemlevel() const;
 
-		uint16_t get_stat(Equipstat::Id type) const;
+		uint16_t get_stat(EquipStat::Id type) const;
 
 		int32_t get_vicious() const;
 
@@ -62,7 +62,7 @@ namespace ms
 		EquipQuality::Id get_quality() const;
 
 	private:
-		EnumMap<Equipstat::Id, uint16_t> stats;
+		EnumMap<EquipStat::Id, uint16_t> stats;
 		int32_t item_id;
 		int64_t expiration;
 		std::string owner;

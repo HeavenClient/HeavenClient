@@ -23,7 +23,6 @@
 #include "../Error.h"
 
 #include "../Util/QuadTree.h"
-#include "../Template/Singleton.h"
 
 #include <glad/glad.h>
 #include <ft2build.h>
@@ -33,19 +32,19 @@
 
 namespace ms
 {
-	// Graphics engine which uses OpenGL.
+	// Graphics engine which uses OpenGL
 	class GraphicsGL : public Singleton<GraphicsGL>
 	{
 	public:
 		GraphicsGL();
 
-		// Initialise all resources.
+		// Initialize all resources
 		Error init();
 
 		// Re-initialise after changing screen modes.
 		void reinit();
 
-		// Clear all bitmaps if most of the space is used up.
+		// Clear all bitmaps if most of the space is used up
 		void clear();
 
 		// Add a bitmap to the available resources.
@@ -69,13 +68,13 @@ namespace ms
 		// Fill the screen with the specified color.
 		void drawscreenfill(float red, float green, float blue, float alpha);
 
-		// Lock the current scene.
+		// Lock the current scene
 		void lock();
 
 		// Unlock the scene.
 		void unlock();
 
-		// Draw the buffer contents with the specified scene opacity.
+		// Draw the buffer contents with the specified scene opacity
 		void flush(float opacity);
 
 		// Clear the buffer contents.

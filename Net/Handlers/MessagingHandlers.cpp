@@ -17,12 +17,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "MessagingHandlers.h"
 
-#include "../Data/ItemData.h"
-#include "../Gameplay/Stage.h"
-#include "../IO/UI.h"
+#include "../../Data/ItemData.h"
+#include "../../Gameplay/Stage.h"
+#include "../../IO/UI.h"
 
-#include "../IO/UITypes/UIStatusMessenger.h"
-#include "../IO/UITypes/UIChatbar.h"
+#include "../../IO/UITypes/UIChatBar.h"
+#include "../../IO/UITypes/UIStatusMessenger.h"
 
 namespace ms
 {
@@ -195,7 +195,7 @@ namespace ms
 		if (message.substr(0, MAPLETIP.length()).compare("[MapleTip]"))
 			message = "[Notice] " + message;
 
-		UI::get().get_element<UIChatbar>()->send_chatline(message, UIChatbar::LineType::YELLOW);
+		UI::get().get_element<UIChatBar>()->send_chatline(message, UIChatBar::LineType::YELLOW);
 	}
 
 	void ChatReceivedHandler::handle(InPacket& recv) const
@@ -213,9 +213,9 @@ namespace ms
 			character->speak(message);
 		}
 
-		auto linetype = static_cast<UIChatbar::LineType>(type);
+		auto linetype = static_cast<UIChatBar::LineType>(type);
 
-		if (auto chatbar = UI::get().get_element<UIChatbar>())
+		if (auto chatbar = UI::get().get_element<UIChatBar>())
 			chatbar->send_chatline(message, linetype);
 	}
 
@@ -249,8 +249,8 @@ namespace ms
 
 		if (Stage::get().is_player(cid))
 		{
-			if (auto chatbar = UI::get().get_element<UIChatbar>())
-				chatbar->display_message(message, UIChatbar::LineType::RED);
+			if (auto chatbar = UI::get().get_element<UIChatBar>())
+				chatbar->display_message(message, UIChatBar::LineType::RED);
 
 			UI::get().enable();
 		}
@@ -278,8 +278,8 @@ namespace ms
 				std::string sign = (qty < 0) ? "-" : "+";
 				std::string message = "Gained an item: " + name + " (" + sign + std::to_string(qty) + ")";
 
-				if (auto chatbar = UI::get().get_element<UIChatbar>())
-					chatbar->send_chatline(message, UIChatbar::LineType::BLUE);
+				if (auto chatbar = UI::get().get_element<UIChatBar>())
+					chatbar->send_chatline(message, UIChatBar::LineType::BLUE);
 			}
 		}
 		else if (mode1 == 13) // card effect
@@ -299,7 +299,7 @@ namespace ms
 		{
 			int32_t skillid = recv.read_int();
 
-			// More bytes, but we don't need them
+			// More bytes, but we don't need them.
 			Stage::get().get_combat().show_player_buff(skillid);
 		}
 	}

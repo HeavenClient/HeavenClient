@@ -17,13 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Template/Point.h"
-#include "../Template/Range.h"
-#include "../Template/Optional.h"
+#include "../../Template/Optional.h"
+#include "../../Template/Point.h"
+#include "../../Template/Range.h"
 
 #include <vector>
-
-#include <nlnx/node.hpp>
 
 namespace ms
 {
@@ -75,10 +73,10 @@ namespace ms
 
 		Range<int16_t> get_borders() const;
 
-		// Find a seat the player's position.
+		// Find a seat the player's position
 		Optional<const Seat> findseat(Point<int16_t> position) const;
-
-		// Find a ladder at the player's position. upwards = false implies downwards.
+		// Find a ladder at the player's position
+		// !upwards - implies downwards
 		Optional<const Ladder> findladder(Point<int16_t> position, bool upwards) const;
 
 	private:

@@ -17,16 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Character/Char.h"
-#include "../Graphics/Animation.h"
-#include "../Template/BoolPair.h"
-
-#include <unordered_map>
-#include <vector>
+#include "../../Character/Char.h"
 
 namespace ms
 {
-	// Interface for skill effects.
+	// Interface for skill effects
 	class SkillUseEffect
 	{
 	public:
@@ -56,7 +51,7 @@ namespace ms
 		};
 	};
 
-	// No animation.
+	// No animation
 	class NoUseEffect : public SkillUseEffect
 	{
 	public:
@@ -64,7 +59,7 @@ namespace ms
 		{}
 	};
 
-	// An effect which displays an animation over the character's position.
+	// An effect which displays an animation over the character's position
 	class SingleUseEffect : public SkillUseEffect
 	{
 	public:
@@ -76,12 +71,12 @@ namespace ms
 		Effect effect;
 	};
 
-	// An effect which displays an animation over the character's position.
-	// The effect changes based on whether the character uses a twohanded weapon.
-	class TwoHUseEffect : public SkillUseEffect
+	// An effect which displays an animation over the character's position
+	// The effect changes based on whether the character uses a two-handed weapon
+	class TwoHandedUseEffect : public SkillUseEffect
 	{
 	public:
-		TwoHUseEffect(nl::node src);
+		TwoHandedUseEffect(nl::node src);
 
 		void apply(Char &target) const override;
 
@@ -89,7 +84,7 @@ namespace ms
 		BoolPair<Effect> effects;
 	};
 
-	// An effect which displays multiple animations over the character's position.
+	// An effect which displays multiple animations over the character's position
 	class MultiUseEffect : public SkillUseEffect
 	{
 	public:
@@ -101,7 +96,7 @@ namespace ms
 		std::vector<Effect> effects;
 	};
 
-	// The animation changes with the character level.
+	// The animation changes with the character level
 	class ByLevelUseEffect : public SkillUseEffect
 	{
 	public:
@@ -113,7 +108,7 @@ namespace ms
 		std::map<uint16_t, Effect> effects;
 	};
 
-	// Use effect for Iron Body.
+	// Use effect for Iron Body
 	class IronBodyUseEffect : public SkillUseEffect
 	{
 	public:

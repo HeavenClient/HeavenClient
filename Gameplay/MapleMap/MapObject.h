@@ -23,7 +23,7 @@
 
 namespace ms
 {
-	// Base for objects on a map, eg. mobs, NPCs, characters etc.
+	// Base for objects on a map, e.g., Mobs, NPCs, Characters, etc.
 	class MapObject
 	{
 	public:

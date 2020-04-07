@@ -23,11 +23,5 @@
 #define USE_ASIO
 #endif
 
-// USE_XXHASH : Use xxhash for file check (additional dependency)
-//#define USE_XXHASH
-
-// USE_CRYPTO : Use cryptography for communication with the server.
+// Use cryptography for communication with the server
 #define USE_CRYPTO
-
-// PRINT_WARNINGS : Print warnings and minor errors to the console.
-#define PRINT_WARNINGS

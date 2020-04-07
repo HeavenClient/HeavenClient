@@ -207,37 +207,37 @@ namespace ms
 		}
 	}
 
-	Equipstat::Id Job::get_primary(Weapon::Type weapontype) const
+	EquipStat::Id Job::get_primary(Weapon::Type weapontype) const
 	{
 		switch (id / 100)
 		{
 			case 2:
-				return Equipstat::Id::INT;
+				return EquipStat::Id::INT;
 			case 3:
-				return Equipstat::Id::DEX;
+				return EquipStat::Id::DEX;
 			case 4:
-				return Equipstat::Id::LUK;
+				return EquipStat::Id::LUK;
 			case 5:
-				return (weapontype == Weapon::Type::GUN) ? Equipstat::Id::DEX : Equipstat::Id::STR;
+				return (weapontype == Weapon::Type::GUN) ? EquipStat::Id::DEX : EquipStat::Id::STR;
 			default:
-				return Equipstat::Id::STR;
+				return EquipStat::Id::STR;
 		}
 	}
 
-	Equipstat::Id Job::get_secondary(Weapon::Type weapontype) const
+	EquipStat::Id Job::get_secondary(Weapon::Type weapontype) const
 	{
 		switch (id / 100)
 		{
 			case 2:
-				return Equipstat::Id::LUK;
+				return EquipStat::Id::LUK;
 			case 3:
-				return Equipstat::Id::STR;
+				return EquipStat::Id::STR;
 			case 4:
-				return Equipstat::Id::DEX;
+				return EquipStat::Id::DEX;
 			case 5:
-				return (weapontype == Weapon::Type::GUN) ? Equipstat::Id::STR : Equipstat::Id::DEX;
+				return (weapontype == Weapon::Type::GUN) ? EquipStat::Id::STR : EquipStat::Id::DEX;
 			default:
-				return Equipstat::Id::DEX;
+				return EquipStat::Id::DEX;
 		}
 	}
 }

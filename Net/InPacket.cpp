@@ -71,15 +71,15 @@ namespace ms
 
 	Point<int16_t> InPacket::read_point()
 	{
-		auto x = read<int16_t>();
-		auto y = read<int16_t>();
+		int16_t x = read<int16_t>();
+		int16_t y = read<int16_t>();
 
-		return { x, y };
+		return Point<int16_t>(x, y);
 	}
 
 	std::string InPacket::read_string()
 	{
-		auto length = read<uint16_t>();
+		uint16_t length = read<uint16_t>();
 
 		return read_padded_string(length);
 	}
@@ -97,6 +97,49 @@ namespace ms
 		}
 
 		return ret;
+	}
+
+	void InPacket::skip_bool()
+	{
+		skip_byte();
+	}
+
+	void InPacket::skip_byte()
+	{
+		skip(sizeof(int8_t));
+	}
+
+	void InPacket::skip_short()
+	{
+		skip(sizeof(int16_t));
+	}
+
+	void InPacket::skip_int()
+	{
+		skip(sizeof(int32_t));
+	}
+
+	void InPacket::skip_long()
+	{
+		skip(sizeof(int64_t));
+	}
+
+	void InPacket::skip_point()
+	{
+		skip(sizeof(int16_t));
+		skip(sizeof(int16_t));
+	}
+
+	void InPacket::skip_string()
+	{
+		uint16_t length = read<uint16_t>();
+
+		skip_padded_string(length);
+	}
+
+	void InPacket::skip_padded_string(uint16_t length)
+	{
+		skip(length);
 	}
 
 	bool InPacket::inspect_bool()

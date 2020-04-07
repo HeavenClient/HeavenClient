@@ -21,9 +21,9 @@
 
 #include "../Components/MapleButton.h"
 #include "../Components/MapleComboBox.h"
+#include "../UITypes/UILoginWait.h"
 
-#include "../IO/UITypes/UILoginwait.h"
-#include "../Net/Packets/LoginPackets.h"
+#include "../../Net/Packets/LoginPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -110,7 +110,7 @@ namespace ms
 				break;
 			case Buttons::YES:
 			{
-				UI::get().emplace<UILoginwait>();
+				UI::get().emplace<UILoginWait>();
 
 				uint16_t selected_value = buttons[Buttons::SELECT]->get_selected();
 				GenderPacket(selected_value).dispatch();

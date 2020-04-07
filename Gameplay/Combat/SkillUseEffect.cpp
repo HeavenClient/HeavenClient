@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "SkillUseEffect.h"
 
-#include "../Util/Misc.h"
+#include "../../Util/Misc.h"
 
 namespace ms
 {
@@ -29,10 +29,9 @@ namespace ms
 		effect.apply(target);
 	}
 
-	TwoHUseEffect::TwoHUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"])
-	{}
+	TwoHandedUseEffect::TwoHandedUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"]) {}
 
-	void TwoHUseEffect::apply(Char &target) const
+	void TwoHandedUseEffect::apply(Char& target) const
 	{
 		bool twohanded = target.is_twohanded();
 		effects[twohanded].apply(target);

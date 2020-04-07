@@ -16,20 +16,18 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIItemInventory.h"
+
 #include "UINotice.h"
 
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
-#include "../Components/TwoSpriteButton.h"
-#include "../Data/ItemData.h"
-#include "../Audio/Audio.h"
-#include "../Character/Player.h"
-#include "../Gameplay/Stage.h"
-#include "../Data/EquipData.h"
+#include "../UITypes/UIKeyConfig.h"
 
-#include "../IO/UITypes/UIKeyConfig.h"
-#include "../Net/Packets/InventoryPackets.h"
+#include "../../Data/EquipData.h"
+#include "../../Gameplay/Stage.h"
+
+#include "../../Net/Packets/InventoryPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -120,7 +118,7 @@ namespace ms
 		slotrange[InventoryType::Id::CASH] = {1, 24};
 
 		slider = Slider(
-				Slider::Type::DEFAULT, Range<int16_t>(50, 245), 152, 6, 1 + inventory.get_slotmax(tab) / COLUMNS,
+				Slider::Type::DEFAULT_SILVER, Range<int16_t>(50, 245), 152, 6, 1 + inventory.get_slotmax(tab) / COLUMNS,
 				[&](bool upwards)
 				{
 					int16_t shift = upwards ? -COLUMNS : COLUMNS;
@@ -233,7 +231,7 @@ namespace ms
 			const bool untradable = ItemData::get(item_id).is_untradable();
 			const bool cashitem = ItemData::get(item_id).is_cashitem();
 			const Texture &texture = ItemData::get(item_id).get_icon(false);
-			Equipslot::Id eqslot = inventory.find_equipslot(item_id);
+			EquipSlot::Id eqslot = inventory.find_equipslot(item_id);
 
 			icons[slot] = std::make_unique<Icon>(
 					std::make_unique<ItemIcon>(*this, tab, eqslot, slot, item_id, count, untradable, cashitem),
@@ -361,7 +359,7 @@ namespace ms
 		if (slot > 0)
 		{
 			int32_t item_id = inventory.get_item_id(tab, slot);
-			Equipslot::Id eqslot;
+			EquipSlot::Id eqslot;
 			bool equip;
 
 			if (item_id && tab == InventoryType::Id::EQUIP)
@@ -370,7 +368,7 @@ namespace ms
 				equip = true;
 			} else
 			{
-				eqslot = Equipslot::Id::NONE;
+				eqslot = EquipSlot::Id::NONE;
 				equip = false;
 			}
 
@@ -676,7 +674,7 @@ namespace ms
 		if (jobname == "GM" || jobname == "SuperGM")
 			return true;
 
-		int16_t reqJOB = equipdata.get_reqstat(Maplestat::Id::JOB);
+		int16_t reqJOB = equipdata.get_reqstat(MapleStat::Id::JOB);
 
 		if (!stats.get_job().is_sub_job(reqJOB))
 		{
@@ -685,24 +683,24 @@ namespace ms
 			return false;
 		}
 
-		int16_t reqLevel = equipdata.get_reqstat(Maplestat::Id::LEVEL);
-		int16_t reqDEX = equipdata.get_reqstat(Maplestat::Id::DEX);
-		int16_t reqSTR = equipdata.get_reqstat(Maplestat::Id::STR);
-		int16_t reqLUK = equipdata.get_reqstat(Maplestat::Id::LUK);
-		int16_t reqINT = equipdata.get_reqstat(Maplestat::Id::INT);
-		int16_t reqFAME = equipdata.get_reqstat(Maplestat::Id::FAME);
+		int16_t reqLevel = equipdata.get_reqstat(MapleStat::Id::LEVEL);
+		int16_t reqDEX = equipdata.get_reqstat(MapleStat::Id::DEX);
+		int16_t reqSTR = equipdata.get_reqstat(MapleStat::Id::STR);
+		int16_t reqLUK = equipdata.get_reqstat(MapleStat::Id::LUK);
+		int16_t reqINT = equipdata.get_reqstat(MapleStat::Id::INT);
+		int16_t reqFAME = equipdata.get_reqstat(MapleStat::Id::FAME);
 
 		int8_t i = 0;
 
-		if (reqLevel > stats.get_stat(Maplestat::Id::LEVEL))
+		if (reqLevel > stats.get_stat(MapleStat::Id::LEVEL))
 			i++;
-		else if (reqDEX > stats.get_total(Equipstat::Id::DEX))
+		else if (reqDEX > stats.get_total(EquipStat::Id::DEX))
 			i++;
-		else if (reqSTR > stats.get_total(Equipstat::Id::STR))
+		else if (reqSTR > stats.get_total(EquipStat::Id::STR))
 			i++;
-		else if (reqLUK > stats.get_total(Equipstat::Id::LUK))
+		else if (reqLUK > stats.get_total(EquipStat::Id::LUK))
 			i++;
-		else if (reqINT > stats.get_total(Equipstat::Id::INT))
+		else if (reqINT > stats.get_total(EquipStat::Id::INT))
 			i++;
 		else if (reqFAME > stats.get_honor())
 			i++;
@@ -860,7 +858,7 @@ namespace ms
 		return Icon::IconType::ITEM;
 	}
 
-	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory &parent, InventoryType::Id st, Equipslot::Id eqs,
+	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory &parent, InventoryType::Id st, EquipSlot::Id eqs,
 										int16_t s, int32_t iid, int16_t c, bool u, bool cash) : parent(parent)
 	{
 		sourcetab = st;
@@ -924,7 +922,7 @@ namespace ms
 		}
 	}
 
-	void UIItemInventory::ItemIcon::drop_on_equips(Equipslot::Id eqslot) const
+	void UIItemInventory::ItemIcon::drop_on_equips(EquipSlot::Id eqslot) const
 	{
 		switch (sourcetab)
 		{
@@ -942,7 +940,7 @@ namespace ms
 		}
 	}
 
-	bool UIItemInventory::ItemIcon::drop_on_items(InventoryType::Id tab, Equipslot::Id, int16_t slot, bool) const
+	bool UIItemInventory::ItemIcon::drop_on_items(InventoryType::Id tab, EquipSlot::Id, int16_t slot, bool) const
 	{
 		if (tab != sourcetab || slot == source)
 			return true;

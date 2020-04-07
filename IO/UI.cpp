@@ -16,29 +16,22 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UI.h"
-#include "UIStateLogin.h"
+
+#include "UIStateCashShop.h"
 #include "UIStateGame.h"
+#include "UIStateLogin.h"
 #include "Window.h"
 
-#include "../IO/UITypes/UIStatsinfo.h"
-#include "../IO/UITypes/UIItemInventory.h"
-#include "../IO/UITypes/UIEquipInventory.h"
-#include "../IO/UITypes/UISkillbook.h"
-#include "../IO/UITypes/UIQuestLog.h"
-#include "../IO/UITypes/UIWorldMap.h"
-#include "../IO/UITypes/UIUserList.h"
-#include "../IO/UITypes/UIChatbar.h"
-#include "../IO/UITypes/UIStatusbar.h"
-#include "../IO/UITypes/UINotice.h"
-#include "../IO/UITypes/UIShop.h"
-#include "../IO/UITypes/UIChannel.h"
-#include "../IO/UITypes/UIJoypad.h"
-#include "../IO/UITypes/UIEvent.h"
-#include "../IO/UITypes/UIChat.h"
-#include "../IO/UITypes/UIKeyConfig.h"
-#include "../IO/UITypes/UIOptionMenu.h"
-#include "../IO/UITypes/UIQuit.h"
-#include "../IO/UITypes/UINpcTalk.h"
+#include "UITypes/UIChannel.h"
+#include "UITypes/UIChat.h"
+#include "UITypes/UIChatBar.h"
+#include "UITypes/UIJoypad.h"
+#include "UITypes/UINpcTalk.h"
+#include "UITypes/UIOptionMenu.h"
+#include "UITypes/UIQuit.h"
+#include "UITypes/UIShop.h"
+#include "UITypes/UIStatusBar.h"
+#include "UITypes/UIWorldMap.h"
 
 namespace ms
 {
@@ -86,12 +79,15 @@ namespace ms
 	{
 		switch (id)
 		{
-			case State::LOGIN:
-				state = std::make_unique<UIStateLogin>();
-				break;
-			case State::GAME:
-				state = std::make_unique<UIStateGame>();
-				break;
+		case State::LOGIN:
+			state = std::make_unique<UIStateLogin>();
+			break;
+		case State::GAME:
+			state = std::make_unique<UIStateGame>();
+			break;
+		case State::CASHSHOP:
+			state = std::make_unique<UIStateCashShop>();
+			break;
 		}
 	}
 
@@ -235,7 +231,7 @@ namespace ms
 			bool left_right = keycode == GLFW_KEY_LEFT || keycode == GLFW_KEY_RIGHT;
 			bool arrows = up_down || left_right;
 
-			auto statusbar = UI::get().get_element<UIStatusbar>();
+			auto statusbar = UI::get().get_element<UIStatusBar>();
 			auto channel = UI::get().get_element<UIChannel>();
 			auto worldmap = UI::get().get_element<UIWorldMap>();
 			auto optionmenu = UI::get().get_element<UIOptionMenu>();
@@ -319,7 +315,9 @@ namespace ms
 					types.emplace_back(UIElement::Type::QUESTLOG);
 					types.emplace_back(UIElement::Type::USERLIST);
 					types.emplace_back(UIElement::Type::NPCTALK);
-				} else if (enter)
+					types.emplace_back(UIElement::Type::CHARINFO);
+				}
+				else if (enter)
 				{
 					// Login
 					types.emplace_back(UIElement::Type::SOFTKEYBOARD);
@@ -351,7 +349,7 @@ namespace ms
 
 			if (!sent)
 			{
-				auto chatbar = UI::get().get_element<UIChatbar>();
+				auto chatbar = UI::get().get_element<UIChatBar>();
 
 				if (escape)
 				{
@@ -442,24 +440,10 @@ namespace ms
 		return keyboard;
 	}
 
-	int64_t UI::get_uptime()
-	{
-		return state->get_uptime();
-	}
-
-	uint16_t UI::get_uplevel()
-	{
-		return state->get_uplevel();
-	}
-
-	int64_t UI::get_upexp()
-	{
-		return state->get_upexp();
-	}
-
 	void UI::remove(UIElement::Type type)
 	{
 		focusedtextfield = {};
+
 		state->remove(type);
 	}
 }

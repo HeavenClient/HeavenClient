@@ -21,6 +21,8 @@
 
 #include "../Configuration.h"
 
+#include "../Util/Randomizer.h"
+
 #include <chrono>
 
 namespace ms
@@ -35,7 +37,12 @@ namespace ms
 		Session::get().write(bytes.data(), bytes.size());
 
 		if (Configuration::get().get_show_packets())
-			std::cout << "Sent Packet: " << std::to_string(opcode) << std::endl;
+		{
+			if (opcode == Opcode::PONG)
+				std::cout << "Sent Packet: PONG" << std::endl;
+			else
+				std::cout << "Sent Packet: " << std::to_string(opcode) << std::endl;
+		}
 	}
 
 	void OutPacket::skip(size_t count)
@@ -51,7 +58,7 @@ namespace ms
 
 	void OutPacket::write_short(int16_t sh)
 	{
-		for (size_t i = 0; i < 2; i++)
+		for (size_t i = 0; i < sizeof(short); i++)
 		{
 			write_byte(static_cast<int8_t>(sh));
 			sh >>= 8;
@@ -60,7 +67,7 @@ namespace ms
 
 	void OutPacket::write_int(int32_t in)
 	{
-		for (size_t i = 0; i < 4; i++)
+		for (size_t i = 0; i < sizeof(int); i++)
 		{
 			write_byte(static_cast<int8_t>(in));
 			in >>= 8;
@@ -69,7 +76,7 @@ namespace ms
 
 	void OutPacket::write_long(int64_t lg)
 	{
-		for (size_t i = 0; i < 8; i++)
+		for (size_t i = 0; i < sizeof(long); i++)
 		{
 			write_byte(static_cast<int8_t>(lg));
 			lg >>= 8;
@@ -80,7 +87,7 @@ namespace ms
 	{
 		auto duration = std::chrono::steady_clock::now().time_since_epoch();
 		auto since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto timestamp = static_cast<int32_t>(since_epoch.count());
+		int32_t timestamp = static_cast<int32_t>(since_epoch.count());
 
 		write_int(timestamp);
 	}
@@ -94,10 +101,19 @@ namespace ms
 	void OutPacket::write_string(const std::string& str)
 	{
 		int16_t length = static_cast<int16_t>(str.length());
+
 		write_short(length);
 
 		for (int16_t i = 0; i < length; i++)
 			write_byte(str[i]);
+	}
+
+	void OutPacket::write_random()
+	{
+		auto randomizer = Randomizer();
+		int32_t rand = randomizer.next_int(INT_MAX);
+
+		write_int(rand);
 	}
 
 	void OutPacket::write_hardware_info()
@@ -109,22 +125,22 @@ namespace ms
 		write_string(hwid);
 	}
 
-	int OutPacket::hex_to_dec(std::string hexVal)
+	int32_t OutPacket::hex_to_dec(std::string hexVal)
 	{
-		int len = strlen(hexVal.c_str());
-		int base = 1;
-		int dec_val = 0;
+		int32_t len = strlen(hexVal.c_str());
+		int32_t base = 1;
+		int32_t dec_val = 0;
 
-		for (int i = len - 1; i >= 0; i--)
+		for (int32_t i = len - 1; i >= 0; i--)
 		{
 			if (hexVal[i] >= '0' && hexVal[i] <= '9')
 			{
-				dec_val += (hexVal[i] - 48)*base;
+				dec_val += (hexVal[i] - 48) * base;
 				base = base * 16;
 			}
 			else if (hexVal[i] >= 'A' && hexVal[i] <= 'F')
 			{
-				dec_val += (hexVal[i] - 55)*base;
+				dec_val += (hexVal[i] - 55) * base;
 				base = base * 16;
 			}
 		}

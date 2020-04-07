@@ -19,35 +19,34 @@
 
 #include "ItemData.h"
 
-#include "../Character/Equipstat.h"
-#include "../Character/Maplestat.h"
-#include "../Template/EnumMap.h"
+#include "../Character/EquipStat.h"
+#include "../Character/MapleStat.h"
 
-#include "../Character/Look/Equipslot.h"
+#include "../Character/Look/EquipSlot.h"
 
 namespace ms
 {
-	// Contains information about an equip.
+	// Contains information about an equip
 	class EquipData : public Cache<EquipData>
 	{
 	public:
-		// Returns whether the equip was loaded correctly.
+		// Returns whether the equip was loaded correctly
 		bool is_valid() const;
 
 		// Returns whether the equip was loaded correctly.
 		explicit operator bool() const;
 
-		// Returns whether this equip has equipslot WEAPON.
+		// Returns whether this equip has equipslot WEAPON
 		bool is_weapon() const;
 
 		// Returns a required base stat.
-		int16_t get_reqstat(Maplestat::Id stat) const;
+		int16_t get_reqstat(MapleStat::Id stat) const;
 
 		// Returns a default stat.
-		int16_t get_defstat(Equipstat::Id stat) const;
+		int16_t get_defstat(EquipStat::Id stat) const;
 
 		// Returns the equip slot.
-		Equipslot::Id get_eqslot() const;
+		EquipSlot::Id get_eqslot() const;
 
 		// Returns the category name.
 		const std::string &get_type() const;
@@ -56,7 +55,7 @@ namespace ms
 		const ItemData &get_itemdata() const;
 
 	private:
-		// Allow the cache to use the constructor.
+		// Allow the cache to use the constructor
 		friend Cache<EquipData>;
 
 		// Load an equip from the game files.
@@ -64,10 +63,10 @@ namespace ms
 
 		const ItemData &itemdata;
 
-		EnumMap<Maplestat::Id, int16_t> reqstats;
-		EnumMap<Equipstat::Id, int16_t> defstats;
+		EnumMap<MapleStat::Id, int16_t> reqstats;
+		EnumMap<EquipStat::Id, int16_t> defstats;
 		std::string type;
-		Equipslot::Id eqslot;
+		EquipSlot::Id eqslot;
 		uint8_t slots;
 		bool cash;
 		bool tradeblock;

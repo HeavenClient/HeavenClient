@@ -17,8 +17,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Physics.h"
 
-#include <functional>
-
 namespace ms
 {
 	const double GRAVFORCE = 0.14;
@@ -39,10 +37,10 @@ namespace ms
 
 	void Physics::move_object(PhysicsObject &phobj) const
 	{
-		// Determine which platform the object is currently on.
+		// Determine which platform the object is currently on
 		fht.update_fh(phobj);
 
-		// Use the appropriate physics for the terrain the object is on.
+		// Use the appropriate physics for the terrain the object is on
 		switch (phobj.type)
 		{
 			case PhysicsObject::Type::NORMAL:
@@ -62,7 +60,7 @@ namespace ms
 				break;
 		}
 
-		// Move the object forward.
+		// Move the object forward
 		phobj.move();
 	}
 
@@ -153,7 +151,7 @@ namespace ms
 		return Point<int16_t>(position.x(), ground - 1);
 	}
 
-	const Footholdtree &Physics::get_fht() const
+	const FootholdTree &Physics::get_fht() const
 	{
 		return fht;
 	}

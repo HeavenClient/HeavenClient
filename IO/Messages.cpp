@@ -16,9 +16,10 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "Messages.h"
+
 #include "UI.h"
 
-#include "UITypes/UIChatbar.h"
+#include "UITypes/UIChatBar.h"
 
 namespace ms
 {
@@ -37,7 +38,6 @@ namespace ms
 					"The item has been destroyed due to the overwhelming power of the scroll."
 			};
 
-
 	InChatMessage::InChatMessage(Messages::Type t)
 	{
 		type = t;
@@ -45,11 +45,11 @@ namespace ms
 
 	void InChatMessage::drop() const
 	{
-		if (type == Messages::NONE)
+		if (type == Messages::Type::NONE)
 			return;
 
-		if (auto chatbar = UI::get().get_element<UIChatbar>())
-			chatbar->display_message(type, UIChatbar::RED);
+		if (auto chatbar = UI::get().get_element<UIChatBar>())
+			chatbar->display_message(type, UIChatBar::RED);
 	}
 
 

@@ -19,11 +19,11 @@
 
 #include "../OutPacket.h"
 
-#include "../Character/Inventory/Inventory.h"
+#include "../../Character/Inventory/Inventory.h"
 
 namespace ms
 {
-	// Packet which requests that the inventory is sorted.
+	// Packet which requests that the inventory is sorted
 	// Opcode: GATHER_ITEMS(69)
 	class GatherItemsPacket : public OutPacket
 	{
@@ -35,7 +35,7 @@ namespace ms
 		}
 	};
 
-	// Packet which requests that the inventory is sorted.
+	// Packet which requests that the inventory is sorted
 	// Opcode: SORT_ITEMS(70)
 	class SortItemsPacket : public OutPacket
 	{
@@ -47,7 +47,7 @@ namespace ms
 		}
 	};
 
-	// Packet which requests that an item is moved.
+	// Packet which requests that an item is moved
 	// Opcode: MOVE_ITEM(71)
 	class MoveItemPacket : public OutPacket
 	{
@@ -62,15 +62,15 @@ namespace ms
 		}
 	};
 
-	// Packet which requests that an item is equipped.
+	// Packet which requests that an item is equipped
 	// Opcode: MOVE_ITEM(71)
 	class EquipItemPacket : public MoveItemPacket
 	{
 	public:
-		EquipItemPacket(int16_t src, Equipslot::Id dest) : MoveItemPacket(InventoryType::Id::EQUIP, src, -dest, 1) {}
+		EquipItemPacket(int16_t src, EquipSlot::Id dest) : MoveItemPacket(InventoryType::Id::EQUIP, src, -dest, 1) {}
 	};
 
-	// Packet which requests that an item is unequipped.
+	// Packet which requests that an item is unequipped
 	// Opcode: MOVE_ITEM(71)
 	class UnequipItemPacket : public MoveItemPacket
 	{
@@ -78,7 +78,7 @@ namespace ms
 		UnequipItemPacket(int16_t src, int16_t dest) : MoveItemPacket(InventoryType::Id::EQUIPPED, -src, dest, 1) {}
 	};
 
-	// A packet which requests that an 'USE' item is used.
+	// A packet which requests that an 'USE' item is used
 	// Opcode: USE_ITEM(72)
 	class UseItemPacket : public OutPacket
 	{
@@ -93,7 +93,7 @@ namespace ms
 		}
 	};
 
-	// Requests using a scroll on an equip. 
+	// Requests using a scroll on an equip 
 	// Opcode: SCROLL_EQUIP(86)
 	class ScrollEquipPacket : public OutPacket
 	{
@@ -105,7 +105,7 @@ namespace ms
 			WHITESCROLL = 0x02
 		};
 
-		ScrollEquipPacket(int16_t source, Equipslot::Id target, uint8_t flags) : OutPacket(OutPacket::Opcode::SCROLL_EQUIP)
+		ScrollEquipPacket(int16_t source, EquipSlot::Id target, uint8_t flags) : OutPacket(OutPacket::Opcode::SCROLL_EQUIP)
 		{
 			write_time();
 			write_short(source);
@@ -113,6 +113,6 @@ namespace ms
 			write_short(flags);
 		}
 
-		ScrollEquipPacket(int16_t source, Equipslot::Id target) : ScrollEquipPacket(source, target, 0) {}
+		ScrollEquipPacket(int16_t source, EquipSlot::Id target) : ScrollEquipPacket(source, target, 0) {}
 	};
 }

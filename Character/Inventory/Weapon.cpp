@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Weapon.h"
 
-#include "../Console.h"
+#include <iostream>
 
 namespace ms
 {
@@ -27,7 +27,7 @@ namespace ms
 			value > 170)
 		{
 			if (value != 100)
-				Console::get().print("Warning: Unhandled weapon type (" + std::to_string(value) + ").");
+				std::cout << "Unknown Weapon::Type value: [" << value << "]" << std::endl;
 
 			return Weapon::NONE;
 		}

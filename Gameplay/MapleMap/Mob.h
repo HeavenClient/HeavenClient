@@ -23,11 +23,12 @@
 
 #include "../Combat/Attack.h"
 #include "../Combat/Bullet.h"
-#include "../Audio/Audio.h"
-#include "../Graphics/EffectLayer.h"
-#include "../Graphics/Geometry.h"
-#include "../Util/Randomizer.h"
-#include "../Util/TimedBool.h"
+
+#include "../../Audio/Audio.h"
+#include "../../Graphics/EffectLayer.h"
+#include "../../Graphics/Geometry.h"
+#include "../../Util/Randomizer.h"
+#include "../../Util/TimedBool.h"
 
 namespace ms
 {
@@ -66,7 +67,7 @@ namespace ms
 		Mob(int32_t oid, int32_t mobid, int8_t mode, int8_t stance, uint16_t fhid, bool newspawn, int8_t team,
 			Point<int16_t> position);
 
-		// Draw the mob.
+		// Draw the mob
 		void draw(double viewx, double viewy, float alpha) const override;
 
 		// Update movement and animations.
@@ -96,7 +97,7 @@ namespace ms
 		// Apply damage to the mob.
 		void apply_damage(int32_t damage, bool toleft);
 
-		// Create a touch damage attack to the player.
+		// Create a touch damage attack to the player
 		MobAttack create_touch_attack() const;
 
 		// Check if this mob collides with the specified rectangle.
@@ -117,7 +118,7 @@ namespace ms
 			NUM_DIRECTIONS
 		};
 
-		// Set the stance by byte value.
+		// Set the stance by byte value
 		void set_stance(uint8_t stancebyte);
 
 		// Set the stance by enum value.
@@ -132,7 +133,7 @@ namespace ms
 		// Send the current position and state to the server.
 		void update_movement();
 
-		// Calculate the hit chance.
+		// Calculate the hit chance
 		float calculate_hitchance(int16_t leveldelta, int32_t accuracy) const;
 
 		// Calculate the minimum damage.
@@ -144,7 +145,7 @@ namespace ms
 		// Calculate a random damage line based on the specified values.
 		std::pair<int32_t, bool> next_damage(double mindamage, double maxdamage, float hitchance, float critical) const;
 
-		// Return the current 'head' position.
+		// Return the current 'head' position
 		Point<int16_t> get_head_position(Point<int16_t> position) const;
 
 		std::map<Stance, Animation> animations;

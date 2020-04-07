@@ -20,11 +20,10 @@
 #include "../UIDragElement.h"
 
 #include "../Components/Slider.h"
-#include "../Graphics/Text.h"
 
 namespace ms
 {
-	// The Item inventory.
+	// The Item inventory
 	class UIItemInventory : public UIDragElement<PosINV>
 	{
 	public:
@@ -95,14 +94,14 @@ namespace ms
 		class ItemIcon : public Icon::Type
 		{
 		public:
-			ItemIcon(const UIItemInventory &parent, InventoryType::Id sourcetab, Equipslot::Id eqsource, int16_t source,
+			ItemIcon(const UIItemInventory &parent, InventoryType::Id sourcetab, EquipSlot::Id eqsource, int16_t source,
 					 int32_t item_id, int16_t count, bool untradable, bool cashitem);
 
 			void drop_on_stage() const override;
 
-			void drop_on_equips(Equipslot::Id eqslot) const override;
+			void drop_on_equips(EquipSlot::Id eqslot) const override;
 
-			bool drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot, bool equip) const override;
+			bool drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const override;
 
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 
@@ -112,7 +111,7 @@ namespace ms
 
 		private:
 			InventoryType::Id sourcetab;
-			Equipslot::Id eqsource;
+			EquipSlot::Id eqsource;
 			int16_t source;
 			int32_t item_id;
 			int16_t count;

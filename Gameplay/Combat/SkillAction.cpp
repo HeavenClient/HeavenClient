@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "SkillAction.h"
 
-#include "../Util/Misc.h"
+#include "../../Util/Misc.h"
 
 namespace ms
 {
@@ -52,13 +52,13 @@ namespace ms
 		target.attack(action);
 	}
 
-	TwoHAction::TwoHAction(nl::node src)
+	TwoHandedAction::TwoHandedAction(nl::node src)
 	{
 		actions[false] = std::string(src["action"]["0"]);
 		actions[true] = std::string(src["action"]["1"]);
 	}
 
-	void TwoHAction::apply(Char &target, Attack::Type) const
+	void TwoHandedAction::apply(Char& target, Attack::Type) const
 	{
 		bool twohanded = target.is_twohanded();
 		std::string action = actions[twohanded];

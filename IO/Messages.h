@@ -17,12 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Template/EnumMap.h"
-
 #include "../Character/Inventory/Weapon.h"
 #include "../Gameplay/Combat/SpecialMove.h"
-
-#include <string>
 
 namespace ms
 {

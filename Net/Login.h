@@ -17,22 +17,22 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Character/Maplestat.h"
+#include "../Character/MapleStat.h"
 
-#include <string>
-#include <vector>
 #include <map>
+#include <vector>
 
 namespace ms
 {
 	struct Account
 	{
-		std::string name;
 		int32_t accid;
-		uint8_t female;
+		int8_t female;
+		bool admin;
+		std::string name;
 		bool muted;
-		int16_t pin;
-		int8_t gmlevel;
+		bool pin;
+		int8_t pic;
 	};
 
 	struct World
@@ -56,7 +56,7 @@ namespace ms
 		std::string name;
 		bool female;
 		std::vector<int64_t> petids;
-		EnumMap<Maplestat::Id, uint16_t> stats;
+		EnumMap<MapleStat::Id, uint16_t> stats;
 		int64_t exp;
 		int32_t mapid;
 		uint8_t portal;

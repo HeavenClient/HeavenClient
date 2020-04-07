@@ -17,13 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Equipstat.h"
 #include "Job.h"
 
-#include "Inventory/Weapon.h"
-
 #include "../Net/Login.h"
-#include "../Template/EnumMap.h"
 #include "../Template/Rectangle.h"
 
 namespace ms
@@ -37,16 +33,16 @@ namespace ms
 
 		void init_totalstats();
 
-		void set_stat(Maplestat::Id stat, uint16_t value);
+		void set_stat(MapleStat::Id stat, uint16_t value);
 
-		void set_total(Equipstat::Id stat, int32_t value);
+		void set_total(EquipStat::Id stat, int32_t value);
 
-		void add_buff(Equipstat::Id stat, int32_t value);
+		void add_buff(EquipStat::Id stat, int32_t value);
 
-		void add_value(Equipstat::Id stat, int32_t value);
+		void add_value(EquipStat::Id stat, int32_t value);
 
-		void add_percent(Equipstat::Id stat, float percent);
-
+		void add_percent(EquipStat::Id stat, float percent);
+		
 		void close_totalstats();
 
 		void set_weapontype(Weapon::Type weapontype);
@@ -67,12 +63,12 @@ namespace ms
 
 		bool is_damage_buffed() const;
 
-		uint16_t get_stat(Maplestat::Id stat) const;
+		uint16_t get_stat(MapleStat::Id stat) const;
 
-		int32_t get_total(Equipstat::Id stat) const;
+		int32_t get_total(EquipStat::Id stat) const;
 
-		int32_t get_buffdelta(Equipstat::Id stat) const;
-
+		int32_t get_buffdelta(EquipStat::Id stat) const;
+		
 		Rectangle<int16_t> get_range() const;
 
 		void set_mapid(int32_t id);
@@ -140,10 +136,10 @@ namespace ms
 		uint8_t portal;
 		std::pair<int32_t, int8_t> rank;
 		std::pair<int32_t, int8_t> jobrank;
-		EnumMap<Maplestat::Id, uint16_t> basestats;
-		EnumMap<Equipstat::Id, int32_t> totalstats;
-		EnumMap<Equipstat::Id, int32_t> buffdeltas;
-		EnumMap<Equipstat::Id, float> percentages;
+		EnumMap<MapleStat::Id, uint16_t> basestats;
+		EnumMap<EquipStat::Id, int32_t> totalstats;
+		EnumMap<EquipStat::Id, int32_t> buffdeltas;
+		EnumMap<EquipStat::Id, float> percentages;
 		int32_t maxdamage;
 		int32_t mindamage;
 		uint16_t honor;

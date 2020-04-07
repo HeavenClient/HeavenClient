@@ -15,21 +15,22 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#pragma once
-
 #include "UIExplorerCreation.h"
-#include "UIRaceSelect.h"
-#include "UILoginNotice.h"
+
 #include "UICharSelect.h"
+#include "UILoginNotice.h"
+#include "UIRaceSelect.h"
 
 #include "../UI.h"
-#include "../Configuration.h"
 
 #include "../Components/MapleButton.h"
-#include "../Data/ItemData.h"
-#include "../Audio/Audio.h"
 
-#include "../Net/Packets/CharCreationPackets.h"
+#include "../../Configuration.h"
+
+#include "../../Audio/Audio.h"
+#include "../../Data/ItemData.h"
+
+#include "../../Net/Packets/CharCreationPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -670,13 +671,13 @@ namespace ms
 			case Buttons::BT_CHARC_TOPL:
 				top = (top > 0) ? top - 1 : tops[female].size() - 1;
 				newchar.add_equip(tops[female][top]);
-				topname.change_text(get_equipname(Equipslot::Id::TOP));
+				topname.change_text(get_equipname(EquipSlot::Id::TOP));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_TOPR:
 				top = (top < tops[female].size() - 1) ? top + 1 : 0;
 				newchar.add_equip(tops[female][top]);
-				topname.change_text(get_equipname(Equipslot::Id::TOP));
+				topname.change_text(get_equipname(EquipSlot::Id::TOP));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_BOTL:
@@ -692,25 +693,25 @@ namespace ms
 			case Buttons::BT_CHARC_SHOESL:
 				shoe = (shoe > 0) ? shoe - 1 : shoes[female].size() - 1;
 				newchar.add_equip(shoes[female][shoe]);
-				shoename.change_text(get_equipname(Equipslot::Id::SHOES));
+				shoename.change_text(get_equipname(EquipSlot::Id::SHOES));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_SHOESR:
 				shoe = (shoe < shoes[female].size() - 1) ? shoe + 1 : 0;
 				newchar.add_equip(shoes[female][shoe]);
-				shoename.change_text(get_equipname(Equipslot::Id::SHOES));
+				shoename.change_text(get_equipname(EquipSlot::Id::SHOES));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_WEPL:
 				weapon = (weapon > 0) ? weapon - 1 : weapons[female].size() - 1;
 				newchar.add_equip(weapons[female][weapon]);
-				wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_WEPR:
 				weapon = (weapon < weapons[female].size() - 1) ? weapon + 1 : 0;
 				newchar.add_equip(weapons[female][weapon]);
-				wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_GENDER_M:
@@ -756,12 +757,12 @@ namespace ms
 		bodyname.change_text(newchar.get_body()->get_name());
 		facename.change_text(newchar.get_face()->get_name());
 		hairname.change_text(newchar.get_hair()->get_name());
-		topname.change_text(get_equipname(Equipslot::Id::TOP));
-		shoename.change_text(get_equipname(Equipslot::Id::SHOES));
-		wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+		topname.change_text(get_equipname(EquipSlot::Id::TOP));
+		shoename.change_text(get_equipname(EquipSlot::Id::SHOES));
+		wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 	}
 
-	const std::string &UIExplorerCreation::get_equipname(Equipslot::Id slot) const
+	const std::string &UIExplorerCreation::get_equipname(EquipSlot::Id slot) const
 	{
 		if (int32_t item_id = newchar.get_equips().get_equip(slot))
 		{

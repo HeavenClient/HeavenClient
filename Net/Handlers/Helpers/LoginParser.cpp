@@ -17,34 +17,36 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "LoginParser.h"
 
+#include "../../Session.h"
+
 namespace ms
 {
 	Account LoginParser::parse_account(InPacket& recv)
 	{
 		Account account;
 
-		recv.skip(2);
+		recv.skip_short();
 
 		account.accid = recv.read_int();
 		account.female = recv.read_byte();
+		account.admin = recv.read_bool();
 
-		recv.read_bool(); // is admin
-
-		account.gmlevel = recv.read_byte();
-
-		recv.skip(1);
+		recv.skip_byte(); // Admin
+		recv.skip_byte(); // Country Code
 
 		account.name = recv.read_string();
 
-		recv.skip(1);
+		recv.skip_byte();
 
 		account.muted = recv.read_bool();
 
-		recv.read_long(); // muted until
-		recv.read_long(); // creation date
-		recv.skip(4);
+		recv.skip_long(); // muted until
+		recv.skip_long(); // creation date
 
-		account.pin = recv.read_short();
+		recv.skip_int(); // Remove "Select the world you want to play in"
+
+		account.pin = recv.read_bool(); // 0 - Enabled, 1 - Disabled
+		account.pic = recv.read_byte(); // 0 - Register, 1 - Ask, 2 - Disabled
 
 		return account;
 	}
@@ -118,6 +120,7 @@ namespace ms
 
 	StatsEntry LoginParser::parse_stats(InPacket& recv)
 	{
+		// TODO: This is similar to CashShopParser.cpp, try and merge these.
 		StatsEntry statsentry;
 
 		statsentry.name = recv.read_padded_string(13);
@@ -130,20 +133,20 @@ namespace ms
 		for (size_t i = 0; i < 3; i++)
 			statsentry.petids.push_back(recv.read_long());
 
-		statsentry.stats[Maplestat::Id::LEVEL] = recv.read_byte(); // TODO: Change to recv.read_short(); to increase level cap
-		statsentry.stats[Maplestat::Id::JOB] = recv.read_short();
-		statsentry.stats[Maplestat::Id::STR] = recv.read_short();
-		statsentry.stats[Maplestat::Id::DEX] = recv.read_short();
-		statsentry.stats[Maplestat::Id::INT] = recv.read_short();
-		statsentry.stats[Maplestat::Id::LUK] = recv.read_short();
-		statsentry.stats[Maplestat::Id::HP] = recv.read_short();
-		statsentry.stats[Maplestat::Id::MAXHP] = recv.read_short();
-		statsentry.stats[Maplestat::Id::MP] = recv.read_short();
-		statsentry.stats[Maplestat::Id::MAXMP] = recv.read_short();
-		statsentry.stats[Maplestat::Id::AP] = recv.read_short();
-		statsentry.stats[Maplestat::Id::SP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::LEVEL] = recv.read_byte(); // TODO: Change to recv.read_short(); to increase level cap
+		statsentry.stats[MapleStat::Id::JOB] = recv.read_short();
+		statsentry.stats[MapleStat::Id::STR] = recv.read_short();
+		statsentry.stats[MapleStat::Id::DEX] = recv.read_short();
+		statsentry.stats[MapleStat::Id::INT] = recv.read_short();
+		statsentry.stats[MapleStat::Id::LUK] = recv.read_short();
+		statsentry.stats[MapleStat::Id::HP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::MAXHP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::MP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::MAXMP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::AP] = recv.read_short();
+		statsentry.stats[MapleStat::Id::SP] = recv.read_short();
 		statsentry.exp = recv.read_int();
-		statsentry.stats[Maplestat::Id::FAME] = recv.read_short();
+		statsentry.stats[MapleStat::Id::FAME] = recv.read_short();
 
 		recv.skip(4); // gachaexp
 
@@ -189,5 +192,28 @@ namespace ms
 			look.petids.push_back(recv.read_int());
 
 		return look;
+	}
+
+	void LoginParser::parse_login(InPacket& recv)
+	{
+		recv.skip_byte();
+
+		// Read the IPv4 address in a string
+		std::string addrstr;
+
+		for (size_t i = 0; i < 4; i++)
+		{
+			uint8_t num = static_cast<uint8_t>(recv.read_byte());
+			addrstr.append(std::to_string(num));
+
+			if (i < 3)
+				addrstr.push_back('.');
+		}
+
+		// Read the port address in a string
+		std::string portstr = std::to_string(recv.read_short());
+
+		// Attempt to reconnect to the server
+		Session::get().reconnect(addrstr.c_str(), portstr.c_str());
 	}
 }

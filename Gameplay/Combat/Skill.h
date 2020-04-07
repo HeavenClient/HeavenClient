@@ -17,18 +17,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "SpecialMove.h"
 #include "SkillAction.h"
 #include "SkillBullet.h"
-#include "SkillSound.h"
 #include "SkillHitEffect.h"
+#include "SkillSound.h"
 #include "SkillUseEffect.h"
+#include "SpecialMove.h"
 
 #include <memory>
 
 namespace ms
 {
-	// The skill implementation of special move.
+	// The skill implementation of special move
 	class Skill : public SpecialMove
 	{
 	public:

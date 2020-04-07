@@ -16,19 +16,20 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIWorldSelect.h"
+
 #include "UILoginNotice.h"
-#include "UILoginwait.h"
+#include "UILoginWait.h"
 #include "UIRegion.h"
 
 #include "../UI.h"
 
-#include "../Audio/Audio.h"
 #include "../Components/MapleButton.h"
 #include "../Components/TwoSpriteButton.h"
 
-#include "../Net/Packets/LoginPackets.h"
+#include "../../Audio/Audio.h"
+#include "../../Util/Randomizer.h"
 
-#include <ctime>
+#include "../../Net/Packets/LoginPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -74,9 +75,8 @@ namespace ms
 		{
 			if (backgrounds_size > 1)
 			{
-				std::srand(std::time(NULL)); // Generate a new seed
-
-				int index = rand() % backgrounds_size;
+				auto randomizer = Randomizer();
+				int32_t index = randomizer.next_int(backgrounds_size);
 
 				sprites.emplace_back(obj["WorldSelect"][backgrounds[index]][0], background_pos);
 			} else
@@ -140,8 +140,8 @@ namespace ms
 			Configuration::get().set_worldid(world);
 			Configuration::get().set_channelid(channel);
 
-			UI::get().emplace<UILoginwait>();
-			auto loginwait = UI::get().get_element<UILoginwait>();
+			UI::get().emplace<UILoginWait>();
+			auto loginwait = UI::get().get_element<UILoginWait>();
 
 			if (loginwait && loginwait->is_active())
 				CharlistRequestPacket(world, channel).dispatch();
@@ -562,7 +562,9 @@ namespace ms
 
 			buttons[Buttons::BT_WORLD0 + worldid]->set_state(Button::State::NORMAL);
 
-			worldid = static_cast<uint8_t>(id - Buttons::BT_WORLD0);
+			worldid = id - Buttons::BT_WORLD0;
+
+			ServerStatusRequestPacket(worldid).dispatch();
 
 			world_selected = true;
 			clear_selected_world();
@@ -596,8 +598,8 @@ namespace ms
 		Configuration::get().set_worldid(worldid);
 		Configuration::get().set_channelid(channelid);
 
-		UI::get().emplace<UILoginwait>();
-		auto loginwait = UI::get().get_element<UILoginwait>();
+		UI::get().emplace<UILoginWait>();
+		auto loginwait = UI::get().get_element<UILoginWait>();
 
 		if (loginwait && loginwait->is_active())
 			CharlistRequestPacket(worldid, channelid).dispatch();

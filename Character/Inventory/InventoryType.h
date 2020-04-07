@@ -23,7 +23,7 @@ namespace ms
 {
 	namespace InventoryType
 	{
-		// Inventory types.
+		// Inventory types
 		enum Id : int8_t
 		{
 			NONE,
@@ -36,7 +36,7 @@ namespace ms
 			LENGTH
 		};
 
-		// Return the inventory type by item id.
+		// Return the inventory type by item id
 		Id by_item_id(int32_t item_id);
 
 		// Return the inventory type by value.

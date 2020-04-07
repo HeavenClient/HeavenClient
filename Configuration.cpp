@@ -57,6 +57,7 @@ namespace ms
 		settings.emplace<PosEVENT>();
 		settings.emplace<PosKEYCONFIG>();
 		settings.emplace<PosOPTIONMENU>();
+		settings.emplace<PosCHARINFO>();
 		settings.emplace<MiniMapType>();
 		settings.emplace<MiniMapSimpleMode>();
 		settings.emplace<MiniMapDefaultHelpers>();
@@ -76,7 +77,7 @@ namespace ms
 
 		if (file.is_open())
 		{
-			// Go through the file line for line.
+			// Go through the file line by line
 			std::string line;
 
 			while (getline(file, line))
@@ -106,7 +107,7 @@ namespace ms
 
 	void Configuration::save() const
 	{
-		// Open the settings file.
+		// Open the settings file
 		std::ofstream config(FILENAME);
 
 		if (config.is_open())
@@ -233,7 +234,12 @@ namespace ms
 		return RESETPIC;
 	}
 
-	void Configuration::set_macs(char *macs)
+	std::string Configuration::get_chargenx() const
+	{
+		return CHARGENX;
+	}
+
+	void Configuration::set_macs(char* macs)
 	{
 		MACS = macs;
 	}
@@ -343,5 +349,15 @@ namespace ms
 	void Configuration::set_channelid(uint8_t id)
 	{
 		channelid = id;
+	}
+
+	bool Configuration::get_admin()
+	{
+		return admin;
+	}
+
+	void Configuration::set_admin(bool value)
+	{
+		admin = value;
 	}
 }

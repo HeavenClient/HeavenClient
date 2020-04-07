@@ -19,7 +19,7 @@
 
 #include "Attack.h"
 
-#include "../Character/Char.h"
+#include "../../Character/Char.h"
 
 namespace ms
 {
@@ -56,10 +56,10 @@ namespace ms
 		std::string action;
 	};
 
-	class TwoHAction : public SkillAction
+	class TwoHandedAction : public SkillAction
 	{
 	public:
-		TwoHAction(nl::node src);
+		TwoHandedAction(nl::node src);
 
 		void apply(Char &target, Attack::Type atype) const override;
 

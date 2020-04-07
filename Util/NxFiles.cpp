@@ -17,37 +17,38 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "NxFiles.h"
 
-#include "../Console.h"
-
 #include <fstream>
 
-#include <nlnx/nx.hpp>
 #include <nlnx/node.hpp>
+#include <nlnx/nx.hpp>
 
 namespace ms
 {
-	Error NxFiles::init()
+	namespace NxFiles
 	{
-		for (auto filename : NxFiles::filenames)
-			if (std::ifstream{filename}.good() == false)
-				return Error(Error::Code::MISSING_FILE, filename);
-
-		try
+		Error init()
 		{
-			nl::nx::load_all();
+			for (auto filename : filenames)
+				if (std::ifstream{ filename }.good() == false)
+					return Error(Error::Code::MISSING_FILE, filename);
+
+			try
+			{
+				nl::nx::load_all();
+			}
+			catch (const std::exception& ex)
+			{
+				static const std::string message = ex.what();
+
+				return Error(Error::Code::NLNX, message.c_str());
+			}
+
+			constexpr const char* POSTCHAOS_BITMAP = "Login.img/WorldSelect/BtChannel/layer:bg";
+
+			if (nl::nx::ui.resolve(POSTCHAOS_BITMAP).data_type() != nl::node::type::bitmap)
+				return Error::Code::WRONG_UI_FILE;
+
+			return Error::Code::NONE;
 		}
-		catch (const std::exception &ex)
-		{
-			static const std::string message = ex.what();
-
-			return Error(Error::Code::NLNX, message.c_str());
-		}
-
-		constexpr const char *POSTCHAOS_BITMAP = "Login.img/WorldSelect/BtChannel/layer:bg";
-
-		if (nl::nx::ui.resolve(POSTCHAOS_BITMAP).data_type() != nl::node::type::bitmap)
-			return Error::Code::WRONG_UI_FILE;
-
-		return Error::Code::NONE;
 	}
 }

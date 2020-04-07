@@ -19,9 +19,10 @@
 
 #include "../UIDragElement.h"
 
-#include "../Character/Questlog.h"
-#include "../Components/Textfield.h"
 #include "../Components/Slider.h"
+#include "../Components/Textfield.h"
+
+#include "../../Character/QuestLog.h"
 
 namespace ms
 {
@@ -32,7 +33,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIQuestLog(const Questlog &questLog);
+		UIQuestLog(const QuestLog &questLog);
 
 		void draw(float inter) const override;
 
@@ -59,8 +60,7 @@ namespace ms
 			MY_LOCATION
 		};
 
-		const Questlog &questlog;
-
+		const QuestLog &questlog;
 		uint16_t tab;
 		std::vector<Sprite> notice_sprites;
 		Textfield search;

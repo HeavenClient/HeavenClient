@@ -20,26 +20,24 @@
 #include "Layer.h"
 #include "MapObject.h"
 
-#include "../Template/Optional.h"
+#include "../../Template/Optional.h"
 
-#include <array>
 #include <memory>
-#include <unordered_map>
 #include <unordered_set>
 
 namespace ms
 {
-	// A collection of generic mapobjects. 
+	// A collection of generic MapObjects
 	class MapObjects
 	{
 	public:
-		// Draw all mapobjects that are on the specified layer.
+		// Draw all MapObjects that are on the specified layer
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update all mapobjects of this type. Also updates layers eg. drawing order.
 		void update(const Physics &physics);
 
-		// Adds a mapobject of this type.
+		// Adds a MapObjects of this type
 		void add(std::unique_ptr<MapObject> mapobject);
 
 		// Removes the mapobject with the given oid.
@@ -48,7 +46,7 @@ namespace ms
 		// Removes all mapobjects of this type.
 		void clear();
 
-		// Check if a map object with the specified id exists on the map.
+		// Check if a map object with the specified id exists on the map
 		bool contains(int32_t oid) const;
 
 		// Obtains a pointer to the mapobject with the given oid.

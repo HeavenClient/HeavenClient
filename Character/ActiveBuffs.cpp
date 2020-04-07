@@ -19,24 +19,24 @@
 
 namespace ms
 {
-	template<Equipstat::Id STAT>
-	void SimpleStatBuff<STAT>::apply_to(CharStats &stats, int16_t value) const
+	template <EquipStat::Id STAT>
+	void SimpleStatBuff<STAT>::apply_to(CharStats& stats, int16_t value) const
 	{
 		stats.add_buff(STAT, value);
 	}
 
-	template<Equipstat::Id STAT>
-	void PercentageStatBuff<STAT>::apply_to(CharStats &stats, int16_t value) const
+	template <EquipStat::Id STAT>
+	void PercentageStatBuff<STAT>::apply_to(CharStats& stats, int16_t value) const
 	{
 		stats.add_percent(STAT, static_cast<float>(value) / 100);
 	}
 
 	void MapleWarriorBuff::apply_to(CharStats &stats, int16_t value) const
 	{
-		stats.add_percent(Equipstat::Id::STR, static_cast<float>(value) / 100);
-		stats.add_percent(Equipstat::Id::DEX, static_cast<float>(value) / 100);
-		stats.add_percent(Equipstat::Id::INT, static_cast<float>(value) / 100);
-		stats.add_percent(Equipstat::Id::LUK, static_cast<float>(value) / 100);
+		stats.add_percent(EquipStat::Id::STR, static_cast<float>(value) / 100);
+		stats.add_percent(EquipStat::Id::DEX, static_cast<float>(value) / 100);
+		stats.add_percent(EquipStat::Id::INT, static_cast<float>(value) / 100);
+		stats.add_percent(EquipStat::Id::LUK, static_cast<float>(value) / 100);
 	}
 
 	void StanceBuff::apply_to(CharStats &stats, int16_t value) const
@@ -54,14 +54,14 @@ namespace ms
 		buffs[Buffstat::Id::MAPLE_WARRIOR] = std::make_unique<MapleWarriorBuff>();
 		buffs[Buffstat::Id::STANCE] = std::make_unique<StanceBuff>();
 		buffs[Buffstat::Id::BOOSTER] = std::make_unique<BoosterBuff>();
-		buffs[Buffstat::Id::WATK] = std::make_unique<SimpleStatBuff<Equipstat::Id::WATK>>();
-		buffs[Buffstat::Id::WDEF] = std::make_unique<SimpleStatBuff<Equipstat::Id::WDEF>>();
-		buffs[Buffstat::Id::MATK] = std::make_unique<SimpleStatBuff<Equipstat::Id::MAGIC>>();
-		buffs[Buffstat::Id::MDEF] = std::make_unique<SimpleStatBuff<Equipstat::Id::MDEF>>();
-		buffs[Buffstat::Id::SPEED] = std::make_unique<SimpleStatBuff<Equipstat::Id::SPEED>>();
-		buffs[Buffstat::Id::JUMP] = std::make_unique<SimpleStatBuff<Equipstat::Id::JUMP>>();
-		buffs[Buffstat::Id::HYPERBODYHP] = std::make_unique<PercentageStatBuff<Equipstat::Id::HP>>();
-		buffs[Buffstat::Id::HYPERBODYMP] = std::make_unique<PercentageStatBuff<Equipstat::Id::MP>>();
+		buffs[Buffstat::Id::WATK] = std::make_unique<SimpleStatBuff<EquipStat::Id::WATK>>();
+		buffs[Buffstat::Id::WDEF] = std::make_unique<SimpleStatBuff<EquipStat::Id::WDEF>>();
+		buffs[Buffstat::Id::MATK] = std::make_unique<SimpleStatBuff<EquipStat::Id::MAGIC>>();
+		buffs[Buffstat::Id::MDEF] = std::make_unique<SimpleStatBuff<EquipStat::Id::MDEF>>();
+		buffs[Buffstat::Id::SPEED] = std::make_unique<SimpleStatBuff<EquipStat::Id::SPEED>>();
+		buffs[Buffstat::Id::JUMP] = std::make_unique<SimpleStatBuff<EquipStat::Id::JUMP>>();
+		buffs[Buffstat::Id::HYPERBODYHP] = std::make_unique<PercentageStatBuff<EquipStat::Id::HP>>();
+		buffs[Buffstat::Id::HYPERBODYMP] = std::make_unique<PercentageStatBuff<EquipStat::Id::MP>>();
 	}
 
 	void ActiveBuffs::apply_buff(CharStats &stats, Buffstat::Id stat, int16_t value) const

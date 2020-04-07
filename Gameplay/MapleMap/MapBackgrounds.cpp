@@ -17,8 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "MapBackgrounds.h"
 
-#include "../Constants.h"
-#include "../Graphics/GraphicsGL.h"
+#include "../../Graphics/GraphicsGL.h"
 
 #include <nlnx/nx.hpp>
 
@@ -32,6 +31,7 @@ namespace ms
 		HOFFSET = VHEIGHT / 2;
 
 		nl::node backsrc = nl::nx::map["Back"];
+
 		animated = src["ani"].get_bool();
 		animation = backsrc[src["bS"] + ".img"][animated ? "ani" : "back"][src["no"]];
 		opacity = src["a"];
@@ -40,10 +40,12 @@ namespace ms
 		cy = src["cy"];
 		rx = src["rx"];
 		ry = src["ry"];
+
 		moveobj.set_x(src["x"]);
 		moveobj.set_y(src["y"]);
 
 		Type type = typebyid(src["type"]);
+
 		settype(type);
 	}
 
@@ -52,7 +54,7 @@ namespace ms
 		int16_t dim_x = animation.get_dimensions().x();
 		int16_t dim_y = animation.get_dimensions().y();
 
-		// TODO: Double check for zero. Is this a wz reading issue?
+		// TODO: Double check for zero. Is this a WZ reading issue?
 		if (cx == 0)
 			cx = (dim_x > 0) ? dim_x : 1;
 

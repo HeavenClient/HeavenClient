@@ -25,9 +25,4 @@ namespace ms
 	{
 		void handle(InPacket&) const override;
 	};
-
-	class NullHandler : public PacketHandler
-	{
-		void handle(InPacket&) const override {}
-	};
 }

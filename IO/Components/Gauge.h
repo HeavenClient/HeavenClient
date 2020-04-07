@@ -24,16 +24,18 @@ namespace ms
 	class Gauge
 	{
 	public:
-		Gauge(Texture front, int16_t max, float percent);
+		enum Type : uint8_t
+		{
+			GAME,
+			CASHSHOP
+		};
 
-		Gauge(Texture front, Texture mid, int16_t max, float percent);
-
-		Gauge(Texture front, Texture mid, Texture end, int16_t maximum, float percentage);
-
+		Gauge(Type type, Texture front, int16_t max, float percent);
+		Gauge(Type type, Texture front, Texture mid, int16_t max, float percent);
+		Gauge(Type type, Texture front, Texture mid, Texture end, int16_t maximum, float percentage);
 		Gauge();
 
-		void draw(const DrawArgument &args) const;
-
+		void draw(const DrawArgument& args) const;
 		void update(float target);
 
 	private:
@@ -45,5 +47,7 @@ namespace ms
 		float percentage;
 		float target;
 		float step;
+
+		Type type;
 	};
 }

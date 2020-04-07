@@ -38,8 +38,8 @@ namespace ms
 	class Char : public MapObject
 	{
 	public:
-		// Player states which determine animation and state. 
-		// Values are used in movement packets (add 1 if facing left).
+		// Player states which determine animation and state 
+		// Values are used in movement packets (Add one if facing left)
 		enum State : int8_t
 		{
 			WALK = 2,
@@ -59,16 +59,16 @@ namespace ms
 			return static_cast<State>(value);
 		}
 
-		// Draw look, nametag, effects and chat bubble.
+		// Draw look, NameTag, effects and chat bubble.
 		void draw(double viewx, double viewy, float alpha) const override;
-
-		// Update look and movements.
-		int8_t update(const Physics &physics) override;
-
-		// Return the current map layer, or 7 if on a ladder or rope.
+		// Draw look
+		void draw_preview(Point<int16_t> position, float alpha) const;
+		// Update look and movements
+		int8_t update(const Physics& physics) override;
+		// Return the current map layer, or seven if on a ladder or rope.
 		int8_t get_layer() const override;
 
-		// Check whether the character is invincible.
+		// Check whether the character is invincible
 		virtual bool is_invincible() const;
 
 		// Return the character's level.
@@ -80,7 +80,7 @@ namespace ms
 		// Return the character's base attacking speed.
 		virtual int8_t get_integer_attackspeed() const = 0;
 
-		// Return the attack speed as a multiplier.
+		// Return the attack speed as a multiplier
 		float get_real_attackspeed() const;
 
 		// Return the delay until applying an attack.
@@ -107,7 +107,7 @@ namespace ms
 		// Return the current afterimage.
 		const Afterimage &get_afterimage() const;
 
-		// Display an animation as an effect with the character.
+		// Display an animation as an effect with the character
 		void show_attack_effect(Animation animation, int8_t z);
 
 		// Display an animation as an effect on top of the character.
@@ -123,7 +123,7 @@ namespace ms
 		void speak(const std::string &line);
 
 		// Change a part of the character's look.
-		void change_look(Maplestat::Id stat, int32_t id);
+		void change_look(MapleStat::Id stat, int32_t id);
 
 		// Change the character's state by id.
 		void set_state(uint8_t statebyte);
@@ -138,13 +138,12 @@ namespace ms
 		// Remove a pet with the specified index and reason.
 		void remove_pet(uint8_t index, bool hunger);
 
-		// Return if the character is facing left.
+		// Return if the character is facing left
 		bool getflip() const;
-
-		// Return the name of this character.
+		// Return the name of this character
 		std::string get_name() const;
 
-		// Return if the char is in the Char::SIT state.
+		// Return if the char is in the Char::State::SIT state
 		bool is_sitting() const;
 
 		// Return if the char is in the Char::LADDER or Char::ROPE state.
@@ -165,7 +164,7 @@ namespace ms
 		// Return a reference to this characters's physics.
 		PhysicsObject &get_phobj();
 
-		// Initialize character effects.
+		// Initialize character effects
 		static void init();
 
 	protected:
@@ -178,6 +177,7 @@ namespace ms
 		float get_stancespeed() const;
 
 		CharLook look;
+		CharLook look_preview;
 		PetLook pets[3];
 
 		State state;

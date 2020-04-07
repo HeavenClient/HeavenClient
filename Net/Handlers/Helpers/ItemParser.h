@@ -17,8 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Net/InPacket.h"
-#include "../Character/Inventory/Inventory.h"
+#include "../../InPacket.h"
+
+#include "../../../Character/Inventory/Inventory.h"
 
 namespace ms
 {

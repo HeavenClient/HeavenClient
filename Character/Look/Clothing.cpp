@@ -17,23 +17,21 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Clothing.h"
 
-#include "../Data/EquipData.h"
-#include "../Data/WeaponData.h"
+#include "../../Data/WeaponData.h"
 
 #include <unordered_set>
 
 #include <nlnx/nx.hpp>
-#include <nlnx/node.hpp>
 
 namespace ms
 {
-	Clothing::Clothing(int32_t id, const BodyDrawinfo &drawinfo) : itemid(id)
+	Clothing::Clothing(int32_t id, const BodyDrawInfo &drawinfo) : itemid(id)
 	{
 		const EquipData &equipdata = EquipData::get(itemid);
 
 		eqslot = equipdata.get_eqslot();
 
-		if (eqslot == Equipslot::Id::WEAPON)
+		if (eqslot == EquipSlot::Id::WEAPON)
 			twohanded = WeaponData::get(itemid).is_twohanded();
 		else
 			twohanded = false;
@@ -154,23 +152,23 @@ namespace ms
 
 					switch (eqslot)
 					{
-						case Equipslot::Id::FACE:
+						case EquipSlot::Id::FACE:
 							shift -= parentpos;
 							break;
-						case Equipslot::Id::SHOES:
-						case Equipslot::Id::GLOVES:
-						case Equipslot::Id::TOP:
-						case Equipslot::Id::BOTTOM:
-						case Equipslot::Id::CAPE:
+						case EquipSlot::Id::SHOES:
+						case EquipSlot::Id::GLOVES:
+						case EquipSlot::Id::TOP:
+						case EquipSlot::Id::BOTTOM:
+						case EquipSlot::Id::CAPE:
 							shift = drawinfo.get_body_position(stance, frame) - parentpos;
 							break;
-						case Equipslot::Id::HAT:
-						case Equipslot::Id::EARACC:
-						case Equipslot::Id::EYEACC:
+						case EquipSlot::Id::HAT:
+						case EquipSlot::Id::EARACC:
+						case EquipSlot::Id::EYEACC:
 							shift = drawinfo.getfacepos(stance, frame) - parentpos;
 							break;
-						case Equipslot::Id::SHIELD:
-						case Equipslot::Id::WEAPON:
+						case EquipSlot::Id::SHIELD:
+						case EquipSlot::Id::WEAPON:
 							if (parent == "handMove")
 								shift += drawinfo.get_hand_position(stance, frame);
 							else if (parent == "hand")
@@ -233,7 +231,7 @@ namespace ms
 		return walk;
 	}
 
-	Equipslot::Id Clothing::get_eqslot() const
+	EquipSlot::Id Clothing::get_eqslot() const
 	{
 		return eqslot;
 	}

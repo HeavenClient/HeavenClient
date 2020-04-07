@@ -54,6 +54,7 @@ namespace ms
 		std::string pad_time(int64_t time);
 
 		float getexppercent(uint16_t level, int64_t exp) const;
+		void close();
 
 		enum Buttons : uint16_t
 		{
@@ -64,7 +65,7 @@ namespace ms
 		Point<int16_t> screen_adj;
 		ColorBox background;
 
-		// Time
+		/// Time
 		int64_t minutes;
 		int64_t hours;
 
@@ -81,7 +82,7 @@ namespace ms
 		Point<int16_t> time_lt;
 		Point<int16_t> time_rb;
 
-		// Level
+		/// Level
 		Sprite levelupEffect;
 
 		uint16_t uplevel;
@@ -99,7 +100,7 @@ namespace ms
 		int64_t levelNumberWidth;
 		Point<int16_t> level_adj;
 
-		// Experience
+		/// Experience
 		Text expBefore;
 		Point<int16_t> expBeforePos;
 

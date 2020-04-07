@@ -17,17 +17,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Template/Cache.h"
 #include "../Graphics/Texture.h"
 #include "../Template/BoolPair.h"
+#include "../Template/Cache.h"
 
 namespace ms
 {
-	// Class that represents an item loaded from the game's files. Contains all shared data between concrete items.
+	// Class that represents an item loaded from the game's files
+	// Contains all shared data between concrete items
 	class ItemData : public Cache<ItemData>
 	{
 	public:
-		// Returns whether the item was loaded correctly.
+		// Returns whether the item was loaded correctly
 		bool is_valid() const;
 
 		// Returns whether the item is tradable or not.
@@ -45,7 +46,7 @@ namespace ms
 		// Returns whether the item was loaded correctly.
 		explicit operator bool() const;
 
-		// Returns the item id.
+		// Returns the item id
 		int32_t get_id() const;
 
 		// Returns the item price.
@@ -67,7 +68,7 @@ namespace ms
 		const Texture &get_icon(bool raw) const;
 
 	private:
-		// Allow the cache to use the constructor.
+		// Allow the cache to use the constructor
 		friend Cache<ItemData>;
 
 		// Creates an item from the game's Item.nx with the specified id.

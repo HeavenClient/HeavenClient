@@ -17,16 +17,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "BodyDrawinfo.h"
 #include "Body.h"
-#include "Hair.h"
-#include "Face.h"
 #include "CharEquips.h"
+#include "Face.h"
+#include "Hair.h"
 
-#include "../Net/Login.h"
-#include "../Template/Interpolated.h"
-#include "../Util/Randomizer.h"
-#include "../Util/TimedBool.h"
+#include "../../Net/Login.h"
+#include "../../Template/Interpolated.h"
+#include "../../Util/Randomizer.h"
+#include "../../Util/TimedBool.h"
 
 namespace ms
 {
@@ -52,8 +51,7 @@ namespace ms
 		void set_face(int32_t faceid);
 
 		void add_equip(int32_t equipid);
-
-		void remove_equip(Equipslot::Id slot);
+		void remove_equip(EquipSlot::Id slot);
 
 		void attack(bool degenerate);
 
@@ -87,7 +85,7 @@ namespace ms
 
 		const CharEquips &get_equips() const;
 
-		// Initialize drawinfo.
+		// Initialize drawinfo
 		static void init();
 
 	private:
@@ -124,7 +122,7 @@ namespace ms
 		Randomizer randomizer;
 		TimedBool alerted;
 
-		static BodyDrawinfo drawinfo;
+		static BodyDrawInfo drawinfo;
 		static std::unordered_map<int32_t, Hair> hairstyles;
 		static std::unordered_map<int32_t, Face> facetypes;
 		static std::unordered_map<int32_t, Body> bodytypes;

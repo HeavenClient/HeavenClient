@@ -15,21 +15,22 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#pragma once
-
 #include "UICygnusCreation.h"
-#include "UIRaceSelect.h"
-#include "UILoginNotice.h"
+
 #include "UICharSelect.h"
+#include "UILoginNotice.h"
+#include "UIRaceSelect.h"
 
 #include "../UI.h"
-#include "../Configuration.h"
 
 #include "../Components/MapleButton.h"
-#include "../Data/ItemData.h"
-#include "../Audio/Audio.h"
 
-#include "../Net/Packets/CharCreationPackets.h"
+#include "../../Configuration.h"
+
+#include "../../Audio/Audio.h"
+#include "../../Data/ItemData.h"
+
+#include "../../Net/Packets/CharCreationPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -74,23 +75,16 @@ namespace ms
 			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(416, 98 + y));
 		}
 
-		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"],
-																			Point<int16_t>(425, 107));
-		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"],
-																			Point<int16_t>(423, 107));
-		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
-																		 Point<int16_t>(418, 81 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
-																		 Point<int16_t>(415, 81 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
-																		Point<int16_t>(418, 81 + (8 * 18)));
-		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
-																		Point<int16_t>(415, 81 + (8 * 18)));
+		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(425, 107));
+		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(423, 107));
+		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(418, 81 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(415, 81 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(418, 81 + (8 * 18)));
+		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(415, 81 + (8 * 18)));
 
 		for (size_t i = 0; i <= 7; i++)
 		{
-			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i],
-																				  Point<int16_t>(553 + (i * 15), 238));
+			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i], Point<int16_t>(553 + (i * 15), 238));
 			buttons[Buttons::BT_CHARC_HAIRC0 + i]->set_active(false);
 		}
 
@@ -100,12 +94,10 @@ namespace ms
 		buttons[Buttons::BT_CHARC_WEPR]->set_active(false);
 
 		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(510, 396));
-		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"],
-																		  Point<int16_t>(615, 396));
+		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(615, 396));
 
 		nameboard = CustomizeChar["charName"];
-		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::BLACK,
-							 Rectangle<int16_t>(Point<int16_t>(539, 209), Point<int16_t>(631, 252)), 12);
+		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::BLACK, Rectangle<int16_t>(Point<int16_t>(539, 209), Point<int16_t>(631, 252)), 12);
 
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, 0));
@@ -148,7 +140,8 @@ namespace ms
 			{
 				f = true;
 				CharGender = mkinfo["CharFemale"];
-			} else
+			}
+			else
 			{
 				f = false;
 				CharGender = mkinfo["CharMale"];
@@ -222,7 +215,8 @@ namespace ms
 				{
 					for (size_t f = 0; f <= 6; f++)
 						sprites_gender_select[i].draw(position + Point<int16_t>(0, 18 * f), inter);
-				} else
+				}
+				else
 				{
 					sprites_gender_select[i].draw(position, inter);
 				}
@@ -231,7 +225,8 @@ namespace ms
 			UIElement::draw_buttons(inter);
 
 			newchar.draw(Point<int16_t>(394, 339), inter);
-		} else
+		}
+		else
 		{
 			if (!charSet)
 			{
@@ -243,7 +238,8 @@ namespace ms
 					{
 						for (size_t f = 0; f <= 7; f++)
 							sprites_lookboard[i].draw(position + Point<int16_t>(0, 18 * f), inter);
-					} else
+					}
+					else
 					{
 						sprites_lookboard[i].draw(position, inter);
 					}
@@ -260,7 +256,8 @@ namespace ms
 				newchar.draw(Point<int16_t>(394, 339), inter);
 
 				UIElement::draw_buttons(inter);
-			} else
+			}
+			else
 			{
 				if (!named)
 				{
@@ -272,7 +269,8 @@ namespace ms
 					newchar.draw(Point<int16_t>(394, 339), inter);
 
 					UIElement::draw_buttons(inter);
-				} else
+				}
+				else
 				{
 					UIElement::draw_sprites(inter);
 
@@ -280,7 +278,7 @@ namespace ms
 
 					UIElement::draw_buttons(inter);
 
-					for (auto &sprite : sprites_keytype)
+					for (auto& sprite : sprites_keytype)
 						sprite.draw(position, inter);
 				}
 			}
@@ -293,27 +291,30 @@ namespace ms
 	{
 		if (!gender)
 		{
-			for (auto &sprite : sprites_gender_select)
+			for (auto& sprite : sprites_gender_select)
 				sprite.update();
 
 			newchar.update(Constants::TIMESTEP);
-		} else
+		}
+		else
 		{
 			if (!charSet)
 			{
-				for (auto &sprite : sprites_lookboard)
+				for (auto& sprite : sprites_lookboard)
 					sprite.update();
 
 				newchar.update(Constants::TIMESTEP);
-			} else
+			}
+			else
 			{
 				if (!named)
 				{
 					namechar.update(position);
 					newchar.update(Constants::TIMESTEP);
-				} else
+				}
+				else
 				{
-					for (auto &sprite : sprites_keytype)
+					for (auto& sprite : sprites_keytype)
 						sprite.update();
 
 					namechar.set_state(Textfield::State::DISABLED);
@@ -337,7 +338,8 @@ namespace ms
 					namechar.set_state(Textfield::State::FOCUSED);
 
 					return Cursor::State::CLICKING;
-				} else
+				}
+				else
 				{
 					return Cursor::State::IDLE;
 				}
@@ -397,7 +399,8 @@ namespace ms
 				};
 
 				UI::get().emplace<UIKeySelect>(onok, true);
-			} else
+			}
+			else
 			{
 				auto onok = [&]()
 				{
@@ -437,7 +440,8 @@ namespace ms
 					buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(607, 381));
 
 					return Button::State::NORMAL;
-				} else
+				}
+				else
 				{
 					if (!charSet)
 					{
@@ -458,7 +462,8 @@ namespace ms
 						namechar.set_state(Textfield::State::FOCUSED);
 
 						return Button::State::NORMAL;
-					} else
+					}
+					else
 					{
 						if (!named)
 						{
@@ -467,7 +472,8 @@ namespace ms
 							if (name.size() <= 0)
 							{
 								return Button::State::NORMAL;
-							} else if (name.size() >= 4)
+							}
+							else if (name.size() >= 4)
 							{
 								namechar.set_state(Textfield::State::DISABLED);
 
@@ -495,7 +501,8 @@ namespace ms
 								UI::get().emplace<UILoginNotice>(UILoginNotice::Message::ILLEGAL_NAME, okhandler);
 
 								return Button::State::NORMAL;
-							} else
+							}
+							else
 							{
 								namechar.set_state(Textfield::State::DISABLED);
 
@@ -514,7 +521,8 @@ namespace ms
 
 								return Button::State::IDENTITY;
 							}
-						} else
+						}
+						else
 						{
 							return Button::State::NORMAL;
 						}
@@ -547,7 +555,8 @@ namespace ms
 					namechar.set_state(Textfield::State::DISABLED);
 
 					return Button::State::NORMAL;
-				} else
+				}
+				else
 				{
 					if (gender)
 					{
@@ -569,7 +578,8 @@ namespace ms
 						buttons[Buttons::BT_CHARC_CANCEL]->set_position(Point<int16_t>(615, 396));
 
 						return Button::State::NORMAL;
-					} else
+					}
+					else
 					{
 						button_pressed(Buttons::BT_BACK);
 
@@ -584,7 +594,7 @@ namespace ms
 			case Buttons::BT_CHARC_HAIRC5:
 			case Buttons::BT_CHARC_HAIRC6:
 			case Buttons::BT_CHARC_HAIRC7:
-				// TODO: These need to be changed so when you click the color it only assigns the color, not the next in the series
+				// TODO: These need to be changed so when you click the color it only assigns the color, not the next in the series.
 				haircolor = (haircolor > 0) ? haircolor - 1 : haircolors[female].size() - 1;
 				newchar.set_hair(hairs[female][hair] + haircolors[female][haircolor]);
 
@@ -604,13 +614,13 @@ namespace ms
 			case Buttons::BT_CHARC_WEPL:
 				weapon = (weapon > 0) ? weapon - 1 : weapons[female].size() - 1;
 				newchar.add_equip(weapons[female][weapon]);
-				wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_WEPR:
 				weapon = (weapon < weapons[female].size() - 1) ? weapon + 1 : 0;
 				newchar.add_equip(weapons[female][weapon]);
-				wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
 			case Buttons::BT_CHARC_GENDER_M:
@@ -656,20 +666,21 @@ namespace ms
 		bodyname.change_text(newchar.get_body()->get_name());
 		facename.change_text(newchar.get_face()->get_name());
 		hairname.change_text(newchar.get_hair()->get_name());
-		topname.change_text(get_equipname(Equipslot::Id::TOP));
-		botname.change_text(get_equipname(Equipslot::Id::BOTTOM));
-		shoename.change_text(get_equipname(Equipslot::Id::SHOES));
-		wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+		topname.change_text(get_equipname(EquipSlot::Id::TOP));
+		botname.change_text(get_equipname(EquipSlot::Id::BOTTOM));
+		shoename.change_text(get_equipname(EquipSlot::Id::SHOES));
+		wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 	}
 
-	const std::string &UICygnusCreation::get_equipname(Equipslot::Id slot) const
+	const std::string& UICygnusCreation::get_equipname(EquipSlot::Id slot) const
 	{
 		if (int32_t item_id = newchar.get_equips().get_equip(slot))
 		{
 			return ItemData::get(item_id).get_name();
-		} else
+		}
+		else
 		{
-			static const std::string &nullstr = "Missing name.";
+			static const std::string& nullstr = "Missing name.";
 
 			return nullstr;
 		}

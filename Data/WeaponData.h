@@ -22,21 +22,20 @@
 #include "../Audio/Audio.h"
 
 #include "../Character/Inventory/Weapon.h"
-#include "../Character/Look/Stance.h"
 
 namespace ms
 {
-	// Contains information about a weapon.
+	// Contains information about a weapon
 	class WeaponData : public Cache<WeaponData>
 	{
 	public:
-		// Returns whether the weapon was loaded correctly.
+		// Returns whether the weapon was loaded correctly
 		bool is_valid() const;
 
-		// Returns whether the weapon was loaded correctly.
+		// Returns whether the weapon was loaded correctly
 		explicit operator bool() const;
 
-		// Return whether this weapon uses twohanded-stances.
+		// Return whether this weapon uses two-handed stances
 		bool is_twohanded() const;
 
 		// Return the attack speed.
@@ -45,29 +44,29 @@ namespace ms
 		// Return the attack type.
 		uint8_t get_attack() const;
 
-		// Return the speed as displayed in a tooltip.
+		// Return the speed as displayed in a tooltip
 		std::string getspeedstring() const;
 
-		// Return the attack delay.
+		// Return the attack delay
 		uint8_t get_attackdelay() const;
 
-		// Return the weapon type.
+		// Return the weapon type
 		Weapon::Type get_type() const;
 
-		// Return the sound to play when attacking.
+		// Return the sound to play when attacking
 		Sound get_usesound(bool degenerate) const;
 
-		// Return the name of the afterimage.
+		// Return the name of the afterimage
 		const std::string &get_afterimage() const;
 
-		// Return the general equip data.
+		// Return the general equip data
 		const EquipData &get_equipdata() const;
 
 	private:
-		// Allow the cache to use the constructor.
+		// Allow the cache to use the constructor
 		friend Cache<WeaponData>;
 
-		// Load a weapon from the game files.
+		// Load a weapon from the game files
 		WeaponData(int32_t id);
 
 		const EquipData &equipdata;

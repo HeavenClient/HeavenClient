@@ -19,24 +19,19 @@
 
 #include "../PacketHandler.h"
 
-#include "../Character/Buff.h"
-#include "../Character/Maplestat.h"
+#include "../../Character/Buff.h"
+#include "../../Character/MapleStat.h"
 
 namespace ms
 {
-	// Parses keymappings and sends them to the Keyboard.
-	class KeymapHandler : public PacketHandler
+	// Handles the changing of channels for players
+	// Opcode: CHANGE_CHANNEL(16)
+	class ChangeChannelHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Parses skill macros.
-	class SkillMacrosHandler : public PacketHandler
-	{
-		void handle(InPacket& recv) const override;
-	};
-
-	// Notifies the client of changes in character stats.
+	// Notifies the client of changes in character stats
 	// Opcode: CHANGE_STATS(31)
 	class ChangeStatsHandler : public PacketHandler
 	{
@@ -44,12 +39,12 @@ namespace ms
 		void handle(InPacket& recv) const override;
 
 	private:
-		bool handle_stat(Maplestat::Id stat, InPacket& recv) const;
-		bool need_statsinfo_update(Maplestat::Id stat) const;
-		bool need_skillbook_update(Maplestat::Id stat) const;
+		bool handle_stat(MapleStat::Id stat, InPacket& recv) const;
+		bool need_statsinfo_update(MapleStat::Id stat) const;
+		bool need_skillbook_update(MapleStat::Id stat) const;
 	};
 
-	// Base class for packets which need to parse buffstats.
+	// Base class for packets which need to parse buff stats
 	class BuffHandler : public PacketHandler
 	{
 	public:
@@ -59,7 +54,7 @@ namespace ms
 		virtual void handle_buff(InPacket& recv, Buffstat::Id stat) const = 0;
 	};
 
-	// Notifies the client that a buff was applied to the player.
+	// Notifies the client that a buff was applied to the player
 	// Opcode: GIVE_BUFF(32)
 	class ApplyBuffHandler : public BuffHandler
 	{
@@ -67,7 +62,7 @@ namespace ms
 		void handle_buff(InPacket& recv, Buffstat::Id stat) const override;
 	};
 
-	// Notifies the client that a buff was cancelled.
+	// Notifies the client that a buff was canceled
 	// Opcode: CANCEL_BUFF(33)
 	class CancelBuffHandler : public BuffHandler
 	{
@@ -75,23 +70,37 @@ namespace ms
 		void handle_buff(InPacket& recv, Buffstat::Id stat) const override;
 	};
 
-	// Force a stats recalculation.
+	// Force a stat recalculation
 	// Opcode: RECALCULATE_STATS(35)
 	class RecalculateStatsHandler : public PacketHandler
 	{
 		void handle(InPacket&) const override;
 	};
 
-	// Updates the player's skills with the client.
+	// Updates the player's skills with the client
 	// Opcode: UPDATE_SKILL(36)
 	class UpdateSkillHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};
 
-	// Notifies the client that a skill is on cooldown.
+	// Parses skill macros
+	// Opcode: SKILL_MACROS(124)
+	class SkillMacrosHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	// Notifies the client that a skill is on cool-down
 	// Opcode: ADD_COOLDOWN(234)
 	class AddCooldownHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	// Parses key mappings and sends them to the keyboard
+	// Opcode: KEYMAP(335)
+	class KeymapHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
 	};

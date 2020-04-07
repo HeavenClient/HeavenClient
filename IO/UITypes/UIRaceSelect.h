@@ -76,6 +76,7 @@ namespace ms
 			CLASS4
 		};
 
+		// TODO: Merge with UILoginNotice.h
 		enum Classes : uint8_t
 		{
 			RESISTANCE,

@@ -20,15 +20,15 @@
 #include "../UIElement.h"
 
 #include "../Components/Charset.h"
-#include "../Components/Nametag.h"
+#include "../Components/NameTag.h"
 
-#include "../Character/Look/CharLook.h"
+#include "../../Character/Look/CharLook.h"
 
 #include <list>
 
 namespace ms
 {
-	// The character selection screen.
+	// The character selection screen
 	class UICharSelect : public UIElement
 	{
 	public:
@@ -130,7 +130,7 @@ namespace ms
 		Charset levelset;
 		OutlinedText namelabel;
 		std::vector<CharLook> charlooks;
-		std::vector<Nametag> nametags;
+		std::vector<NameTag> nametags;
 		Animation emptyslot_effect;
 		Texture emptyslot;
 		Animation selectedslot_effect[2];

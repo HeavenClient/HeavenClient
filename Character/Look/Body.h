@@ -17,9 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "BodyDrawinfo.h"
+#include "BodyDrawInfo.h"
 
-#include "../Graphics/Texture.h"
+#include "../../Graphics/Texture.h"
 
 namespace ms
 {
@@ -42,7 +42,7 @@ namespace ms
 			NUM_LAYERS
 		};
 
-		Body(int32_t skin, const BodyDrawinfo &drawinfo);
+		Body(int32_t skin, const BodyDrawInfo &drawinfo);
 
 		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const;
 

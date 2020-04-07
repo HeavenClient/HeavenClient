@@ -19,28 +19,27 @@
 
 #include "Helpers/LoginParser.h"
 
-#include "../Session.h"
-
 #include "../Packets/LoginPackets.h"
-#include "../IO/UI.h"
 
-#include "../IO/UITypes/UILoginNotice.h"
-#include "../IO/UITypes/UIWorldSelect.h"
-#include "../IO/UITypes/UICharSelect.h"
-#include "../IO/UITypes/UIRaceSelect.h"
-#include "../IO/UITypes/UILoginwait.h"
-#include "../IO/UITypes/UITermsOfService.h"
-#include "../IO/UITypes/UIGender.h"
+#include "../../IO/UI.h"
+
+#include "../../IO/UITypes/UICharSelect.h"
+#include "../../IO/UITypes/UIGender.h"
+#include "../../IO/UITypes/UILoginNotice.h"
+#include "../../IO/UITypes/UILoginWait.h"
+#include "../../IO/UITypes/UIRaceSelect.h"
+#include "../../IO/UITypes/UITermsOfService.h"
+#include "../../IO/UITypes/UIWorldSelect.h"
 
 namespace ms
 {
 	void LoginResultHandler::handle(InPacket& recv) const
 	{
-		auto loginwait = UI::get().get_element<UILoginwait>();
+		auto loginwait = UI::get().get_element<UILoginWait>();
 
 		if (loginwait && loginwait->is_active())
 		{
-			// Remove previous UIs.
+			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);
 			UI::get().remove(UIElement::Type::LOGINWAIT);
 			UI::get().remove(UIElement::Type::TOS);
@@ -48,10 +47,11 @@ namespace ms
 
 			std::function<void()> okhandler = loginwait->get_handler();
 
-			// The packet should contain a 'reason' integer which can signify various things.
+			// The packet should contain a 'reason' integer which can signify various things
 			if (int32_t reason = recv.read_int())
 			{
-				// Login unsuccessfull. The LoginNotice displayed will contain the specific information.
+				// Login unsuccessful
+				// The LoginNotice displayed will contain the specific information
 				switch (reason)
 				{
 				case 2:
@@ -67,23 +67,27 @@ namespace ms
 					UI::get().emplace<UILoginNotice>(UILoginNotice::Message::UNABLE_TO_LOGIN_WITH_IP, okhandler);
 					break;
 				case 23:
-					// The server sends a request to accept the terms of service.
 					UI::get().emplace<UITermsOfService>(okhandler);
 					break;
 				default:
-					// Other reasons.
+					// Other reasons
 					if (reason > 0)
 					{
 						auto reasonbyte = static_cast<int8_t>(reason - 1);
 
 						UI::get().emplace<UILoginNotice>(reasonbyte, okhandler);
 					}
+
+					break;
 				}
 			}
 			else
 			{
-				// Login successfull. The packet contains information on the account, so we initialise the account with it.
+				// Login successful
+				// The packet contains information on the account, so we initialize the account with it.
 				Account account = LoginParser::parse_account(recv);
+
+				Configuration::get().set_admin(account.admin);
 
 				if (account.female == 10)
 				{
@@ -91,7 +95,7 @@ namespace ms
 				}
 				else
 				{
-					// Save the Login ID if the box for it on the login panel is checked.
+					// Save the "Login ID" if the box for it on the login screen is checked
 					if (Setting<SaveLogin>::get().load())
 						Setting<DefaultAccount>::get().save(account.name);
 
@@ -104,6 +108,17 @@ namespace ms
 		}
 	}
 
+	void ServerStatusHandler::handle(InPacket& recv) const
+	{
+		// Possible values for status:
+		// 0 - Normal
+		// 1 - Highly populated
+		// 2 - Full
+		recv.read_short(); // status
+
+		// TODO: I believe it shows a warning message if it's 1 and blocks enter into the world if it's 2. Need to find those messages.
+	}
+
 	void ServerlistHandler::handle(InPacket& recv) const
 	{
 		auto worldselect = UI::get().get_element<UIWorldSelect>();
@@ -111,7 +126,7 @@ namespace ms
 		if (!worldselect)
 			worldselect = UI::get().emplace<UIWorldSelect>();
 
-		// Parse all worlds.
+		// Parse all worlds
 		while (recv.available())
 		{
 			World world = LoginParser::parse_world(recv);
@@ -122,43 +137,27 @@ namespace ms
 			}
 			else
 			{
-				// Remove previous UIs.
+				// Remove previous UIs
 				UI::get().remove(UIElement::Type::LOGIN);
 
-				// Add the world selection screen to the ui.
+				// Add the world selection screen to the UI
 				worldselect->draw_world();
 
-				// "End of serverlist" packet.
+				// End of packet
 				return;
-			}
-		}
-	}
-
-	void RecommendedWorldsHandler::handle(InPacket& recv) const
-	{
-		if (auto worldselect = UI::get().get_element<UIWorldSelect>())
-		{
-			int16_t count = recv.read_byte();
-
-			for (size_t i = 0; i < count; i++)
-			{
-				RecommendedWorld world = LoginParser::parse_recommended_world(recv);
-
-				if (world.wid != -1 && !world.message.empty())
-					worldselect->add_recommended_world(world);
 			}
 		}
 	}
 
 	void CharlistHandler::handle(InPacket& recv) const
 	{
-		auto loginwait = UI::get().get_element<UILoginwait>();
+		auto loginwait = UI::get().get_element<UILoginWait>();
 
 		if (loginwait && loginwait->is_active())
 		{
 			uint8_t channel_id = recv.read_byte();
 
-			// Parse all characters.
+			// Parse all characters
 			std::vector<CharEntry> characters;
 			int8_t charcount = recv.read_byte();
 
@@ -168,26 +167,36 @@ namespace ms
 			int8_t pic = recv.read_byte();
 			int32_t slots = recv.read_int();
 
-			// Remove previous UIs.
+			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);
 			UI::get().remove(UIElement::Type::LOGINWAIT);
 
-			// Remove the world selection screen.
+			// Remove the world selection screen
 			if (auto worldselect = UI::get().get_element<UIWorldSelect>())
 				worldselect->remove_selected();
 
-			// Add the character selection screen.
+			// Add the character selection screen
 			UI::get().emplace<UICharSelect>(characters, charcount, slots, pic);
 		}
 	}
 
+	void ServerIPHandler::handle(InPacket& recv) const
+	{
+		recv.skip_byte();
+
+		LoginParser::parse_login(recv);
+
+		int32_t cid = recv.read_int();
+		PlayerLoginPacket(cid).dispatch();
+	}
+
 	void CharnameResponseHandler::handle(InPacket& recv) const
 	{
-		// Read the name and if it is already in use.
+		// Read the name and if it is already in use
 		std::string name = recv.read_string();
 		bool used = recv.read_bool();
 
-		// Notify the character creation screen.
+		// Notify the character creation screen
 		if (auto raceselect = UI::get().get_element<UIRaceSelect>())
 			raceselect->send_naming_result(used);
 	}
@@ -196,21 +205,21 @@ namespace ms
 	{
 		recv.skip(1);
 
-		// Parse info on the new character.
+		// Parse info on the new character
 		CharEntry character = LoginParser::parse_charentry(recv);
 
-		// Read the updated character selection.
+		// Read the updated character selection
 		if (auto charselect = UI::get().get_element<UICharSelect>())
 			charselect->add_character(std::move(character));
 	}
 
 	void DeleteCharResponseHandler::handle(InPacket& recv) const
 	{
-		// Read the character id and if deletion was successfull (pic was correct).
+		// Read the character id and if deletion was successful (PIC was correct)
 		int32_t cid = recv.read_int();
 		uint8_t state = recv.read_byte();
 
-		// Extract information from the state byte.
+		// Extract information from the state byte
 		if (state)
 		{
 			UILoginNotice::Message message;
@@ -236,29 +245,19 @@ namespace ms
 		}
 	}
 
-	void ServerIPHandler::handle(InPacket& recv) const
+	void RecommendedWorldsHandler::handle(InPacket& recv) const
 	{
-		recv.skip(2);
-
-		// Read the ipv4 address in a string.
-		std::string addrstr;
-
-		for (int i = 0; i < 4; i++)
+		if (auto worldselect = UI::get().get_element<UIWorldSelect>())
 		{
-			uint8_t num = static_cast<uint8_t>(recv.read_byte());
-			addrstr.append(std::to_string(num));
+			int16_t count = recv.read_byte();
 
-			if (i < 3)
-				addrstr.push_back('.');
+			for (size_t i = 0; i < count; i++)
+			{
+				RecommendedWorld world = LoginParser::parse_recommended_world(recv);
+
+				if (world.wid != -1 && !world.message.empty())
+					worldselect->add_recommended_world(world);
+			}
 		}
-
-		// Read the port address in a string.
-		std::string portstr = std::to_string(recv.read_short());
-
-		int32_t cid = recv.read_int();
-
-		// Attempt to reconnect to the server and if successfull, login to the game.
-		Session::get().reconnect(addrstr.c_str(), portstr.c_str());
-		PlayerLoginPacket(cid).dispatch();
 	}
 }

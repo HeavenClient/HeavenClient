@@ -18,7 +18,6 @@
 #include "ItemData.h"
 
 #include <nlnx/nx.hpp>
-#include <nlnx/node.hpp>
 
 namespace ms
 {

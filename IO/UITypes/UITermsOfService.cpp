@@ -16,7 +16,7 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UITermsOfService.h"
-#include "UILoginwait.h"
+#include "UILoginWait.h"
 
 #include "../UI.h"
 
@@ -1062,7 +1062,7 @@ namespace ms
 		int16_t slider_y = 77;
 
 		slider = Slider(
-				Slider::Type::GOLD, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
+				Slider::Type::LINE_PUNGA, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
 				[&](bool upwards)
 				{
 					int16_t shift = upwards ? -1 : 1;
@@ -1117,7 +1117,7 @@ namespace ms
 		switch (buttonid)
 		{
 			case Buttons::OK:
-				UI::get().emplace<UILoginwait>();
+				UI::get().emplace<UILoginWait>();
 
 				TOSPacket().dispatch();
 				break;

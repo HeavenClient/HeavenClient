@@ -18,12 +18,10 @@
 #include "SocketWinsock.h"
 
 #ifndef USE_ASIO
-#include <WinSock2.h>
 #include <ws2tcpip.h>
 
+// TODO: Can this be moved?
 #pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "AdvApi32.lib")
 
 namespace ms
 {
@@ -42,6 +40,7 @@ namespace ms
 			return false;
 
 		ZeroMemory(&hints, sizeof(hints));
+
 		hints.ai_family = AF_UNSPEC;
 		hints.ai_socktype = SOCK_STREAM;
 		hints.ai_protocol = IPPROTO_TCP;
@@ -71,6 +70,7 @@ namespace ms
 			if (result == SOCKET_ERROR)
 			{
 				closesocket(sock);
+
 				sock = INVALID_SOCKET;
 
 				continue;
@@ -120,7 +120,9 @@ namespace ms
 	{
 		timeval timeout = { 0, 0 };
 		fd_set sockset = { 0 };
+
 		FD_SET(sock, &sockset);
+
 		int result = select(0, &sockset, 0, 0, &timeout);
 
 		if (result > 0)

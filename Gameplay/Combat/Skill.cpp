@@ -17,11 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Skill.h"
 
-#include "../Character/SkillId.h"
-#include "../Data/SkillData.h"
-#include "../Util/Misc.h"
+#include "../../Character/SkillId.h"
+#include "../../Data/SkillData.h"
+#include "../../Util/Misc.h"
 
-#include <nlnx/node.hpp>
 #include <nlnx/nx.hpp>
 
 namespace ms
@@ -63,7 +62,7 @@ namespace ms
 				useeffect = std::make_unique<SingleUseEffect>(src);
 			} else if (haseffect1)
 			{
-				useeffect = std::make_unique<TwoHUseEffect>(src);
+				useeffect = std::make_unique<TwoHandedUseEffect>(src);
 			} else
 			{
 				switch (skillid)
@@ -87,7 +86,7 @@ namespace ms
 		if (bylevelhit)
 		{
 			if (hashit0 && hashit1)
-				hiteffect = std::make_unique<ByLevelTwoHHitEffect>(src);
+				hiteffect = std::make_unique<ByLevelTwoHandedHitEffect>(src);
 			else
 				hiteffect = std::make_unique<ByLevelHitEffect>(src);
 		} else if (byskilllevelhit)
@@ -95,7 +94,7 @@ namespace ms
 			hiteffect = std::make_unique<BySkillLevelHitEffect>(src);
 		} else if (hashit0 && hashit1)
 		{
-			hiteffect = std::make_unique<TwoHHitEffect>(src);
+			hiteffect = std::make_unique<TwoHandedHitEffect>(src);
 		} else if (hashit0)
 		{
 			hiteffect = std::make_unique<SingleHitEffect>(src);
@@ -109,7 +108,7 @@ namespace ms
 
 		if (hasaction0 && hasaction1)
 		{
-			action = std::make_unique<TwoHAction>(src);
+			action = std::make_unique<TwoHandedAction>(src);
 		} else if (hasaction0)
 		{
 			action = std::make_unique<SingleAction>(src);

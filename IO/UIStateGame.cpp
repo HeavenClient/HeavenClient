@@ -16,29 +16,30 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIStateGame.h"
+
 #include "UI.h"
 
-#include "UITypes/UIStatusMessenger.h"
-#include "UITypes/UIStatusbar.h"
-#include "UITypes/UIChatbar.h"
-#include "UITypes/UIMiniMap.h"
 #include "UITypes/UIBuffList.h"
-#include "UITypes/UINpcTalk.h"
-#include "UITypes/UIShop.h"
-#include "UITypes/UIStatsinfo.h"
-#include "UITypes/UIItemInventory.h"
-#include "UITypes/UIEquipInventory.h"
-#include "UITypes/UISkillbook.h"
-#include "UITypes/UIChat.h"
-#include "UITypes/UIQuestLog.h"
-#include "UITypes/UIWorldMap.h"
-#include "UITypes/UIUserList.h"
-#include "UITypes/UIKeyConfig.h"
-#include "UITypes/UIEvent.h"
 #include "UITypes/UIChannel.h"
+#include "UITypes/UICharInfo.h"
+#include "UITypes/UIChat.h"
+#include "UITypes/UIChatBar.h"
+#include "UITypes/UIEquipInventory.h"
+#include "UITypes/UIEvent.h"
+#include "UITypes/UIItemInventory.h"
+#include "UITypes/UIKeyConfig.h"
+#include "UITypes/UIMiniMap.h"
+#include "UITypes/UIQuestLog.h"
 #include "UITypes/UIQuit.h"
+#include "UITypes/UIShop.h"
+#include "UITypes/UISkillBook.h"
+#include "UITypes/UIStatsInfo.h"
+#include "UITypes/UIStatusBar.h"
+#include "UITypes/UIStatusMessenger.h"
+#include "UITypes/UIUserList.h"
+#include "UITypes/UIWorldMap.h"
 
-#include "../Gameplay/Stage.h"
+#include "../Net/Packets/GameplayPackets.h"
 
 namespace ms
 {
@@ -51,18 +52,14 @@ namespace ms
 		const Inventory &inventory = Stage::get().get_player().get_inventory();
 
 		emplace<UIStatusMessenger>();
-		emplace<UIStatusbar>(stats);
-		emplace<UIChatbar>();
+		emplace<UIStatusBar>(stats);
+		emplace<UIChatBar>();
 		emplace<UIMiniMap>(stats);
 		emplace<UIBuffList>();
 		emplace<UIShop>(look, inventory);
 
 		VWIDTH = Constants::Constants::get().get_viewwidth();
 		VHEIGHT = Constants::Constants::get().get_viewheight();
-
-		start = ContinuousTimer::get().start();
-		levelBefore = stats.get_stat(Maplestat::Id::LEVEL);
-		expBefore = stats.get_exp();
 	}
 
 	void UIStateGame::draw(float inter, Point<int16_t> cursor) const
@@ -97,7 +94,7 @@ namespace ms
 			UI::get().remove(UIElement::Type::STATUSBAR);
 
 			const CharStats &stats = Stage::get().get_player().get_stats();
-			emplace<UIStatusbar>(stats);
+			emplace<UIStatusBar>(stats);
 		}
 
 		for (auto &type : elementorder)
@@ -197,12 +194,12 @@ namespace ms
 								);
 								break;
 							case KeyAction::Id::STATS:
-								emplace<UIStatsinfo>(
+								emplace<UIStatsInfo>(
 										Stage::get().get_player().get_stats()
 								);
 								break;
 							case KeyAction::Id::SKILLS:
-								emplace<UISkillbook>(
+								emplace<UISkillBook>(
 										Stage::get().get_player().get_stats(),
 										Stage::get().get_player().get_skills()
 								);
@@ -262,17 +259,20 @@ namespace ms
 								);
 								break;
 							case KeyAction::Id::MENU:
-								if (auto statusbar = UI::get().get_element<UIStatusbar>())
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
 									statusbar->toggle_menu();
 
 								break;
 							case KeyAction::Id::QUICKSLOTS:
-								if (auto statusbar = UI::get().get_element<UIStatusbar>())
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
 									statusbar->toggle_qs();
 
 								break;
+							case KeyAction::Id::CASHSHOP:
+								EnterCashShopPacket().dispatch();
+								break;
 							case KeyAction::Id::TOGGLECHAT:
-								if (auto chatbar = UI::get().get_element<UIChatbar>())
+								if (auto chatbar = UI::get().get_element<UIChatBar>())
 									if (!chatbar->is_chatfieldopen())
 										chatbar->toggle_chat();
 
@@ -292,7 +292,7 @@ namespace ms
 								break;
 							}
 							case KeyAction::Id::MAINMENU:
-								if (auto statusbar = UI::get().get_element<UIStatusbar>())
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
 									statusbar->send_key(action, pressed, escape);
 
 								break;
@@ -639,20 +639,5 @@ namespace ms
 		}
 
 		return nullptr;
-	}
-
-	int64_t UIStateGame::get_uptime()
-	{
-		return ContinuousTimer::get().stop(start);
-	}
-
-	uint16_t UIStateGame::get_uplevel()
-	{
-		return levelBefore;
-	}
-
-	int64_t UIStateGame::get_upexp()
-	{
-		return expBefore;
 	}
 }

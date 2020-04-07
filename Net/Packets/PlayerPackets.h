@@ -19,25 +19,25 @@
 
 #include "../OutPacket.h"
 
-#include "../Character/Maplestat.h"
+#include "../../Character/MapleStat.h"
 
 #include "../IO/UITypes/UIKeyConfig.h"
 
 namespace ms
 {
-	// Requests a stat increase by spending ap.
+	// Requests a stat increase by spending AP
 	// Opcode: SPEND_AP(87)
 	class SpendApPacket : public OutPacket
 	{
 	public:
-		SpendApPacket(Maplestat::Id stat) : OutPacket(OutPacket::Opcode::SPEND_AP)
+		SpendApPacket(MapleStat::Id stat) : OutPacket(OutPacket::Opcode::SPEND_AP)
 		{
 			write_time();
-			write_int(Maplestat::codes[stat]);
+			write_int(MapleStat::codes[stat]);
 		}
 	};
 
-	// Requests a skill level increase by spending sp.
+	// Requests a skill level increase by spending SP
 	// Opcode: SPEND_SP(90)
 	class SpendSpPacket : public OutPacket
 	{
@@ -49,7 +49,7 @@ namespace ms
 		}
 	};
 
-	// Requests the server to change kep mappings
+	// Requests the server to change key mappings
 	// Opcode: CHANGE_KEYMAP(135)
 	class ChangeKeyMapPacket : public OutPacket
 	{
@@ -63,9 +63,9 @@ namespace ms
 			{
 				auto keymap = updated_actions[i];
 
-				write_int(std::get<0>(keymap)); // key
-				write_byte(std::get<1>(keymap));// type
-				write_int(std::get<2>(keymap)); // action
+				write_int(std::get<0>(keymap));		// key
+				write_byte(std::get<1>(keymap));	// type
+				write_int(std::get<2>(keymap));		// action
 			}
 		}
 	};

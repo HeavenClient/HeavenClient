@@ -16,11 +16,10 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "Icon.h"
+
 #include "Charset.h"
 
-#include "../Audio/Audio.h"
-#include "../Graphics/Texture.h"
-#include "../Template/EnumMap.h"
+#include "../../Audio/Audio.h"
 
 #include <nlnx/nx.hpp>
 
@@ -59,12 +58,12 @@ namespace ms
 		type->drop_on_stage();
 	}
 
-	void Icon::drop_on_equips(Equipslot::Id eqslot) const
+	void Icon::drop_on_equips(EquipSlot::Id eqslot) const
 	{
 		type->drop_on_equips(eqslot);
 	}
 
-	bool Icon::drop_on_items(InventoryType::Id tab, Equipslot::Id eqslot, int16_t slot, bool equip) const
+	bool Icon::drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const
 	{
 		if (!texture.is_valid())
 			return false;
@@ -95,7 +94,8 @@ namespace ms
 		dragged = false;
 	}
 
-	// Allows for Icon extensibility. Use this instead of referencing texture directly.
+	// Allows for Icon extensibility
+	// Use this instead of referencing texture directly
 	Texture Icon::get_texture() const
 	{
 		return texture;

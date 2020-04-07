@@ -17,7 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "Keyboard.h"
 
+#ifdef __linux__
 #include <GLFW/glfw3.h>
+#else
+#include <glfw3.h>
+#endif
 
 namespace ms
 {

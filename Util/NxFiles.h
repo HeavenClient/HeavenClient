@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////////////////////////
 //	This file is part of the continued Journey MMORPG client					//
 //	Copyright (C) 2015-2019  Daniel Allendorf, Ryan Payton						//
 //																				//
@@ -19,14 +19,13 @@
 
 #include "../Error.h"
 
-#include <cstdint>
 #include <array>
 
 namespace ms
 {
 	namespace NxFiles
 	{
-		// Number of needed files.
+		// Number of needed files
 		constexpr uint8_t NUM_FILES = 18;
 
 		// Names of the needed game files.
@@ -52,8 +51,8 @@ namespace ms
 						"UI.nx"            // From v209.2
 				};
 
-		// Initialize nlnx.
-		// When successfull also tests if the UI file contains valid images.
+		// Initialize NX
+		// When successful test if the UI file is the correct version
 		Error init();
 	};
 }

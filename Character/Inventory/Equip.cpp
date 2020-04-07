@@ -20,7 +20,7 @@
 namespace ms
 {
 	Equip::Equip(int32_t item_id, int64_t expiration, const std::string &owner, int16_t flags, uint8_t slots,
-				 uint8_t level, const EnumMap<Equipstat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
+				 uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
 				 int32_t vicious) : item_id(item_id), expiration(expiration), owner(owner), flags(flags), slots(slots),
 									level(level), stats(stats), itemlevel(itemlevel), itemexp(itemexp),
 									vicious(vicious)
@@ -64,7 +64,7 @@ namespace ms
 		return itemlevel;
 	}
 
-	uint16_t Equip::get_stat(Equipstat::Id type) const
+	uint16_t Equip::get_stat(EquipStat::Id type) const
 	{
 		return stats[type];
 	}

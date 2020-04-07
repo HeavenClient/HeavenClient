@@ -21,11 +21,11 @@
 
 namespace ms
 {
-	// Requests the server to warp the player to a different map.
 	// Opcode: CHANGE_MAP(38)
 	class ChangeMapPacket : public OutPacket
 	{
 	public:
+		// Request the server to warp the player to a different map
 		ChangeMapPacket(bool died, int32_t targetid, const std::string& targetp, bool usewheel) : OutPacket(OutPacket::Opcode::CHANGEMAP)
 		{
 			write_byte(died);
@@ -34,21 +34,24 @@ namespace ms
 			skip(1);
 			write_short(usewheel ? 1 : 0);
 		}
+
+		// Request the server to exit the cash shop
+		ChangeMapPacket() : OutPacket(OutPacket::Opcode::CHANGEMAP) {}
 	};
 
-	// Requests the server to set map transition complete
-	// Opcode: PLAYER_MAP_TRANSFER(207)
-	class PlayerMapTransferPacket : public OutPacket
+	// Opcode: ENTER_CASHSHOP(40)
+	class EnterCashShopPacket : public OutPacket
 	{
 	public:
-		PlayerMapTransferPacket() : OutPacket(OutPacket::Opcode::PLAYER_MAP_TRANSFER) {}
+		// Requests the server to warp the player into the cash shop
+		EnterCashShopPacket() : OutPacket(OutPacket::Opcode::ENTER_CASHSHOP) {}
 	};
 
-	// Updates the player's position with the server.
 	// Opcode: MOVE_PLAYER(41)
 	class MovePlayerPacket : public MovementPacket
 	{
 	public:
+		// Updates the player's position with the server
 		MovePlayerPacket(const Movement& movement) : MovementPacket(OutPacket::Opcode::MOVE_PLAYER)
 		{
 			skip(9);
@@ -57,7 +60,6 @@ namespace ms
 		}
 	};
 
-	// Requests various party-related things.
 	// Opcode: PARTY_OPERATION(124)
 	class PartyOperationPacket : public OutPacket
 	{
@@ -79,8 +81,7 @@ namespace ms
 		}
 	};
 
-	// Creates a new party.
-	// Operation: CREATE(1)
+	// Creates a new party
 	class CreatePartyPacket : public PartyOperationPacket
 	{
 	public:
@@ -88,15 +89,13 @@ namespace ms
 	};
 
 	// Leaves a party
-	// Operation: LEAVE(2)
 	class LeavePartyPacket : public PartyOperationPacket
 	{
 	public:
 		LeavePartyPacket() : PartyOperationPacket(PartyOperationPacket::Operation::LEAVE) {}
 	};
 
-	// Joins a party.
-	// Operation: JOIN(3)
+	// Joins a party
 	class JoinPartyPacket : public PartyOperationPacket
 	{
 	public:
@@ -106,8 +105,7 @@ namespace ms
 		}
 	};
 
-	// Invites a player to a party.
-	// Operation: INVITE(4)
+	// Invites a player to a party
 	class InviteToPartyPacket : public PartyOperationPacket
 	{
 	public:
@@ -117,8 +115,7 @@ namespace ms
 		}
 	};
 
-	// Expels someone from a party.
-	// Operation: EXPEL(5)
+	// Expels someone from a party
 	class ExpelFromPartyPacket : public PartyOperationPacket
 	{
 	public:
@@ -128,8 +125,7 @@ namespace ms
 		}
 	};
 
-	// Passes party leadership to another character.
-	// Operation: PASS_LEADER(6)
+	// Passes party leadership to another character
 	class ChangePartyLeaderPacket : public PartyOperationPacket
 	{
 	public:
@@ -139,11 +135,43 @@ namespace ms
 		}
 	};
 
-	// Updates a mob's position with the server.
+	// Opcode: ADMIN_COMMAND(128)
+	class AdminCommandPacket : public OutPacket
+	{
+	public:
+		enum Mode : int8_t
+		{
+			ENTER_MAP = 0x11
+		};
+
+	protected:
+		AdminCommandPacket(Mode mode) : OutPacket(OutPacket::Opcode::ADMIN_COMMAND)
+		{
+			write_byte(mode);
+		}
+	};
+
+	// Admin has entered the map
+	class AdminEnterMapPacket : public AdminCommandPacket
+	{
+	public:
+		enum Operation : int8_t
+		{
+			SHOW_USERS,
+			ALERT_ADMINS = 12
+		};
+
+		AdminEnterMapPacket(Operation op) : AdminCommandPacket(AdminCommandPacket::Mode::ENTER_MAP)
+		{
+			write_byte(op);
+		}
+	};
+
 	// Opcode: MOVE_MONSTER(188)
 	class MoveMobPacket : public MovementPacket
 	{
 	public:
+		// Updates a mob's position with the server
 		MoveMobPacket(int32_t oid, int16_t type, int8_t skillb, int8_t skill0, int8_t skill1, int8_t skill2, int8_t skill3, int8_t skill4, Point<int16_t> startpos, const Movement& movement) : MovementPacket(OutPacket::Opcode::MOVE_MONSTER)
 		{
 			write_int(oid);
@@ -164,11 +192,11 @@ namespace ms
 		}
 	};
 
-	// Requests picking up an item.
 	// Opcode: PICKUP_ITEM(202)
 	class PickupItemPacket : public OutPacket
 	{
 	public:
+		// Requests picking up an item
 		PickupItemPacket(int32_t oid, Point<int16_t> position) : OutPacket(OutPacket::Opcode::PICKUP_ITEM)
 		{
 			write_int(0);
@@ -178,11 +206,11 @@ namespace ms
 		}
 	};
 
-	// Requests damaging a reactor.
 	// Opcode: DAMAGE_REACTOR(205)
 	class DamageReactorPacket : public OutPacket
 	{
 	public:
+		// Requests damaging a reactor
 		DamageReactorPacket(int32_t oid, Point<int16_t> position, int16_t stance, int skillid) : OutPacket(OutPacket::Opcode::DAMAGE_REACTOR)
 		{
 			write_int(oid);
@@ -191,5 +219,21 @@ namespace ms
 			skip(4);
 			write_int(skillid);
 		};
+	};
+
+	// Opcode: PLAYER_MAP_TRANSFER(207)
+	class PlayerMapTransferPacket : public OutPacket
+	{
+	public:
+		// Requests the server to set map transition complete
+		PlayerMapTransferPacket() : OutPacket(OutPacket::Opcode::PLAYER_MAP_TRANSFER) {}
+	};
+
+	// Opcode: PLAYER_UPDATE(223)
+	class PlayerUpdatePacket : public OutPacket
+	{
+	public:
+		// Finished updating player stats
+		PlayerUpdatePacket() : OutPacket(OutPacket::Opcode::PLAYER_UPDATE) {}
 	};
 }

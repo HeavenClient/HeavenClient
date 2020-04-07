@@ -19,8 +19,9 @@
 
 #include "../UIElement.h"
 
-#include "../Graphics/Text.h"
 #include "../Components/Slider.h"
+
+#include "../../Graphics/Text.h"
 
 namespace ms
 {

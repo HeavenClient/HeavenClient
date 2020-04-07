@@ -17,9 +17,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Equipstat.h"
+#include "../EquipStat.h"
 
-#include "../Template/EnumMap.h"
+#include "../../Template/EnumMap.h"
 
 namespace ms
 {
@@ -35,6 +35,6 @@ namespace ms
 			GOLD
 		};
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<Equipstat::Id, uint16_t> &stats);
+		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t> &stats);
 	}
 }

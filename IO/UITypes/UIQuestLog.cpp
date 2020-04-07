@@ -17,14 +17,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIQuestLog.h"
 
-#include "../IO/Components/MapleButton.h"
-#include "../IO/Components/TwoSpriteButton.h"
+#include "../Components/MapleButton.h"
 
 #include <nlnx/nx.hpp>
 
 namespace ms
 {
-	UIQuestLog::UIQuestLog(const Questlog &ql) : UIDragElement<PosQUEST>(), questlog(ql)
+	UIQuestLog::UIQuestLog(const QuestLog &ql) : UIDragElement<PosQUEST>(), questlog(ql)
 	{
 		tab = Buttons::TAB0;
 
@@ -66,7 +65,7 @@ namespace ms
 						   Rectangle<int16_t>(search_pos, search_dim), 19);
 		placeholder = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BOULDER, "Enter the quest name.");
 
-		slider = Slider(Slider::Type::DEFAULT, Range<int16_t>(0, 279), 150, 20, 5, [](bool)
+		slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(0, 279), 150, 20, 5, [](bool)
 		{});
 
 		change_tab(tab);

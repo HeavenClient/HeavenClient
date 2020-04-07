@@ -17,10 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Tooltip.h"
 #include "Charset.h"
+#include "Tooltip.h"
 
-#include "../Character/Maplestat.h"
+#include "../Character/MapleStat.h"
 #include "../Graphics/Text.h"
 #include "../Template/BoolPair.h"
 
@@ -50,8 +50,8 @@ namespace ms
 		bool hasslots_preview;
 		bool is_weapon;
 		bool is_weapon_preview;
-		EnumMap<Maplestat::Id, std::string> reqstatstrings;
-		EnumMap<Maplestat::Id, std::string> reqstatstrings_preview;
+		EnumMap<MapleStat::Id, std::string> reqstatstrings;
+		EnumMap<MapleStat::Id, std::string> reqstatstrings_preview;
 		Texture itemicon;
 		Texture itemicon_preview;
 
@@ -71,8 +71,8 @@ namespace ms
 		Text hammers_preview;
 		Text atkinc;
 		Text atkinc_preview;
-		EnumMap<Equipstat::Id, Text> statlabels;
-		EnumMap<Equipstat::Id, Text> statlabels_preview;
+		EnumMap<EquipStat::Id, Text> statlabels;
+		EnumMap<EquipStat::Id, Text> statlabels_preview;
 
 		Texture top;
 		Texture mid;
@@ -88,11 +88,11 @@ namespace ms
 		Texture itemcover;
 		BoolPair<Texture> type;
 
-		std::vector<Maplestat::Id> requirements;
-		EnumMap<Maplestat::Id, BoolPair<Texture>> reqstattextures;
-		EnumMap<Maplestat::Id, bool> canequip;
-		EnumMap<Maplestat::Id, bool> canequip_preview;
-		EnumMap<Maplestat::Id, Point<int16_t>> reqstatpositions;
+		std::vector<MapleStat::Id> requirements;
+		EnumMap<MapleStat::Id, BoolPair<Texture>> reqstattextures;
+		EnumMap<MapleStat::Id, bool> canequip;
+		EnumMap<MapleStat::Id, bool> canequip_preview;
+		EnumMap<MapleStat::Id, Point<int16_t>> reqstatpositions;
 		BoolPair<Charset> reqset;
 		BoolPair<Charset> lvset;
 		BoolPair<Charset> atkincset;

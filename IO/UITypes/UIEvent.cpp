@@ -54,8 +54,7 @@ namespace ms
 		events.emplace_back(BoolPair<bool>(false, false));
 
 		for (size_t i = 0; i < 3; i++)
-			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF,
-										Color::Name::ENDEAVOUR);
+			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF, Color::Name::ENDEAVOUR);
 
 		for (size_t i = 0; i < 3; i++)
 			event_date[i] = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::WHITE);
@@ -67,7 +66,7 @@ namespace ms
 		label_next = main["label_next"]["0"];
 
 		slider = Slider(
-				Slider::Type::DEFAULT, Range<int16_t>(86, 449), 396, 3, event_count,
+				Slider::Type::DEFAULT_SILVER, Range<int16_t>(86, 449), 396, 3, event_count,
 				[&](bool upwards)
 				{
 					int16_t shift = upwards ? -1 : 1;
@@ -110,7 +109,7 @@ namespace ms
 
 				for (size_t f = 0; f < 5; f++)
 				{
-					const ItemData &item_data = ItemData::get(2000000 + f);
+					const ItemData& item_data = ItemData::get(2000000 + f);
 					Texture icon = item_data.get_icon(true);
 
 					if (f == 2)
@@ -122,7 +121,8 @@ namespace ms
 
 					icon.draw(position + Point<int16_t>(33 + x_adj + 46 * f, 191 + 125 * i));
 				}
-			} else
+			}
+			else
 			{
 				text_reward.draw(position + event_pos);
 

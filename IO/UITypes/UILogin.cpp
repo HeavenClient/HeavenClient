@@ -16,15 +16,17 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UILogin.h"
-#include "UILoginwait.h"
+
 #include "UILoginNotice.h"
+#include "UILoginWait.h"
 
 #include "../UI.h"
 
 #include "../Components/MapleButton.h"
-#include "../Audio/Audio.h"
 
-#include "../Net/Packets/LoginPackets.h"
+#include "../../Audio/Audio.h"
+
+#include "../../Net/Packets/LoginPackets.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -36,6 +38,8 @@ namespace ms
 {
 	UILogin::UILogin() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600))
 	{
+		LoginStartPacket().dispatch();
+
 		Music("BgmUI.img/Title").play();
 
 		std::string version_text = Configuration::get().get_version();
@@ -129,16 +133,15 @@ namespace ms
 
 		if (Configuration::get().get_auto_login())
 		{
-			UI::get().emplace<UILoginwait>([]()
-										   {});
+			UI::get().emplace<UILoginWait>([]() {});
 
-			auto loginwait = UI::get().get_element<UILoginwait>();
+			auto loginwait = UI::get().get_element<UILoginWait>();
 
 			if (loginwait && loginwait->is_active())
 				LoginPacket(
-						Configuration::get().get_auto_acc(),
-						Configuration::get().get_auto_pass()
-				).dispatch();
+					Configuration::get().get_auto_acc(),
+					Configuration::get().get_auto_pass()
+					).dispatch();
 		}
 	}
 
@@ -198,9 +201,9 @@ namespace ms
 			return;
 		}
 
-		UI::get().emplace<UILoginwait>(okhandler);
+		UI::get().emplace<UILoginWait>(okhandler);
 
-		auto loginwait = UI::get().get_element<UILoginwait>();
+		auto loginwait = UI::get().get_element<UILoginWait>();
 
 		if (loginwait && loginwait->is_active())
 			LoginPacket(account_text, password_text).dispatch();

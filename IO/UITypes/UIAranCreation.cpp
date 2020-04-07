@@ -15,21 +15,22 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#pragma once
-
 #include "UIAranCreation.h"
-#include "UIRaceSelect.h"
-#include "UILoginNotice.h"
+
 #include "UICharSelect.h"
+#include "UILoginNotice.h"
+#include "UIRaceSelect.h"
 
 #include "../UI.h"
-#include "../Configuration.h"
 
 #include "../Components/MapleButton.h"
-#include "../Data/ItemData.h"
-#include "../Audio/Audio.h"
 
-#include "../Net/Packets/CharCreationPackets.h"
+#include "../../Configuration.h"
+
+#include "../../Audio/Audio.h"
+#include "../../Data/ItemData.h"
+
+#include "../../Net/Packets/CharCreationPackets.h"
 
 #include <nlnx/nx.hpp>
 
@@ -573,13 +574,13 @@ namespace ms
 		bodyname.change_text(newchar.get_body()->get_name());
 		facename.change_text(newchar.get_face()->get_name());
 		hairname.change_text(newchar.get_hair()->get_name());
-		topname.change_text(get_equipname(Equipslot::Id::TOP));
-		botname.change_text(get_equipname(Equipslot::Id::BOTTOM));
-		shoename.change_text(get_equipname(Equipslot::Id::SHOES));
-		wepname.change_text(get_equipname(Equipslot::Id::WEAPON));
+		topname.change_text(get_equipname(EquipSlot::Id::TOP));
+		botname.change_text(get_equipname(EquipSlot::Id::BOTTOM));
+		shoename.change_text(get_equipname(EquipSlot::Id::SHOES));
+		wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 	}
 
-	const std::string &UIAranCreation::get_equipname(Equipslot::Id slot) const
+	const std::string &UIAranCreation::get_equipname(EquipSlot::Id slot) const
 	{
 		if (int32_t item_id = newchar.get_equips().get_equip(slot))
 		{

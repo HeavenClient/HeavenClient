@@ -38,7 +38,7 @@ namespace ms
 		{
 			std::string VScr = "VScr";
 
-			if (type != Type::BLUE)
+			if (type != Type::LINE_CYAN)
 				VScr += std::to_string(type);
 
 			src = nl::nx::ui["Basic.img"][VScr];
@@ -112,29 +112,42 @@ namespace ms
 			rowheight = 0;
 	}
 
+	Range<int16_t> Slider::getvertical() const
+	{
+		return vertical;
+	}
+
 	void Slider::draw(Point<int16_t> position) const
 	{
 		Point<int16_t> base_pos = position + start;
 		Point<int16_t> fill = Point<int16_t>(0, vertical.length() + buttonheight - 2);
 		DrawArgument base_arg = DrawArgument(Point<int16_t>(base_pos.x(), base_pos.y() + 1), fill);
 
+		int16_t height = dbase.height();
+		int16_t maxheight = vertical.first() + height;
+
+		while (maxheight < vertical.second())
+		{
+			dbase.draw(position + Point<int16_t>(start.x(), maxheight));
+
+			maxheight += height;
+		}
+
 		if (enabled)
 		{
 			if (rowheight > 0)
 			{
-				base.draw(base_arg);
-				thumb.draw(position + getthumbpos());
 				prev.draw(position);
 				next.draw(position);
-			} else
+				thumb.draw(position + getthumbpos());
+			}
+			else
 			{
-				dbase.draw(base_arg);
 				dprev.draw(position + start);
 				dnext.draw(position + end);
 			}
 		} else
 		{
-			dbase.draw(base_arg);
 			dprev.draw(position + start);
 			dnext.draw(position + end);
 		}

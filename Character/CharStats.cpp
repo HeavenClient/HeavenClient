@@ -16,6 +16,7 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "CharStats.h"
+
 #include "StatCaps.h"
 
 namespace ms
@@ -24,7 +25,8 @@ namespace ms
 												portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats),
 												female(s.female)
 	{
-		job = basestats[Maplestat::Id::JOB];
+		job = basestats[MapleStat::Id::JOB];
+
 		init_totalstats();
 	}
 
@@ -37,14 +39,14 @@ namespace ms
 		buffdeltas.clear();
 		percentages.clear();
 
-		totalstats[Equipstat::Id::HP] = get_stat(Maplestat::Id::MAXHP);
-		totalstats[Equipstat::Id::MP] = get_stat(Maplestat::Id::MAXMP);
-		totalstats[Equipstat::Id::STR] = get_stat(Maplestat::Id::STR);
-		totalstats[Equipstat::Id::DEX] = get_stat(Maplestat::Id::DEX);
-		totalstats[Equipstat::Id::INT] = get_stat(Maplestat::Id::INT);
-		totalstats[Equipstat::Id::LUK] = get_stat(Maplestat::Id::LUK);
-		totalstats[Equipstat::Id::SPEED] = 100;
-		totalstats[Equipstat::Id::JUMP] = 100;
+		totalstats[EquipStat::Id::HP] = get_stat(MapleStat::Id::MAXHP);
+		totalstats[EquipStat::Id::MP] = get_stat(MapleStat::Id::MAXMP);
+		totalstats[EquipStat::Id::STR] = get_stat(MapleStat::Id::STR);
+		totalstats[EquipStat::Id::DEX] = get_stat(MapleStat::Id::DEX);
+		totalstats[EquipStat::Id::INT] = get_stat(MapleStat::Id::INT);
+		totalstats[EquipStat::Id::LUK] = get_stat(MapleStat::Id::LUK);
+		totalstats[EquipStat::Id::SPEED] = 100;
+		totalstats[EquipStat::Id::JUMP] = 100;
 
 		maxdamage = 0;
 		mindamage = 0;
@@ -65,11 +67,11 @@ namespace ms
 
 	void CharStats::close_totalstats()
 	{
-		totalstats[Equipstat::Id::ACC] += calculateaccuracy();
+		totalstats[EquipStat::Id::ACC] += calculateaccuracy();
 
 		for (auto iter : percentages)
 		{
-			Equipstat::Id stat = iter.first;
+			EquipStat::Id stat = iter.first;
 			int32_t total = totalstats[stat];
 			total += static_cast<int32_t>(total * iter.second);
 			set_total(stat, total);
@@ -77,7 +79,7 @@ namespace ms
 
 		int32_t primary = get_primary_stat();
 		int32_t secondary = get_secondary_stat();
-		int32_t attack = get_total(Equipstat::Id::WATK);
+		int32_t attack = get_total(EquipStat::Id::WATK);
 		float multiplier = damagepercent + static_cast<float>(attack) / 100;
 		maxdamage = static_cast<int32_t>((primary + secondary) * multiplier);
 		mindamage = static_cast<int32_t>(((primary * 0.9f * mastery) + secondary) * multiplier);
@@ -85,22 +87,22 @@ namespace ms
 
 	int32_t CharStats::calculateaccuracy() const
 	{
-		int32_t totaldex = get_total(Equipstat::Id::DEX);
-		int32_t totalluk = get_total(Equipstat::Id::LUK);
+		int32_t totaldex = get_total(EquipStat::Id::DEX);
+		int32_t totalluk = get_total(EquipStat::Id::LUK);
 
 		return static_cast<int32_t>(totaldex * 0.8f + totalluk * 0.5f);
 	}
 
 	int32_t CharStats::get_primary_stat() const
 	{
-		Equipstat::Id primary = job.get_primary(weapontype);
+		EquipStat::Id primary = job.get_primary(weapontype);
 
 		return static_cast<int32_t>(get_multiplier() * get_total(primary));
 	}
 
 	int32_t CharStats::get_secondary_stat() const
 	{
-		Equipstat::Id secondary = job.get_secondary(weapontype);
+		EquipStat::Id secondary = job.get_secondary(weapontype);
 
 		return get_total(secondary);
 	}
@@ -137,12 +139,12 @@ namespace ms
 		}
 	}
 
-	void CharStats::set_stat(Maplestat::Id stat, uint16_t value)
+	void CharStats::set_stat(MapleStat::Id stat, uint16_t value)
 	{
 		basestats[stat] = value;
 	}
 
-	void CharStats::set_total(Equipstat::Id stat, int32_t value)
+	void CharStats::set_total(EquipStat::Id stat, int32_t value)
 	{
 		auto iter = EQSTAT_CAPS.find(stat);
 
@@ -157,20 +159,20 @@ namespace ms
 		totalstats[stat] = value;
 	}
 
-	void CharStats::add_buff(Equipstat::Id stat, int32_t value)
+	void CharStats::add_buff(EquipStat::Id stat, int32_t value)
 	{
 		int32_t current = get_total(stat);
 		set_total(stat, current + value);
 		buffdeltas[stat] += value;
 	}
 
-	void CharStats::add_value(Equipstat::Id stat, int32_t value)
+	void CharStats::add_value(EquipStat::Id stat, int32_t value)
 	{
 		int32_t current = get_total(stat);
 		set_total(stat, current + value);
 	}
 
-	void CharStats::add_percent(Equipstat::Id stat, float percent)
+	void CharStats::add_percent(EquipStat::Id stat, float percent)
 	{
 		percentages[stat] += percent;
 	}
@@ -207,14 +209,14 @@ namespace ms
 
 	void CharStats::change_job(uint16_t id)
 	{
-		basestats[Maplestat::Id::JOB] = id;
+		basestats[MapleStat::Id::JOB] = id;
 		job.change_job(id);
 	}
 
 	int32_t CharStats::calculate_damage(int32_t mobatk) const
 	{
-		// TODO: Random stuff, need to find the actual formula somewhere
-		auto weapon_def = get_total(Equipstat::Id::WDEF);
+		// TODO: Random stuff, need to find the actual formula somewhere.
+		auto weapon_def = get_total(EquipStat::Id::WDEF);
 
 		if (weapon_def == 0)
 			return mobatk;
@@ -226,20 +228,20 @@ namespace ms
 
 	bool CharStats::is_damage_buffed() const
 	{
-		return get_buffdelta(Equipstat::Id::WATK) > 0 || get_buffdelta(Equipstat::Id::MAGIC) > 0;
+		return get_buffdelta(EquipStat::Id::WATK) > 0 || get_buffdelta(EquipStat::Id::MAGIC) > 0;
 	}
 
-	uint16_t CharStats::get_stat(Maplestat::Id stat) const
+	uint16_t CharStats::get_stat(MapleStat::Id stat) const
 	{
 		return basestats[stat];
 	}
 
-	int32_t CharStats::get_total(Equipstat::Id stat) const
+	int32_t CharStats::get_total(EquipStat::Id stat) const
 	{
 		return totalstats[stat];
 	}
 
-	int32_t CharStats::get_buffdelta(Equipstat::Id stat) const
+	int32_t CharStats::get_buffdelta(EquipStat::Id stat) const
 	{
 		return buffdeltas[stat];
 	}

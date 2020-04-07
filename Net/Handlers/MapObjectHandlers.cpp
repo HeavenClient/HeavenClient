@@ -20,9 +20,7 @@
 #include "Helpers/LoginParser.h"
 #include "Helpers/MovementParser.h"
 
-#include "../Audio/Audio.h"
-#include "../Gameplay/Stage.h"
-#include "../Gameplay/Spawn.h"
+#include "../../Gameplay/Stage.h"
 
 namespace ms
 {
@@ -314,7 +312,7 @@ namespace ms
 	{
 		int32_t oid = recv.read_int();
 		int8_t hppercent = recv.read_byte();
-		uint16_t playerlevel = Stage::get().get_player().get_stats().get_stat(Maplestat::LEVEL);
+		uint16_t playerlevel = Stage::get().get_player().get_stats().get_stat(MapleStat::Id::LEVEL);
 
 		Stage::get().get_mobs().send_mobhp(oid, hppercent, playerlevel);
 	}
@@ -427,7 +425,7 @@ namespace ms
 		Point<int16_t> point = recv.read_point();
 		int8_t stance = recv.read_byte(); // TODO: When is this different than state?
 		recv.skip(2); // TODO: Unused
-		recv.skip(1); // "frame" delay but this is in the wz file?
+		recv.skip(1); // "frame" delay but this is in the WZ file?
 
 		Stage::get().get_reactors().trigger(oid, state);
 	}
