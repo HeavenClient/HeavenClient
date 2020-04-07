@@ -4,7 +4,7 @@ project(HeavenClient)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(.)
-#include_directories(Audio)
+include_directories(Audio)
 include_directories(Character)
 include_directories(Character/Inventory)
 include_directories(Character/Look)
@@ -438,10 +438,9 @@ add_executable(HeavenClient
         resource.h
         Timer.h Audio/membuf.cpp Audio/membuf.h)
 
-target_link_libraries(HeavenClient /home/rich/HeavenClient/HeavenClient/nlnx/build/libNoLifeNx.a)
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/nlnx)
-#target_link_libraries(HeavenClient /home/rich/HeavenClient/HeavenClient/nlnx/)
-target_link_libraries(HeavenClient lz4)
+target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/NoLifeNx/build/libNoLifeNx.a)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/NoLifeNx)
+target_link_libraries(HeavenClient ${PROJECT_SOURCE_DIR}/libs/lz4/lz4)
 
 INCLUDE(FindFreetype)
 IF(NOT FREETYPE_FOUND)
@@ -451,22 +450,22 @@ ENDIF(NOT FREETYPE_FOUND)
 INCLUDE_DIRECTORIES(${FREETYPE_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(HeavenClient ${FREETYPE_LIBRARIES})
 
-TARGET_LINK_LIBRARIES(HeavenClient "${PROJECT_SOURCE_DIR}/libs/glad/build/libglad.a")
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glad/build/libglad.a)
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glad/build/include)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/glfw-3.3.2)
-target_link_libraries(HeavenClient glfw3)
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/glfw/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/glfw/build/src/libglfw3.a)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC /home/rich/openal-soft/include)
-TARGET_LINK_LIBRARIES(HeavenClient "/home/rich/openal-soft/build/libopenal.so")
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/openal-soft/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/openal-soft/build/libopenal.so)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC /home/rich/alure/include)
-TARGET_LINK_LIBRARIES(HeavenClient "/home/rich/alure/build/libalure2.so")
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/alure/include)
+TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}}/libs/alure/build/libalure2.so)
+
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/libs/stb)
 
 target_link_libraries(HeavenClient GL)
-#target_link_libraries(HeavenClient GLEW)
 target_link_libraries(HeavenClient X11)
 target_link_libraries(HeavenClient dl)
 target_link_libraries(HeavenClient pthread)
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}}/stb)
 
