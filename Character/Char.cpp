@@ -23,7 +23,7 @@
 
 namespace ms
 {
-	Char::Char(int32_t o, const CharLook &lk, const std::string &name) : MapObject(o), look(lk), namelabel(
+	Char::Char(int32_t o, const CharLook &lk, const std::string &name) : MapObject(o), look(lk), look_preview(lk), namelabel(
 			Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name))
 	{}
 
