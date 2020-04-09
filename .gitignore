@@ -1,4 +1,5 @@
 /.vs
+/.vscode
 /x64
 
 *.nx
@@ -12,3 +13,11 @@ Settings
 /includes/**/*.vcxproj*
 /includes/**/*.txt
 /includes/**/*.gitignore
+
+# Builds
+build/
+libs/NoLifeNx/
+libs/alure/
+libs/asio/
+libs/glfw/
+libs/openal-soft/

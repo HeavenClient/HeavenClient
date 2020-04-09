@@ -472,6 +472,8 @@ TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/alure/build/libalu
 
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/stb)
 
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/asio/asio/include)
+
 target_link_libraries(HeavenClient GL)
 target_link_libraries(HeavenClient X11)
 target_link_libraries(HeavenClient dl)
