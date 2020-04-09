@@ -14,6 +14,8 @@ The build can be configured by editing the **MapleStory.h** file. The following 
 The default settings can be configured by editing the **Configuration.h** file. These are also generated after a game session in a file called **Settings**. These can be altered in the same way as **Configuration.h**, although, these do not persist if you delete the file, unlike **Configuration.h**.
 
 # Building
+*After cloning you need to check out the linux branch! To do so run ```git checkout linux``` in your HeavenClient directory.*
+
 1. Run ```./build-deps.sh```. We try to build each dependency from source -- if any dependencies fail to build, you could try and find the corresponding package for your linux distro if it exists.
 2. ```mkdir build```
 3. ```cd build```
