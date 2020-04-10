@@ -77,14 +77,13 @@ One can refer to the shell scripts written within the Vagrantfile to get an insi
 
 All ssh commands must be run on a shell within context of the HeavenClient directory (this project)
 
-1. ```vagrant up --provision```
-2. ```vagrant halt```
-3. ```vagrant up```
-4. Login to the GUI via the virtualbox window with default vagrant credentials - vagrant:vagrant
+1. ```vagrant up```
+2. Login to the desktop environment via the virtualbox window with default vagrant credentials (vagrant:vagrant) - once the bootstrap script has completed execution
    1. This is required to start up desktop environment (xfce)
-5. ```vagrant ssh -- -R 8484:localhost:8484 -R 7575:localhost:7575 -R 7576:localhost:7576 -R 7577:localhost:7577```
+3. ```vagrant ssh -- -R 8484:localhost:8484 -R 7575:localhost:7575 -R 7576:localhost:7576 -R 7577:localhost:7577```
    1. We SSH into the VM with reverse port-forwarding; this allows us to run/dev our [server](https://github.com/ronancpl/HeavenMS) on the host machine while allowing the client to connect to it and run on the VM
-6. ```/home/vagrant/Desktop/HeavenClient/build/HeavenClient```
+4. ```cd /home/vagrant/Desktop/HeavenClient/build/```
+5. ```./HeavenClient```
 
 Note: To run the HeavenClient from the build directory; all the [relevant **.nx** files](./Util/NxFiles.h) must be available within the linux build directory
 
