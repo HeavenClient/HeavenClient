@@ -21,3 +21,6 @@ libs/alure/
 libs/asio/
 libs/glfw/
 libs/openal-soft/
+
+# Vagrant
+.vagrant/
