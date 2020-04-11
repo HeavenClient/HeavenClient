@@ -1,6 +1,7 @@
 /.vs
 /.vscode
 /x64
+.DS_store
 
 *.nx
 *.aps
