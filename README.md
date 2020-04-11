@@ -67,6 +67,63 @@ Note: These steps are not applicable to linux
 
 ---
 
+## Docker Setup - web-vnc
+
+A [Dockerfile](./Dockerfile) has been included in the repo to simulate a complete HeaventClient setup on a linux ubuntu/bionic OS.
+
+The Docker setup utilizes [fcwu/docker-ubuntu-vnc-desktop](https://github.com/fcwu/docker-ubuntu-vnc-desktop) **web-based lxde VNC** solution to output HeavenClient GUI on a web browser at port **6080**.
+
+This allows the host to rely on minimal dependencies (other than nx files) for running HeavenClient.
+
+### Docker Pre-requisites
+
+- All [relevant](./Util/NxFiles.h) **.nx** files must be located in the **nx** directory
+- A [Settings](./Settings) file must be present in project root - instructions to create this [below](#building--runnning-client)
+  - This gives user ability to configure HeavenClient outside the container - on the host
+- Relevant audio passthrough device must be installed on the host
+  - Mac: [pulseaudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
+  - Linux: [snd-aloop](./https://www.alsa-project.org/wiki/Matrix:Module-aloop)
+- [HeavenMS](https://github.com/ronancpl/HeavenMS) server running at port 8484 on host machine
+
+### Installing sound passthrough device
+
+#### Mac
+
+```sh
+# Install pulseaudio
+brew install pulseaudio
+
+# Run pulseaudio daemon
+pulseaudio --load=module-native-protocol-tcp --exit-idle-time=-1 --daemon
+```
+
+Note: To stop sound passthrough daemon: ```pulseaudio --kill```
+
+#### Linux
+
+```sh
+# Insert kernel module snd-aloop and specify 2 as the index of sound loop device
+sudo modprobe snd-aloop index=2
+```
+
+### Building & Runnning Client
+
+1. Create Settings with server ip pointing to host
+   1. ```echo "ServerIP = host.docker.internal" > Settings```
+2. Build & Run container for your OS
+   1. Mac:
+      1. ```docker-compose -f docker-compose.yml -f docker-compose.mac.yml up --build```
+   2. Linux:
+      1. ```docker-compose -f docker-compose.yml -f docker-compose.linux.yml up --build```
+3. Run HeavenClient in the browser GUI at [localhost:6080](http://localhost:6080) by double clicking the HeavenClient icon
+
+</br>
+Note: If the client fails to startup, then it is very likely something went wrong with the setup. The link doesn't show errors hence you will have to use the **LXTerminal** within the web-based GUI to run the client manually.
+
+- The HeaventClient binary is located within the **/root** folder of the container
+
+---
+
 ## Donations
 
 If you feel obligated to donate, to further help and support all parties involved in the development of the HeavenClient project, you can donate using [this](https://paypal.me/pools/c/8frYNoobcY) link.
