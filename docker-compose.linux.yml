@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  heavenclient:
+    environment:
+      ALSADEV: hw:2,0
+    devices: 
+      - /dev/snd:/dev/snd
