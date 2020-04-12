@@ -32,6 +32,8 @@
 #include "../Gameplay/MapleMap/Layer.h"
 #include "../Gameplay/MapleMap/MapInfo.h"
 
+#include <ctime>
+
 namespace ms
 {
 	class Player : public Playable, public Char
@@ -141,6 +143,12 @@ namespace ms
 		TeleportRock& get_teleportrock();
 		// Obtain a reference to the player's MonsterBook
 		MonsterBook& get_monsterbook();
+		
+		// Update timestamp of a jump for disabling climbing
+		void mark_jump_for_cooldown();
+
+		// Check if a jump was recently performed to disable climbing
+		bool is_jump_cooldown();
 
 	private:
 		CharStats stats;
@@ -165,5 +173,7 @@ namespace ms
 		Optional<const Ladder> ladder;
 
 		bool underwater;
+
+		std::time_t last_jump;
 	};
 }

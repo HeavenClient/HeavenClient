@@ -17,6 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "PlayerStates.h"
 
+
 namespace ms
 {
 	// Base class
@@ -134,12 +135,19 @@ namespace ms
 				player.set_direction(true);
 				break;
 			case KeyAction::Id::JUMP:
-				play_jumpsound();
-				player.get_phobj().vforce = -player.get_jumpforce();
-				break;
-			case KeyAction::Id::DOWN:
-				player.set_state(Char::State::PRONE);
-				break;
+				if (player.get_phobj().enablejd && player.is_key_down(KeyAction::Id::DOWN))
+				{
+					play_jumpsound();
+					player.get_phobj().y = player.get_phobj().groundbelow;
+					player.get_phobj().hspeed = 0.0;
+					player.set_state(Char::State::FALL);
+				}
+				else 
+                {
+					play_jumpsound();
+					player.get_phobj().vforce = -player.get_jumpforce();
+					break;
+				}
 			}
 		}
 	}
@@ -385,6 +393,7 @@ namespace ms
 			case KeyAction::Id::JUMP:
 				if (player.is_key_down(KeyAction::Id::LEFT))
 				{
+					player.mark_jump_for_cooldown();
 					play_jumpsound();
 					player.set_direction(false);
 					player.get_phobj().hspeed = -player.get_walkforce() * 8.0;
@@ -393,6 +402,7 @@ namespace ms
 				}
 				else if (player.is_key_down(KeyAction::Id::RIGHT))
 				{
+					player.mark_jump_for_cooldown();
 					play_jumpsound();
 					player.set_direction(true);
 					player.get_phobj().hspeed = player.get_walkforce() * 8.0;

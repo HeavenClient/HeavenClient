@@ -155,6 +155,22 @@ namespace ms
 		portals.update(player.get_position());
 		camera.update(player.get_position());
 
+        // Check if player is currently aligned with a ladder and is attempting to hold on
+		if (!player.is_climbing() && player.is_key_down(KeyAction::Id::UP) && !player.is_jump_cooldown()) {
+			Optional<const Ladder> ladder = mapinfo.findladder(player.get_position(), true);
+			if (ladder) {
+				player.set_ladder(ladder);
+			}
+		}
+
+        // Check if player is currently aligned with a ladder and is attempting to hold on - this time for down
+		if (!player.is_climbing() && player.is_key_down(KeyAction::Id::DOWN) && !player.is_jump_cooldown()) {
+			Optional<const Ladder> ladder = mapinfo.findladder(player.get_position(), false);
+			if (ladder) {
+				player.set_ladder(ladder);
+			}
+		}
+		
 		if (player.is_invincible())
 			return;
 

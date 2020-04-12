@@ -26,6 +26,8 @@
 #include "../Net/Packets/GameplayPackets.h"
 #include "../Net/Packets/InventoryPackets.h"
 
+#include <ctime>
+
 namespace ms
 {
 	const PlayerNullState nullstate;
@@ -66,6 +68,7 @@ namespace ms
 	{
 		attacking = false;
 		underwater = false;
+		last_jump = (std::time_t)(-1);
 
 		set_state(Char::State::STAND);
 		set_direction(true);
@@ -516,5 +519,16 @@ namespace ms
 	Optional<const Ladder> Player::get_ladder() const
 	{
 		return ladder;
+	}
+
+	void Player::mark_jump_for_cooldown()
+	{
+		last_jump = std::time(nullptr);
+	}
+
+	bool Player::is_jump_cooldown()
+	{
+		std::time_t current_time = std::time(nullptr);
+		return (current_time - last_jump) < 1;
 	}
 }
