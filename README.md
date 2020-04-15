@@ -110,6 +110,7 @@ sudo modprobe snd-aloop index=2
 
 1. Create Settings with server ip pointing to host
    1. ```echo "ServerIP = host.docker.internal" > Settings```
+      1. This allows the HeavenClient application within the container to point to the running hosts IP (on which the server will be running)
 2. Build & Run container for your OS
    1. Mac:
       1. ```docker-compose -f docker-compose.yml -f docker-compose.mac.yml up --build```
