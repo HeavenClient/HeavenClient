@@ -122,6 +122,8 @@ sudo modprobe snd-aloop index=2
 Note: If the client fails to startup, then it is very likely something went wrong with the setup. The link doesn't show errors hence you will have to use the **LXTerminal** within the web-based GUI to run the client manually.
 
 - The HeaventClient binary is located within the **/root** folder of the container
+- You may need to restart your browser before trying to run the game after applying any fixes
+- You need to ```docker-compose down``` if you move your **.nx** files into the **nx/** difectory post container start-up (since symlinks are generated only when starting up fresh container)
 
 ---
 
