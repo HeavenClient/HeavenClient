@@ -2,7 +2,7 @@
 set -ex
 
 SOURCE_DIR=${PWD}
-CORES=4
+CORES=$(nproc)
 
 
 # build alure

@@ -27,6 +27,8 @@ The default settings can be configured by editing the **Configuration.h** file. 
 4. ```cmake ..```
 5. ```make -j$CORES``` where $CORES is your number of CPU cores
 
+This will always be the option with the most performance, but if you are using Mac / are having issues, try out the [Vagrant](vagrant-setup) or [Docker](#docker-setup---web-vnc) setups. 
+
 ## Required Files
 
 *Always check **NxFiles.h** for an updated list of required nx files*
@@ -88,6 +90,64 @@ All ssh commands must be run on a shell within context of the HeavenClient direc
 Note: To run the HeavenClient from the build directory; all the [relevant **.nx** files](./Util/NxFiles.h) must be available within the linux build directory
 
 Tip: Since the binary is built on the VM with a mounted/shared volume; the binary is also available/usable by a linux host
+
+## Docker Setup - web-vnc
+
+A [Dockerfile](./Dockerfile) has been included in the repo to simulate a complete HeaventClient setup on a linux ubuntu/bionic OS.
+
+The Docker setup utilizes [fcwu/docker-ubuntu-vnc-desktop](https://github.com/fcwu/docker-ubuntu-vnc-desktop) **web-based lxde VNC** solution to output HeavenClient GUI on a web browser at port **6080**.
+
+This allows the host to rely on minimal dependencies (other than nx files) for running HeavenClient.
+
+### Docker Pre-requisites
+
+- All [relevant](./Util/NxFiles.h) **.nx** files must be located in the **nx** directory
+- A [Settings](./Settings) file must be present in project root - instructions to create this [below](#building--runnning-client)
+  - This gives user ability to configure HeavenClient outside the container - on the host
+- Relevant audio passthrough device must be installed on the host
+  - Mac: [pulseaudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
+  - Linux: [snd-aloop](./https://www.alsa-project.org/wiki/Matrix:Module-aloop)
+- [HeavenMS](https://github.com/ronancpl/HeavenMS) server running at port 8484 on host machine
+
+### Installing sound passthrough device
+
+#### Mac
+
+```sh
+# Install pulseaudio
+brew install pulseaudio
+
+# Run pulseaudio daemon
+pulseaudio --load=module-native-protocol-tcp --exit-idle-time=-1 --daemon
+```
+
+Note: To stop sound passthrough daemon: ```pulseaudio --kill```
+
+#### Linux
+
+```sh
+# Insert kernel module snd-aloop and specify 2 as the index of sound loop device
+sudo modprobe snd-aloop index=2
+```
+
+### Building & Runnning Client
+
+1. Create Settings with server ip pointing to host
+   1. ```echo "ServerIP = host.docker.internal" > Settings```
+      1. This allows the HeavenClient application within the container to point to the running hosts IP (on which the server will be running)
+2. Build & Run container for your OS
+   1. Mac:
+      1. ```docker-compose -f docker-compose.yml -f docker-compose.mac.yml up --build```
+   2. Linux:
+      1. ```docker-compose -f docker-compose.yml -f docker-compose.linux.yml up --build```
+3. Run HeavenClient in the browser GUI at [localhost:6080](http://localhost:6080) by double clicking the HeavenClient icon
+
+</br>
+Note: If the client fails to startup, then it is very likely something went wrong with the setup. The link doesn't show errors hence you will have to use the **LXTerminal** within the web-based GUI to run the client manually.
+
+- The HeaventClient binary is located within the **/root** folder of the container
+- You may need to restart your browser before trying to run the game after applying any fixes
+- You need to ```docker-compose down``` if you move your **.nx** files into the **nx/** difectory post container start-up (since symlinks are generated only when starting up fresh container)
 
 ---
 

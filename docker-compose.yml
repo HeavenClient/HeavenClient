@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  heavenclient:
+    build: .
+    container_name: heavenclient
+    volumes:
+      - ./nx/:/root/nx/
+      - ./Settings:/root/Settings
+    ports:
+      - 6080:80

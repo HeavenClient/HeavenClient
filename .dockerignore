@@ -1,12 +1,13 @@
 /.vs
 /.vscode
 /x64
-.DS_store
+.DS_Store
 
-*.nx
+**.nx
 *.aps
 *.log
 *.tlog
+.git/
 
 Settings
 
@@ -17,11 +18,15 @@ Settings
 
 # Builds
 build/
-libs/NoLifeNx/
 libs/alure/
-libs/asio/
-libs/glfw/
 libs/openal-soft/
+libs/glad/build/
+libs/NoLifeNx/
+libs/glfw/
+libs/asio/
 
 # Vagrant
 .vagrant/
+
+# NX file dir
+nx/
