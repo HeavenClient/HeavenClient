@@ -4,8 +4,9 @@ set -ex
 SOURCE_DIR=${PWD}
 CORES=$(nproc)
 
+mkdir -p libs
 
-# build alure
+# fetch & build alure
 if [[
     ! -d "libs/alure/include" ||
     ! -f "libs/alure/build/libalure2.so" 
@@ -23,7 +24,7 @@ if [[
 fi
 
 
-# build openal-soft 
+# fetch & build openal-soft
 if [[
     ! -d "libs/openal-soft/include" ||
     ! -f "libs/openal-soft/build/libopenal.so"
@@ -42,14 +43,15 @@ if [[
 fi
 
 
-# build glad
+# fetch & build glad
 if [[
     ! -d "libs/glad/build/include" ||
     ! -f "libs/glad/build/libglad.a"
 ]]; then
-    rm -rf "libs/glad/build"
-    echo "building glad..."
+    rm -rf "libs/glad"
+    echo "fetching and building glad..."
     cd libs && \
+    git clone https://github.com/Dav1dde/glad.git && \
     cd glad && \
     mkdir build && \
     cd build && \
@@ -59,19 +61,21 @@ if [[
     cd $SOURCE_DIR
 fi
 
-
-# build lz4
+# fetch & build lz4
 if [[
     ! -f "libs/lz4/lib/liblz4.a"
 ]]; then
-    echo "building lz4..."
-    cd libs/lz4 && \
+    rm -rf "libs/lz4"
+    echo "fetching and building lz4..."
+    cd libs && \
+    git clone https://github.com/lz4/lz4.git && \
+    cd lz4 && \
     make -j$CORES && \
     echo "successfully compiled lz4"
     cd $SOURCE_DIR
 fi
 
-# build NoLifeNx
+# fetch & build NoLifeNx
 if [[
     ! -f "libs/NoLifeNx/nlnx/build/libNoLifeNx.a"
 ]]; then
@@ -91,7 +95,7 @@ if [[
 fi
 
 
-# build glfw
+# fetch & build glfw
 if [[
     ! -d "libs/glfw/include" ||
     ! -f "libs/glfw/build/src/libglfw3.a"
@@ -120,6 +124,18 @@ if [[
     cd libs && \
     git clone https://github.com/chriskohlhoff/asio.git && \
     echo "successfully fetched asio"
+    cd $SOURCE_DIR
+fi
+
+# fetch stb
+if [[
+    ! -d "libs/stb"
+]]; then
+    rm -rf "libs/stb"
+    echo "fetching stb..."
+    cd libs && \
+    git clone https://github.com/nothings/stb.git && \
+    echo "successfully fetched stb"
     cd $SOURCE_DIR
 fi
 

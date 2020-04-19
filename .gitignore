@@ -21,11 +21,9 @@ Settings
 
 # Builds
 build/
-libs/NoLifeNx/
-libs/alure/
-libs/asio/
-libs/glfw/
-libs/openal-soft/
+
+# Libraries
+libs/
 
 # Vagrant
 .vagrant/
