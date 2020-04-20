@@ -34,7 +34,7 @@ RUN apt-get install -y \
 
 # Explicitly copying required files into container (optimize for docker caching)
 WORKDIR /tmp/HeavenClient/
-COPY *.cpp *.h Icon.* build-deps.sh CMakeLists.txt ./
+COPY *.cpp *.h Icon.* ./
 COPY Audio ./Audio
 COPY Character ./Character
 COPY Data ./Data
@@ -106,6 +106,7 @@ RUN git clone https://github.com/nothings/stb.git
 
 # Building HeavenClient
 WORKDIR /tmp/HeavenClient
+COPY CMakeLists.txt ./
 RUN mkdir build && \
   cd build && \
   cmake .. && \
