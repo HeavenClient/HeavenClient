@@ -27,7 +27,7 @@ The default settings can be configured by editing the **Configuration.h** file. 
 4. ```cmake ..```
 5. ```make -j$CORES``` where $CORES is your number of CPU cores
 
-This will always be the option with the most performance, but if you are using Mac / are having issues, try out the [Vagrant](vagrant-setup) or [Docker](#docker-setup---web-vnc) setups. 
+This will always be the option with the most performance, but if you are using Mac / are having issues, try out the [Vagrant](#vagrant-setup) or [Docker](#docker-setup---web-vnc) setups.
 
 ## Required Files
 
