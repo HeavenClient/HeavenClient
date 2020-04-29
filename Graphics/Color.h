@@ -24,6 +24,8 @@
 #else
 #define GLEW_STATIC
 #include <glew.h>
+#else
+#include <glad/glad.h>
 #endif
 
 #include <array>

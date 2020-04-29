@@ -25,7 +25,7 @@
 #include "../Util/WzFiles.h"
 #endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 #include <cmath>
 #endif
 
