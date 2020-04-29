@@ -463,21 +463,34 @@ TARGET_LINK_LIBRARIES(HeavenClient ${FREETYPE_LIBRARIES})
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glad/build/include)
 TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glad/build/libglad.a)
 
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glfw/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glfw/build/src/libglfw3.a)
-
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/openal-soft/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/openal-soft/build/libopenal.so)
-
-TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/alure/include)
-TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/alure/build/libalure2.so)
-
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/stb)
 
 TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/asio/asio/include)
 
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/openal-soft/include)
+IF(APPLE)
+    TARGET_LINK_LIBRARIES(HeavenClient /usr/local/Cellar/openal-soft/1.20.1/lib/libopenal.dylib)
+ELSE()
+    TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/openal-soft/build/libopenal.so)
+ENDIF()
+
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/glfw/include)
+IF(APPLE)
+    TARGET_LINK_LIBRARIES(HeavenClient /usr/local/Cellar/glfw/3.3.2/lib/libglfw.dylib)
+ELSE(APPLE)
+    TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/glfw/build/src/libglfw3.a)
+ENDIF()
+
+TARGET_INCLUDE_DIRECTORIES(HeavenClient PUBLIC ${PROJECT_SOURCE_DIR}/libs/alure/include)
+IF(APPLE)
+    TARGET_LINK_LIBRARIES(HeavenClient /usr/local/Cellar/alure/1.2_1/lib/libalure.dylib)
+ELSE()
+    TARGET_LINK_LIBRARIES(HeavenClient ${PROJECT_SOURCE_DIR}/libs/alure/build/libalure2.so)
+ENDIF()
+
 TARGET_LINK_LIBRARIES(HeavenClient GL)
 TARGET_LINK_LIBRARIES(HeavenClient X11)
-TARGET_LINK_LIBRARIES(HeavenClient dl)
-TARGET_LINK_LIBRARIES(HeavenClient pthread)
-
+IF(NOT APPLE)
+    TARGET_LINK_LIBRARIES(HeavenClient dl)
+    TARGET_LINK_LIBRARIES(HeavenClient pthread)
+ENDIF()

@@ -27,10 +27,8 @@
 //#include <stb_image.h>
 #ifdef WIN32
 #include <Windows.h>
-#elif __linux__
-
+#else
 #include "stb_image.h"
-
 #endif
 
 namespace ms

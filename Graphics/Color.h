@@ -17,10 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#ifdef __linux__
-#include <glad/glad.h>
-#elif
+#ifdef _WIN32
 #include <glew.h>
+#else
+#include <glad/glad.h>
 #endif
 
 #include <array>

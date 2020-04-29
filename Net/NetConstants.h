@@ -19,9 +19,7 @@
 
 #include <cstdint>
 
-#ifdef __linux__
 #include "unistd.h"
-#endif
 
 namespace ms
 {

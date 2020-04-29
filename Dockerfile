@@ -31,22 +31,6 @@ RUN apt-get install -y \
   xorg-dev \
   libgl1-mesa-dev
 
-
-# Explicitly copying required files into container (optimize for docker caching)
-WORKDIR /tmp/HeavenClient/
-COPY *.cpp *.h Icon.* ./
-COPY Audio ./Audio
-COPY Character ./Character
-COPY Data ./Data
-COPY Gameplay ./Gameplay
-COPY Graphics ./Graphics
-COPY IO ./IO
-COPY Net ./Net
-COPY Template ./Template
-COPY Util ./Util
-COPY fonts ./fonts
-
-
 # Build all HeavenClient dependencies
 WORKDIR /tmp/HeavenClient/libs
 
@@ -103,10 +87,21 @@ RUN git clone https://github.com/chriskohlhoff/asio.git
 # fetch stb
 RUN git clone https://github.com/nothings/stb.git
 
+# Explicitly copying required files into container (optimize for docker caching)
+WORKDIR /tmp/HeavenClient/
+COPY *.cpp *.h Icon.* CMakeLists.txt ./
+COPY Audio ./Audio
+COPY Character ./Character
+COPY Data ./Data
+COPY Gameplay ./Gameplay
+COPY Graphics ./Graphics
+COPY IO ./IO
+COPY Net ./Net
+COPY Template ./Template
+COPY Util ./Util
+COPY fonts ./fonts
 
-# Building HeavenClient
-WORKDIR /tmp/HeavenClient
-COPY CMakeLists.txt ./
+# Build HeavenClient
 RUN mkdir build && \
   cd build && \
   cmake .. && \

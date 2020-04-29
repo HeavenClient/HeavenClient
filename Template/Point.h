@@ -18,10 +18,7 @@
 #pragma once
 
 #include <nlnx/node.hpp>
-
-#ifdef __linux__
 #include <cmath>
-#endif
 
 namespace ms
 {
