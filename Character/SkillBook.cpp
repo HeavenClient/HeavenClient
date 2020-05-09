@@ -23,7 +23,7 @@ namespace ms
 {
 	void SkillBook::set_skill(int32_t id, int32_t level, int32_t mlevel, int64_t expire)
 	{
-		skillentries[id] = { level, mlevel, expire };
+		skillentries[id] = {level, mlevel, expire};
 	}
 
 	bool SkillBook::has_skill(int32_t id) const
@@ -65,7 +65,7 @@ namespace ms
 	{
 		std::map<int32_t, int32_t> passives;
 
-		for (auto& iter : skillentries)
+		for (auto &iter : skillentries)
 			if (SkillData::get(iter.first).is_passive())
 				passives.emplace(iter.first, iter.second.level);
 

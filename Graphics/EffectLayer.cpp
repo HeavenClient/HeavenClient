@@ -22,46 +22,46 @@ namespace ms
 	void EffectLayer::drawbelow(Point<int16_t> position, float alpha) const
 	{
 		for (auto iter = effects.begin(); iter != effects.upper_bound(-1); ++iter)
-			for (auto& effect : iter->second)
+			for (auto &effect : iter->second)
 				effect.draw(position, alpha);
 	}
 
 	void EffectLayer::drawabove(Point<int16_t> position, float alpha) const
 	{
 		for (auto iter = effects.upper_bound(-1); iter != effects.end(); ++iter)
-			for (auto& effect : iter->second)
+			for (auto &effect : iter->second)
 				effect.draw(position, alpha);
 	}
 
 	void EffectLayer::update()
 	{
-		for (auto& effectlist : effects)
+		for (auto &effectlist : effects)
 		{
 			effectlist.second.remove_if(
-				[](Effect& effect)
-				{
-					return effect.update();
-				}
+					[](Effect &effect)
+					{
+						return effect.update();
+					}
 			);
 		}
 	}
 
-	void EffectLayer::add(const Animation& animation, const DrawArgument& args, int8_t z, float speed)
+	void EffectLayer::add(const Animation &animation, const DrawArgument &args, int8_t z, float speed)
 	{
 		effects[z].emplace_back(animation, args, speed);
 	}
 
-	void EffectLayer::add(const Animation& animation, const DrawArgument& args, int8_t z)
+	void EffectLayer::add(const Animation &animation, const DrawArgument &args, int8_t z)
 	{
 		add(animation, args, z, 1.0f);
 	}
 
-	void EffectLayer::add(const Animation& animation, const DrawArgument& args)
+	void EffectLayer::add(const Animation &animation, const DrawArgument &args)
 	{
 		add(animation, args, 0, 1.0f);
 	}
 
-	void EffectLayer::add(const Animation& animation)
+	void EffectLayer::add(const Animation &animation)
 	{
 		add(animation, {}, 0, 1.0f);
 	}

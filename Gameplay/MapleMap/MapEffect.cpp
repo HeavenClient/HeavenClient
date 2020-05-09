@@ -36,7 +36,8 @@ namespace ms
 		position = Point<int16_t>(width / 2, 250);
 	}
 
-	MapEffect::MapEffect() {}
+	MapEffect::MapEffect()
+	{}
 
 	void MapEffect::draw() const
 	{

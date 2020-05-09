@@ -32,22 +32,30 @@ namespace ms
 		static constexpr bool FOCUSED = true;
 		static constexpr bool TOGGLED = true;
 
-		UIShop(const CharLook& charlook, const Inventory& inventory);
+		UIShop(const CharLook &charlook, const Inventory &inventory);
 
 		void draw(float alpha) const override;
+
 		void update() override;
 
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> position) override;
+
 		void send_scroll(double yoffset) override;
+
 		void rightclick(Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		void reset(int32_t npcid);
+
 		void add_item(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t buyable);
-		void add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice, int16_t buyable);
+
+		void
+		add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice, int16_t buyable);
 
 		void modify(InventoryType::Id type);
 
@@ -56,10 +64,15 @@ namespace ms
 
 	private:
 		void clear_tooltip();
+
 		void show_item(int16_t slot, bool sale);
+
 		void changeselltab(InventoryType::Id tab);
+
 		int16_t slot_by_position(int16_t y);
+
 		uint16_t tabbyinventory(InventoryType::Id type);
+
 		void exit_shop();
 
 		enum Buttons : int16_t
@@ -95,8 +108,8 @@ namespace ms
 			NUM_BUTTONS
 		};
 
-		const CharLook& charlook;
-		const Inventory& inventory;
+		const CharLook &charlook;
+		const Inventory &inventory;
 
 		Texture npc;
 		Texture buy_selection;
@@ -126,6 +139,7 @@ namespace ms
 			void draw(Point<int16_t> position) const;
 
 			int32_t get_id() const;
+
 			int16_t get_buyable() const;
 
 		private:
@@ -149,7 +163,9 @@ namespace ms
 			void draw(Point<int16_t> position) const;
 
 			int32_t get_id() const;
+
 			int16_t get_slot() const;
+
 			int16_t get_sellable() const;
 
 		private:
@@ -170,10 +186,15 @@ namespace ms
 			int16_t selection;
 
 			void reset();
-			void draw(Point<int16_t> position, const Texture& selected) const;
+
+			void draw(Point<int16_t> position, const Texture &selected) const;
+
 			void show_item(int16_t slot);
+
 			void add(BuyItem item);
+
 			void buy() const;
+
 			void select(int16_t selected);
 		};
 
@@ -188,10 +209,15 @@ namespace ms
 			int16_t selection;
 
 			void reset();
-			void change_tab(const Inventory& inventory, InventoryType::Id type, Texture meso);
-			void draw(Point<int16_t> position, const Texture& selected) const;
+
+			void change_tab(const Inventory &inventory, InventoryType::Id type, Texture meso);
+
+			void draw(Point<int16_t> position, const Texture &selected) const;
+
 			void show_item(int16_t slot);
+
 			void sell(bool skip_confirmation) const;
+
 			void select(int16_t selected);
 		};
 

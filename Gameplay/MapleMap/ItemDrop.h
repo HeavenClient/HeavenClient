@@ -26,12 +26,13 @@ namespace ms
 	class ItemDrop : public Drop
 	{
 	public:
-		ItemDrop(int32_t oid, int32_t owner, Point<int16_t> start, Point<int16_t> dest, int8_t type, int8_t mode, int32_t iid, bool playerdrop, const Texture& icon);
+		ItemDrop(int32_t oid, int32_t owner, Point<int16_t> start, Point<int16_t> dest, int8_t type, int8_t mode,
+				 int32_t iid, bool playerdrop, const Texture &icon);
 
 		void draw(double viewx, double viewy, float alpha) const override;
 
 	private:
-		const Texture& icon;
+		const Texture &icon;
 		int32_t itemid;
 	};
 }

@@ -19,14 +19,15 @@
 
 namespace ms
 {
-	void RegularAttack::apply_useeffects(Char&) const {}
+	void RegularAttack::apply_useeffects(Char &) const
+	{}
 
-	void RegularAttack::apply_actions(Char& user, Attack::Type type) const
+	void RegularAttack::apply_actions(Char &user, Attack::Type type) const
 	{
 		action.apply(user, type);
 	}
 
-	void RegularAttack::apply_stats(const Char& user, Attack& attack) const
+	void RegularAttack::apply_stats(const Char &user, Attack &attack) const
 	{
 		attack.damagetype = Attack::DMG_WEAPON;
 		attack.skill = 0;
@@ -38,9 +39,10 @@ namespace ms
 			attack.range = user.get_afterimage().get_range();
 	}
 
-	void RegularAttack::apply_hiteffects(const AttackUser&, Mob&) const {}
+	void RegularAttack::apply_hiteffects(const AttackUser &, Mob &) const
+	{}
 
-	Animation RegularAttack::get_bullet(const Char& user, int32_t bulletid) const
+	Animation RegularAttack::get_bullet(const Char &user, int32_t bulletid) const
 	{
 		return bullet.get(user, bulletid);
 	}
@@ -60,17 +62,18 @@ namespace ms
 		return 0;
 	}
 
-	SpecialMove::ForbidReason RegularAttack::can_use(int32_t, Weapon::Type weapon, const Job&, uint16_t, uint16_t, uint16_t bullets) const
+	SpecialMove::ForbidReason
+	RegularAttack::can_use(int32_t, Weapon::Type weapon, const Job &, uint16_t, uint16_t, uint16_t bullets) const
 	{
 		switch (weapon)
 		{
-		case Weapon::BOW:
-		case Weapon::CROSSBOW:
-		case Weapon::CLAW:
-		case Weapon::GUN:
-			return bullets ? FBR_NONE : FBR_BULLETCOST;
-		default:
-			return FBR_NONE;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+			case Weapon::CLAW:
+			case Weapon::GUN:
+				return bullets ? FBR_NONE : FBR_BULLETCOST;
+			default:
+				return FBR_NONE;
 		}
 	}
 }

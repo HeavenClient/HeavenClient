@@ -35,10 +35,13 @@ namespace ms
 		UIEvent();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -48,10 +51,15 @@ namespace ms
 
 	private:
 		void close();
+
 		std::string get_event_title(uint8_t id);
+
 		std::string get_event_date(uint8_t id);
+
 		int16_t row_by_position(int16_t y);
+
 		int16_t col_by_position(int16_t x);
+
 		void show_item(int16_t row, int16_t col);
 
 		enum Buttons : uint16_t

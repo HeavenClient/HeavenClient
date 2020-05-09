@@ -25,6 +25,10 @@
 #include "../Util/WzFiles.h"
 #endif
 
+#ifdef __linux__
+#include <cmath>
+#endif
+
 namespace ms
 {
 	template <class T>

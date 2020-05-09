@@ -28,7 +28,9 @@
 
 #include "../../Net/Packets/LoginPackets.h"
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #ifdef USE_NX
 #include <nlnx/nx.hpp>
@@ -74,45 +76,47 @@ namespace ms
 		checkbox[false] = title["check"]["0"];
 		checkbox[true] = title["check"]["1"];
 
-		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(296, 279), Point<int16_t>(446, 303)), 12);
+		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
+							Rectangle<int16_t>(Point<int16_t>(296, 279), Point<int16_t>(446, 303)), 12);
 
 		account.set_key_callback
-		(
-			KeyAction::Id::TAB, [&]
-			{
-				account.set_state(Textfield::State::NORMAL);
-				password.set_state(Textfield::State::FOCUSED);
-			}
-		);
+				(
+						KeyAction::Id::TAB, [&]
+						{
+							account.set_state(Textfield::State::NORMAL);
+							password.set_state(Textfield::State::FOCUSED);
+						}
+				);
 
 		account.set_enter_callback
-		(
-			[&](std::string msg)
-			{
-				login();
-			}
-		);
+				(
+						[&](std::string msg)
+						{
+							login();
+						}
+				);
 
 		accountbg = title["ID"];
 
-		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(296, 305), Point<int16_t>(446, 329)), 12);
+		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
+							 Rectangle<int16_t>(Point<int16_t>(296, 305), Point<int16_t>(446, 329)), 12);
 
 		password.set_key_callback
-		(
-			KeyAction::Id::TAB, [&]
-			{
-				account.set_state(Textfield::State::FOCUSED);
-				password.set_state(Textfield::State::NORMAL);
-			}
-		);
+				(
+						KeyAction::Id::TAB, [&]
+						{
+							account.set_state(Textfield::State::FOCUSED);
+							password.set_state(Textfield::State::NORMAL);
+						}
+				);
 
 		password.set_enter_callback
-		(
-			[&](std::string msg)
-			{
-				login();
-			}
-		);
+				(
+						[&](std::string msg)
+						{
+							login();
+						}
+				);
 
 		password.set_cryptchar('*');
 		passwordbg = title["PW"];
@@ -123,8 +127,7 @@ namespace ms
 		{
 			account.change_text(Setting<DefaultAccount>::get().load());
 			password.set_state(Textfield::State::FOCUSED);
-		}
-		else
+		} else
 		{
 			account.set_state(Textfield::State::FOCUSED);
 		}
@@ -213,51 +216,53 @@ namespace ms
 
 		switch (id)
 		{
-		case Buttons::BT_REGISTER:
-			url = Configuration::get().get_joinlink();
-			break;
-		case Buttons::BT_HOMEPAGE:
-			url = Configuration::get().get_website();
-			break;
-		case Buttons::BT_PASSLOST:
-			url = Configuration::get().get_findpass();
-			break;
-		case Buttons::BT_IDLOST:
-			url = Configuration::get().get_findid();
-			break;
-		default:
-			return;
+			case Buttons::BT_REGISTER:
+				url = Configuration::get().get_joinlink();
+				break;
+			case Buttons::BT_HOMEPAGE:
+				url = Configuration::get().get_website();
+				break;
+			case Buttons::BT_PASSLOST:
+				url = Configuration::get().get_findpass();
+				break;
+			case Buttons::BT_IDLOST:
+				url = Configuration::get().get_findid();
+				break;
+			default:
+				return;
 		}
 
+		#ifdef _WIN32
 		ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+		#endif
 	}
 
 	Button::State UILogin::button_pressed(uint16_t id)
 	{
 		switch (id)
 		{
-		case Buttons::BT_LOGIN:
-			login();
+			case Buttons::BT_LOGIN:
+				login();
 
-			return Button::State::NORMAL;
-		case Buttons::BT_REGISTER:
-		case Buttons::BT_HOMEPAGE:
-		case Buttons::BT_PASSLOST:
-		case Buttons::BT_IDLOST:
-			open_url(id);
+				return Button::State::NORMAL;
+			case Buttons::BT_REGISTER:
+			case Buttons::BT_HOMEPAGE:
+			case Buttons::BT_PASSLOST:
+			case Buttons::BT_IDLOST:
+				open_url(id);
 
-			return Button::State::NORMAL;
-		case Buttons::BT_SAVEID:
-			saveid = !saveid;
-			Setting<SaveLogin>::get().save(saveid);
+				return Button::State::NORMAL;
+			case Buttons::BT_SAVEID:
+				saveid = !saveid;
+				Setting<SaveLogin>::get().save(saveid);
 
-			return Button::State::MOUSEOVER;
-		case Buttons::BT_QUIT:
-			UI::get().quit();
+				return Button::State::MOUSEOVER;
+			case Buttons::BT_QUIT:
+				UI::get().quit();
 
-			return Button::State::PRESSED;
-		default:
-			return Button::State::NORMAL;
+				return Button::State::PRESSED;
+			default:
+				return Button::State::NORMAL;
 		}
 	}
 

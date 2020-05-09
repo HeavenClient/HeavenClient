@@ -75,9 +75,14 @@ namespace ms
 		Point<int16_t> origin;
 		bool valid = false;
 
-		// Create a mob attack for touch damage
-		MobAttack() : valid(false) {}
-		MobAttack(int32_t watk, Point<int16_t> origin, int32_t mobid, int32_t oid) : type(Attack::Type::CLOSE), watk(watk), origin(origin), mobid(mobid), oid(oid), valid(true) {}
+		// Create a mob attack for touch damage.
+		MobAttack(int32_t watk, Point<int16_t> origin, int32_t mobid, int32_t oid) : type(Attack::Type::CLOSE),
+																					 watk(watk), origin(origin),
+																					 mobid(mobid), oid(oid), valid(true)
+		{}
+
+		MobAttack() : valid(false)
+		{}
 
 		explicit operator bool() const
 		{
@@ -92,14 +97,16 @@ namespace ms
 		int32_t oid;
 		uint8_t direction;
 
-		MobAttackResult(const MobAttack& attack, int32_t damage, uint8_t direction) : damage(damage), direction(direction), mobid(attack.mobid), oid(attack.oid) {}
+		MobAttackResult(const MobAttack &attack, int32_t damage, uint8_t direction) : damage(damage),
+																					  direction(direction),
+																					  mobid(attack.mobid),
+																					  oid(attack.oid)
+		{}
 	};
 
 	struct AttackResult
 	{
-		AttackResult() {}
-
-		AttackResult(const Attack& attack)
+		AttackResult(const Attack &attack)
 		{
 			type = attack.type;
 			hitcount = attack.hitcount;
@@ -109,6 +116,9 @@ namespace ms
 			bullet = attack.bullet;
 			toleft = attack.toleft;
 		}
+
+		AttackResult()
+		{}
 
 		Attack::Type type;
 		int32_t attacker = 0;

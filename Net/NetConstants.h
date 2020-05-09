@@ -19,6 +19,10 @@
 
 #include <cstdint>
 
+#ifdef __linux__
+#include "unistd.h"
+#endif
+
 namespace ms
 {
 	const size_t HEADER_LENGTH = 4;

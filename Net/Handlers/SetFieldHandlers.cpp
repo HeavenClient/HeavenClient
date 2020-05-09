@@ -17,6 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "SetFieldHandlers.h"
 
+#include "Timer.h"
+
 #include "Helpers/CharacterParser.h"
 #include "Helpers/LoginParser.h"
 
@@ -115,7 +117,7 @@ namespace ms
 		CharacterParser::parse_ring1(recv);
 		CharacterParser::parse_ring2(recv);
 		CharacterParser::parse_ring3(recv);
-		CharacterParser::parse_teleportrock(recv, player.get_teleportrock());
+		CharacterParser::parse_teleportrock(recv, player.get_teleport_rock());
 		CharacterParser::parse_monsterbook(recv, player.get_monsterbook());
 		CharacterParser::parse_nyinfo(recv);
 		CharacterParser::parse_areainfo(recv);

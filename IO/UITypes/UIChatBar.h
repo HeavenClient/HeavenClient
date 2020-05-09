@@ -44,24 +44,33 @@ namespace ms
 		UIChatBar();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		bool is_in_range(Point<int16_t> cursorpos) const override;
+
 		Cursor::State send_cursor(bool clicking, Point<int16_t> cursorpos) override;
 
 		UIElement::Type get_type() const override;
 
 		Cursor::State check_dragtop(bool clicking, Point<int16_t> cursorpos);
 
-		void send_chatline(const std::string& line, LineType type);
+		void send_chatline(const std::string &line, LineType type);
+
 		void display_message(Messages::Type line, UIChatBar::LineType type);
+
 		void toggle_chat();
+
 		void toggle_chat(bool chat_open);
+
 		void toggle_chatfield();
+
 		void toggle_chatfield(bool chatfield_open);
+
 		bool is_chatopen();
+
 		bool is_chatfieldopen();
 
 	protected:
@@ -71,7 +80,9 @@ namespace ms
 		bool indragrange(Point<int16_t> cursorpos) const override;
 
 		int16_t getchattop(bool chat_open) const;
+
 		int16_t getchatbarheight() const;
+
 		Rectangle<int16_t> getbounds(Point<int16_t> additional_area) const;
 
 		static constexpr int16_t CHATROWHEIGHT = 13;
@@ -109,14 +120,14 @@ namespace ms
 		};
 
 		std::vector<std::string> ChatTabText =
-		{
-			"All",
-			"Battle",
-			"Party",
-			"Friend",
-			"Guild",
-			"Alliance"
-		};
+				{
+						"All",
+						"Battle",
+						"Party",
+						"Friend",
+						"Guild",
+						"Alliance"
+				};
 
 		bool chatopen;
 		bool chatopen_persist;

@@ -23,7 +23,8 @@
 
 namespace ms
 {
-	Slider::Slider(int32_t t, Range<int16_t> ver, int16_t xp, int16_t ur, int16_t rm, std::function<void(bool)> om) : type(t), vertical(ver), x(xp), onmoved(om)
+	Slider::Slider(int32_t t, Range<int16_t> ver, int16_t xp, int16_t ur, int16_t rm, std::function<void(bool)> om)
+			: type(t), vertical(ver), x(xp), onmoved(om)
 	{
 		start = Point<int16_t>(x, vertical.first());
 		end = Point<int16_t>(x, vertical.second());
@@ -35,8 +36,7 @@ namespace ms
 		{
 			src = nl::nx::ui["StatusBar3.img"]["chat"]["common"]["scroll"];
 			base_str += "_c";
-		}
-		else
+		} else
 		{
 			std::string VScr = "VScr";
 
@@ -70,7 +70,8 @@ namespace ms
 		scrolling = false;
 	}
 
-	Slider::Slider() : Slider(0, {}, 0, 0, 0, {}) {}
+	Slider::Slider() : Slider(0, {}, 0, 0, 0, {})
+	{}
 
 	bool Slider::isenabled() const
 	{
@@ -147,8 +148,7 @@ namespace ms
 				dprev.draw(position + start);
 				dnext.draw(position + end);
 			}
-		}
-		else
+		} else
 		{
 			dprev.draw(position + start);
 			dnext.draw(position + end);
@@ -167,9 +167,9 @@ namespace ms
 	Point<int16_t> Slider::getthumbpos() const
 	{
 		int16_t y =
-			row < rowmax ?
-			vertical.first() + row * rowheight + buttonheight :
-			vertical.second() - buttonheight * 2 - 2;
+				row < rowmax ?
+				vertical.first() + row * rowheight + buttonheight :
+				vertical.second() - buttonheight * 2 - 2;
 
 		return Point<int16_t>(x, y);
 	}
@@ -189,21 +189,18 @@ namespace ms
 				{
 					row++;
 					onmoved(false);
-				}
-				else if (delta < -rowheight / 2 && row > 0)
+				} else if (delta < -rowheight / 2 && row > 0)
 				{
 					row--;
 					onmoved(true);
 				}
 
 				return Cursor::State::VSCROLLIDLE;
-			}
-			else
+			} else
 			{
 				scrolling = false;
 			}
-		}
-		else if (relative.x() < 0 || relative.y() < 0 || relative.x() > 8 || relative.y() > vertical.second())
+		} else if (relative.x() < 0 || relative.y() < 0 || relative.x() > 8 || relative.y() > vertical.second())
 		{
 			thumb.set_state(Button::State::NORMAL);
 			next.set_state(Button::State::NORMAL);
@@ -222,15 +219,13 @@ namespace ms
 				thumb.set_state(Button::State::PRESSED);
 
 				return Cursor::State::VSCROLLIDLE;
-			}
-			else
+			} else
 			{
 				thumb.set_state(Button::State::NORMAL);
 
 				return Cursor::State::VSCROLL;
 			}
-		}
-		else
+		} else
 		{
 			thumb.set_state(Button::State::NORMAL);
 		}
@@ -248,15 +243,13 @@ namespace ms
 				prev.set_state(Button::State::PRESSED);
 
 				return Cursor::State::VSCROLLIDLE;
-			}
-			else
+			} else
 			{
 				prev.set_state(Button::State::MOUSEOVER);
 
 				return Cursor::State::VSCROLL;
 			}
-		}
-		else
+		} else
 		{
 			prev.set_state(Button::State::NORMAL);
 		}
@@ -274,15 +267,13 @@ namespace ms
 				next.set_state(Button::State::PRESSED);
 
 				return Cursor::State::VSCROLLIDLE;
-			}
-			else
+			} else
 			{
 				next.set_state(Button::State::MOUSEOVER);
 
 				return Cursor::State::VSCROLL;
 			}
-		}
-		else
+		} else
 		{
 			next.set_state(Button::State::NORMAL);
 		}

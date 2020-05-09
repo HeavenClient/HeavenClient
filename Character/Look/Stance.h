@@ -67,11 +67,15 @@ namespace ms
 		};
 
 		Id by_state(int8_t state);
+
 		Id by_id(uint8_t id);
-		Id by_string(const std::string& name);
+
+		Id by_string(const std::string &name);
 
 		bool is_climbing(Id value);
+
 		Id baseof(Id value);
+
 		Id secondof(Id value);
 
 		extern const EnumMap<Id, std::string> names;

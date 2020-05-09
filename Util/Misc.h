@@ -27,14 +27,14 @@ namespace ms
 	namespace string_conversion
 	{
 		template<typename T>
-		inline T or_default(const std::string& str, T def)
+		inline T or_default(const std::string &str, T def)
 		{
 			try
 			{
 				int32_t intval = std::stoi(str);
 				return static_cast<T>(intval);
 			}
-			catch (const std::exception& ex)
+			catch (const std::exception &ex)
 			{
 				std::cout << __func__ << ": " << ex.what() << std::endl;
 
@@ -43,7 +43,7 @@ namespace ms
 		}
 
 		template<typename T>
-		inline T or_zero(const std::string& str)
+		inline T or_zero(const std::string &str)
 		{
 			return or_default<T>(str, T(0));
 		}
@@ -51,8 +51,9 @@ namespace ms
 
 	namespace string_format
 	{
-		// Format a number string so that each three decimal points are separated by a comma
-		void split_number(std::string& input);
+		// Format a number string so that each 3 decimal points
+		// are seperated by a ',' character.
+		void split_number(std::string &input);
 
 		// Prefix an id with zeros so that it has the minimum specified length
 		std::string extend_id(int32_t id, size_t length);

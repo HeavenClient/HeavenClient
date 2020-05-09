@@ -29,7 +29,8 @@
 
 namespace ms
 {
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler) : okhandler(okhandler), cancelhandler(cancelhandler)
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler)
+			: okhandler(okhandler), cancelhandler(cancelhandler)
 	{
 		multiple = false;
 
@@ -58,8 +59,7 @@ namespace ms
 
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(70, 106));
 			buttons[Buttons::NO] = std::make_unique<MapleButton>(Notice["BtNo"], Point<int16_t>(130, 106));
-		}
-		else
+		} else
 		{
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(100, 106));
 		}
@@ -68,8 +68,14 @@ namespace ms
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler, []() {}) {}
-	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []() {}) {}
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler,
+																									[]()
+																									{})
+	{}
+
+	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []()
+	{})
+	{}
 
 	void UILoginNotice::send_key(int32_t keycode, bool pressed, bool escape)
 	{
@@ -83,8 +89,7 @@ namespace ms
 					cancelhandler();
 
 				deactivate();
-			}
-			else if (keycode == KeyAction::RETURN)
+			} else if (keycode == KeyAction::RETURN)
 			{
 				okhandler();
 				deactivate();
@@ -131,8 +136,7 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			}
-			else if (keycode == KeyAction::RETURN)
+			} else if (keycode == KeyAction::RETURN)
 			{
 				UI::get().quit();
 				deactivate();
@@ -186,7 +190,7 @@ namespace ms
 
 	Cursor::State UIClassConfirm::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -195,8 +199,7 @@ namespace ms
 					Sound(Sound::Name::BUTTONOVER).play();
 
 					btit.second->set_state(Button::State::MOUSEOVER);
-				}
-				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -205,8 +208,7 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 					}
 				}
-			}
-			else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}
@@ -323,8 +325,7 @@ namespace ms
 			if (keycode == KeyAction::Id::RETURN)
 			{
 				confirm();
-			}
-			else if (!login && escape)
+			} else if (!login && escape)
 			{
 				deactivate();
 

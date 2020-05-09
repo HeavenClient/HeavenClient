@@ -28,7 +28,8 @@
 
 namespace ms
 {
-	UISoftKey::UISoftKey(OkCallback ok, CancelCallback cancel, std::string tooltip_text, Point<int16_t> tooltip_pos) : ok_callback(ok), cancel_callback(cancel), tooltipposition(tooltip_pos)
+	UISoftKey::UISoftKey(OkCallback ok, CancelCallback cancel, std::string tooltip_text, Point<int16_t> tooltip_pos)
+			: ok_callback(ok), cancel_callback(cancel), tooltipposition(tooltip_pos)
 	{
 		Point<int16_t> screen_adj = Point<int16_t>(-1, 0);
 
@@ -61,7 +62,8 @@ namespace ms
 		for (size_t i = 0; i < NUM_KEYS; i++)
 			buttons[Buttons::NUM0 + i] = std::make_unique<MapleButton>(SoftKey["BtNum"][i]);
 
-		entry = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY, Rectangle<int16_t>(Point<int16_t>(-3, -4), Point<int16_t>(150, 24)), MAX_SIZE);
+		entry = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY,
+						  Rectangle<int16_t>(Point<int16_t>(-3, -4), Point<int16_t>(150, 24)), MAX_SIZE);
 		entry.set_cryptchar('*');
 
 		shufflekeys();
@@ -126,16 +128,14 @@ namespace ms
 				entered.pop_back();
 				entry.change_text(entered);
 			}
-		}
-		else if (buttonid == Buttons::CANCEL)
+		} else if (buttonid == Buttons::CANCEL)
 		{
 			if (cancel_callback)
 			{
 				cancel_callback();
 				deactivate();
 			}
-		}
-		else if (buttonid == Buttons::OK)
+		} else if (buttonid == Buttons::OK)
 		{
 			if (size >= MIN_SIZE)
 			{
@@ -144,14 +144,12 @@ namespace ms
 					ok_callback(entered);
 					deactivate();
 				}
-			}
-			else
+			} else
 			{
 				clear_tooltip();
 				show_text("The PIC needs to be at least 6 characters long.");
 			}
-		}
-		else if (buttonid >= Buttons::NUM0)
+		} else if (buttonid >= Buttons::NUM0)
 		{
 			if (size < MAX_SIZE)
 			{

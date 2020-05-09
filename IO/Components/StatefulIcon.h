@@ -35,7 +35,8 @@ namespace ms
 		class Type : public Icon::Type
 		{
 		public:
-			virtual ~Type() {}
+			virtual ~Type()
+			{}
 
 			virtual void set_state(State state) = 0;
 		};

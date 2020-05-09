@@ -19,7 +19,11 @@
 
 namespace ms
 {
-	Equip::Equip(int32_t item_id, int64_t expiration, const std::string& owner, int16_t flags, uint8_t slots, uint8_t level, const EnumMap<EquipStat::Id, uint16_t>& stats, uint8_t itemlevel, int16_t itemexp, int32_t vicious) : item_id(item_id), expiration(expiration), owner(owner), flags(flags), slots(slots), level(level), stats(stats), itemlevel(itemlevel), itemexp(itemexp), vicious(vicious)
+	Equip::Equip(int32_t item_id, int64_t expiration, const std::string &owner, int16_t flags, uint8_t slots,
+				 uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
+				 int32_t vicious) : item_id(item_id), expiration(expiration), owner(owner), flags(flags), slots(slots),
+									level(level), stats(stats), itemlevel(itemlevel), itemexp(itemexp),
+									vicious(vicious)
 	{
 		potrank = Equip::Potential::POT_NONE;
 		quality = EquipQuality::check_quality(item_id, level > 0, stats);
@@ -35,7 +39,7 @@ namespace ms
 		return expiration;
 	}
 
-	const std::string& Equip::get_owner() const
+	const std::string &Equip::get_owner() const
 	{
 		return owner;
 	}

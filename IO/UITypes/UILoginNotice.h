@@ -87,6 +87,7 @@ namespace ms
 		UIClassConfirm(uint16_t selected_class, bool unavailable, std::function<void()> okhandler);
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -262,7 +263,9 @@ namespace ms
 		};
 
 		UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler);
+
 		UILoginNotice(uint16_t message, std::function<void()> okhandler);
+
 		UILoginNotice(uint16_t message);
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;

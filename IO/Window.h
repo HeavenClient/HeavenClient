@@ -21,11 +21,29 @@
 
 #include "../Template/Singleton.h"
 
+#ifdef _WIN32
 #define GLEW_STATIC
 #include <glew.h>
 #include <glfw3.h>
+#include <GL/gl.h>
+#else
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <string>
+#endif
 
 #include <functional>
+
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
+#include<iostream>
 
 namespace ms
 {
@@ -33,19 +51,27 @@ namespace ms
 	{
 	public:
 		Window();
+
 		~Window();
 
 		Error init();
+
 		Error initwindow();
 
 		bool not_closed() const;
+
 		void update();
+
 		void begin() const;
+
 		void end() const;
+
 		void fadeout(float step, std::function<void()> fadeprocedure);
+
 		void check_events();
 
-		void setclipboard(const std::string& text) const;
+		void setclipboard(const std::string &text) const;
+
 		std::string getclipboard() const;
 
 		void toggle_fullscreen();
@@ -53,13 +79,15 @@ namespace ms
 	private:
 		void updateopc();
 
-		GLFWwindow* glwnd;
-		GLFWwindow* context;
+		GLFWwindow *glwnd;
+		GLFWwindow *context;
 		bool fullscreen;
 		float opacity;
 		float opcstep;
 		std::function<void()> fadeprocedure;
 		int16_t width;
 		int16_t height;
+
+		std::string GetCurrentWorkingDir(void);
 	};
 }

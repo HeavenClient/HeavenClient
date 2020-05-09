@@ -17,10 +17,17 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#if defined(__linux__) || defined(__APPLE__)
+
+#include <glad/glad.h>
+
+#else
 #define GLEW_STATIC
 #include <glew.h>
+#endif
 
 #include <array>
+#include <algorithm>
 
 namespace ms
 {
@@ -91,53 +98,55 @@ namespace ms
 
 		// Predefined colors by name
 		static constexpr GLfloat colors[Name::NUM_COLORS][3] =
-		{
-			{ 0.00f, 0.00f, 0.00f }, // Black
-			{ 1.00f, 1.00f, 1.00f }, // White
-			{ 1.00f, 1.00f, 0.00f }, // Yellow
-			{ 0.00f, 0.00f, 1.00f }, // Blue
-			{ 1.00f, 0.00f, 0.00f }, // Red
-			{ 0.80f, 0.30f, 0.30f }, // DarkRed
-			{ 0.50f, 0.25f, 0.00f }, // Brown
-			{ 0.34f, 0.20f, 0.07f }, // Jambalaya
-			{ 0.50f, 0.50f, 0.50f }, // Lightgrey
-			{ 0.25f, 0.25f, 0.25f }, // Darkgrey
-			{ 1.00f, 0.50f, 0.00f }, // Orange
-			{ 0.00f, 0.75f, 1.00f }, // Mediumblue
-			{ 0.50f, 0.00f, 0.50f }, // Violet
-			{ 0.47f, 0.40f, 0.27f }, // Tobacco Brown
-			{ 0.74f, 0.74f, 0.67f }, // Eagle
-			{ 0.60f, 0.60f, 0.54f }, // Lemon Grass
-			{ 0.20f, 0.20f, 0.27f }, // Tuna
-			{ 0.94f, 0.94f, 0.94f }, // Gallery
-			{ 0.60f, 0.60f, 0.60f }, // Dusty Gray
-			{ 0.34f, 0.34f, 0.34f }, // Emperor
-			{ 0.20f, 0.20f, 0.20f }, // Mine Shaft
-			{ 1.00f, 1.00f, 0.87f }, // Half and Half
-			{ 0.00f, 0.40f, 0.67f }, // Endeavour
-			{ 0.30f, 0.20f, 0.10f }, // Brown Derby
-			{ 0.94f, 0.95f, 0.95f }, // Porcelain
-			{ 0.34f, 0.27f, 0.14f }, // Irish Coffee
-			{ 0.47f, 0.47f, 0.47f }, // Boulder
-			{ 0.00f, 0.75f, 0.00f }, // Green (Mob HP Bar)
-			{ 0.00f, 1.00f, 0.00f }, // Light Green (Mob HP Bar)
-			{ 0.00f, 0.50f, 0.00f }, // Japanese Laurel (Mob HP Bar)
-			{ 0.67f, 0.67f, 0.60f }, // Gray Olive
-			{ 0.80f, 1.00f, 0.00f }, // Electric Lime
-			{ 1.00f, 0.80f, 0.00f }, // Supernova
-			{ 0.47f, 1.00f, 0.00f }, // Chartreuse
-			{ 0.47f, 0.80f, 1.00f }, // Malibu
-			{ 0.67f, 0.67f, 0.67f }, // Silver Chalice
-			{ 0.54f, 0.54f, 0.54f }, // Gray
-			{ 0.94f, 0.00f, 0.20f }  // Torch Red
-		};
+				{
+						{0.00f, 0.00f, 0.00f}, // Black
+						{1.00f, 1.00f, 1.00f}, // White
+						{1.00f, 1.00f, 0.00f}, // Yellow
+						{0.00f, 0.00f, 1.00f}, // Blue
+						{1.00f, 0.00f, 0.00f}, // Red
+						{0.80f, 0.30f, 0.30f}, // DarkRed
+						{0.50f, 0.25f, 0.00f}, // Brown
+						{0.34f, 0.20f, 0.07f}, // Jambalaya
+						{0.50f, 0.50f, 0.50f}, // Lightgrey
+						{0.25f, 0.25f, 0.25f}, // Darkgrey
+						{1.00f, 0.50f, 0.00f}, // Orange
+						{0.00f, 0.75f, 1.00f}, // Mediumblue
+						{0.50f, 0.00f, 0.50f}, // Violet
+						{0.47f, 0.40f, 0.27f}, // Tobacco Brown
+						{0.74f, 0.74f, 0.67f}, // Eagle
+						{0.60f, 0.60f, 0.54f}, // Lemon Grass
+						{0.20f, 0.20f, 0.27f}, // Tuna
+						{0.94f, 0.94f, 0.94f}, // Gallery
+						{0.60f, 0.60f, 0.60f}, // Dusty Gray
+						{0.34f, 0.34f, 0.34f}, // Emperor
+						{0.20f, 0.20f, 0.20f}, // Mine Shaft
+						{1.00f, 1.00f, 0.87f}, // Half and Half
+						{0.00f, 0.40f, 0.67f}, // Endeavour
+						{0.30f, 0.20f, 0.10f}, // Brown Derby
+						{0.94f, 0.95f, 0.95f}, // Porcelain
+						{0.34f, 0.27f, 0.14f}, // Irish Coffee
+						{0.47f, 0.47f, 0.47f}, // Boulder
+						{0.00f, 0.75f, 0.00f}, // Green (Mob HP Bar)
+						{0.00f, 1.00f, 0.00f}, // Light Green (Mob HP Bar)
+						{0.00f, 0.50f, 0.00f}, // Japanese Laurel (Mob HP Bar)
+						{0.67f, 0.67f, 0.60f}, // Gray Olive
+						{0.80f, 1.00f, 0.00f}, // Electric Lime
+						{1.00f, 0.80f, 0.00f}, // Supernova
+						{0.47f, 1.00f, 0.00f}, // Chartreuse
+						{0.47f, 0.80f, 1.00f}  // Malibu
+				};
 
 		// Create a color by an array of real numbers [0.0f, 1.0f]
-		constexpr Color(underlying_t comps) : rgba(comps) {}
+		constexpr Color(underlying_t comps) : rgba(comps)
+		{}
+
 		// Create a color by real numbers [0.0f, 1.0f]
-		constexpr Color(float red, float green, float blue, float alpha) : Color(underlying_t{ red, green, blue, alpha }) {}
+		constexpr Color(float red, float green, float blue, float alpha) : Color(underlying_t{red, green, blue, alpha})
+		{}
+
 		// Create a color by an array of natural numbers [0, 255]
-		constexpr Color(const std::array<uint8_t, Color::LENGTH> comps) : Color(comps[0], comps[1], comps[2], comps[3]) {}
+		constexpr Color(const std::array<uint8_t, Color::LENGTH> comps) : Color(comps[0], comps[1], comps[2], comps[3])
+		{}
 
 		// Create a color by natural numbers [0, 255]
 		constexpr Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : Color(
@@ -155,9 +164,8 @@ namespace ms
 			static_cast<uint8_t>(code)
 		) {}
 
-		// Create a color by named code
-		constexpr Color(Code code) : Color((uint32_t)code) {}
-		constexpr Color() : Color(Code::CNONE) {}
+		constexpr Color() : Color(Code::CNONE)
+		{}
 
 		// Check whether the color is completely invisible
 		constexpr bool invisible() const
@@ -189,8 +197,8 @@ namespace ms
 			return rgba[3];
 		}
 
-		// Return all components
-		const float* data() const;
+		// Return all components.
+		const float *data() const;
 
 		// Return a begin iterator
 		underlying_t::const_iterator begin() const;
@@ -198,11 +206,11 @@ namespace ms
 		// Return an end iterator
 		underlying_t::const_iterator end() const;
 
-		// Blend the second color into the first
-		Color blend(const Color& other, float alpha) const;
+		// Blend the second color into the first.
+		Color blend(const Color &other, float alpha) const;
 
-		// Combine two colors
-		constexpr Color operator*(const Color& o) const
+		// Combine two colors.
+		constexpr Color operator*(const Color &o) const
 		{
 			return Color(
 				r() * o.r(),
@@ -212,8 +220,8 @@ namespace ms
 			);
 		}
 
-		// Combine two colors
-		constexpr Color operator/(const Color& o) const
+		// Combine two colors.
+		constexpr Color operator/(const Color &o) const
 		{
 			return Color(
 				r() / o.r(),

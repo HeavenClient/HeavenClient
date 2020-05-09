@@ -18,6 +18,7 @@
 #include "Stage.h"
 
 #include "../Configuration.h"
+#include "Timer.h"
 
 #include "../IO/UI.h"
 
@@ -57,7 +58,7 @@ namespace ms
 		state = State::ACTIVE;
 	}
 
-	void Stage::loadplayer(const CharEntry& entry)
+	void Stage::loadplayer(const CharEntry &entry)
 	{
 		player = entry;
 		playable = player;
@@ -210,12 +211,11 @@ namespace ms
 			Point<int16_t> startpos = physics.get_y_below(spawnpoint);
 
 			player.respawn(startpos, mapinfo.is_underwater());
-		}
-		else if (warpinfo.valid)
+		} else if (warpinfo.valid)
 		{
 			ChangeMapPacket(false, -1, warpinfo.name, false).dispatch();
 
-			CharStats& stats = Stage::get().get_player().get_stats();
+			CharStats &stats = Stage::get().get_player().get_stats();
 
 			stats.set_mapid(warpinfo.mapid);
 
@@ -293,37 +293,37 @@ namespace ms
 		return cid == player.get_oid();
 	}
 
-	MapNpcs& Stage::get_npcs()
+	MapNpcs &Stage::get_npcs()
 	{
 		return npcs;
 	}
 
-	MapChars& Stage::get_chars()
+	MapChars &Stage::get_chars()
 	{
 		return chars;
 	}
 
-	MapMobs& Stage::get_mobs()
+	MapMobs &Stage::get_mobs()
 	{
 		return mobs;
 	}
 
-	MapReactors& Stage::get_reactors()
+	MapReactors &Stage::get_reactors()
 	{
 		return reactors;
 	}
 
-	MapDrops& Stage::get_drops()
+	MapDrops &Stage::get_drops()
 	{
 		return drops;
 	}
 
-	Player& Stage::get_player()
+	Player &Stage::get_player()
 	{
 		return player;
 	}
 
-	Combat& Stage::get_combat()
+	Combat &Stage::get_combat()
 	{
 		return combat;
 	}

@@ -27,9 +27,9 @@
 
 namespace ms
 {
-	Clothing::Clothing(int32_t id, const BodyDrawInfo& drawinfo) : itemid(id)
+	Clothing::Clothing(int32_t id, const BodyDrawInfo &drawinfo) : itemid(id)
 	{
-		const EquipData& equipdata = EquipData::get(itemid);
+		const EquipData &equipdata = EquipData::get(itemid);
 
 		eqslot = equipdata.get_eqslot();
 
@@ -43,23 +43,23 @@ namespace ms
 		constexpr size_t WEAPON_TYPES = 20;
 
 		constexpr Clothing::Layer layers[NON_WEAPON_TYPES] =
-		{
-			Clothing::Layer::CAP,
-			Clothing::Layer::FACEACC,
-			Clothing::Layer::EYEACC,
-			Clothing::Layer::EARRINGS,
-			Clothing::Layer::TOP,
-			Clothing::Layer::MAIL,
-			Clothing::Layer::PANTS,
-			Clothing::Layer::SHOES,
-			Clothing::Layer::GLOVE,
-			Clothing::Layer::SHIELD,
-			Clothing::Layer::CAPE,
-			Clothing::Layer::RING,
-			Clothing::Layer::PENDANT,
-			Clothing::Layer::BELT,
-			Clothing::Layer::MEDAL
-		};
+				{
+						Clothing::Layer::CAP,
+						Clothing::Layer::FACEACC,
+						Clothing::Layer::EYEACC,
+						Clothing::Layer::EARRINGS,
+						Clothing::Layer::TOP,
+						Clothing::Layer::MAIL,
+						Clothing::Layer::PANTS,
+						Clothing::Layer::SHOES,
+						Clothing::Layer::GLOVE,
+						Clothing::Layer::SHIELD,
+						Clothing::Layer::CAPE,
+						Clothing::Layer::RING,
+						Clothing::Layer::PENDANT,
+						Clothing::Layer::BELT,
+						Clothing::Layer::MEDAL
+				};
 
 		Clothing::Layer chlayer;
 		size_t index = (itemid / 10000) - 100;
@@ -76,38 +76,38 @@ namespace ms
 		nl::node src = nl::nx::character[category][strid + ".img"];
 		nl::node info = src["info"];
 
-		vslot = info["vslot"];
+		vslot = std::string(info["vslot"]);
 
 		switch (int32_t standno = info["stand"])
 		{
-		case 1:
-			stand = Stance::Id::STAND1;
-			break;
-		case 2:
-			stand = Stance::Id::STAND2;
-			break;
-		default:
-			stand = twohanded ? Stance::Id::STAND2 : Stance::Id::STAND1;
-			break;
+			case 1:
+				stand = Stance::Id::STAND1;
+				break;
+			case 2:
+				stand = Stance::Id::STAND2;
+				break;
+			default:
+				stand = twohanded ? Stance::Id::STAND2 : Stance::Id::STAND1;
+				break;
 		}
 
 		switch (int32_t walkno = info["walk"])
 		{
-		case 1:
-			walk = Stance::Id::WALK1;
-			break;
-		case 2:
-			walk = Stance::Id::WALK2;
-			break;
-		default:
-			walk = twohanded ? Stance::Id::WALK2 : Stance::Id::WALK1;
-			break;
+			case 1:
+				walk = Stance::Id::WALK1;
+				break;
+			case 2:
+				walk = Stance::Id::WALK2;
+				break;
+			default:
+				walk = twohanded ? Stance::Id::WALK2 : Stance::Id::WALK1;
+				break;
 		}
 
 		for (auto iter : Stance::names)
 		{
 			Stance::Id stance = iter.first;
-			const std::string& stancename = iter.second;
+			const std::string &stancename = iter.second;
 
 			nl::node stancenode = src[stancename];
 
@@ -129,8 +129,7 @@ namespace ms
 					if (part == "mailArm")
 					{
 						z = Clothing::Layer::MAILARM;
-					}
-					else
+					} else
 					{
 						auto sublayer_iter = sublayernames.find(zs);
 
@@ -155,32 +154,32 @@ namespace ms
 
 					switch (eqslot)
 					{
-					case EquipSlot::Id::FACE:
-						shift -= parentpos;
-						break;
-					case EquipSlot::Id::SHOES:
-					case EquipSlot::Id::GLOVES:
-					case EquipSlot::Id::TOP:
-					case EquipSlot::Id::BOTTOM:
-					case EquipSlot::Id::CAPE:
-						shift = drawinfo.get_body_position(stance, frame) - parentpos;
-						break;
-					case EquipSlot::Id::HAT:
-					case EquipSlot::Id::EARACC:
-					case EquipSlot::Id::EYEACC:
-						shift = drawinfo.getfacepos(stance, frame) - parentpos;
-						break;
-					case EquipSlot::Id::SHIELD:
-					case EquipSlot::Id::WEAPON:
-						if (parent == "handMove")
-							shift += drawinfo.get_hand_position(stance, frame);
-						else if (parent == "hand")
-							shift += drawinfo.get_arm_position(stance, frame);
-						else if (parent == "navel")
-							shift += drawinfo.get_body_position(stance, frame);
+						case EquipSlot::Id::FACE:
+							shift -= parentpos;
+							break;
+						case EquipSlot::Id::SHOES:
+						case EquipSlot::Id::GLOVES:
+						case EquipSlot::Id::TOP:
+						case EquipSlot::Id::BOTTOM:
+						case EquipSlot::Id::CAPE:
+							shift = drawinfo.get_body_position(stance, frame) - parentpos;
+							break;
+						case EquipSlot::Id::HAT:
+						case EquipSlot::Id::EARACC:
+						case EquipSlot::Id::EYEACC:
+							shift = drawinfo.getfacepos(stance, frame) - parentpos;
+							break;
+						case EquipSlot::Id::SHIELD:
+						case EquipSlot::Id::WEAPON:
+							if (parent == "handMove")
+								shift += drawinfo.get_hand_position(stance, frame);
+							else if (parent == "hand")
+								shift += drawinfo.get_arm_position(stance, frame);
+							else if (parent == "navel")
+								shift += drawinfo.get_body_position(stance, frame);
 
-						shift -= parentpos;
-						break;
+							shift -= parentpos;
+							break;
 					}
 
 					stances[stance][z].emplace(frame, partnode)->second.shift(shift);
@@ -189,14 +188,14 @@ namespace ms
 		}
 
 		static const std::unordered_set<int32_t> transparents =
-		{
-			1002186
-		};
+				{
+						1002186
+				};
 
 		transparent = transparents.count(itemid) > 0;
 	}
 
-	void Clothing::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const
+	void Clothing::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const
 	{
 		auto range = stances[stance][layer].equal_range(frame);
 
@@ -239,32 +238,32 @@ namespace ms
 		return eqslot;
 	}
 
-	const std::string& Clothing::get_vslot() const
+	const std::string &Clothing::get_vslot() const
 	{
 		return vslot;
 	}
 
 	const std::unordered_map<std::string, Clothing::Layer> Clothing::sublayernames =
-	{
-		// WEAPON
-		{ "weaponOverHand",			Clothing::Layer::WEAPON_OVER_HAND	},
-		{ "weaponOverGlove",		Clothing::Layer::WEAPON_OVER_GLOVE	},
-		{ "weaponOverBody",			Clothing::Layer::WEAPON_OVER_BODY	},
-		{ "weaponBelowArm",			Clothing::Layer::WEAPON_BELOW_ARM	},
-		{ "weaponBelowBody",		Clothing::Layer::WEAPON_BELOW_BODY	},
-		{ "backWeaponOverShield",	Clothing::Layer::BACKWEAPON			},
-		// SHIELD
-		{ "shieldOverHair",			Clothing::Layer::SHIELD_OVER_HAIR	},
-		{ "shieldBelowBody",		Clothing::Layer::SHIELD_BELOW_BODY	},
-		{ "backShield",				Clothing::Layer::BACKSHIELD			},
-		// GLOVE
-		{ "gloveWrist",				Clothing::Layer::WRIST				},
-		{ "gloveOverHair",			Clothing::Layer::GLOVE_OVER_HAIR	},
-		{ "gloveOverBody",			Clothing::Layer::GLOVE_OVER_BODY	},
-		{ "gloveWristOverHair",		Clothing::Layer::WRIST_OVER_HAIR	},
-		{ "gloveWristOverBody",		Clothing::Layer::WRIST_OVER_BODY	},
-		// CAP
-		{ "capOverHair",			Clothing::Layer::CAP_OVER_HAIR		},
-		{ "capBelowBody",			Clothing::Layer::CAP_BELOW_BODY		},
-	};
+			{
+					// WEAPON
+					{"weaponOverHand",       Clothing::Layer::WEAPON_OVER_HAND},
+					{"weaponOverGlove",      Clothing::Layer::WEAPON_OVER_GLOVE},
+					{"weaponOverBody",       Clothing::Layer::WEAPON_OVER_BODY},
+					{"weaponBelowArm",       Clothing::Layer::WEAPON_BELOW_ARM},
+					{"weaponBelowBody",      Clothing::Layer::WEAPON_BELOW_BODY},
+					{"backWeaponOverShield", Clothing::Layer::BACKWEAPON},
+					// SHIELD
+					{"shieldOverHair",       Clothing::Layer::SHIELD_OVER_HAIR},
+					{"shieldBelowBody",      Clothing::Layer::SHIELD_BELOW_BODY},
+					{"backShield",           Clothing::Layer::BACKSHIELD},
+					// GLOVE
+					{"gloveWrist",           Clothing::Layer::WRIST},
+					{"gloveOverHair",        Clothing::Layer::GLOVE_OVER_HAIR},
+					{"gloveOverBody",        Clothing::Layer::GLOVE_OVER_BODY},
+					{"gloveWristOverHair",   Clothing::Layer::WRIST_OVER_HAIR},
+					{"gloveWristOverBody",   Clothing::Layer::WRIST_OVER_BODY},
+					// CAP
+					{"capOverHair",          Clothing::Layer::CAP_OVER_HAIR},
+					{"capBelowBody",         Clothing::Layer::CAP_BELOW_BODY},
+			};
 }

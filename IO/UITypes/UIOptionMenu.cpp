@@ -60,13 +60,13 @@ namespace ms
 		MapleComboBox::Type type = static_cast<MapleComboBox::Type>(std::stoi(ctype));
 
 		std::vector<std::string> resolutions =
-		{
-			"800 x 600 ( 4 : 3 )",
-			"1024 x 768 ( 4 : 3 )",
-			"1280 x 720 ( 16 : 9 )",
-			"1366 x 768 ( 16 : 9 )",
-			"1920 x 1080 ( 16 : 9 ) - Beta"
-		};
+				{
+						"800 x 600 ( 4 : 3 )",
+						"1024 x 768 ( 4 : 3 )",
+						"1280 x 720 ( 16 : 9 )",
+						"1366 x 768 ( 16 : 9 )",
+						"1920 x 1080 ( 16 : 9 ) - Beta"
+				};
 
 		int16_t max_width = Configuration::get().get_max_width();
 		int16_t max_height = Configuration::get().get_max_height();
@@ -80,36 +80,37 @@ namespace ms
 
 		switch (screen_width)
 		{
-		case 800:
-			default_option = 0;
-			break;
-		case 1024:
-			default_option = 1;
-			break;
-		case 1280:
-			default_option = 2;
-			break;
-		case 1366:
-			default_option = 3;
-			break;
-		case 1920:
-			switch (screen_height)
-			{
-			case 1080:
-				default_option = 4;
+			case 800:
+				default_option = 0;
 				break;
-			case 1200:
-				default_option = 5;
+			case 1024:
+				default_option = 1;
 				break;
-			}
+			case 1280:
+				default_option = 2;
+				break;
+			case 1366:
+				default_option = 3;
+				break;
+			case 1920:
+				switch (screen_height)
+				{
+					case 1080:
+						default_option = 4;
+						break;
+					case 1200:
+						default_option = 5;
+						break;
+				}
 
-			break;
+				break;
 		}
 
 		int64_t combobox_width = graphic["combo:resolution"]["boxWidth"].get_integer();
 		Point<int16_t> lt = Point<int16_t>(graphic["combo:resolution"]["lt"]);
 
-		buttons[Buttons::SELECT_RES] = std::make_unique<MapleComboBox>(type, resolutions, default_option, position, lt, combobox_width);
+		buttons[Buttons::SELECT_RES] = std::make_unique<MapleComboBox>(type, resolutions, default_option, position, lt,
+																	   combobox_width);
 
 		Point<int16_t> bg_dimensions = Texture(backgrnd).get_dimensions();
 
@@ -132,78 +133,78 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::TAB0:
-		case Buttons::TAB1:
-		case Buttons::TAB2:
-		case Buttons::TAB3:
-		case Buttons::TAB4:
-			change_tab(buttonid);
-			return Button::State::IDENTITY;
-		case Buttons::CANCEL:
-			deactivate();
-			return Button::State::NORMAL;
-		case Buttons::OK:
-			switch (selected_tab)
-			{
 			case Buttons::TAB0:
-			{
-				uint16_t selected_value = buttons[Buttons::SELECT_RES]->get_selected();
-
-				int16_t width = Constants::Constants::get().get_viewwidth();
-				int16_t height = Constants::Constants::get().get_viewheight();
-
-				switch (selected_value)
-				{
-				case 0:
-					width = 800;
-					height = 600;
-					break;
-				case 1:
-					width = 1024;
-					height = 768;
-					break;
-				case 2:
-					width = 1280;
-					height = 720;
-					break;
-				case 3:
-					width = 1366;
-					height = 768;
-					break;
-				case 4:
-					width = 1920;
-					height = 1080;
-					break;
-				case 5:
-					width = 1920;
-					height = 1200;
-					break;
-				}
-
-				Setting<Width>::get().save(width);
-				Setting<Height>::get().save(height);
-
-				Constants::Constants::get().set_viewwidth(width);
-				Constants::Constants::get().set_viewheight(height);
-			}
-			break;
 			case Buttons::TAB1:
 			case Buttons::TAB2:
 			case Buttons::TAB3:
 			case Buttons::TAB4:
-			default:
-				break;
-			}
+				change_tab(buttonid);
+				return Button::State::IDENTITY;
+			case Buttons::CANCEL:
+				deactivate();
+				return Button::State::NORMAL;
+			case Buttons::OK:
+				switch (selected_tab)
+				{
+					case Buttons::TAB0:
+					{
+						uint16_t selected_value = buttons[Buttons::SELECT_RES]->get_selected();
 
-			deactivate();
-			return Button::State::NORMAL;
-		case Buttons::UIRESET:
-			return Button::State::DISABLED;
-		case Buttons::SELECT_RES:
-			buttons[Buttons::SELECT_RES]->toggle_pressed();
-			return Button::State::NORMAL;
-		default:
-			return Button::State::DISABLED;
+						int16_t width = Constants::Constants::get().get_viewwidth();
+						int16_t height = Constants::Constants::get().get_viewheight();
+
+						switch (selected_value)
+						{
+							case 0:
+								width = 800;
+								height = 600;
+								break;
+							case 1:
+								width = 1024;
+								height = 768;
+								break;
+							case 2:
+								width = 1280;
+								height = 720;
+								break;
+							case 3:
+								width = 1366;
+								height = 768;
+								break;
+							case 4:
+								width = 1920;
+								height = 1080;
+								break;
+							case 5:
+								width = 1920;
+								height = 1200;
+								break;
+						}
+
+						Setting<Width>::get().save(width);
+						Setting<Height>::get().save(height);
+
+						Constants::Constants::get().set_viewwidth(width);
+						Constants::Constants::get().set_viewheight(height);
+					}
+						break;
+					case Buttons::TAB1:
+					case Buttons::TAB2:
+					case Buttons::TAB3:
+					case Buttons::TAB4:
+					default:
+						break;
+				}
+
+				deactivate();
+				return Button::State::NORMAL;
+			case Buttons::UIRESET:
+				return Button::State::DISABLED;
+			case Buttons::SELECT_RES:
+				buttons[Buttons::SELECT_RES]->toggle_pressed();
+				return Button::State::NORMAL;
+			default:
+				return Button::State::DISABLED;
 		}
 	}
 
@@ -214,7 +215,7 @@ namespace ms
 		if (dragged)
 			return dstate;
 
-		auto& button = buttons[Buttons::SELECT_RES];
+		auto &button = buttons[Buttons::SELECT_RES];
 
 		if (button->is_pressed())
 		{
@@ -222,8 +223,7 @@ namespace ms
 			{
 				if (Cursor::State new_state = button->send_cursor(clicked, cursorpos))
 					return new_state;
-			}
-			else
+			} else
 			{
 				remove_cursor();
 			}
@@ -257,17 +257,17 @@ namespace ms
 
 		switch (tabid)
 		{
-		case Buttons::TAB0:
-			buttons[Buttons::SELECT_RES]->set_active(true);
-			break;
-		case Buttons::TAB1:
-		case Buttons::TAB2:
-		case Buttons::TAB3:
-		case Buttons::TAB4:
-			buttons[Buttons::SELECT_RES]->set_active(false);
-			break;
-		default:
-			break;
+			case Buttons::TAB0:
+				buttons[Buttons::SELECT_RES]->set_active(true);
+				break;
+			case Buttons::TAB1:
+			case Buttons::TAB2:
+			case Buttons::TAB3:
+			case Buttons::TAB4:
+				buttons[Buttons::SELECT_RES]->set_active(false);
+				break;
+			default:
+				break;
 		}
 	}
 }

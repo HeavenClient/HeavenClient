@@ -26,19 +26,28 @@ namespace ms
 	class Slider
 	{
 	public:
-		Slider(int32_t type, Range<int16_t> vertical, int16_t x, int16_t unitrows, int16_t rowmax, std::function<void(bool upwards)> onmoved);
+		Slider(int32_t type, Range<int16_t> vertical, int16_t x, int16_t unitrows, int16_t rowmax,
+			   std::function<void(bool upwards)> onmoved);
+
 		Slider();
 
 		bool isenabled() const;
+
 		void setenabled(bool enabled);
+
 		void setrows(int16_t newrow, int16_t unitrows, int16_t rowmax);
+
 		void setrows(int16_t unitrows, int16_t rowmax);
+
 		void setvertical(Range<int16_t> vertical);
 		Range<int16_t> getvertical() const;
 
 		void draw(Point<int16_t> position) const;
+
 		void remove_cursor();
+
 		Cursor::State send_cursor(Point<int16_t> cursor, bool pressed);
+
 		void send_scroll(double yoffset);
 
 		enum Type

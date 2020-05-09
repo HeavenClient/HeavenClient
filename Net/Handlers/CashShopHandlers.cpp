@@ -23,6 +23,8 @@
 #include "../../IO/UI.h"
 #include "../../IO/Window.h"
 
+#include "Timer.h"
+
 namespace ms
 {
 	void SetCashShopHandler::handle(InPacket& recv) const

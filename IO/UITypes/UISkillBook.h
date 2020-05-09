@@ -35,20 +35,26 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UISkillBook(const CharStats& stats, const SkillBook& skillbook);
+		UISkillBook(const CharStats &stats, const SkillBook &skillbook);
 
 		void draw(float alpha) const override;
 
 		void toggle_active() override;
+
 		void doubleclick(Point<int16_t> cursorpos) override;
+
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		void update_stat(MapleStat::Id stat, int16_t value);
+
 		void update_skills(int32_t skill_id);
+
 		bool is_skillpoint_enabled();
 
 	protected:
@@ -64,8 +70,13 @@ namespace ms
 			void drop_on_equips(EquipSlot::Id) const override {}
 			bool drop_on_items(InventoryType::Id, EquipSlot::Id, int16_t, bool) const override { return true; }
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
-			void set_count(int16_t) override {}
-			void set_state(StatefulIcon::State) override {}
+
+			void set_count(int16_t) override
+			{}
+
+			void set_state(StatefulIcon::State) override
+			{}
+
 			Icon::IconType get_type() override;
 
 		private:
@@ -77,11 +88,13 @@ namespace ms
 		public:
 			SkillDisplayMeta(int32_t id, int32_t level);
 
-			void draw(const DrawArgument& args) const;
+			void draw(const DrawArgument &args) const;
 
 			int32_t get_id() const;
+
 			int32_t get_level() const;
-			StatefulIcon* get_icon() const;
+
+			StatefulIcon *get_icon() const;
 
 		private:
 			int32_t id;
@@ -92,24 +105,33 @@ namespace ms
 		};
 
 		void change_job(uint16_t id);
+
 		void change_sp();
+
 		void change_tab(uint16_t new_tab);
+
 		void change_offset(uint16_t new_offset);
 
 		void show_skill(int32_t skill_id);
+
 		void clear_tooltip();
 
 		bool can_raise(int32_t skill_id) const;
+
 		void send_spup(uint16_t row);
+
 		void spend_sp(int32_t skill_id);
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
-		const UISkillBook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos) const;
+
+		const UISkillBook::SkillDisplayMeta *skill_by_position(Point<int16_t> cursorpos) const;
 
 		void close();
+
 		bool check_required(int32_t id) const;
 
 		void set_macro(bool enabled);
+
 		void set_skillpoint(bool enabled);
 
 		enum Buttons : uint16_t
@@ -151,8 +173,8 @@ namespace ms
 		static constexpr Point<int16_t> SKILL_META_OFFSET = Point<int16_t>(2, 2);
 		static constexpr Point<int16_t> LINE_OFFSET = Point<int16_t>(0, 37);
 
-		const CharStats& stats;
-		const SkillBook& skillbook;
+		const CharStats &stats;
+		const SkillBook &skillbook;
 
 		Slider slider;
 		Texture skille;

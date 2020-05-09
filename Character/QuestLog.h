@@ -25,10 +25,14 @@ namespace ms
 	class QuestLog
 	{
 	public:
-		void add_started(int16_t, const std::string& quest_data);
-		void add_in_progress(int16_t, int16_t, const std::string& quest_data);
+		void add_started(int16_t, const std::string &quest_data);
+
+		void add_in_progress(int16_t, int16_t, const std::string &quest_data);
+
 		void add_completed(int16_t, int64_t);
+
 		bool is_started(int16_t);
+
 		int16_t get_last_started();
 
 	private:

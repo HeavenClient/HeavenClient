@@ -16,14 +16,13 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UITermsOfService.h"
-
 #include "UILoginWait.h"
 
 #include "../UI.h"
 
-#include "../Components/MapleButton.h"
+#include "IO/Components/MapleButton.h"
 
-#include "../../Net/Packets/LoginPackets.h"
+#include "Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
 #include <nlnx/nx.hpp>
@@ -1065,19 +1064,19 @@ namespace ms
 		int16_t slider_y = 77;
 
 		slider = Slider(
-			Slider::Type::LINE_PUNGA, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
-			[&](bool upwards)
-			{
-				int16_t shift = upwards ? -1 : 1;
-				bool above = offset + shift >= 0;
-				bool below = offset + shift <= max_rows - unit_rows;
-
-				if (above && below)
+				Slider::Type::LINE_PUNGA, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
+				[&](bool upwards)
 				{
-					offset += shift;
-					update_accept(offset);
+					int16_t shift = upwards ? -1 : 1;
+					bool above = offset + shift >= 0;
+					bool below = offset + shift <= max_rows - unit_rows;
+
+					if (above && below)
+					{
+						offset += shift;
+						update_accept(offset);
+					}
 				}
-			}
 		);
 
 		update_accept(offset);
@@ -1119,17 +1118,17 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			UI::get().emplace<UILoginWait>();
+			case Buttons::OK:
+				UI::get().emplace<UILoginWait>();
 
-			TOSPacket().dispatch();
-			break;
-		case Buttons::CANCEL:
-			deactivate();
-			okhandler();
-			break;
-		default:
-			break;
+				TOSPacket().dispatch();
+				break;
+			case Buttons::CANCEL:
+				deactivate();
+				okhandler();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

@@ -31,10 +31,11 @@ namespace ms
 	class TilesObjs
 	{
 	public:
-		TilesObjs() {};
 		TilesObjs(nl::node src);
+		TilesObjs();
 
 		void draw(Point<int16_t> viewpos, float alpha) const;
+
 		void update();
 
 	private:
@@ -46,10 +47,12 @@ namespace ms
 	class MapTilesObjs
 	{
 	public:
-		MapTilesObjs() {};
 		MapTilesObjs(nl::node src);
 
+		MapTilesObjs();
+
 		void draw(Layer::Id layer, Point<int16_t> viewpos, float alpha) const;
+
 		void update();
 
 	private:

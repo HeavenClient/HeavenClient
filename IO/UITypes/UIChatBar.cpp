@@ -52,7 +52,8 @@ namespace ms
 		closechat = Point<int16_t>(387, 21);
 
 		buttons[Buttons::BT_OPENCHAT] = std::make_unique<MapleButton>(view["btMax"], Point<int16_t>(391, -7));
-		buttons[Buttons::BT_CLOSECHAT] = std::make_unique<MapleButton>(view["btMin"], closechat + Point<int16_t>(0, chattop_y));
+		buttons[Buttons::BT_CLOSECHAT] = std::make_unique<MapleButton>(view["btMin"],
+																	   closechat + Point<int16_t>(0, chattop_y));
 		buttons[Buttons::BT_CHAT] = std::make_unique<MapleButton>(input["button:chat"], Point<int16_t>(344, -8));
 		buttons[Buttons::BT_LINK] = std::make_unique<MapleButton>(input["button:itemLink"], Point<int16_t>(365, -8));
 		buttons[Buttons::BT_HELP] = std::make_unique<MapleButton>(input["button:help"], Point<int16_t>(386, -8));
@@ -68,14 +69,20 @@ namespace ms
 
 		for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
 		{
-			buttons[Buttons::BT_TAB_0 + i] = std::make_unique<MapleButton>(view["tab"], Point<int16_t>(chattab_x + (i * chattab_span), chattab_y));
+			buttons[Buttons::BT_TAB_0 + i] = std::make_unique<MapleButton>(view["tab"], Point<int16_t>(
+					chattab_x + (i * chattab_span), chattab_y));
 			buttons[Buttons::BT_TAB_0 + i]->set_active(chatopen ? true : false);
-			chattab_text[ChatTab::CHT_ALL + i] = Text(Text::Font::A12M, Text::Alignment::CENTER, Color::Name::DUSTYGRAY, ChatTabText[i]);
+			chattab_text[ChatTab::CHT_ALL + i] = Text(Text::Font::A12M, Text::Alignment::CENTER, Color::Name::DUSTYGRAY,
+													  ChatTabText[i]);
 		}
 
 		chattab_text[ChatTab::CHT_ALL].change_color(Color::Name::WHITE);
 
-		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB] = std::make_unique<MapleButton>(view["btAddTab"], Point<int16_t>(chattab_x + (ChatTab::NUM_CHATTAB * chattab_span), chattab_y));
+		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB] = std::make_unique<MapleButton>(view["btAddTab"],
+																						  Point<int16_t>(chattab_x +
+																										 (ChatTab::NUM_CHATTAB *
+																										  chattab_span),
+																										 chattab_y));
 		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB]->set_active(chatopen ? true : false);
 
 		buttons[Buttons::BT_CHAT_TARGET] = std::make_unique<MapleButton>(chatTarget["all"], Point<int16_t>(5, -8));
@@ -84,69 +91,68 @@ namespace ms
 		chatenter = input["layer:chatEnter"];
 		chatcover = input["layer:backgrnd"];
 
-		chatfield = Textfield(Text::A11M, Text::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(62, -9), Point<int16_t>(330, 8)), 0);
+		chatfield = Textfield(Text::A11M, Text::LEFT, Color::Name::WHITE,
+							  Rectangle<int16_t>(Point<int16_t>(62, -9), Point<int16_t>(330, 8)), 0);
 		chatfield.set_state(chatopen ? Textfield::State::NORMAL : Textfield::State::DISABLED);
 
 		chatfield.set_enter_callback(
-			[&](std::string msg)
-			{
-				if (msg.size() > 0)
+				[&](std::string msg)
 				{
-					size_t last = msg.find_last_not_of(' ');
-
-					if (last != std::string::npos)
+					if (msg.size() > 0)
 					{
-						msg.erase(last + 1);
+						size_t last = msg.find_last_not_of(' ');
 
-						GeneralChatPacket(msg, true).dispatch();
+						if (last != std::string::npos)
+						{
+							msg.erase(last + 1);
 
-						lastentered.push_back(msg);
-						lastpos = lastentered.size();
-					}
-					else
+							GeneralChatPacket(msg, true).dispatch();
+
+							lastentered.push_back(msg);
+							lastpos = lastentered.size();
+						} else
+						{
+							toggle_chatfield();
+						}
+
+						chatfield.change_text("");
+					} else
 					{
 						toggle_chatfield();
 					}
-
-					chatfield.change_text("");
 				}
-				else
-				{
-					toggle_chatfield();
-				}
-			}
 		);
 
 		chatfield.set_key_callback(
-			KeyAction::Id::UP,
-			[&]()
-			{
-				if (lastpos > 0)
+				KeyAction::Id::UP,
+				[&]()
 				{
-					lastpos--;
-					chatfield.change_text(lastentered[lastpos]);
+					if (lastpos > 0)
+					{
+						lastpos--;
+						chatfield.change_text(lastentered[lastpos]);
+					}
 				}
-			}
 		);
 
 		chatfield.set_key_callback(
-			KeyAction::Id::DOWN,
-			[&]()
-			{
-				if (lastentered.size() > 0 && lastpos < lastentered.size() - 1)
+				KeyAction::Id::DOWN,
+				[&]()
 				{
-					lastpos++;
-					chatfield.change_text(lastentered[lastpos]);
+					if (lastentered.size() > 0 && lastpos < lastentered.size() - 1)
+					{
+						lastpos++;
+						chatfield.change_text(lastentered[lastpos]);
+					}
 				}
-			}
 		);
 
 		chatfield.set_key_callback(
-			KeyAction::Id::ESCAPE,
-			[&]()
-			{
-				toggle_chatfield(false);
-			}
+				KeyAction::Id::ESCAPE,
+				[&]()
+				{
+					toggle_chatfield(false);
+				}
 		);
 
 		//int16_t slider_x = 394;
@@ -177,7 +183,8 @@ namespace ms
 			chatspace[0].draw(position + Point<int16_t>(0, chattop) + pos_adj);
 
 			if (chatrows > 1)
-				chatspace[1].draw(DrawArgument(position + Point<int16_t>(0, -28) + pos_adj, Point<int16_t>(0, 28 + chattop)));
+				chatspace[1].draw(
+						DrawArgument(position + Point<int16_t>(0, -28) + pos_adj, Point<int16_t>(0, 28 + chattop)));
 
 			chatspace[2].draw(position + Point<int16_t>(0, -28) + pos_adj);
 			chatspace[3].draw(position + Point<int16_t>(0, -15 + chattop) + pos_adj);
@@ -203,8 +210,7 @@ namespace ms
 
 				rowtexts.at(rowid).draw(position + Point<int16_t>(9, getchattop(chatopen) - yshift - 21) + pos_adj);
 			}
-		}
-		else
+		} else
 		{
 			auto pos_adj = chatfieldopen ? Point<int16_t>(0, -28) : Point<int16_t>(0, 0);
 
@@ -231,7 +237,8 @@ namespace ms
 			auto pos_adj = chatopen && !chatfieldopen ? Point<int16_t>(0, 28) : Point<int16_t>(0, 0);
 
 			for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
-				chattab_text[ChatTab::CHT_ALL + i].draw(position + Point<int16_t>(chattab_x + (i * chattab_span) + 25, chattab_y - 3) + pos_adj);
+				chattab_text[ChatTab::CHT_ALL + i].draw(
+						position + Point<int16_t>(chattab_x + (i * chattab_span) + 25, chattab_y - 3) + pos_adj);
 		}
 	}
 
@@ -244,7 +251,8 @@ namespace ms
 		for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
 			buttons[BT_TAB_0 + i]->set_position(Point<int16_t>(chattab_x + (i * chattab_span), chattab_y) + pos_adj);
 
-		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB]->set_position(Point<int16_t>(chattab_x + (ChatTab::NUM_CHATTAB * chattab_span), chattab_y) + pos_adj);
+		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB]->set_position(
+				Point<int16_t>(chattab_x + (ChatTab::NUM_CHATTAB * chattab_span), chattab_y) + pos_adj);
 		buttons[Buttons::BT_CLOSECHAT]->set_position(closechat + Point<int16_t>(0, chattab_y) + pos_adj);
 
 		chatfield.update(position);
@@ -278,8 +286,7 @@ namespace ms
 				return new_state;
 
 			return check_dragtop(clicking, cursorpos);
-		}
-		else
+		} else
 		{
 			return UIDragElement::send_cursor(clicking, cursorpos);
 		}
@@ -303,10 +310,14 @@ namespace ms
 		auto chattop_rb = Point<int16_t>(bounds_rb.x() - 1, bounds_rb_y - 27);
 		auto chattop = Rectangle<int16_t>(Point<int16_t>(bounds_lt.x() + 1, bounds_lt_y), chattop_rb);
 
-		auto chattopleft = Rectangle<int16_t>(Point<int16_t>(bounds_lt.x(), bounds_lt_y), Point<int16_t>(bounds_lt.x(), chattop_rb.y()));
-		auto chattopright = Rectangle<int16_t>(Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y), Point<int16_t>(chattop_rb.x() + 1, chattop_rb.y()));
-		auto chatleft = Rectangle<int16_t>(Point<int16_t>(bounds_lt.x(), bounds_lt_y), Point<int16_t>(bounds_lt.x(), bounds_lt_y + bounds_rb_y));
-		auto chatright = Rectangle<int16_t>(Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y), Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y + bounds_rb_y));
+		auto chattopleft = Rectangle<int16_t>(Point<int16_t>(bounds_lt.x(), bounds_lt_y),
+											  Point<int16_t>(bounds_lt.x(), chattop_rb.y()));
+		auto chattopright = Rectangle<int16_t>(Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y),
+											   Point<int16_t>(chattop_rb.x() + 1, chattop_rb.y()));
+		auto chatleft = Rectangle<int16_t>(Point<int16_t>(bounds_lt.x(), bounds_lt_y),
+										   Point<int16_t>(bounds_lt.x(), bounds_lt_y + bounds_rb_y));
+		auto chatright = Rectangle<int16_t>(Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y),
+											Point<int16_t>(chattop_rb.x() + 1, bounds_lt_y + bounds_rb_y));
 
 		bool in_chattop = chattop.contains(cursorpos);
 		bool in_chattopleft = chattopleft.contains(cursorpos);
@@ -339,73 +350,62 @@ namespace ms
 				//dimension.set_y(getchatbarheight());
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				dragchattop = false;
 			}
-		}
-		else if (in_chattop)
+		} else if (in_chattop)
 		{
 			if (clicking)
 			{
 				dragchattop = true;
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CHATBARVDRAG;
 			}
-		}
-		else if (in_chattopleft)
+		} else if (in_chattopleft)
 		{
 			if (clicking)
 			{
 				//dragchattopleft = true;
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CHATBARBRTLDRAG;
 			}
-		}
-		else if (in_chattopright)
+		} else if (in_chattopright)
 		{
 			if (clicking)
 			{
 				//dragchattopright = true;
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CHATBARBLTRDRAG;
 			}
-		}
-		else if (in_chatleft)
+		} else if (in_chatleft)
 		{
 			if (clicking)
 			{
 				//dragchatleft = true;
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CHATBARHDRAG;
 			}
-		}
-		else if (in_chatright)
+		} else if (in_chatright)
 		{
 			if (clicking)
 			{
 				//dragchatright = true;
 
 				return Cursor::State::CLICKING;
-			}
-			else
+			} else
 			{
 				return Cursor::State::CHATBARHDRAG;
 			}
@@ -421,7 +421,7 @@ namespace ms
 		return bounds.contains(cursorpos);
 	}
 
-	void UIChatBar::send_chatline(const std::string& line, LineType type)
+	void UIChatBar::send_chatline(const std::string &line, LineType type)
 	{
 		rowmax++;
 		rowpos = rowmax;
@@ -432,24 +432,24 @@ namespace ms
 
 		switch (type)
 		{
-		case LineType::RED:
-			color = Color::Name::DARKRED;
-			break;
-		case LineType::BLUE:
-			color = Color::Name::MEDIUMBLUE;
-			break;
-		case LineType::YELLOW:
-			color = Color::Name::YELLOW;
-			break;
-		default:
-			color = Color::Name::WHITE;
-			break;
+			case LineType::RED:
+				color = Color::Name::DARKRED;
+				break;
+			case LineType::BLUE:
+				color = Color::Name::MEDIUMBLUE;
+				break;
+			case LineType::YELLOW:
+				color = Color::Name::YELLOW;
+				break;
+			default:
+				color = Color::Name::WHITE;
+				break;
 		}
 
 		rowtexts.emplace(
-			std::piecewise_construct,
-			std::forward_as_tuple(rowmax),
-			std::forward_as_tuple(Text::Font::A11M, Text::Alignment::LEFT, color, line, 480)
+				std::piecewise_construct,
+				std::forward_as_tuple(rowmax),
+				std::forward_as_tuple(Text::Font::A11M, Text::Alignment::LEFT, color, line, 480)
 		);
 	}
 
@@ -511,8 +511,7 @@ namespace ms
 			chatfield.set_state(Textfield::State::FOCUSED);
 
 			//dimension.shift_y(getchatbarheight());
-		}
-		else
+		} else
 		{
 			buttons[Buttons::BT_CHAT]->set_active(false);
 			buttons[Buttons::BT_HELP]->set_active(false);
@@ -540,25 +539,25 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::BT_OPENCHAT:
-		case Buttons::BT_CLOSECHAT:
-			toggle_chat();
-			break;
-		case Buttons::BT_TAB_0:
-		case Buttons::BT_TAB_1:
-		case Buttons::BT_TAB_2:
-		case Buttons::BT_TAB_3:
-		case Buttons::BT_TAB_4:
-		case Buttons::BT_TAB_5:
-			for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
-			{
-				buttons[Buttons::BT_TAB_0 + i]->set_state(Button::State::NORMAL);
-				chattab_text[ChatTab::CHT_ALL + i].change_color(Color::Name::DUSTYGRAY);
-			}
+			case Buttons::BT_OPENCHAT:
+			case Buttons::BT_CLOSECHAT:
+				toggle_chat();
+				break;
+			case Buttons::BT_TAB_0:
+			case Buttons::BT_TAB_1:
+			case Buttons::BT_TAB_2:
+			case Buttons::BT_TAB_3:
+			case Buttons::BT_TAB_4:
+			case Buttons::BT_TAB_5:
+				for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
+				{
+					buttons[Buttons::BT_TAB_0 + i]->set_state(Button::State::NORMAL);
+					chattab_text[ChatTab::CHT_ALL + i].change_color(Color::Name::DUSTYGRAY);
+				}
 
-			chattab_text[buttonid - Buttons::BT_TAB_0].change_color(Color::Name::WHITE);
+				chattab_text[buttonid - Buttons::BT_TAB_0].change_color(Color::Name::WHITE);
 
-			return Button::State::PRESSED;
+				return Button::State::PRESSED;
 		}
 
 		Setting<Chatopen>::get().save(chatopen);

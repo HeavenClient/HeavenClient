@@ -30,7 +30,7 @@ namespace ms
 {
 	const PlayerNullState nullstate;
 
-	const PlayerState* get_state(Char::State state)
+	const PlayerState *get_state(Char::State state)
 	{
 		static PlayerStandState standing;
 		static PlayerWalkState walking;
@@ -62,7 +62,7 @@ namespace ms
 		}
 	}
 
-	Player::Player(const CharEntry& entry) : Char(entry.id, entry.look, entry.stats.name), stats(entry.stats)
+	Player::Player(const CharEntry &entry) : Char(entry.id, entry.look, entry.stats.name), stats(entry.stats)
 	{
 		attacking = false;
 		underwater = false;
@@ -71,7 +71,8 @@ namespace ms
 		set_direction(true);
 	}
 
-	Player::Player() : Char(0, {}, "") {}
+	Player::Player() : Char(0, {}, "")
+	{}
 
 	void Player::respawn(Point<int16_t> pos, bool uw)
 	{
@@ -85,7 +86,7 @@ namespace ms
 
 	void Player::send_action(KeyAction::Id action, bool down)
 	{
-		const PlayerState* pst = get_state(state);
+		const PlayerState *pst = get_state(state);
 
 		if (pst)
 			pst->send_action(*this, action, down);
@@ -111,7 +112,7 @@ namespace ms
 
 		auto passive_skills = skillbook.collect_passives();
 
-		for (auto& passive : passive_skills)
+		for (auto &passive : passive_skills)
 		{
 			int32_t skill_id = passive.first;
 			int32_t skill_level = passive.second;
@@ -119,7 +120,7 @@ namespace ms
 			passive_buffs.apply_buff(stats, skill_id, skill_level);
 		}
 
-		for (const Buff& buff : buffs.values())
+		for (const Buff &buff : buffs.values())
 			active_buffs.apply_buff(stats, buff.stat, buff.value);
 
 		stats.close_totalstats();
@@ -151,9 +152,9 @@ namespace ms
 			Char::draw(viewx, viewy, alpha);
 	}
 
-	int8_t Player::update(const Physics& physics)
+	int8_t Player::update(const Physics &physics)
 	{
-		const PlayerState* pst = get_state(state);
+		const PlayerState *pst = get_state(state);
 
 		if (pst)
 		{
@@ -166,8 +167,7 @@ namespace ms
 			{
 				attacking = false;
 				nullstate.update_state(*this);
-			}
-			else
+			} else
 			{
 				pst->update_state(*this);
 			}
@@ -195,7 +195,7 @@ namespace ms
 		if (weapon_id <= 0)
 			return 0;
 
-		const WeaponData& weapon = WeaponData::get(weapon_id);
+		const WeaponData &weapon = WeaponData::get(weapon_id);
 
 		int8_t base_speed = stats.get_attackspeed();
 		int8_t weapon_speed = weapon.get_speed();
@@ -215,7 +215,7 @@ namespace ms
 		{
 			Char::set_state(st);
 
-			const PlayerState* pst = get_state(st);
+			const PlayerState *pst = get_state(st);
 
 			if (pst)
 				pst->initialize(*this);
@@ -232,7 +232,7 @@ namespace ms
 		return !attacking && !is_climbing() && !is_sitting() && look.get_equips().has_weapon();
 	}
 
-	SpecialMove::ForbidReason Player::can_use(const SpecialMove& move) const
+	SpecialMove::ForbidReason Player::can_use(const SpecialMove &move) const
 	{
 		if (move.is_skill() && state == Char::State::PRONE)
 			return SpecialMove::ForbidReason::FBR_OTHER;
@@ -245,7 +245,7 @@ namespace ms
 
 		int32_t level = skillbook.get_level(move.get_id());
 		Weapon::Type weapon = get_weapontype();
-		const Job& job = stats.get_job();
+		const Job &job = stats.get_job();
 		uint16_t hp = stats.get_stat(MapleStat::Id::HP);
 		uint16_t mp = stats.get_stat(MapleStat::Id::MP);
 		uint16_t bullets = inventory.get_bulletcount();
@@ -262,8 +262,7 @@ namespace ms
 		{
 			degenerate = true;
 			attacktype = Attack::Type::CLOSE;
-		}
-		else
+		} else
 		{
 			Weapon::Type weapontype;
 			weapontype = get_weapontype();
@@ -340,7 +339,7 @@ namespace ms
 		return Char::is_invincible();
 	}
 
-	MobAttackResult Player::damage(const MobAttack& attack)
+	MobAttackResult Player::damage(const MobAttack &attack)
 	{
 		int32_t damage = stats.calculate_damage(attack.watk);
 		show_damage(damage);
@@ -359,7 +358,7 @@ namespace ms
 
 		uint8_t direction = fromleft ? 0 : 1;
 
-		return { attack, damage, direction };
+		return {attack, damage, direction};
 	}
 
 	void Player::give_buff(Buff buff)
@@ -492,42 +491,42 @@ namespace ms
 		return keysdown.count(action) ? keysdown.at(action) : false;
 	}
 
-	CharStats& Player::get_stats()
+	CharStats &Player::get_stats()
 	{
 		return stats;
 	}
 
-	const CharStats& Player::get_stats() const
+	const CharStats &Player::get_stats() const
 	{
 		return stats;
 	}
 
-	Inventory& Player::get_inventory()
+	Inventory &Player::get_inventory()
 	{
 		return inventory;
 	}
 
-	const Inventory& Player::get_inventory() const
+	const Inventory &Player::get_inventory() const
 	{
 		return inventory;
 	}
 
-	SkillBook& Player::get_skills()
+	SkillBook &Player::get_skills()
 	{
 		return skillbook;
 	}
 
-	QuestLog& Player::get_quests()
+	QuestLog &Player::get_quests()
 	{
 		return questlog;
 	}
 
-	TeleportRock& Player::get_teleportrock()
+	TeleportRock &Player::get_teleport_rock()
 	{
 		return teleportrock;
 	}
 
-	MonsterBook& Player::get_monsterbook()
+	MonsterBook &Player::get_monsterbook()
 	{
 		return monsterbook;
 	}

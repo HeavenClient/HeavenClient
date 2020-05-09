@@ -58,27 +58,26 @@ namespace ms
 				{
 					value = false;
 					delay = 0;
-				}
-				else
+				} else
 				{
 					delay -= timestep;
 				}
 			}
 		}
 
-		void operator = (bool b)
+		void operator=(bool b)
 		{
 			value = b;
 			delay = 0;
 			last = 0;
 		}
 
-		bool operator == (bool b) const
+		bool operator==(bool b) const
 		{
 			return value == b;
 		}
 
-		bool operator != (bool b) const
+		bool operator!=(bool b) const
 		{
 			return value != b;
 		}

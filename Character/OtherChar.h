@@ -32,24 +32,30 @@ namespace ms
 	class OtherChar : public Char
 	{
 	public:
-		OtherChar(int32_t charid, const CharLook& look, uint8_t level, int16_t job, const std::string& name, int8_t stance, Point<int16_t> position);
+		OtherChar(int32_t charid, const CharLook &look, uint8_t level, int16_t job, const std::string &name,
+				  int8_t stance, Point<int16_t> position);
 
 		// Update the character.
-		int8_t update(const Physics& physics) override;
+		int8_t update(const Physics &physics) override;
+
 		// Add the movements which this character will go through next.
-		void send_movement(const std::vector<Movement>& movements);
+		void send_movement(const std::vector<Movement> &movements);
 
 		// Update a skill level.
 		void update_skill(int32_t skillid, uint8_t skilllevel);
+
 		// Update the attack speed.
 		void update_speed(uint8_t attackspeed);
+
 		// Update the character look.
-		void update_look(const LookEntry& look);
+		void update_look(const LookEntry &look);
 
 		// Return the character's attacking speed.
 		int8_t get_integer_attackspeed() const override;
+
 		// Return the character's level.
 		uint16_t get_level() const override;
+
 		// Return the character's level of a skill.
 		int32_t get_skilllevel(int32_t skillid) const override;
 

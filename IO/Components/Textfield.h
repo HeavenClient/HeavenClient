@@ -36,30 +36,42 @@ namespace ms
 			FOCUSED
 		};
 
+		Textfield(Text::Font font, Text::Alignment alignment, Color::Name color, Rectangle<int16_t> bounds,
+				  size_t limit);
+
 		Textfield();
-		Textfield(Text::Font font, Text::Alignment alignment, Color::Name color, Rectangle<int16_t> bounds, size_t limit);
 
 		void draw(Point<int16_t> position) const;
+
 		void update(Point<int16_t> parentpos);
+
 		void send_key(KeyType::Id type, int32_t code, bool down);
-		void add_string(const std::string& str);
+
+		void add_string(const std::string &str);
 
 		void set_state(State state);
-		void change_text(const std::string& text);
+
+		void change_text(const std::string &text);
+
 		void set_cryptchar(int8_t character);
 
 		void set_enter_callback(std::function<void(std::string)> onreturn);
+
 		void set_key_callback(KeyAction::Id key, std::function<void(void)> action);
 
 		Cursor::State send_cursor(Point<int16_t> cursorpos, bool clicked);
 
 		bool empty() const;
+
 		State get_state() const;
+
 		Rectangle<int16_t> get_bounds() const;
-		const std::string& get_text() const;
+
+		const std::string &get_text() const;
 
 	private:
-		void modifytext(const std::string& t);
+		void modifytext(const std::string &);
+
 		bool belowlimit() const;
 
 		Text textlabel;

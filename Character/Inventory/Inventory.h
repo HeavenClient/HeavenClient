@@ -60,50 +60,69 @@ namespace ms
 
 		// Recalculate sums of equip stats
 		void recalc_stats(Weapon::Type weapontype);
-		// Set the meso amount
+
+		// Set the meso amount.
 		void set_meso(int64_t meso);
-		// Set the number of slots for a given inventory
+
+		// Set the number of slots for a given inventory.
 		void set_slotmax(InventoryType::Id type, uint8_t value);
 
 		// Modify the inventory with info from a packet
 		void modify(InventoryType::Id type, int16_t pos, int8_t mode, int16_t arg, Movement movement);
-		// Add a general item
-		void add_item(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint16_t count, const std::string& owner, int16_t flag);
-		// Add a pet item
-		void add_pet(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, const std::string& name, int8_t level, int16_t closeness, int8_t fullness);
-		// Add an equip item
-		void add_equip(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint8_t slots, uint8_t level, const EnumMap<EquipStat::Id, uint16_t>& stats, const std::string& owner, int16_t flag, uint8_t itemlevel, uint16_t itemexp, int32_t vicious);
+
+		// Add a general item.
+		void add_item(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint16_t count,
+					  const std::string &owner, int16_t flag);
+
+		// Add a pet item.
+		void add_pet(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire,
+					 const std::string &name, int8_t level, int16_t closeness, int8_t fullness);
+
+		// Add an equip item.
+		void add_equip(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint8_t slots,
+					   uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, const std::string &owner,
+					   int16_t flag, uint8_t itemlevel, uint16_t itemexp, int32_t vicious);
 
 		// Check if the use inventory contains at least one projectile
 		bool has_projectile() const;
-		// Return if an equip is equipped in the specified slot
+
+		// Return if an equip is equipped in the specfied slot.
 		bool has_equipped(EquipSlot::Id slot) const;
-		// Return the currently active projectile slot
+
+		// Return the currently active projectile slot.
 		int16_t get_bulletslot() const;
-		// Return the count of the currently active projectile
+
+		// Return the count of the currently active projectile.
 		uint16_t get_bulletcount() const;
-		// Return the itemid of the currently active projectile
+
+		// Return the itemid of the currently active projectile.
 		int32_t get_bulletid() const;
-		// Return the number of slots for the specified inventory
+
+		// Return the number of slots for the specified inventory.
 		uint8_t get_slotmax(InventoryType::Id type) const;
-		// Return a total stat
+
+		// Return a total stat.
 		uint16_t get_stat(EquipStat::Id type) const;
-		// Return the amount of meso
+
+		// Return the amount of meso.
 		int64_t get_meso() const;
-		// Find a free slot for the specified equip
+
+		// Find a free slot for the specified equip.
 		EquipSlot::Id find_equipslot(int32_t itemid) const;
-		// Find a free slot in the specified inventory
+
+		// Find a free slot in the specified inventory.
 		int16_t find_free_slot(InventoryType::Id type) const;
-		// Return the first slot which contains the specified item
+
+		// Return the first slot which contains the specified item.
 		int16_t find_item(InventoryType::Id type, int32_t itemid) const;
-		// Return the count of an item
-		// Returns zero if the slot is empty
+
+		// Return the count of an item. Returns 0 if the slot is empty.
 		int16_t get_item_count(InventoryType::Id type, int16_t slot) const;
-		// Return the total count of an item
-		// Returns zero if no instances of the item was found
+
+		// Return the total count of an item. Returns 0 if no instances of item found.
 		int16_t get_total_item_count(int32_t itemid) const;
-		// Return the id of an item
-		// Returns zero if the slot is empty
+
+		// Return the id of an item. Returns 0 if the slot is empty.
 		int32_t get_item_id(InventoryType::Id type, int16_t slot) const;
 
 		// Return a pointer to an equip
@@ -112,11 +131,14 @@ namespace ms
 	private:
 		// Add an inventory slot and return the unique_id
 		int32_t add_slot(InventoryType::Id type, int16_t slot, int32_t item_id, int16_t count, bool cash);
-		// Change the quantity of an item
+
+		// Change the quantity of an item.
 		void change_count(InventoryType::Id type, int16_t slot, int16_t count);
-		// Swap two items
+
+		// Swap two items.
 		void swap(InventoryType::Id firsttype, int16_t firstslot, InventoryType::Id secondtype, int16_t secondslot);
-		// Remove an item
+
+		// Remove an item.
 		void remove(InventoryType::Id type, int16_t slot);
 
 		struct Slot

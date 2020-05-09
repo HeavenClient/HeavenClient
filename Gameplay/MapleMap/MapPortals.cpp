@@ -40,9 +40,9 @@ namespace ms
 			std::string name = sub["pn"];
 			std::string target_name = sub["tn"];
 			int32_t target_id = sub["tm"];
-			Point<int16_t> position = { sub["x"], sub["y"] };
+			Point<int16_t> position = {sub["x"], sub["y"]};
 
-			const Animation* animation = &animations[type];
+			const Animation *animation = &animations[type];
 			bool intramap = target_id == mapid;
 
 			portals_by_id.emplace(
@@ -67,15 +67,15 @@ namespace ms
 		animations[Portal::REGULAR].update(Constants::TIMESTEP);
 		animations[Portal::HIDDEN].update(Constants::TIMESTEP);
 
-		for (auto& iter : portals_by_id)
+		for (auto &iter : portals_by_id)
 		{
-			Portal& portal = iter.second;
+			Portal &portal = iter.second;
 			switch (portal.get_type())
 			{
-			case Portal::HIDDEN:
-			case Portal::TOUCH:
-				portal.update(playerpos);
-				break;
+				case Portal::HIDDEN:
+				case Portal::TOUCH:
+					portal.update(playerpos);
+					break;
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace ms
 
 	void MapPortals::draw(Point<int16_t> viewpos, float inter) const
 	{
-		for (auto& ptit : portals_by_id)
+		for (auto &ptit : portals_by_id)
 			ptit.second.draw(viewpos, inter);
 	}
 
@@ -98,14 +98,13 @@ namespace ms
 			constexpr Point<int16_t> ABOVE(0, 30);
 
 			return iter->second.get_position() - ABOVE;
-		}
-		else
+		} else
 		{
 			return {};
 		}
 	}
 
-	Point<int16_t> MapPortals::get_portal_by_name(const std::string& portal_name) const
+	Point<int16_t> MapPortals::get_portal_by_name(const std::string &portal_name) const
 	{
 		auto iter = portal_ids_by_name.find(portal_name);
 
@@ -121,9 +120,9 @@ namespace ms
 		{
 			cooldown = WARPCD;
 
-			for (auto& iter : portals_by_id)
+			for (auto &iter : portals_by_id)
 			{
-				const Portal& portal = iter.second;
+				const Portal &portal = iter.second;
 
 				if (portal.bounds().contains(playerpos))
 					return portal.getwarpinfo();

@@ -18,16 +18,22 @@
 #pragma once
 
 #include "Combat/Combat.h"
+#include "MapleMap/MapInfo.h"
+#include "MapleMap/MapTilesObjs.h"
 #include "MapleMap/MapBackgrounds.h"
+#include "MapleMap/MapPortals.h"
+#include "MapleMap/MapChars.h"
+#include "MapleMap/MapMobs.h"
+#include "MapleMap/MapReactors.h"
+#include "MapleMap/MapNpcs.h"
 #include "MapleMap/MapDrops.h"
 #include "MapleMap/MapEffect.h"
-#include "MapleMap/MapNpcs.h"
-#include "MapleMap/MapPortals.h"
-#include "MapleMap/MapTilesObjs.h"
+#include "Physics/Physics.h"
 
-#include "../Timer.h"
-
+#include "../Character/Player.h"
 #include "../IO/KeyType.h"
+
+#include "Timer.h"
 
 namespace ms
 {
@@ -40,15 +46,17 @@ namespace ms
 
 		// Loads the map to display
 		void load(int32_t mapid, int8_t portalid);
-		// Remove all map objects and graphics
+
+		// Remove all map objects and graphics.
 		void clear();
 
-		// Construct the player from a character entry
-		void loadplayer(const CharEntry& entry);
+		// Construct the player from a character entry.
+		void loadplayer(const CharEntry &entry);
 
 		// Call 'draw()' of all objects on stage
 		void draw(float alpha) const;
-		// Calls 'update()' of all objects on stage
+
+		// Calls 'update()' of all objects on stage.
 		void update();
 
 		// Show a character effect
@@ -56,27 +64,35 @@ namespace ms
 
 		// Send key input to the stage
 		void send_key(KeyType::Id keytype, int32_t keycode, bool pressed);
-		// Send mouse input to the stage
+
+		// Send mouse input to the stage.
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position);
 
 		// Check if the specified id is the player's id
 		bool is_player(int32_t cid) const;
 
-		// Returns a reference to the NPCs on the current map
-		MapNpcs& get_npcs();
-		// Returns a reference to the other characters on the current map
-		MapChars& get_chars();
-		// Returns a reference to the mobs on the current map
-		MapMobs& get_mobs();
-		// Returns a reference to the reactors on the current map
-		MapReactors& get_reactors();
-		// Returns a reference to the drops on the current map
-		MapDrops& get_drops();
-		// Returns a reference to the Player
-		Player& get_player();
-		// Return a reference to the attack and buff component
-		Combat& get_combat();
-		// Returns the current map ID
+		// Returns a reference to the NPCs on the current map.
+		MapNpcs &get_npcs();
+
+		// Returns a reference to the other characters on the current map.
+		MapChars &get_chars();
+
+		// Returns a reference to the mobs on the current map.
+		MapMobs &get_mobs();
+
+		// Returns a reference to the reactors on the current map.
+		MapReactors &get_reactors();
+
+		// Returns a reference to the drops on the current map.
+		MapDrops &get_drops();
+
+		// Returns a reference to the Player.
+		Player &get_player();
+
+		// Return a reference to the attack and buff component.
+		Combat &get_combat();
+
+		// Returns the current map ID.
 		int32_t get_mapid();
 
 		// Return a pointer to a character, possibly the player.
@@ -97,10 +113,15 @@ namespace ms
 
 	private:
 		void load_map(int32_t mapid);
+
 		void respawn(int8_t portalid);
+
 		void check_portals();
+
 		void check_seats();
+
 		void check_ladders(bool up);
+
 		void check_drops();
 
 		enum State

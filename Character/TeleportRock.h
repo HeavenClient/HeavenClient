@@ -17,6 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#ifdef __linux__
+#include <cstdint>
+#endif
+
 #include <vector>
 
 namespace ms
@@ -26,6 +30,7 @@ namespace ms
 	{
 	public:
 		void addlocation(int32_t);
+
 		void addviplocation(int32_t);
 
 	private:

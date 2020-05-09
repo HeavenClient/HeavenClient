@@ -93,7 +93,7 @@ namespace ms
 		auto shortx = static_cast<int16_t>(std::round(x.get()));
 		auto shorty = static_cast<int16_t>(std::round(y.get()));
 
-		return { shortx, shorty };
+		return {shortx, shorty};
 	}
 
 	Point<int16_t> Camera::position(float alpha) const
@@ -101,11 +101,11 @@ namespace ms
 		auto interx = static_cast<int16_t>(std::round(x.get(alpha)));
 		auto intery = static_cast<int16_t>(std::round(y.get(alpha)));
 
-		return { interx, intery };
+		return {interx, intery};
 	}
 
 	Point<double> Camera::realposition(float alpha) const
 	{
-		return { x.get(alpha), y.get(alpha) };
+		return {x.get(alpha), y.get(alpha)};
 	}
 }

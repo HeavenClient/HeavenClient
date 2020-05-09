@@ -41,13 +41,13 @@ namespace ms
 			return next_real(1.0f) > percent;
 		}
 
-		template <class T>
+		template<class T>
 		T next_real(T to) const
 		{
 			return next_real<T>(0, to);
 		}
 
-		template <class T>
+		template<class T>
 		T next_real(T from, T to) const
 		{
 			if (from >= to)
@@ -55,18 +55,18 @@ namespace ms
 
 			std::uniform_real_distribution<T> range(from, to);
 			std::random_device rd;
-			std::default_random_engine engine{ rd() };
+			std::default_random_engine engine{rd()};
 
 			return range(engine);
 		}
 
-		template <class T>
+		template<class T>
 		T next_int(T to) const
 		{
 			return next_int<T>(0, to);
 		}
 
-		template <class T>
+		template<class T>
 		T next_int(T from, T to) const
 		{
 			if (from >= to)
@@ -74,21 +74,21 @@ namespace ms
 
 			std::uniform_int_distribution<T> range(from, to - 1);
 			std::random_device rd;
-			std::default_random_engine engine{ rd() };
+			std::default_random_engine engine{rd()};
 
 			return range(engine);
 		}
 
-		template <class E>
+		template<class E>
 		E next_enum(E to = E::LENGTH) const
 		{
 			return next_enum(E(), to);
 		}
 
-		template <class E>
+		template<class E>
 		E next_enum(E from, E to) const
 		{
-			auto next_underlying = next_int<std::underlying_type<E>::type>(from, to);
+			auto next_underlying = next_int<typename std::underlying_type<E>::type>(from, to);
 
 			return static_cast<E>(next_underlying);
 		}

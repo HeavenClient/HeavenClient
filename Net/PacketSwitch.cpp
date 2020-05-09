@@ -18,6 +18,7 @@
 #include "PacketSwitch.h"
 
 #include "Handlers/AttackHandlers.h"
+#include "Handlers/MapObjectHandlers.h"
 #include "Handlers/CashShopHandlers.h"
 #include "Handlers/CommonHandlers.h"
 #include "Handlers/InventoryHandlers.h"

@@ -86,6 +86,10 @@ namespace ms
 		}
 
 	private:
+#ifdef _WIN32
 		using clock = std::chrono::high_resolution_clock;
+#else
+		using clock = std::chrono::steady_clock;
+#endif
 	};
 }

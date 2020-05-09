@@ -45,15 +45,15 @@ namespace ms
 			{
 				delay = sgndelay;
 				attackframe = true;
-			}
-			else if (sgndelay < 0)
+			} else if (sgndelay < 0)
 			{
 				delay = -sgndelay;
 				attackframe = false;
 			}
 		}
 
-		BodyAction() {}
+		BodyAction()
+		{}
 
 		bool isattackframe() const
 		{
@@ -94,17 +94,26 @@ namespace ms
 		void init();
 
 		Point<int16_t> get_body_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_arm_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_hand_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_head_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> gethairpos(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> getfacepos(Stance::Id stance, uint8_t frame) const;
+
 		uint8_t nextframe(Stance::Id stance, uint8_t frame) const;
+
 		uint16_t get_delay(Stance::Id stance, uint8_t frame) const;
 
 		uint16_t get_attackdelay(std::string action, size_t no) const;
+
 		uint8_t next_actionframe(std::string action, uint8_t frame) const;
-		const BodyAction* get_action(std::string action, uint8_t frame) const;
+
+		const BodyAction *get_action(std::string action, uint8_t frame) const;
 
 	private:
 		std::unordered_map<uint8_t, Point<int16_t>> body_positions[Stance::Id::LENGTH];

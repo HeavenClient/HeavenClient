@@ -41,7 +41,8 @@ namespace ms
 			MINIMAP
 		};
 
-		virtual ~Tooltip() {}
+		virtual ~Tooltip()
+		{}
 
 		virtual void draw(Point<int16_t> cursorpos) const = 0;
 	};

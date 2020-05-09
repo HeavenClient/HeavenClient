@@ -40,18 +40,18 @@ namespace ms
 			"Item.nx",
 			"Map.nx",
 			"MapPretty.nx",	// From v167,
-			"MapLatest.nx",	// From latest
-			"Map001.nx",	// From latest
+			"MapLatest.nx",	// From v209.2,
+			"Map001.nx",	// From v209.2,
 			"Mob.nx",
 			"Morph.nx",
 			"Npc.nx",
 			"Quest.nx",
 			"Reactor.nx",
 			"Skill.nx",
-			"Sound.nx",		// From latest
+			"Sound.nx",	
 			"String.nx",
 			"TamingMob.nx",
-			"UI.nx"			// From latest
+			"UI.nx"			// From v209.2,
 		};
 
 		// Initialize NX

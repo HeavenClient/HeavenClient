@@ -29,11 +29,11 @@ namespace ms
 		mobs.draw(layer, viewx, viewy, alpha);
 	}
 
-	void MapMobs::update(const Physics& physics)
+	void MapMobs::update(const Physics &physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
 		{
-			const MobSpawn& spawn = spawns.front();
+			const MobSpawn &spawn = spawns.front();
 
 			if (Optional<Mob> mob = mobs.get(spawn.get_oid()))
 			{
@@ -43,8 +43,7 @@ namespace ms
 					mob->set_control(mode);
 
 				mob->makeactive();
-			}
-			else
+			} else
 			{
 				mobs.add(spawn.instantiate());
 			}
@@ -53,7 +52,7 @@ namespace ms
 		mobs.update(physics);
 	}
 
-	void MapMobs::spawn(MobSpawn&& spawn)
+	void MapMobs::spawn(MobSpawn &&spawn)
 	{
 		spawns.emplace(std::move(spawn));
 	}
@@ -83,15 +82,16 @@ namespace ms
 			mob->show_hp(percent, playerlevel);
 	}
 
-	void MapMobs::send_movement(int32_t oid, Point<int16_t> start, std::vector<Movement>&& movements)
+	void MapMobs::send_movement(int32_t oid, Point<int16_t> start, std::vector<Movement> &&movements)
 	{
 		if (Optional<Mob> mob = mobs.get(oid))
 			mob->send_movement(start, std::move(movements));
 	}
 
-	void MapMobs::send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t>& targets, uint8_t mobcount)
+	void MapMobs::send_attack(AttackResult &result, const Attack &attack, const std::vector<int32_t> &targets,
+							  uint8_t mobcount)
 	{
-		for (auto& target : targets)
+		for (auto &target : targets)
 		{
 			if (Optional<Mob> mob = mobs.get(target))
 			{
@@ -107,7 +107,8 @@ namespace ms
 		}
 	}
 
-	void MapMobs::apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move)
+	void
+	MapMobs::apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser &user, const SpecialMove &move)
 	{
 		if (Optional<Mob> mob = mobs.get(oid))
 		{
@@ -123,26 +124,26 @@ namespace ms
 		return mobs.contains(oid);
 	}
 
-	int32_t MapMobs::find_colliding(const MovingObject& moveobj) const
+	int32_t MapMobs::find_colliding(const MovingObject &moveobj) const
 	{
 		Range<int16_t> horizontal = Range<int16_t>(moveobj.get_last_x(), moveobj.get_x());
 		Range<int16_t> vertical = Range<int16_t>(moveobj.get_last_y(), moveobj.get_y());
 
 		Rectangle<int16_t> player_rect = {
-			horizontal.smaller(),
-			horizontal.greater(),
-			vertical.smaller() - 50,
-			vertical.greater()
+				horizontal.smaller(),
+				horizontal.greater(),
+				vertical.smaller() - 50,
+				vertical.greater()
 		};
 
 		auto iter = std::find_if(
-			mobs.begin(),
-			mobs.end(),
-			[&player_rect](auto& mmo)
-			{
-				Optional<Mob> mob = mmo.second.get();
-				return mob && mob->is_alive() && mob->is_in_range(player_rect);
-			}
+				mobs.begin(),
+				mobs.end(),
+				[&player_rect](auto &mmo)
+				{
+					Optional<Mob> mob = mmo.second.get();
+					return mob && mob->is_alive() && mob->is_in_range(player_rect);
+				}
 		);
 
 		if (iter == mobs.end())
@@ -175,7 +176,7 @@ namespace ms
 			return Point<int16_t>(0, 0);
 	}
 
-	MapObjects* MapMobs::get_mobs()
+	MapObjects *MapMobs::get_mobs()
 	{
 		return &mobs;
 	}

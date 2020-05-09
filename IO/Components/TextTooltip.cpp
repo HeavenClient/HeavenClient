@@ -63,8 +63,7 @@ namespace ms
 		{
 			cover.draw(pos + Point<int16_t>(-5, -2));
 			text_label.draw(pos);
-		}
-		else
+		} else
 		{
 			cover.draw(DrawArgument(pos + Point<int16_t>(-5, -2), 0.5f, 0.5f));
 			text_label.draw(pos + Point<int16_t>(1, -3));

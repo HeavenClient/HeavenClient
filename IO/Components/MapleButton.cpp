@@ -37,8 +37,11 @@ namespace ms
 		state = Button::State::NORMAL;
 	}
 
-	MapleButton::MapleButton(nl::node src, int16_t x, int16_t y) : MapleButton(src, Point<int16_t>(x, y)) {}
-	MapleButton::MapleButton(nl::node src) : MapleButton(src, Point<int16_t>()) {}
+	MapleButton::MapleButton(nl::node src, int16_t x, int16_t y) : MapleButton(src, Point<int16_t>(x, y))
+	{}
+
+	MapleButton::MapleButton(nl::node src) : MapleButton(src, Point<int16_t>())
+	{}
 
 	void MapleButton::draw(Point<int16_t> parentpos) const
 	{
@@ -64,8 +67,7 @@ namespace ms
 		{
 			lt = parentpos + position - textures[state].get_origin();
 			rb = lt + textures[state].get_dimensions();
-		}
-		else
+		} else
 		{
 			lt = parentpos + position - animations[state].get_origin();
 			rb = lt + animations[state].get_dimensions();

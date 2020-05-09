@@ -70,8 +70,7 @@ namespace ms
 					name_simple.draw(pos);
 				else
 					name_simple.draw(pos + Point<int16_t>(1, -3));
-			}
-			else
+			} else
 			{
 				int16_t name_width = name_label.width();
 				int16_t name_height = name_label.height();
@@ -95,7 +94,8 @@ namespace ms
 
 				int16_t half_width = new_width / 2;
 
-				frame.draw(pos + Point<int16_t>(half_width + 2, new_height - 7 + BOTTOM_PADDING), new_width - 14, new_height - 18 + BOTTOM_PADDING);
+				frame.draw(pos + Point<int16_t>(half_width + 2, new_height - 7 + BOTTOM_PADDING), new_width - 14,
+						   new_height - 18 + BOTTOM_PADDING);
 				cover.draw(pos + Point<int16_t>(-5, -2));
 				name_label.draw(pos + Point<int16_t>(half_width, -2));
 
@@ -104,8 +104,7 @@ namespace ms
 				separator.draw(pos + SEPARATOR_ADJ);
 				desc_simple.draw(pos + Point<int16_t>(half_width, -3));
 			}
-		}
-		else
+		} else
 		{
 			int16_t cur_width = pos.x() + fillwidth + 21;
 			int16_t cur_height = pos.y() + fillheight + 40;
@@ -121,7 +120,8 @@ namespace ms
 
 			int16_t half_width = fillwidth / 2;
 
-			frame.draw(pos + Point<int16_t>(half_width + 2, fillheight - 7 + BOTTOM_PADDING), fillwidth - 14, fillheight - 18 + BOTTOM_PADDING);
+			frame.draw(pos + Point<int16_t>(half_width + 2, fillheight - 7 + BOTTOM_PADDING), fillwidth - 14,
+					   fillheight - 18 + BOTTOM_PADDING);
 			cover.draw(pos + Point<int16_t>(-5, -2));
 			name_label.draw(pos + Point<int16_t>(half_width, 0));
 
@@ -134,8 +134,7 @@ namespace ms
 				desc_label.draw(pos + Point<int16_t>(4, 0));
 
 				pos.shift_y(desc_label.height() + BOTTOM_PADDING);
-			}
-			else
+			} else
 			{
 				pos.shift_y(name_height + BOTTOM_PADDING);
 			}
@@ -191,8 +190,10 @@ namespace ms
 		if (name.empty() || (parent != Tooltip::Parent::WORLDMAP && parent != Tooltip::Parent::MINIMAP))
 			return;
 
-		name_label = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::CENTER, Color::Name::WHITE, name);
-		name_simple = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, name);
+		name_label = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::CENTER, Color::Name::WHITE,
+						  name);
+		name_simple = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE,
+						   name);
 
 		int16_t width = name_label.width();
 		int16_t height = name_label.height();
@@ -228,8 +229,7 @@ namespace ms
 			int16_t new_width = (name_width > desc_width) ? name_width : desc_width;
 
 			separator = ColorLine(new_width - 6, Color::Name::WHITE, 0.40f);
-		}
-		else
+		} else
 		{
 			separator = ColorLine(fillwidth - 6, Color::Name::WHITE, 0.40f);
 		}
@@ -249,11 +249,11 @@ namespace ms
 
 			if (life_object.first == "m" && m < MAX_LIFE)
 			{
-				mob_labels[m] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::CHARTREUSE, life_object.second);
+				mob_labels[m] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::CHARTREUSE,
+									 life_object.second);
 				fillheight += mob_labels->height() + 2;
 				m++;
-			}
-			else if (life_object.first == "n" && n < MAX_LIFE)
+			} else if (life_object.first == "n" && n < MAX_LIFE)
 			{
 				npc_labels[n] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::MALIBU, life_object.second);
 				fillheight += npc_labels->height() + 2;

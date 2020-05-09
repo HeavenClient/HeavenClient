@@ -29,7 +29,7 @@ namespace ms
 {
 	Skill::Skill(int32_t id) : skillid(id)
 	{
-		const SkillData& data = SkillData::get(skillid);
+		const SkillData &data = SkillData::get(skillid);
 
 		std::string strid;
 
@@ -51,12 +51,10 @@ namespace ms
 		if (byleveleffect)
 		{
 			useeffect = std::make_unique<ByLevelUseEffect>(src);
-		}
-		else if (multieffect)
+		} else if (multieffect)
 		{
 			useeffect = std::make_unique<MultiUseEffect>(src);
-		}
-		else
+		} else
 		{
 			bool isanimation = src["effect"]["0"].data_type() == nl::node::type::bitmap;
 			bool haseffect1 = src["effect"]["1"].size() > 0;
@@ -64,22 +62,20 @@ namespace ms
 			if (isanimation)
 			{
 				useeffect = std::make_unique<SingleUseEffect>(src);
-			}
-			else if (haseffect1)
+			} else if (haseffect1)
 			{
 				useeffect = std::make_unique<TwoHandedUseEffect>(src);
-			}
-			else
+			} else
 			{
 				switch (skillid)
 				{
-				case SkillId::IRON_BODY:
-				case SkillId::MAGIC_ARMOR:
-					useeffect = std::make_unique<IronBodyUseEffect>();
-					break;
-				default:
-					useeffect = std::make_unique<NoUseEffect>();
-					break;
+					case SkillId::IRON_BODY:
+					case SkillId::MAGIC_ARMOR:
+						useeffect = std::make_unique<IronBodyUseEffect>();
+						break;
+					default:
+						useeffect = std::make_unique<NoUseEffect>();
+						break;
 				}
 			}
 		}
@@ -92,23 +88,19 @@ namespace ms
 		if (bylevelhit)
 		{
 			if (hashit0 && hashit1)
-				hiteffect = std::make_unique<ByLevelTwoHHitEffect>(src);
+				hiteffect = std::make_unique<ByLevelTwoHandedHitEffect>(src);
 			else
 				hiteffect = std::make_unique<ByLevelHitEffect>(src);
-		}
-		else if (byskilllevelhit)
+		} else if (byskilllevelhit)
 		{
 			hiteffect = std::make_unique<BySkillLevelHitEffect>(src);
-		}
-		else if (hashit0 && hashit1)
+		} else if (hashit0 && hashit1)
 		{
 			hiteffect = std::make_unique<TwoHandedHitEffect>(src);
-		}
-		else if (hashit0)
+		} else if (hashit0)
 		{
 			hiteffect = std::make_unique<SingleHitEffect>(src);
-		}
-		else
+		} else
 		{
 			hiteffect = std::make_unique<NoHitEffect>();
 		}
@@ -119,26 +111,22 @@ namespace ms
 		if (hasaction0 && hasaction1)
 		{
 			action = std::make_unique<TwoHandedAction>(src);
-		}
-		else if (hasaction0)
+		} else if (hasaction0)
 		{
 			action = std::make_unique<SingleAction>(src);
-		}
-		else if (data.is_attack())
+		} else if (data.is_attack())
 		{
 			bool bylevel = src["level"]["1"]["action"].data_type() == nl::node::type::string;
 
 			if (bylevel)
 			{
 				action = std::make_unique<ByLevelAction>(src, skillid);
-			}
-			else
+			} else
 			{
 				action = std::make_unique<RegularAction>();
 				overregular = true;
 			}
-		}
-		else
+		} else
 		{
 			action = std::make_unique<NoAction>();
 		}
@@ -149,31 +137,29 @@ namespace ms
 		if (bylevelball)
 		{
 			bullet = std::make_unique<BySkillLevelBullet>(src, skillid);
-		}
-		else if (hasball)
+		} else if (hasball)
 		{
 			bullet = std::make_unique<SingleBullet>(src);
-		}
-		else
+		} else
 		{
 			bullet = std::make_unique<RegularBullet>();
 			projectile = false;
 		}
 	}
 
-	void Skill::apply_useeffects(Char& user) const
+	void Skill::apply_useeffects(Char &user) const
 	{
 		useeffect->apply(user);
 
 		sound->play_use();
 	}
 
-	void Skill::apply_actions(Char& user, Attack::Type type) const
+	void Skill::apply_actions(Char &user, Attack::Type type) const
 	{
 		action->apply(user, type);
 	}
 
-	void Skill::apply_stats(const Char& user, Attack& attack) const
+	void Skill::apply_stats(const Char &user, Attack &attack) const
 	{
 		attack.skill = skillid;
 
@@ -184,13 +170,11 @@ namespace ms
 		{
 			attack.fixdamage = stats.fixdamage;
 			attack.damagetype = Attack::DMG_FIXED;
-		}
-		else if (stats.matk)
+		} else if (stats.matk)
 		{
 			attack.matk += stats.matk;
 			attack.damagetype = Attack::DMG_MAGIC;
-		}
-		else
+		} else
 		{
 			attack.mindamage *= stats.damage;
 			attack.maxdamage *= stats.damage;
@@ -204,12 +188,12 @@ namespace ms
 
 		switch (attack.type)
 		{
-		case Attack::RANGED:
-			attack.hitcount = stats.bulletcount;
-			break;
-		default:
-			attack.hitcount = stats.attackcount;
-			break;
+			case Attack::RANGED:
+				attack.hitcount = stats.bulletcount;
+				break;
+			default:
+				attack.hitcount = stats.attackcount;
+				break;
 		}
 
 		if (!stats.range.empty())
@@ -219,23 +203,23 @@ namespace ms
 		{
 			switch (skillid)
 			{
-			case SkillId::THREE_SNAILS:
-				switch (level)
-				{
-				case 1:
-					attack.bullet = 4000019;
+				case SkillId::THREE_SNAILS:
+					switch (level)
+					{
+						case 1:
+							attack.bullet = 4000019;
+							break;
+						case 2:
+							attack.bullet = 4000000;
+							break;
+						case 3:
+							attack.bullet = 4000016;
+							break;
+					}
 					break;
-				case 2:
-					attack.bullet = 4000000;
+				default:
+					attack.bullet = skillid;
 					break;
-				case 3:
-					attack.bullet = 4000016;
-					break;
-				}
-				break;
-			default:
-				attack.bullet = skillid;
-				break;
 			}
 		}
 
@@ -248,14 +232,14 @@ namespace ms
 		}
 	}
 
-	void Skill::apply_hiteffects(const AttackUser& user, Mob& target) const
+	void Skill::apply_hiteffects(const AttackUser &user, Mob &target) const
 	{
 		hiteffect->apply(user, target);
 
 		sound->play_hit();
 	}
 
-	Animation Skill::get_bullet(const Char& user, int32_t bulletid) const
+	Animation Skill::get_bullet(const Char &user, int32_t bulletid) const
 	{
 		return bullet->get(user, bulletid);
 	}
@@ -275,7 +259,8 @@ namespace ms
 		return skillid;
 	}
 
-	SpecialMove::ForbidReason Skill::can_use(int32_t level, Weapon::Type weapon, const Job& job, uint16_t hp, uint16_t mp, uint16_t bullets) const
+	SpecialMove::ForbidReason
+	Skill::can_use(int32_t level, Weapon::Type weapon, const Job &job, uint16_t hp, uint16_t mp, uint16_t bullets) const
 	{
 		if (level <= 0 || level > SkillData::get(skillid).get_masterlevel())
 			return FBR_OTHER;
@@ -298,13 +283,13 @@ namespace ms
 
 		switch (weapon)
 		{
-		case Weapon::BOW:
-		case Weapon::CROSSBOW:
-		case Weapon::CLAW:
-		case Weapon::GUN:
-			return (bullets >= stats.bulletcost) ? FBR_NONE : FBR_BULLETCOST;
-		default:
-			return FBR_NONE;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+			case Weapon::CLAW:
+			case Weapon::GUN:
+				return (bullets >= stats.bulletcost) ? FBR_NONE : FBR_BULLETCOST;
+			default:
+				return FBR_NONE;
 		}
 	}
 }

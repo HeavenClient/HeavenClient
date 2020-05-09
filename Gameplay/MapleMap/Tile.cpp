@@ -23,7 +23,7 @@
 
 namespace ms
 {
-	Tile::Tile(nl::node src, const std::string& ts)
+	Tile::Tile(nl::node src, const std::string &ts)
 	{
 		nl::node dsrc = nl::nx::map["Tile"][ts][src["u"]][src["no"]];
 		texture = Texture(nl::nx::map["Tile"][ts][src["u"]][src["no"]]);

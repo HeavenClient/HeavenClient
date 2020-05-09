@@ -89,7 +89,7 @@ namespace ms
 			FACE6 = 105,
 			FACE7 = 106,
 			// Static keys
-			LEFT,
+					LEFT,
 			RIGHT,
 			UP,
 			DOWN,

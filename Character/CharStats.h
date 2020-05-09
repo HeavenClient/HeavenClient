@@ -27,22 +27,34 @@ namespace ms
 	class CharStats
 	{
 	public:
-		CharStats(const StatsEntry& entry);
+		CharStats(const StatsEntry &entry);
+
 		CharStats();
 
 		void init_totalstats();
+
 		void set_stat(MapleStat::Id stat, uint16_t value);
+
 		void set_total(EquipStat::Id stat, int32_t value);
+
 		void add_buff(EquipStat::Id stat, int32_t value);
+
 		void add_value(EquipStat::Id stat, int32_t value);
+
 		void add_percent(EquipStat::Id stat, float percent);
+		
 		void close_totalstats();
 
 		void set_weapontype(Weapon::Type weapontype);
+
 		void set_exp(int64_t exp);
+
 		void set_portal(uint8_t portal);
+
 		void set_mastery(float mastery);
+
 		void set_damagepercent(float damagepercent);
+
 		void set_reducedamage(float reducedamage);
 
 		void change_job(uint16_t id);
@@ -50,40 +62,70 @@ namespace ms
 		int32_t calculate_damage(int32_t mobatk) const;
 
 		bool is_damage_buffed() const;
+
 		uint16_t get_stat(MapleStat::Id stat) const;
+
 		int32_t get_total(EquipStat::Id stat) const;
+
 		int32_t get_buffdelta(EquipStat::Id stat) const;
+		
 		Rectangle<int16_t> get_range() const;
 
 		void set_mapid(int32_t id);
+
 		int32_t get_mapid() const;
+
 		uint8_t get_portal() const;
+
 		int64_t get_exp() const;
-		const std::string& get_name() const;
-		const std::string& get_jobname() const;
+
+		const std::string &get_name() const;
+
+		const std::string &get_jobname() const;
+
 		Weapon::Type get_weapontype() const;
+
 		float get_mastery() const;
+
 		float get_critical() const;
+
 		float get_mincrit() const;
+
 		float get_maxcrit() const;
+
 		float get_reducedamage() const;
+
 		float get_bossdmg() const;
+
 		float get_ignoredef() const;
+
 		void set_stance(float stance);
+
 		float get_stance() const;
+
 		float get_resistance() const;
+
 		int32_t get_maxdamage() const;
+
 		int32_t get_mindamage() const;
+
 		uint16_t get_honor() const;
+
 		void set_attackspeed(int8_t speed);
+
 		int8_t get_attackspeed() const;
-		const Job& get_job() const;
+
+		const Job &get_job() const;
+
 		bool get_female() const;
 
 	private:
 		int32_t calculateaccuracy() const;
+
 		int32_t get_primary_stat() const;
+
 		int32_t get_secondary_stat() const;
+
 		float get_multiplier() const;
 
 		std::string name;

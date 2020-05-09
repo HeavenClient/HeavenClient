@@ -36,13 +36,13 @@ namespace ms
 	{
 		totalstats.clear();
 
-		for (auto& iter : inventories[InventoryType::Id::EQUIPPED])
+		for (auto &iter : inventories[InventoryType::Id::EQUIPPED])
 		{
 			auto equip_iter = equips.find(iter.second.unique_id);
 
 			if (equip_iter != equips.end())
 			{
-				const Equip& equip = equip_iter->second;
+				const Equip &equip = equip_iter->second;
 
 				for (auto stat_iter : totalstats)
 					stat_iter.second += equip.get_stat(stat_iter.first);
@@ -53,30 +53,30 @@ namespace ms
 
 		switch (type)
 		{
-		case Weapon::Type::BOW:
-			prefix = 2060;
-			break;
-		case Weapon::Type::CROSSBOW:
-			prefix = 2061;
-			break;
-		case Weapon::Type::CLAW:
-			prefix = 2070;
-			break;
-		case Weapon::Type::GUN:
-			prefix = 2330;
-			break;
-		default:
-			prefix = 0;
-			break;
+			case Weapon::Type::BOW:
+				prefix = 2060;
+				break;
+			case Weapon::Type::CROSSBOW:
+				prefix = 2061;
+				break;
+			case Weapon::Type::CLAW:
+				prefix = 2070;
+				break;
+			case Weapon::Type::GUN:
+				prefix = 2330;
+				break;
+			default:
+				prefix = 0;
+				break;
 		}
 
 		bulletslot = 0;
 
 		if (prefix)
 		{
-			for (auto& iter : inventories[InventoryType::Id::USE])
+			for (auto &iter : inventories[InventoryType::Id::USE])
 			{
-				const Slot& slot = iter.second;
+				const Slot &slot = iter.second;
 
 				if (slot.count && slot.item_id / 1000 == prefix)
 				{
@@ -100,31 +100,35 @@ namespace ms
 		slotmaxima[type] = slotmax;
 	}
 
-	void Inventory::add_item(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire, uint16_t count, const std::string& owner, int16_t flags)
+	void Inventory::add_item(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire,
+							 uint16_t count, const std::string &owner, int16_t flags)
 	{
 		items.emplace(
-			std::piecewise_construct,
-			std::forward_as_tuple(add_slot(invtype, slot, item_id, count, cash)),
-			std::forward_as_tuple(item_id, expire, owner, flags)
-			);
+				std::piecewise_construct,
+				std::forward_as_tuple(add_slot(invtype, slot, item_id, count, cash)),
+				std::forward_as_tuple(item_id, expire, owner, flags)
+		);
 	}
 
-	void Inventory::add_pet(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire, const std::string& name, int8_t level, int16_t closeness, int8_t fullness)
+	void Inventory::add_pet(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire,
+							const std::string &name, int8_t level, int16_t closeness, int8_t fullness)
 	{
 		pets.emplace(
-			std::piecewise_construct,
-			std::forward_as_tuple(add_slot(invtype, slot, item_id, 1, cash)),
-			std::forward_as_tuple(item_id, expire, name, level, closeness, fullness)
-			);
+				std::piecewise_construct,
+				std::forward_as_tuple(add_slot(invtype, slot, item_id, 1, cash)),
+				std::forward_as_tuple(item_id, expire, name, level, closeness, fullness)
+		);
 	}
 
-	void Inventory::add_equip(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire, uint8_t slots, uint8_t level, const EnumMap<EquipStat::Id, uint16_t>& stats, const std::string& owner, int16_t flag, uint8_t ilevel, uint16_t iexp, int32_t vicious)
+	void Inventory::add_equip(InventoryType::Id invtype, int16_t slot, int32_t item_id, bool cash, int64_t expire,
+							  uint8_t slots, uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats,
+							  const std::string &owner, int16_t flag, uint8_t ilevel, uint16_t iexp, int32_t vicious)
 	{
 		equips.emplace(
-			std::piecewise_construct,
-			std::forward_as_tuple(add_slot(invtype, slot, item_id, 1, cash)),
-			std::forward_as_tuple(item_id, expire, owner, flag, slots, level, stats, ilevel, iexp, vicious)
-			);
+				std::piecewise_construct,
+				std::forward_as_tuple(add_slot(invtype, slot, item_id, 1, cash)),
+				std::forward_as_tuple(item_id, expire, owner, flag, slots, level, stats, ilevel, iexp, vicious)
+		);
 	}
 
 	void Inventory::remove(InventoryType::Id type, int16_t slot)
@@ -139,21 +143,22 @@ namespace ms
 
 		switch (type)
 		{
-		case InventoryType::Id::EQUIPPED:
-		case InventoryType::Id::EQUIP:
-			equips.erase(unique_id);
-			break;
-		case InventoryType::Id::CASH:
-			items.erase(unique_id);
-			pets.erase(unique_id);
-			break;
-		default:
-			items.erase(unique_id);
-			break;
+			case InventoryType::Id::EQUIPPED:
+			case InventoryType::Id::EQUIP:
+				equips.erase(unique_id);
+				break;
+			case InventoryType::Id::CASH:
+				items.erase(unique_id);
+				pets.erase(unique_id);
+				break;
+			default:
+				items.erase(unique_id);
+				break;
 		}
 	}
 
-	void Inventory::swap(InventoryType::Id firsttype, int16_t firstslot, InventoryType::Id secondtype, int16_t secondslot)
+	void
+	Inventory::swap(InventoryType::Id firsttype, int16_t firstslot, InventoryType::Id secondtype, int16_t secondslot)
 	{
 		Slot first = std::move(inventories[firsttype][firstslot]);
 		inventories[firsttype][firstslot] = std::move(inventories[secondtype][secondslot]);
@@ -169,7 +174,7 @@ namespace ms
 	int32_t Inventory::add_slot(InventoryType::Id type, int16_t slot, int32_t item_id, int16_t count, bool cash)
 	{
 		running_uid++;
-		inventories[type][slot] = { running_uid, item_id, count, cash };
+		inventories[type][slot] = {running_uid, item_id, count, cash};
 
 		return running_uid;
 	}
@@ -194,27 +199,27 @@ namespace ms
 
 		switch (mode)
 		{
-		case Modification::CHANGECOUNT:
-			change_count(type, slot, arg);
-			break;
-		case Modification::SWAP:
-			switch (move)
-			{
-			case Movement::MOVE_INTERNAL:
-				swap(type, slot, type, arg);
+			case Modification::CHANGECOUNT:
+				change_count(type, slot, arg);
 				break;
-			case Movement::MOVE_UNEQUIP:
-				swap(InventoryType::Id::EQUIPPED, slot, InventoryType::Id::EQUIP, arg);
-				break;
-			case Movement::MOVE_EQUIP:
-				swap(InventoryType::Id::EQUIP, slot, InventoryType::Id::EQUIPPED, arg);
-				break;
-			}
+			case Modification::SWAP:
+				switch (move)
+				{
+					case Movement::MOVE_INTERNAL:
+						swap(type, slot, type, arg);
+						break;
+					case Movement::MOVE_UNEQUIP:
+						swap(InventoryType::Id::EQUIPPED, slot, InventoryType::Id::EQUIP, arg);
+						break;
+					case Movement::MOVE_EQUIP:
+						swap(InventoryType::Id::EQUIP, slot, InventoryType::Id::EQUIPPED, arg);
+						break;
+				}
 
-			break;
-		case Modification::REMOVE:
-			remove(type, slot);
-			break;
+				break;
+			case Modification::REMOVE:
+				remove(type, slot);
+				break;
 		}
 	}
 
@@ -260,7 +265,7 @@ namespace ms
 
 	EquipSlot::Id Inventory::find_equipslot(int32_t itemid) const
 	{
-		const EquipData& cloth = EquipData::get(itemid);
+		const EquipData &cloth = EquipData::get(itemid);
 
 		if (!cloth.is_valid())
 			return EquipSlot::Id::NONE;
@@ -279,8 +284,7 @@ namespace ms
 				return EquipSlot::Id::RING4;
 
 			return EquipSlot::Id::RING1;
-		}
-		else
+		} else
 		{
 			return eqslot;
 		}
@@ -290,7 +294,7 @@ namespace ms
 	{
 		int16_t counter = 1;
 
-		for (auto& iter : inventories[type])
+		for (auto &iter : inventories[type])
 		{
 			if (iter.first != counter)
 				return counter;
@@ -303,7 +307,7 @@ namespace ms
 
 	int16_t Inventory::find_item(InventoryType::Id type, int32_t itemid) const
 	{
-		for (auto& iter : inventories[type])
+		for (auto &iter : inventories[type])
 			if (iter.second.item_id == itemid)
 				return iter.first;
 
@@ -326,7 +330,7 @@ namespace ms
 
 		int16_t total_count = 0;
 
-		for (auto& iter : inventories[type])
+		for (auto &iter : inventories[type])
 			if (iter.second.item_id == itemid)
 				total_count += iter.second.count;
 

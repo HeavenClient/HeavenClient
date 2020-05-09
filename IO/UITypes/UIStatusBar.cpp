@@ -47,7 +47,7 @@
 
 namespace ms
 {
-	UIStatusBar::UIStatusBar(const CharStats& st) : stats(st)
+	UIStatusBar::UIStatusBar(const CharStats &st) : stats(st)
 	{
 		quickslot_active = false;
 		quickslot_adj = Point<int16_t>(QUICKSLOT_MAX, 0);
@@ -118,8 +118,7 @@ namespace ms
 			community_pos = menu_pos + Point<int16_t>(-26, 196);
 			character_pos = menu_pos + Point<int16_t>(-61, 168);
 			event_pos = menu_pos + Point<int16_t>(-94, 252);
-		}
-		else
+		} else
 		{
 			hpmp_pos = Point<int16_t>(416 + pos_adj, 40);
 			hpset_pos = Point<int16_t>(550 + pos_adj, 70);
@@ -148,8 +147,7 @@ namespace ms
 			community_pos += Point<int16_t>(-7, 0);
 			character_pos += Point<int16_t>(-7, 0);
 			event_pos += Point<int16_t>(-7, 0);
-		}
-		else if (VWIDTH == 1366)
+		} else if (VWIDTH == 1366)
 		{
 			quickslot_pos = Point<int16_t>(623 + pos_adj, 37);
 
@@ -159,8 +157,7 @@ namespace ms
 			community_pos += Point<int16_t>(-5, 0);
 			character_pos += Point<int16_t>(-5, 0);
 			event_pos += Point<int16_t>(-5, 0);
-		}
-		else if (VWIDTH == 1920)
+		} else if (VWIDTH == 1920)
 		{
 			quickslot_pos = Point<int16_t>(900 + pos_adj, 37);
 
@@ -244,35 +241,36 @@ namespace ms
 			Point<int16_t> quickslot_qs = Point<int16_t>(579, 0);
 
 			buttons[Buttons::BT_FOLD_QS] = std::make_unique<MapleButton>(quickSlot[fold], quickslot_qs);
-			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend], quickslot_qs + quickslot_qs_adj);
-		}
-		else if (VWIDTH == 1024)
+			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend],
+																		   quickslot_qs + quickslot_qs_adj);
+		} else if (VWIDTH == 1024)
 		{
 			Point<int16_t> quickslot_qs = Point<int16_t>(627 + pos_adj, 37);
 
 			buttons[Buttons::BT_FOLD_QS] = std::make_unique<MapleButton>(quickSlot[fold], quickslot_qs);
-			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend], quickslot_qs + quickslot_qs_adj);
-		}
-		else if (VWIDTH == 1280)
+			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend],
+																		   quickslot_qs + quickslot_qs_adj);
+		} else if (VWIDTH == 1280)
 		{
 			Point<int16_t> quickslot_qs = Point<int16_t>(621 + pos_adj, 37);
 
 			buttons[Buttons::BT_FOLD_QS] = std::make_unique<MapleButton>(quickSlot[fold], quickslot_qs);
-			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend], quickslot_qs + quickslot_qs_adj);
-		}
-		else if (VWIDTH == 1366)
+			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend],
+																		   quickslot_qs + quickslot_qs_adj);
+		} else if (VWIDTH == 1366)
 		{
 			Point<int16_t> quickslot_qs = Point<int16_t>(623 + pos_adj, 37);
 
 			buttons[Buttons::BT_FOLD_QS] = std::make_unique<MapleButton>(quickSlot[fold], quickslot_qs);
-			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend], quickslot_qs + quickslot_qs_adj);
-		}
-		else if (VWIDTH == 1920)
+			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend],
+																		   quickslot_qs + quickslot_qs_adj);
+		} else if (VWIDTH == 1920)
 		{
 			Point<int16_t> quickslot_qs = Point<int16_t>(900 + pos_adj, 37);
 
 			buttons[Buttons::BT_FOLD_QS] = std::make_unique<MapleButton>(quickSlot[fold], quickslot_qs);
-			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend], quickslot_qs + quickslot_qs_adj);
+			buttons[Buttons::BT_EXTEND_QS] = std::make_unique<MapleButton>(quickSlot[extend],
+																		   quickslot_qs + quickslot_qs_adj);
 		}
 
 		if (quickslot_active)
@@ -285,37 +283,58 @@ namespace ms
 		menubackground[1] = submenu["backgrnd"]["1"];
 		menubackground[2] = submenu["backgrnd"]["2"];
 
-		buttons[Buttons::BT_MENU_ACHIEVEMENT] = std::make_unique<MapleButton>(submenu["menu"]["button:achievement"], menu_pos);
+		buttons[Buttons::BT_MENU_ACHIEVEMENT] = std::make_unique<MapleButton>(submenu["menu"]["button:achievement"],
+																			  menu_pos);
 		buttons[Buttons::BT_MENU_AUCTION] = std::make_unique<MapleButton>(submenu["menu"]["button:auction"], menu_pos);
-		buttons[Buttons::BT_MENU_BATTLE] = std::make_unique<MapleButton>(submenu["menu"]["button:battleStats"], menu_pos);
+		buttons[Buttons::BT_MENU_BATTLE] = std::make_unique<MapleButton>(submenu["menu"]["button:battleStats"],
+																		 menu_pos);
 		buttons[Buttons::BT_MENU_CLAIM] = std::make_unique<MapleButton>(submenu["menu"]["button:Claim"], menu_pos);
-		buttons[Buttons::BT_MENU_FISHING] = std::make_unique<MapleButton>(submenu["menu"]["button:Fishing"], menu_pos + Point<int16_t>(3, 1));
+		buttons[Buttons::BT_MENU_FISHING] = std::make_unique<MapleButton>(submenu["menu"]["button:Fishing"],
+																		  menu_pos + Point<int16_t>(3, 1));
 		buttons[Buttons::BT_MENU_HELP] = std::make_unique<MapleButton>(submenu["menu"]["button:Help"], menu_pos);
 		buttons[Buttons::BT_MENU_MEDAL] = std::make_unique<MapleButton>(submenu["menu"]["button:medal"], menu_pos);
-		buttons[Buttons::BT_MENU_MONSTER_COLLECTION] = std::make_unique<MapleButton>(submenu["menu"]["button:monsterCollection"], menu_pos);
-		buttons[Buttons::BT_MENU_MONSTER_LIFE] = std::make_unique<MapleButton>(submenu["menu"]["button:monsterLife"], menu_pos);
+		buttons[Buttons::BT_MENU_MONSTER_COLLECTION] = std::make_unique<MapleButton>(
+				submenu["menu"]["button:monsterCollection"], menu_pos);
+		buttons[Buttons::BT_MENU_MONSTER_LIFE] = std::make_unique<MapleButton>(submenu["menu"]["button:monsterLife"],
+																			   menu_pos);
 		buttons[Buttons::BT_MENU_QUEST] = std::make_unique<MapleButton>(submenu["menu"]["button:quest"], menu_pos);
 		buttons[Buttons::BT_MENU_UNION] = std::make_unique<MapleButton>(submenu["menu"]["button:union"], menu_pos);
 
-		buttons[Buttons::BT_SETTING_CHANNEL] = std::make_unique<MapleButton>(submenu["setting"]["button:channel"], setting_pos);
-		buttons[Buttons::BT_SETTING_QUIT] = std::make_unique<MapleButton>(submenu["setting"]["button:GameQuit"], setting_pos);
-		buttons[Buttons::BT_SETTING_JOYPAD] = std::make_unique<MapleButton>(submenu["setting"]["button:JoyPad"], setting_pos);
-		buttons[Buttons::BT_SETTING_KEYS] = std::make_unique<MapleButton>(submenu["setting"]["button:keySetting"], setting_pos);
-		buttons[Buttons::BT_SETTING_OPTION] = std::make_unique<MapleButton>(submenu["setting"]["button:option"], setting_pos);
+		buttons[Buttons::BT_SETTING_CHANNEL] = std::make_unique<MapleButton>(submenu["setting"]["button:channel"],
+																			 setting_pos);
+		buttons[Buttons::BT_SETTING_QUIT] = std::make_unique<MapleButton>(submenu["setting"]["button:GameQuit"],
+																		  setting_pos);
+		buttons[Buttons::BT_SETTING_JOYPAD] = std::make_unique<MapleButton>(submenu["setting"]["button:JoyPad"],
+																			setting_pos);
+		buttons[Buttons::BT_SETTING_KEYS] = std::make_unique<MapleButton>(submenu["setting"]["button:keySetting"],
+																		  setting_pos);
+		buttons[Buttons::BT_SETTING_OPTION] = std::make_unique<MapleButton>(submenu["setting"]["button:option"],
+																			setting_pos);
 
-		buttons[Buttons::BT_COMMUNITY_PARTY] = std::make_unique<MapleButton>(submenu["community"]["button:bossParty"], community_pos);
-		buttons[Buttons::BT_COMMUNITY_FRIENDS] = std::make_unique<MapleButton>(submenu["community"]["button:friends"], community_pos);
-		buttons[Buttons::BT_COMMUNITY_GUILD] = std::make_unique<MapleButton>(submenu["community"]["button:guild"], community_pos);
-		buttons[Buttons::BT_COMMUNITY_MAPLECHAT] = std::make_unique<MapleButton>(submenu["community"]["button:mapleChat"], community_pos);
+		buttons[Buttons::BT_COMMUNITY_PARTY] = std::make_unique<MapleButton>(submenu["community"]["button:bossParty"],
+																			 community_pos);
+		buttons[Buttons::BT_COMMUNITY_FRIENDS] = std::make_unique<MapleButton>(submenu["community"]["button:friends"],
+																			   community_pos);
+		buttons[Buttons::BT_COMMUNITY_GUILD] = std::make_unique<MapleButton>(submenu["community"]["button:guild"],
+																			 community_pos);
+		buttons[Buttons::BT_COMMUNITY_MAPLECHAT] = std::make_unique<MapleButton>(
+				submenu["community"]["button:mapleChat"], community_pos);
 
-		buttons[Buttons::BT_CHARACTER_INFO] = std::make_unique<MapleButton>(submenu["character"]["button:character"], character_pos);
-		buttons[Buttons::BT_CHARACTER_EQUIP] = std::make_unique<MapleButton>(submenu["character"]["button:Equip"], character_pos);
-		buttons[Buttons::BT_CHARACTER_ITEM] = std::make_unique<MapleButton>(submenu["character"]["button:Item"], character_pos);
-		buttons[Buttons::BT_CHARACTER_SKILL] = std::make_unique<MapleButton>(submenu["character"]["button:Skill"], character_pos);
-		buttons[Buttons::BT_CHARACTER_STAT] = std::make_unique<MapleButton>(submenu["character"]["button:Stat"], character_pos);
+		buttons[Buttons::BT_CHARACTER_INFO] = std::make_unique<MapleButton>(submenu["character"]["button:character"],
+																			character_pos);
+		buttons[Buttons::BT_CHARACTER_EQUIP] = std::make_unique<MapleButton>(submenu["character"]["button:Equip"],
+																			 character_pos);
+		buttons[Buttons::BT_CHARACTER_ITEM] = std::make_unique<MapleButton>(submenu["character"]["button:Item"],
+																			character_pos);
+		buttons[Buttons::BT_CHARACTER_SKILL] = std::make_unique<MapleButton>(submenu["character"]["button:Skill"],
+																			 character_pos);
+		buttons[Buttons::BT_CHARACTER_STAT] = std::make_unique<MapleButton>(submenu["character"]["button:Stat"],
+																			character_pos);
 
-		buttons[Buttons::BT_EVENT_DAILY] = std::make_unique<MapleButton>(submenu["event"]["button:dailyGift"], event_pos);
-		buttons[Buttons::BT_EVENT_SCHEDULE] = std::make_unique<MapleButton>(submenu["event"]["button:schedule"], event_pos);
+		buttons[Buttons::BT_EVENT_DAILY] = std::make_unique<MapleButton>(submenu["event"]["button:dailyGift"],
+																		 event_pos);
+		buttons[Buttons::BT_EVENT_SCHEDULE] = std::make_unique<MapleButton>(submenu["event"]["button:schedule"],
+																			event_pos);
 
 		for (size_t i = Buttons::BT_MENU_QUEST; i <= Buttons::BT_EVENT_DAILY; i++)
 			buttons[i]->set_active(false);
@@ -333,29 +352,25 @@ namespace ms
 			position_x = 410;
 			position_y = position.y();
 			dimension = Point<int16_t>(VWIDTH - position_x, 140);
-		}
-		else if (VWIDTH == 1024)
+		} else if (VWIDTH == 1024)
 		{
 			position = Point<int16_t>(0, 648);
 			position_x = 410;
 			position_y = position.y() + 42;
 			dimension = Point<int16_t>(VWIDTH - position_x, 75);
-		}
-		else if (VWIDTH == 1280)
+		} else if (VWIDTH == 1280)
 		{
 			position = Point<int16_t>(0, 600);
 			position_x = 500;
 			position_y = position.y() + 42;
 			dimension = Point<int16_t>(VWIDTH - position_x, 75);
-		}
-		else if (VWIDTH == 1366)
+		} else if (VWIDTH == 1366)
 		{
 			position = Point<int16_t>(0, 648);
 			position_x = 585;
 			position_y = position.y() + 42;
 			dimension = Point<int16_t>(VWIDTH - position_x, 75);
-		}
-		else if (VWIDTH == 1920)
+		} else if (VWIDTH == 1920)
 		{
 			position = Point<int16_t>(0, 960 + (VHEIGHT - 1080));
 			position_x = 860;
@@ -418,8 +433,7 @@ namespace ms
 		{
 			quickslot[0].draw(position + quickslot_pos + Point<int16_t>(-1, 0) + quickslot_adj);
 			quickslot[1].draw(position + quickslot_pos + Point<int16_t>(-1, 0) + quickslot_adj);
-		}
-		else
+		} else
 		{
 			quickslot[0].draw(position + quickslot_pos + quickslot_adj);
 			quickslot[1].draw(position + quickslot_pos + quickslot_adj);
@@ -444,32 +458,27 @@ namespace ms
 			pos = character_pos;
 			button_count = 5;
 			menutitle_index = 0;
-		}
-		else if (community_active)
+		} else if (community_active)
 		{
 			pos = community_pos;
 			button_count = 4;
 			menutitle_index = 1;
-		}
-		else if (event_active)
+		} else if (event_active)
 		{
 			pos = event_pos;
 			button_count = 2;
 			menutitle_index = 2;
-		}
-		else if (menu_active)
+		} else if (menu_active)
 		{
 			pos = menu_pos;
 			button_count = 11;
 			menutitle_index = 3;
-		}
-		else if (setting_active)
+		} else if (setting_active)
 		{
 			pos = setting_pos;
 			button_count = 5;
 			menutitle_index = 4;
-		}
-		else
+		} else
 		{
 			return;
 		}
@@ -484,7 +493,8 @@ namespace ms
 		uint16_t mid_y = end_y - mid_pos.y();
 
 		menubackground[0].draw(position + pos + pos_adj);
-		menubackground[1].draw(DrawArgument(position + pos + pos_adj) + DrawArgument(mid_pos, Point<int16_t>(0, mid_y)));
+		menubackground[1].draw(
+				DrawArgument(position + pos + pos_adj) + DrawArgument(mid_pos, Point<int16_t>(0, mid_y)));
 		menubackground[2].draw(position + pos + pos_adj + Point<int16_t>(0, end_y));
 
 		menutitle[menutitle_index].draw(position + pos + pos_adj);
@@ -498,7 +508,7 @@ namespace ms
 	{
 		UIElement::update();
 
-		for each (auto sprite in hpmp_sprites)
+		for (auto sprite : hpmp_sprites)
 			sprite.update();
 
 		expbar.update(getexppercent());
@@ -520,8 +530,7 @@ namespace ms
 				else
 					quickslot_adj.shift_x(-Constants::TIMESTEP);
 			}
-		}
-		else
+		} else
 		{
 			if (quickslot_adj.x() < QUICKSLOT_MAX)
 			{
@@ -590,78 +599,76 @@ namespace ms
 				Stage::get().get_player().get_quests()
 				);
 
-			remove_menus();
-			break;
-		case Buttons::BT_MENU_MEDAL:
-		case Buttons::BT_MENU_UNION:
-		case Buttons::BT_MENU_MONSTER_COLLECTION:
-		case Buttons::BT_MENU_AUCTION:
-		case Buttons::BT_MENU_MONSTER_LIFE:
-		case Buttons::BT_MENU_BATTLE:
-		case Buttons::BT_MENU_ACHIEVEMENT:
-		case Buttons::BT_MENU_FISHING:
-		case Buttons::BT_MENU_HELP:
-		case Buttons::BT_MENU_CLAIM:
-			remove_menus();
-			break;
-		case Buttons::BT_SETTING_CHANNEL:
-			UI::get().emplace<UIChannel>();
+				remove_menus();
+				break;
+			case Buttons::BT_MENU_MEDAL:
+			case Buttons::BT_MENU_UNION:
+			case Buttons::BT_MENU_MONSTER_COLLECTION:
+			case Buttons::BT_MENU_AUCTION:
+			case Buttons::BT_MENU_MONSTER_LIFE:
+			case Buttons::BT_MENU_BATTLE:
+			case Buttons::BT_MENU_ACHIEVEMENT:
+			case Buttons::BT_MENU_FISHING:
+			case Buttons::BT_MENU_HELP:
+			case Buttons::BT_MENU_CLAIM:
+				remove_menus();
+				break;
+			case Buttons::BT_SETTING_CHANNEL:
+				UI::get().emplace<UIChannel>();
 
-			remove_menus();
-			break;
-		case Buttons::BT_SETTING_OPTION:
-			UI::get().emplace<UIOptionMenu>();
+				remove_menus();
+				break;
+			case Buttons::BT_SETTING_OPTION:
+				UI::get().emplace<UIOptionMenu>();
 
-			remove_menus();
-			break;
-		case Buttons::BT_SETTING_KEYS:
-			UI::get().emplace<UIKeyConfig>(
-				Stage::get().get_player().get_inventory(),
-				Stage::get().get_player().get_skills()
+				remove_menus();
+				break;
+			case Buttons::BT_SETTING_KEYS:
+				UI::get().emplace<UIKeyConfig>(
+						Stage::get().get_player().get_inventory(),
+						Stage::get().get_player().get_skills()
 				);
 
-			remove_menus();
-			break;
-		case Buttons::BT_SETTING_JOYPAD:
-			UI::get().emplace<UIJoypad>();
+				remove_menus();
+				break;
+			case Buttons::BT_SETTING_JOYPAD:
+				UI::get().emplace<UIJoypad>();
 
-			remove_menus();
-			break;
-		case Buttons::BT_SETTING_QUIT:
-			UI::get().emplace<UIQuit>(stats);
+				remove_menus();
+				break;
+			case Buttons::BT_SETTING_QUIT:
+				UI::get().emplace<UIQuit>(stats);
 
-			remove_menus();
-			break;
-		case Buttons::BT_COMMUNITY_FRIENDS:
-		case Buttons::BT_COMMUNITY_PARTY:
-		{
-			auto userlist = UI::get().get_element<UIUserList>();
-			auto tab = (id == Buttons::BT_COMMUNITY_FRIENDS) ? UIUserList::Tab::FRIEND : UIUserList::Tab::PARTY;
-
-			if (!userlist)
+				remove_menus();
+				break;
+			case Buttons::BT_COMMUNITY_FRIENDS:
+			case Buttons::BT_COMMUNITY_PARTY:
 			{
-				UI::get().emplace<UIUserList>(tab);
-			}
-			else
-			{
-				auto cur_tab = userlist->get_tab();
-				auto is_active = userlist->is_active();
+				auto userlist = UI::get().get_element<UIUserList>();
+				auto tab = (id == Buttons::BT_COMMUNITY_FRIENDS) ? UIUserList::Tab::FRIEND : UIUserList::Tab::PARTY;
 
-				if (cur_tab == tab)
+				if (!userlist)
 				{
-					if (is_active)
-						userlist->deactivate();
-					else
-						userlist->makeactive();
-				}
-				else
+					UI::get().emplace<UIUserList>(tab);
+				} else
 				{
-					if (!is_active)
-						userlist->makeactive();
+					auto cur_tab = userlist->get_tab();
+					auto is_active = userlist->is_active();
 
-					userlist->change_tab(tab);
+					if (cur_tab == tab)
+					{
+						if (is_active)
+							userlist->deactivate();
+						else
+							userlist->makeactive();
+					} else
+					{
+						if (!is_active)
+							userlist->makeactive();
+
+						userlist->change_tab(tab);
+					}
 				}
-			}
 
 			remove_menus();
 		}
@@ -694,30 +701,30 @@ namespace ms
 				Stage::get().get_player().get_skills()
 				);
 
-			remove_menus();
-			break;
-		case Buttons::BT_CHARACTER_EQUIP:
-			UI::get().emplace<UIEquipInventory>(
-				Stage::get().get_player().get_inventory()
+				remove_menus();
+				break;
+			case Buttons::BT_CHARACTER_EQUIP:
+				UI::get().emplace<UIEquipInventory>(
+						Stage::get().get_player().get_inventory()
 				);
 
-			remove_menus();
-			break;
-		case Buttons::BT_CHARACTER_ITEM:
-			UI::get().emplace<UIItemInventory>(
-				Stage::get().get_player().get_inventory()
+				remove_menus();
+				break;
+			case Buttons::BT_CHARACTER_ITEM:
+				UI::get().emplace<UIItemInventory>(
+						Stage::get().get_player().get_inventory()
 				);
 
-			remove_menus();
-			break;
-		case Buttons::BT_EVENT_SCHEDULE:
-			UI::get().emplace<UIEvent>();
+				remove_menus();
+				break;
+			case Buttons::BT_EVENT_SCHEDULE:
+				UI::get().emplace<UIEvent>();
 
-			remove_menus();
-			break;
-		case Buttons::BT_EVENT_DAILY:
-			remove_menus();
-			break;
+				remove_menus();
+				break;
+			case Buttons::BT_EVENT_DAILY:
+				remove_menus();
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -733,14 +740,12 @@ namespace ms
 					toggle_setting();
 				else
 					remove_menus();
-			}
-			else if (keycode == KeyAction::Id::RETURN)
+			} else if (keycode == KeyAction::Id::RETURN)
 			{
 				for (size_t i = Buttons::BT_MENU_QUEST; i <= Buttons::BT_EVENT_DAILY; i++)
 					if (buttons[i]->get_state() == Button::State::MOUSEOVER)
 						button_pressed(i);
-			}
-			else if (keycode == KeyAction::Id::UP || keycode == KeyAction::Id::DOWN)
+			} else if (keycode == KeyAction::Id::UP || keycode == KeyAction::Id::DOWN)
 			{
 				uint16_t min_id, max_id;
 
@@ -748,23 +753,19 @@ namespace ms
 				{
 					min_id = Buttons::BT_MENU_QUEST;
 					max_id = Buttons::BT_MENU_CLAIM;
-				}
-				else if (setting_active)
+				} else if (setting_active)
 				{
 					min_id = Buttons::BT_SETTING_CHANNEL;
 					max_id = Buttons::BT_SETTING_QUIT;
-				}
-				else if (community_active)
+				} else if (community_active)
 				{
 					min_id = Buttons::BT_COMMUNITY_FRIENDS;
 					max_id = Buttons::BT_COMMUNITY_MAPLECHAT;
-				}
-				else if (character_active)
+				} else if (character_active)
 				{
 					min_id = Buttons::BT_CHARACTER_INFO;
 					max_id = Buttons::BT_CHARACTER_ITEM;
-				}
-				else if (event_active)
+				} else if (event_active)
 				{
 					min_id = Buttons::BT_EVENT_SCHEDULE;
 					max_id = Buttons::BT_EVENT_DAILY;
@@ -789,8 +790,7 @@ namespace ms
 						id++;
 					else
 						id = min_id;
-				}
-				else if (keycode == KeyAction::Id::UP)
+				} else if (keycode == KeyAction::Id::UP)
 				{
 					if (id > min_id)
 						id--;
@@ -812,8 +812,7 @@ namespace ms
 		{
 			pos = Point<int16_t>(position_x, position_y);
 			bounds = Rectangle<int16_t>(pos, pos + dimension);
-		}
-		else
+		} else
 		{
 			uint8_t button_count;
 			int16_t pos_y_adj;
@@ -823,26 +822,22 @@ namespace ms
 				pos = character_pos;
 				button_count = 5;
 				pos_y_adj = 248;
-			}
-			else if (community_active)
+			} else if (community_active)
 			{
 				pos = community_pos;
 				button_count = 4;
 				pos_y_adj = 301;
-			}
-			else if (event_active)
+			} else if (event_active)
 			{
 				pos = event_pos;
 				button_count = 2;
 				pos_y_adj = 417;
-			}
-			else if (menu_active)
+			} else if (menu_active)
 			{
 				pos = menu_pos;
 				button_count = 11;
 				pos_y_adj = -90;
-			}
-			else if (setting_active)
+			} else if (setting_active)
 			{
 				pos = setting_pos;
 				button_count = 5;
@@ -1054,8 +1049,8 @@ namespace ms
 		int64_t exp = stats.get_exp();
 
 		return static_cast<float>(
-			static_cast<double>(exp) / ExpTable::values[level]
-			);
+				static_cast<double>(exp) / ExpTable::values[level]
+		);
 	}
 
 	float UIStatusBar::gethppercent() const

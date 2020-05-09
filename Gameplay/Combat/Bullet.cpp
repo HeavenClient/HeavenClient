@@ -52,8 +52,7 @@ namespace ms
 				moveobj.hspeed = 3.0;
 			else if (moveobj.hspeed > 6.0)
 				moveobj.hspeed = 6.0;
-		}
-		else if (xdelta < 0.0)
+		} else if (xdelta < 0.0)
 		{
 			if (moveobj.hspeed > -3.0)
 				moveobj.hspeed = -3.0;

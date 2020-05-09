@@ -26,19 +26,24 @@ namespace ms
 	{
 	public:
 		Physics(nl::node src);
+
 		Physics();
 
-		// Move the specified object over the specified game-time
-		void move_object(PhysicsObject& tomove) const;
-		// Determine the point on the ground below the specified position
+		// Move the specified object over the specified game-time.
+		void move_object(PhysicsObject &tomove) const;
+
+		// Determine the point on the ground below the specified position.
 		Point<int16_t> get_y_below(Point<int16_t> position) const;
-		// Return a reference to the collection of platforms
-		const FootholdTree& get_fht() const;
+
+		// Return a reference to the collection of platforms.
+		const FootholdTree &get_fht() const;
 
 	private:
-		void move_normal(PhysicsObject&) const;
-		void move_flying(PhysicsObject&) const;
-		void move_swimming(PhysicsObject&) const;
+		void move_normal(PhysicsObject &) const;
+
+		void move_flying(PhysicsObject &) const;
+
+		void move_swimming(PhysicsObject &) const;
 
 		FootholdTree fht;
 	};

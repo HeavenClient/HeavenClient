@@ -31,23 +31,32 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIItemInventory(const Inventory& inventory);
+		UIItemInventory(const Inventory &inventory);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void doubleclick(Point<int16_t> position) override;
-		bool send_icon(const Icon& icon, Point<int16_t> position) override;
+
+		bool send_icon(const Icon &icon, Point<int16_t> position) override;
+
 		void toggle_active() override;
+
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		void modify(InventoryType::Id type, int16_t pos, int8_t mode, int16_t arg);
+
 		void set_sort(bool enabled);
+
 		void change_tab(InventoryType::Id type);
+
 		void clear_new();
 
 	protected:
@@ -55,30 +64,49 @@ namespace ms
 
 	private:
 		void show_item(int16_t slot);
+
 		void clear_tooltip();
+
 		void load_icons();
+
 		void update_slot(int16_t slot);
+
 		bool is_visible(int16_t slot) const;
+
 		bool is_not_visible(int16_t slot) const;
+
 		bool can_wear_equip(int16_t slot) const;
+
 		int16_t slot_by_position(Point<int16_t> position) const;
+
 		uint16_t button_by_tab(InventoryType::Id tab) const;
+
 		Point<int16_t> get_slotpos(int16_t slot) const;
+
 		Point<int16_t> get_full_slotpos(int16_t slot) const;
+
 		Point<int16_t> get_tabpos(InventoryType::Id tab) const;
-		Icon* get_icon(int16_t slot);
+
+		Icon *get_icon(int16_t slot);
+
 		void set_full(bool enabled);
 
 		class ItemIcon : public Icon::Type
 		{
 		public:
-			ItemIcon(const UIItemInventory& parent, InventoryType::Id sourcetab, EquipSlot::Id eqsource, int16_t source, int32_t item_id, int16_t count, bool untradable, bool cashitem);
+			ItemIcon(const UIItemInventory &parent, InventoryType::Id sourcetab, EquipSlot::Id eqsource, int16_t source,
+					 int32_t item_id, int16_t count, bool untradable, bool cashitem);
 
 			void drop_on_stage() const override;
+
 			void drop_on_equips(EquipSlot::Id eqslot) const override;
+
 			bool drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const override;
+
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
+
 			void set_count(int16_t count) override;
+
 			Icon::IconType get_type() override;
 
 		private:
@@ -89,7 +117,7 @@ namespace ms
 			int16_t count;
 			bool untradable;
 			bool cashitem;
-			const UIItemInventory& parent;
+			const UIItemInventory &parent;
 		};
 
 		static constexpr uint16_t ROWS = 8;
@@ -134,7 +162,7 @@ namespace ms
 			BT_CASHSHOP
 		};
 
-		const Inventory& inventory;
+		const Inventory &inventory;
 
 		Animation newitemslot;
 		Animation newitemtab;

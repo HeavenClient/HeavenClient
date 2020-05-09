@@ -31,7 +31,7 @@ namespace ms
 		stats.add_percent(STAT, static_cast<float>(value) / 100);
 	}
 
-	void MapleWarriorBuff::apply_to(CharStats& stats, int16_t value) const
+	void MapleWarriorBuff::apply_to(CharStats &stats, int16_t value) const
 	{
 		stats.add_percent(EquipStat::Id::STR, static_cast<float>(value) / 100);
 		stats.add_percent(EquipStat::Id::DEX, static_cast<float>(value) / 100);
@@ -39,12 +39,12 @@ namespace ms
 		stats.add_percent(EquipStat::Id::LUK, static_cast<float>(value) / 100);
 	}
 
-	void StanceBuff::apply_to(CharStats& stats, int16_t value) const
+	void StanceBuff::apply_to(CharStats &stats, int16_t value) const
 	{
 		stats.set_stance(static_cast<float>(value) / 100);
 	}
 
-	void BoosterBuff::apply_to(CharStats& stats, int16_t value) const
+	void BoosterBuff::apply_to(CharStats &stats, int16_t value) const
 	{
 		stats.set_attackspeed(static_cast<int8_t>(value));
 	}
@@ -64,9 +64,9 @@ namespace ms
 		buffs[Buffstat::Id::HYPERBODYMP] = std::make_unique<PercentageStatBuff<EquipStat::Id::MP>>();
 	}
 
-	void ActiveBuffs::apply_buff(CharStats& stats, Buffstat::Id stat, int16_t value) const
+	void ActiveBuffs::apply_buff(CharStats &stats, Buffstat::Id stat, int16_t value) const
 	{
-		if (auto& buff = buffs[stat])
+		if (auto &buff = buffs[stat])
 			buff->apply_to(stats, value);
 	}
 }

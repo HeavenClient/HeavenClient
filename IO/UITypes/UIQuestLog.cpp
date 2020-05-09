@@ -25,7 +25,7 @@
 
 namespace ms
 {
-	UIQuestLog::UIQuestLog(const QuestLog& ql) : UIDragElement<PosQUEST>(), questlog(ql)
+	UIQuestLog::UIQuestLog(const QuestLog &ql) : UIDragElement<PosQUEST>(), questlog(ql)
 	{
 		tab = Buttons::TAB0;
 
@@ -63,10 +63,12 @@ namespace ms
 		auto search_pos = position + search_area_origin + search_pos_adj;
 		auto search_dim = search_pos + search_area_dim + search_dim_adj;
 
-		search = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BOULDER, Rectangle<int16_t>(search_pos, search_dim), 19);
+		search = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BOULDER,
+						   Rectangle<int16_t>(search_pos, search_dim), 19);
 		placeholder = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BOULDER, "Enter the quest name.");
 
-		slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(0, 279), 150, 20, 5, [](bool) {});
+		slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(0, 279), 150, 20, 5, [](bool)
+		{});
 
 		change_tab(tab);
 
@@ -108,8 +110,7 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			}
-			else if (keycode == KeyAction::Id::TAB)
+			} else if (keycode == KeyAction::Id::TAB)
 			{
 				uint16_t new_tab = tab;
 
@@ -140,17 +141,17 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::TAB0:
-		case Buttons::TAB1:
-		case Buttons::TAB2:
-			change_tab(buttonid);
+			case Buttons::TAB0:
+			case Buttons::TAB1:
+			case Buttons::TAB2:
+				change_tab(buttonid);
 
-			return Button::State::IDENTITY;
-		case Buttons::CLOSE:
-			deactivate();
-			break;
-		default:
-			break;
+				return Button::State::IDENTITY;
+			case Buttons::CLOSE:
+				deactivate();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

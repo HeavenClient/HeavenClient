@@ -29,7 +29,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIEquipInventory(const Inventory& inventory);
+		UIEquipInventory(const Inventory &inventory);
 
 		void draw(float inter) const override;
 
@@ -39,6 +39,7 @@ namespace ms
 		void doubleclick(Point<int16_t> position) override;
 		bool is_in_range(Point<int16_t> cursorpos) const override;
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -51,6 +52,7 @@ namespace ms
 	private:
 		void show_equip(EquipSlot::Id slot);
 		void clear_tooltip();
+
 		void load_icons();
 		void update_slot(EquipSlot::Id slot);
 		EquipSlot::Id slot_by_position(Point<int16_t> position) const;
@@ -88,7 +90,7 @@ namespace ms
 			BT_SHOP
 		};
 
-		const Inventory& inventory;
+		const Inventory &inventory;
 
 		EnumMap<EquipSlot::Id, Point<int16_t>> iconpositions;
 		EnumMap<EquipSlot::Id, std::unique_ptr<Icon>> icons;

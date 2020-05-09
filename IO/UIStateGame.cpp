@@ -48,8 +48,8 @@ namespace ms
 		focused = UIElement::Type::NONE;
 		tooltipparent = Tooltip::Parent::NONE;
 
-		const CharLook& look = Stage::get().get_player().get_look();
-		const Inventory& inventory = Stage::get().get_player().get_inventory();
+		const CharLook &look = Stage::get().get_player().get_look();
+		const Inventory &inventory = Stage::get().get_player().get_inventory();
 
 		emplace<UIStatusMessenger>();
 		emplace<UIStatusBar>(stats);
@@ -64,9 +64,9 @@ namespace ms
 
 	void UIStateGame::draw(float inter, Point<int16_t> cursor) const
 	{
-		for (auto& type : elementorder)
+		for (auto &type : elementorder)
 		{
-			auto& element = elements[type];
+			auto &element = elements[type];
 
 			if (element && element->is_active())
 				element->draw(inter);
@@ -93,13 +93,13 @@ namespace ms
 
 			UI::get().remove(UIElement::Type::STATUSBAR);
 
-			const CharStats& stats = Stage::get().get_player().get_stats();
+			const CharStats &stats = Stage::get().get_player().get_stats();
 			emplace<UIStatusBar>(stats);
 		}
 
-		for (auto& type : elementorder)
+		for (auto &type : elementorder)
 		{
-			auto& element = elements[type];
+			auto &element = elements[type];
 
 			if (element && element->is_active())
 			{
@@ -111,9 +111,9 @@ namespace ms
 		}
 	}
 
-	bool UIStateGame::drop_icon(const Icon& icon, Point<int16_t> pos)
+	bool UIStateGame::drop_icon(const Icon &icon, Point<int16_t> pos)
 	{
-		if (UIElement* front = get_front(pos))
+		if (UIElement *front = get_front(pos))
 			return front->send_icon(icon, pos);
 		else
 			icon.drop_on_stage();
@@ -151,177 +151,169 @@ namespace ms
 
 	void UIStateGame::doubleclick(Point<int16_t> pos)
 	{
-		if (UIElement* front = get_front(pos))
+		if (UIElement *front = get_front(pos))
 			front->doubleclick(pos);
 	}
 
 	void UIStateGame::rightclick(Point<int16_t> pos)
 	{
-		if (UIElement* front = get_front(pos))
+		if (UIElement *front = get_front(pos))
 			front->rightclick(pos);
 	}
 
 	void UIStateGame::send_key(KeyType::Id type, int32_t action, bool pressed, bool escape)
 	{
-		if (UIElement* focusedelement = get(focused))
+		if (UIElement *focusedelement = get(focused))
 		{
 			if (focusedelement->is_active())
 			{
 				return focusedelement->send_key(action, pressed, escape);
-			}
-			else
+			} else
 			{
 				focused = UIElement::NONE;
 
 				return;
 			}
-		}
-		else
+		} else
 		{
 			switch (type)
 			{
-			case KeyType::Id::MENU:
-				if (pressed)
-				{
-					switch (action)
+				case KeyType::Id::MENU:
+					if (pressed)
 					{
-					case KeyAction::Id::EQUIPMENT:
-						emplace<UIEquipInventory>(
-							Stage::get().get_player().get_inventory()
-							);
-						break;
-					case KeyAction::Id::ITEMS:
-						emplace<UIItemInventory>(
-							Stage::get().get_player().get_inventory()
-							);
-						break;
-					case KeyAction::Id::STATS:
-						emplace<UIStatsInfo>(
-							Stage::get().get_player().get_stats()
-							);
-						break;
-					case KeyAction::Id::SKILLS:
-						emplace<UISkillBook>(
-							Stage::get().get_player().get_stats(),
-							Stage::get().get_player().get_skills()
-							);
-						break;
-					case KeyAction::Id::FRIENDS:
-					case KeyAction::Id::PARTY:
-					case KeyAction::Id::BOSSPARTY:
-					{
-						UIUserList::Tab tab;
-
 						switch (action)
 						{
-						case KeyAction::Id::FRIENDS:
-							tab = UIUserList::Tab::FRIEND;
-							break;
-						case KeyAction::Id::PARTY:
-							tab = UIUserList::Tab::PARTY;
-							break;
-						case KeyAction::Id::BOSSPARTY:
-							tab = UIUserList::Tab::BOSS;
-							break;
-						}
-
-						auto userlist = UI::get().get_element<UIUserList>();
-
-						if (userlist && userlist->get_tab() != tab && userlist->is_active())
-						{
-							userlist->change_tab(tab);
-						}
-						else
-						{
-							emplace<UIUserList>(tab);
-
-							if (userlist && userlist->get_tab() != tab && userlist->is_active())
-								userlist->change_tab(tab);
-						}
-					}
-					break;
-					case KeyAction::Id::WORLDMAP:
-						emplace<UIWorldMap>();
-						break;
-					case KeyAction::Id::MAPLECHAT:
-					{
-						auto chat = UI::get().get_element<UIChat>();
-
-						if (!chat || !chat->is_active())
-							emplace<UIChat>();
-					}
-					break;
-					case KeyAction::Id::MINIMAP:
-						if (auto minimap = UI::get().get_element<UIMiniMap>())
-							minimap->send_key(action, pressed, escape);
-
-						break;
-					case KeyAction::Id::QUESTLOG:
-						emplace<UIQuestLog>(
-							Stage::get().get_player().get_quests()
-							);
-						break;
-					case KeyAction::Id::KEYBINDINGS:
-					{
-						auto keyconfig = UI::get().get_element<UIKeyConfig>();
-
-						if (!keyconfig || !keyconfig->is_active())
-							emplace<UIKeyConfig>(
-								Stage::get().get_player().get_inventory(),
-								Stage::get().get_player().get_skills()
+							case KeyAction::Id::EQUIPMENT:
+								emplace<UIEquipInventory>(
+										Stage::get().get_player().get_inventory()
 								);
-						else if (keyconfig && keyconfig->is_active())
-							keyconfig->close();
+								break;
+							case KeyAction::Id::ITEMS:
+								emplace<UIItemInventory>(
+										Stage::get().get_player().get_inventory()
+								);
+								break;
+							case KeyAction::Id::STATS:
+								emplace<UIStatsInfo>(
+										Stage::get().get_player().get_stats()
+								);
+								break;
+							case KeyAction::Id::SKILLS:
+								emplace<UISkillBook>(
+										Stage::get().get_player().get_stats(),
+										Stage::get().get_player().get_skills()
+								);
+								break;
+							case KeyAction::Id::FRIENDS:
+							case KeyAction::Id::PARTY:
+							case KeyAction::Id::BOSSPARTY:
+							{
+								UIUserList::Tab tab;
 
-						break;
+								switch (action)
+								{
+									case KeyAction::Id::FRIENDS:
+										tab = UIUserList::Tab::FRIEND;
+										break;
+									case KeyAction::Id::PARTY:
+										tab = UIUserList::Tab::PARTY;
+										break;
+									case KeyAction::Id::BOSSPARTY:
+										tab = UIUserList::Tab::BOSS;
+										break;
+								}
+
+								auto userlist = UI::get().get_element<UIUserList>();
+
+								if (userlist && userlist->get_tab() != tab && userlist->is_active())
+								{
+									userlist->change_tab(tab);
+								} else
+								{
+									emplace<UIUserList>(tab);
+
+									if (userlist && userlist->get_tab() != tab && userlist->is_active())
+										userlist->change_tab(tab);
+								}
+							}
+								break;
+							case KeyAction::Id::WORLDMAP:
+								emplace<UIWorldMap>();
+								break;
+							case KeyAction::Id::MAPLECHAT:
+							{
+								auto chat = UI::get().get_element<UIChat>();
+
+								if (!chat || !chat->is_active())
+									emplace<UIChat>();
+							}
+								break;
+							case KeyAction::Id::MINIMAP:
+								if (auto minimap = UI::get().get_element<UIMiniMap>())
+									minimap->send_key(action, pressed, escape);
+
+								break;
+							case KeyAction::Id::QUESTLOG:
+								emplace<UIQuestLog>(
+										Stage::get().get_player().get_quests()
+								);
+								break;
+							case KeyAction::Id::MENU:
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
+									statusbar->toggle_menu();
+
+								break;
+							case KeyAction::Id::QUICKSLOTS:
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
+									statusbar->toggle_qs();
+
+								break;
+							case KeyAction::Id::CASHSHOP:
+								EnterCashShopPacket().dispatch();
+								break;
+							case KeyAction::Id::TOGGLECHAT:
+								if (auto chatbar = UI::get().get_element<UIChatBar>())
+									if (!chatbar->is_chatfieldopen())
+										chatbar->toggle_chat();
+
+								break;
+							case KeyAction::Id::KEYBINDINGS:
+							{
+								auto keyconfig = UI::get().get_element<UIKeyConfig>();
+
+								if (!keyconfig || !keyconfig->is_active())
+									emplace<UIKeyConfig>(
+											Stage::get().get_player().get_inventory(),
+											Stage::get().get_player().get_skills()
+									);
+								else if (keyconfig && keyconfig->is_active())
+									keyconfig->close();
+
+								break;
+							}
+							case KeyAction::Id::MAINMENU:
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
+									statusbar->send_key(action, pressed, escape);
+
+								break;
+							case KeyAction::Id::EVENT:
+								emplace<UIEvent>();
+								break;
+							case KeyAction::Id::CHANGECHANNEL:
+								emplace<UIChannel>();
+								break;
+							default:
+								std::cout << "Action (" << action << ") not handled!" << std::endl;
+								break;
+						}
 					}
-					case KeyAction::Id::TOGGLECHAT:
-						if (auto chatbar = UI::get().get_element<UIChatBar>())
-							if (!chatbar->is_chatfieldopen())
-								chatbar->toggle_chat();
-
-						break;
-					case KeyAction::Id::MENU:
-						if (auto statusbar = UI::get().get_element<UIStatusBar>())
-							statusbar->toggle_menu();
-
-						break;
-					case KeyAction::Id::QUICKSLOTS:
-						if (auto statusbar = UI::get().get_element<UIStatusBar>())
-							statusbar->toggle_qs();
-
-						break;
-					case KeyAction::Id::CASHSHOP:
-						EnterCashShopPacket().dispatch();
-						break;
-					case KeyAction::Id::EVENT:
-						emplace<UIEvent>();
-						break;
-					case KeyAction::Id::CHARINFO:
-						emplace<UICharInfo>(
-							Stage::get().get_player().get_oid()
-							);
-						break;
-					case KeyAction::Id::CHANGECHANNEL:
-						emplace<UIChannel>();
-						break;
-					case KeyAction::Id::MAINMENU:
-						if (auto statusbar = UI::get().get_element<UIStatusBar>())
-							statusbar->send_key(action, pressed, escape);
-
-						break;
-					default:
-						std::cout << "Unknown KeyAction::Id action: [" << action << "]" << std::endl;
-						break;
-					}
-				}
-				break;
-			case KeyType::Id::ACTION:
-			case KeyType::Id::FACE:
-			case KeyType::Id::ITEM:
-			case KeyType::Id::SKILL:
-				Stage::get().send_key(type, action, pressed);
-				break;
+					break;
+				case KeyType::Id::ACTION:
+				case KeyType::Id::FACE:
+				case KeyType::Id::ITEM:
+				case KeyType::Id::SKILL:
+					Stage::get().send_key(type, action, pressed);
+					break;
 			}
 		}
 	}
@@ -339,8 +331,7 @@ namespace ms
 			}
 
 			return Cursor::State::GRABBING;
-		}
-		else
+		} else
 		{
 			bool clicked = cursorstate == Cursor::State::CLICKING || cursorstate == Cursor::State::VSCROLLIDLE;
 
@@ -351,15 +342,13 @@ namespace ms
 					remove_cursor(focusedelement->get_type());
 
 					return focusedelement->send_cursor(clicked, cursorpos);
-				}
-				else
+				} else
 				{
 					focused = UIElement::Type::NONE;
 
 					return cursorstate;
 				}
-			}
-			else
+			} else
 			{
 				if (!clicked)
 				{
@@ -376,15 +365,13 @@ namespace ms
 						remove_cursor(front_type);
 
 						return front->send_cursor(clicked, cursorpos);
-					}
-					else
+					} else
 					{
 						remove_cursors();
 
 						return Stage::get().send_cursor(clicked, cursorpos);
 					}
-				}
-				else
+				} else
 				{
 
 					if (!dragged)
@@ -393,7 +380,7 @@ namespace ms
 
 						for (auto iter = elementorder.rbegin(); iter != elementorder.rend(); ++iter)
 						{
-							auto& element = elements[*iter];
+							auto &element = elements[*iter];
 
 							if (element && element->is_active() && element->is_in_range(cursorpos))
 							{
@@ -421,9 +408,9 @@ namespace ms
 
 	void UIStateGame::send_scroll(double yoffset)
 	{
-		for (auto& type : elementorder)
+		for (auto &type : elementorder)
 		{
-			auto& element = elements[type];
+			auto &element = elements[type];
 
 			if (element && element->is_active())
 				element->send_scroll(yoffset);
@@ -435,7 +422,7 @@ namespace ms
 		UI::get().emplace<UIQuit>(stats);
 	}
 
-	void UIStateGame::drag_icon(Icon* drgic)
+	void UIStateGame::drag_icon(Icon *drgic)
 	{
 		draggedicon = drgic;
 	}
@@ -475,7 +462,8 @@ namespace ms
 		}
 	}
 
-	void UIStateGame::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
+	void UIStateGame::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel,
+								 int64_t expiration)
 	{
 		sktooltip.set_skill(skill_id, level, masterlevel, expiration);
 
@@ -497,7 +485,8 @@ namespace ms
 		}
 	}
 
-	void UIStateGame::show_map(Tooltip::Parent parent, std::string name, std::string description, int32_t mapid, bool bolded)
+	void
+	UIStateGame::show_map(Tooltip::Parent parent, std::string name, std::string description, int32_t mapid, bool bolded)
 	{
 		matooltip.set_name(parent, name, bolded);
 		matooltip.set_desc(description);
@@ -510,23 +499,23 @@ namespace ms
 		}
 	}
 
-	template <class T, typename...Args>
-	void UIStateGame::emplace(Args&& ...args)
+	template<class T, typename...Args>
+	void UIStateGame::emplace(Args &&...args)
 	{
 		if (auto iter = pre_add(T::TYPE, T::TOGGLED, T::FOCUSED))
 		{
 			(*iter).second = std::make_unique<T>(
-				std::forward<Args>(args)...
-				);
+					std::forward<Args>(args)...
+			);
 
 			auto silent_types = {
-				UIElement::Type::STATUSMESSENGER,
-				UIElement::Type::STATUSBAR,
-				UIElement::Type::CHATBAR,
-				UIElement::Type::MINIMAP,
-				UIElement::Type::BUFFLIST,
-				UIElement::Type::NPCTALK,
-				UIElement::Type::SHOP
+					UIElement::Type::STATUSMESSENGER,
+					UIElement::Type::STATUSBAR,
+					UIElement::Type::CHATBAR,
+					UIElement::Type::MINIMAP,
+					UIElement::Type::BUFFLIST,
+					UIElement::Type::NPCTALK,
+					UIElement::Type::SHOP
 			};
 
 			if (std::find(silent_types.begin(), silent_types.end(), T::TYPE) == silent_types.end())
@@ -543,7 +532,7 @@ namespace ms
 
 	UIState::Iterator UIStateGame::pre_add(UIElement::Type type, bool is_toggled, bool is_focused)
 	{
-		auto& element = elements[type];
+		auto &element = elements[type];
 
 		if (element && is_toggled)
 		{
@@ -564,8 +553,7 @@ namespace ms
 						Sound(Sound::Name::MENUUP).play();
 
 					UI::get().send_cursor(false);
-				}
-				else
+				} else
 				{
 					if (type == UIElement::Type::WORLDMAP)
 						Sound(Sound::Name::WORLDMAPCLOSE).play();
@@ -583,8 +571,7 @@ namespace ms
 			}
 
 			return elements.end();
-		}
-		else
+		} else
 		{
 			remove(type);
 			elementorder.push_back(type);
@@ -606,19 +593,19 @@ namespace ms
 
 		elementorder.remove(type);
 
-		if (auto& element = elements[type])
+		if (auto &element = elements[type])
 		{
 			element->deactivate();
 			element.release();
 		}
 	}
 
-	UIElement* UIStateGame::get(UIElement::Type type)
+	UIElement *UIStateGame::get(UIElement::Type type)
 	{
 		return elements[type].get();
 	}
 
-	UIElement* UIStateGame::get_front(std::list<UIElement::Type> types)
+	UIElement *UIStateGame::get_front(std::list<UIElement::Type> types)
 	{
 		auto begin = elementorder.rbegin();
 		auto end = elementorder.rend();
@@ -627,7 +614,7 @@ namespace ms
 		{
 			if (std::find(types.begin(), types.end(), *iter) != types.end())
 			{
-				auto& element = elements[*iter];
+				auto &element = elements[*iter];
 
 				if (element && element->is_active())
 					return element.get();
@@ -637,14 +624,14 @@ namespace ms
 		return nullptr;
 	}
 
-	UIElement* UIStateGame::get_front(Point<int16_t> pos)
+	UIElement *UIStateGame::get_front(Point<int16_t> pos)
 	{
 		auto begin = elementorder.rbegin();
 		auto end = elementorder.rend();
 
 		for (auto iter = begin; iter != end; ++iter)
 		{
-			auto& element = elements[*iter];
+			auto &element = elements[*iter];
 
 			if (element && element->is_active() && element->is_in_range(pos))
 				return element.get();

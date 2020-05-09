@@ -38,7 +38,7 @@ namespace ms
 	{
 		position = position + Point<int16_t>(1, 2);
 
-		auto& tag = textures[selected];
+		auto &tag = textures[selected];
 
 		int16_t width = name.width();
 		auto startpos = position - Point<int16_t>(6 + width / 2, -1);

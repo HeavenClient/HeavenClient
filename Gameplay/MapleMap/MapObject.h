@@ -27,29 +27,36 @@ namespace ms
 	class MapObject
 	{
 	public:
-		virtual ~MapObject() {}
+		virtual ~MapObject()
+		{}
 
 		// Draws the object at the given position and with the specified interpolation.
 		virtual void draw(double viewx, double viewy, float alpha) const = 0;
 
 		// Updates the object and returns the updated layer.
-		virtual int8_t update(const Physics& physics);
+		virtual int8_t update(const Physics &physics);
+
 		// Reactivates the object.
 		virtual void makeactive();
+
 		// Deactivates the object.
 		virtual void deactivate();
+
 		// Checks whether this object is active.
 		virtual bool is_active() const;
+
 		// Obtains the layer used to determine the drawing order on the map.
 		virtual int8_t get_layer() const;
 
 		// Changes the objects position.
 		void set_position(int16_t x, int16_t y);
+
 		// Changes the objects position.
 		void set_position(Point<int16_t> position);
 
 		// Returns the object id unique to every object on one map.
 		int32_t get_oid() const;
+
 		// Returns the current position.
 		Point<int16_t> get_position() const;
 

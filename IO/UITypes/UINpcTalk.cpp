@@ -31,7 +31,8 @@
 
 namespace ms
 {
-	UINpcTalk::UINpcTalk() : offset(0), unitrows(0), rowmax(0), show_slider(false), draw_text(false), formatted_text(""), formatted_text_pos(0), timestep(0)
+	UINpcTalk::UINpcTalk() : offset(0), unitrows(0), rowmax(0), show_slider(false), draw_text(false),
+							 formatted_text(""), formatted_text_pos(0), timestep(0)
 	{
 		nl::node UIWindow2 = nl::nx::ui["UIWindow2.img"];
 		nl::node UtilDlgEx = UIWindow2["UtilDlgEx"];
@@ -103,10 +104,10 @@ namespace ms
 		if (show_slider)
 		{
 			int16_t text_min_height = position.y() + top.height() - 1;
-			text.draw(position + Point<int16_t>(162, 19 - offset * 400), Range<int16_t>(text_min_height, text_min_height + height - 18));
+			text.draw(position + Point<int16_t>(162, 19 - offset * 400),
+					  Range<int16_t>(text_min_height, text_min_height + height - 18));
 			slider.draw(position);
-		}
-		else
+		} else
 		{
 			int16_t y_adj = height - min_height;
 			text.draw(position + Point<int16_t>(166, 48 - y_adj));
@@ -130,13 +131,11 @@ namespace ms
 
 					formatted_text_pos++;
 					timestep = 0;
-				}
-				else
+				} else
 				{
 					draw_text = false;
 				}
-			}
-			else
+			} else
 			{
 				timestep++;
 			}
@@ -149,94 +148,94 @@ namespace ms
 
 		switch (type)
 		{
-		case TalkType::SENDNEXT:
-		case TalkType::SENDOK:
-			// Type = 0
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, -1).dispatch();
+			case TalkType::SENDNEXT:
+			case TalkType::SENDOK:
+				// Type = 0
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, -1).dispatch();
+						break;
+					case Buttons::NEXT:
+					case Buttons::OK:
+						NpcTalkMorePacket(type, 1).dispatch();
+						break;
+				}
 				break;
-			case Buttons::NEXT:
-			case Buttons::OK:
-				NpcTalkMorePacket(type, 1).dispatch();
+			case TalkType::SENDNEXTPREV:
+				// Type = 0
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, -1).dispatch();
+						break;
+					case Buttons::NEXT:
+						NpcTalkMorePacket(type, 1).dispatch();
+						break;
+					case Buttons::PREV:
+						NpcTalkMorePacket(type, 0).dispatch();
+						break;
+				}
 				break;
-			}
-			break;
-		case TalkType::SENDNEXTPREV:
-			// Type = 0
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, -1).dispatch();
+			case TalkType::SENDYESNO:
+				// Type = 1
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, -1).dispatch();
+						break;
+					case Buttons::NO:
+						NpcTalkMorePacket(type, 0).dispatch();
+						break;
+					case Buttons::YES:
+						NpcTalkMorePacket(type, 1).dispatch();
+						break;
+				}
 				break;
-			case Buttons::NEXT:
-				NpcTalkMorePacket(type, 1).dispatch();
+			case TalkType::SENDACCEPTDECLINE:
+				// Type = 1
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, -1).dispatch();
+						break;
+					case Buttons::QNO:
+						NpcTalkMorePacket(type, 0).dispatch();
+						break;
+					case Buttons::QYES:
+						NpcTalkMorePacket(type, 1).dispatch();
+						break;
+				}
 				break;
-			case Buttons::PREV:
-				NpcTalkMorePacket(type, 0).dispatch();
+			case TalkType::SENDGETTEXT:
+				// TODO: What is this?
 				break;
-			}
-			break;
-		case TalkType::SENDYESNO:
-			// Type = 1
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, -1).dispatch();
+			case TalkType::SENDGETNUMBER:
+				// Type = 3
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, 0).dispatch();
+						break;
+					case Buttons::OK:
+						NpcTalkMorePacket(type, 1).dispatch();
+						break;
+				}
 				break;
-			case Buttons::NO:
-				NpcTalkMorePacket(type, 0).dispatch();
-				break;
-			case Buttons::YES:
-				NpcTalkMorePacket(type, 1).dispatch();
-				break;
-			}
-			break;
-		case TalkType::SENDACCEPTDECLINE:
-			// Type = 1
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, -1).dispatch();
-				break;
-			case Buttons::QNO:
-				NpcTalkMorePacket(type, 0).dispatch();
-				break;
-			case Buttons::QYES:
-				NpcTalkMorePacket(type, 1).dispatch();
-				break;
-			}
-			break;
-		case TalkType::SENDGETTEXT:
-			// TODO: What is this?
-			break;
-		case TalkType::SENDGETNUMBER:
-			// Type = 3
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, 0).dispatch();
-				break;
-			case Buttons::OK:
-				NpcTalkMorePacket(type, 1).dispatch();
-				break;
-			}
-			break;
-		case TalkType::SENDSIMPLE:
-			// Type = 4
-			switch (buttonid)
-			{
-			case Buttons::CLOSE:
-				NpcTalkMorePacket(type, 0).dispatch();
+			case TalkType::SENDSIMPLE:
+				// Type = 4
+				switch (buttonid)
+				{
+					case Buttons::CLOSE:
+						NpcTalkMorePacket(type, 0).dispatch();
+						break;
+					default:
+						NpcTalkMorePacket(0).dispatch(); // TODO: Selection
+						break;
+				}
 				break;
 			default:
-				NpcTalkMorePacket(0).dispatch(); // TODO: Selection
 				break;
-			}
-			break;
-		default:
-			break;
 		}
 
 		return Button::State::NORMAL;
@@ -285,7 +284,7 @@ namespace ms
 	}
 
 	// TODO: Move this to GraphicsGL?
-	std::string UINpcTalk::format_text(const std::string& tx, const int32_t& npcid)
+	std::string UINpcTalk::format_text(const std::string &tx, const int32_t &npcid)
 	{
 		std::string formatted_text = tx;
 		size_t begin = formatted_text.find("#p");
@@ -333,7 +332,7 @@ namespace ms
 		return formatted_text;
 	}
 
-	void UINpcTalk::change_text(int32_t npcid, int8_t msgtype, int16_t, int8_t speakerbyte, const std::string& tx)
+	void UINpcTalk::change_text(int32_t npcid, int8_t msgtype, int16_t, int8_t speakerbyte, const std::string &tx)
 	{
 		type = get_by_value(msgtype);
 
@@ -358,8 +357,7 @@ namespace ms
 
 			std::string namestr = nl::nx::string["Npc.img"][std::to_string(npcid)]["name"];
 			name.change_text(namestr);
-		}
-		else
+		} else
 		{
 			speaker = Texture();
 			name.change_text("");
@@ -378,15 +376,15 @@ namespace ms
 				unitrows = 1;
 
 				int16_t slider_y = top.height() - 7;
-				slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(slider_y, slider_y + height - 20), top.width() - 26, unitrows, rowmax, onmoved);
-			}
-			else
+				slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(slider_y, slider_y + height - 20),
+								top.width() - 26, unitrows, rowmax, onmoved);
+			} else
 			{
 				height = text_height;
 			}
 		}
 
-		for (auto& button : buttons)
+		for (auto &button : buttons)
 		{
 			button.second->set_active(false);
 			button.second->set_state(Button::State::NORMAL);
@@ -399,29 +397,29 @@ namespace ms
 
 		switch (type)
 		{
-		case TalkType::SENDOK:
-			buttons[Buttons::OK]->set_position(Point<int16_t>(471, y_cord));
-			buttons[Buttons::OK]->set_active(true);
-			break;
-		case TalkType::SENDYESNO:
-		{
-			Point<int16_t> yes_position = Point<int16_t>(389, y_cord);
+			case TalkType::SENDOK:
+				buttons[Buttons::OK]->set_position(Point<int16_t>(471, y_cord));
+				buttons[Buttons::OK]->set_active(true);
+				break;
+			case TalkType::SENDYESNO:
+			{
+				Point<int16_t> yes_position = Point<int16_t>(389, y_cord);
 
-			buttons[Buttons::YES]->set_position(yes_position);
-			buttons[Buttons::YES]->set_active(true);
+				buttons[Buttons::YES]->set_position(yes_position);
+				buttons[Buttons::YES]->set_active(true);
 
-			buttons[Buttons::NO]->set_position(yes_position + Point<int16_t>(65, 0));
-			buttons[Buttons::NO]->set_active(true);
-			break;
-		}
-		case TalkType::SENDNEXT:
-		case TalkType::SENDNEXTPREV:
-		case TalkType::SENDACCEPTDECLINE:
-		case TalkType::SENDGETTEXT:
-		case TalkType::SENDGETNUMBER:
-		case TalkType::SENDSIMPLE:
-		default:
-			break;
+				buttons[Buttons::NO]->set_position(yes_position + Point<int16_t>(65, 0));
+				buttons[Buttons::NO]->set_active(true);
+				break;
+			}
+			case TalkType::SENDNEXT:
+			case TalkType::SENDNEXTPREV:
+			case TalkType::SENDACCEPTDECLINE:
+			case TalkType::SENDGETTEXT:
+			case TalkType::SENDGETNUMBER:
+			case TalkType::SENDSIMPLE:
+			default:
+				break;
 		}
 
 		position = Point<int16_t>(400 - top.width() / 2, 240 - height / 2);

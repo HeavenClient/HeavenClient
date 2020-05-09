@@ -1,6 +1,8 @@
 /.vs
+/.vscode
 /x64
 /x86
+.DS_store
 
 *.aps
 *.log
@@ -12,3 +14,18 @@
 Settings
 
 /includes/WzLib
+/includes/**/*.sln
+/includes/**/*.vcxproj*
+/includes/**/*.txt
+/includes/**/*.gitignore
+
+# Builds
+build/
+libs/NoLifeNx/
+libs/alure/
+libs/asio/
+libs/glfw/
+libs/openal-soft/
+
+# Vagrant
+.vagrant/

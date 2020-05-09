@@ -21,6 +21,10 @@
 
 #include <vector>
 
+#ifdef __linux__
+#include "stdio.h"
+#endif
+
 namespace ms
 {
 	// A packet to be sent to the server

@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	const float* Color::data() const
+	const float *Color::data() const
 	{
 		return rgba.data();
 	}
@@ -36,19 +36,19 @@ namespace ms
 		return rgba.end();
 	}
 
-	Color Color::blend(const Color& other, float alpha) const
+	Color Color::blend(const Color &other, float alpha) const
 	{
 		underlying_t blended;
 
 		std::transform(
-			begin(),
-			end(),
-			other.begin(),
-			blended.begin(),
-			[alpha](float first, float second)
-			{
-				return lerp(first, second, alpha);
-			}
+				begin(),
+				end(),
+				other.begin(),
+				blended.begin(),
+				[alpha](float f, float s)
+				{
+					return lerp(f, s, alpha);
+				}
 		);
 
 		return blended;

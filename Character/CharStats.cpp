@@ -21,14 +21,17 @@
 
 namespace ms
 {
-	CharStats::CharStats(const StatsEntry& s) : name(s.name), petids(s.petids), exp(s.exp), mapid(s.mapid), portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats), female(s.female)
+	CharStats::CharStats(const StatsEntry &s) : name(s.name), petids(s.petids), exp(s.exp), mapid(s.mapid),
+												portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats),
+												female(s.female)
 	{
 		job = basestats[MapleStat::Id::JOB];
 
 		init_totalstats();
 	}
 
-	CharStats::CharStats() {}
+	CharStats::CharStats()
+	{}
 
 	void CharStats::init_totalstats()
 	{
@@ -108,31 +111,31 @@ namespace ms
 	{
 		switch (weapontype)
 		{
-		case Weapon::Type::SWORD_1H:
-			return 4.0f;
-		case Weapon::Type::AXE_1H:
-		case Weapon::Type::MACE_1H:
-		case Weapon::Type::WAND:
-		case Weapon::Type::STAFF:
-			return 4.4f;
-		case Weapon::Type::DAGGER:
-		case Weapon::Type::CROSSBOW:
-		case Weapon::Type::CLAW:
-		case Weapon::Type::GUN:
-			return 3.6f;
-		case Weapon::Type::SWORD_2H:
-			return 4.6f;
-		case Weapon::Type::AXE_2H:
-		case Weapon::Type::MACE_2H:
-		case Weapon::Type::KNUCKLE:
-			return 4.8f;
-		case Weapon::Type::SPEAR:
-		case Weapon::Type::POLEARM:
-			return 5.0f;
-		case Weapon::Type::BOW:
-			return 3.4f;
-		default:
-			return 0.0f;
+			case Weapon::Type::SWORD_1H:
+				return 4.0f;
+			case Weapon::Type::AXE_1H:
+			case Weapon::Type::MACE_1H:
+			case Weapon::Type::WAND:
+			case Weapon::Type::STAFF:
+				return 4.4f;
+			case Weapon::Type::DAGGER:
+			case Weapon::Type::CROSSBOW:
+			case Weapon::Type::CLAW:
+			case Weapon::Type::GUN:
+				return 3.6f;
+			case Weapon::Type::SWORD_2H:
+				return 4.6f;
+			case Weapon::Type::AXE_2H:
+			case Weapon::Type::MACE_2H:
+			case Weapon::Type::KNUCKLE:
+				return 4.8f;
+			case Weapon::Type::SPEAR:
+			case Weapon::Type::POLEARM:
+				return 5.0f;
+			case Weapon::Type::BOW:
+				return 3.4f;
+			default:
+				return 0.0f;
 		}
 	}
 
@@ -268,12 +271,12 @@ namespace ms
 		return exp;
 	}
 
-	const std::string& CharStats::get_name() const
+	const std::string &CharStats::get_name() const
 	{
 		return name;
 	}
 
-	const std::string& CharStats::get_jobname() const
+	const std::string &CharStats::get_jobname() const
 	{
 		return job.get_name();
 	}
@@ -358,7 +361,7 @@ namespace ms
 		return attackspeed;
 	}
 
-	const Job& CharStats::get_job() const
+	const Job &CharStats::get_job() const
 	{
 		return job;
 	}

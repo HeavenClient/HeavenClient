@@ -32,18 +32,21 @@ namespace ms
 	public:
 		// Draw all NPCs on a layer
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
-		// Update all NPCs
-		void update(const Physics& physics);
 
-		// Add an NPC to the spawn queue
-		void spawn(NpcSpawn&& spawn);
-		// Remove the NPC with the specified oid
+		// Update all NPCs.
+		void update(const Physics &physics);
+
+		// Add an npc to the spawn queue.
+		void spawn(NpcSpawn &&spawn);
+
+		// Remove the npc with the specified oid;
 		void remove(int32_t oid);
-		// Remove all NPCs
+
+		// Remove all NPCs.
 		void clear();
 
-		// Returns a reference to the MapObject's object
-		MapObjects* get_npcs();
+		// Returns a reference to the MapObjects object.
+		MapObjects *get_npcs();
 
 		// Send mouse input to clickable NPCs
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position, Point<int16_t> viewpos);

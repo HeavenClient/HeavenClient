@@ -36,7 +36,8 @@
 
 namespace ms
 {
-	UIShop::UIShop(const CharLook& in_charlook, const Inventory& in_inventory) : UIDragElement<PosSHOP>(), charlook(in_charlook), inventory(in_inventory)
+	UIShop::UIShop(const CharLook &in_charlook, const Inventory &in_inventory)
+			: UIDragElement<PosSHOP>(), charlook(in_charlook), inventory(in_inventory)
 	{
 		nl::node src = nl::nx::ui["UIWindow2.img"]["Shop2"];
 
@@ -64,7 +65,8 @@ namespace ms
 		checkBox[0] = cbdis;
 		checkBox[1] = cben;
 
-		buttons[Buttons::CHECKBOX] = std::make_unique<AreaButton>(Point<int16_t>(std::abs(cb_x), std::abs(cb_y)), cben.get_dimensions());
+		buttons[Buttons::CHECKBOX] = std::make_unique<AreaButton>(Point<int16_t>(std::abs(cb_x), std::abs(cb_y)),
+																  cben.get_dimensions());
 
 		nl::node buyen = src["TabBuy"]["enabled"];
 		nl::node buydis = src["TabBuy"]["disabled"];
@@ -110,29 +112,29 @@ namespace ms
 		mesolabel = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::MINESHAFT);
 
 		buyslider = Slider(
-			Slider::Type::DEFAULT_SILVER, Range<int16_t>(123, 484), 257, 5, 1,
-			[&](bool upwards)
-			{
-				int16_t shift = upwards ? -1 : 1;
-				bool above = buystate.offset + shift >= 0;
-				bool below = buystate.offset + shift <= buystate.lastslot - 5;
+				Slider::Type::DEFAULT_SILVER, Range<int16_t>(123, 484), 257, 5, 1,
+				[&](bool upwards)
+				{
+					int16_t shift = upwards ? -1 : 1;
+					bool above = buystate.offset + shift >= 0;
+					bool below = buystate.offset + shift <= buystate.lastslot - 5;
 
-				if (above && below)
-					buystate.offset += shift;
-			}
+					if (above && below)
+						buystate.offset += shift;
+				}
 		);
 
 		sellslider = Slider(
-			Slider::Type::DEFAULT_SILVER, Range<int16_t>(123, 484), 488, 5, 1,
-			[&](bool upwards)
-			{
-				int16_t shift = upwards ? -1 : 1;
-				bool above = sellstate.offset + shift >= 0;
-				bool below = sellstate.offset + shift <= sellstate.lastslot - 5;
+				Slider::Type::DEFAULT_SILVER, Range<int16_t>(123, 484), 488, 5, 1,
+				[&](bool upwards)
+				{
+					int16_t shift = upwards ? -1 : 1;
+					bool above = sellstate.offset + shift >= 0;
+					bool below = sellstate.offset + shift <= sellstate.lastslot - 5;
 
-				if (above && below)
-					sellstate.offset += shift;
-			}
+					if (above && below)
+						sellstate.offset += shift;
+				}
 		);
 
 		active = false;
@@ -180,56 +182,54 @@ namespace ms
 			sellstate.selection = -1;
 
 			return Button::State::NORMAL;
-		}
-		else if (sell.contains(buttonid))
+		} else if (sell.contains(buttonid))
 		{
 			int16_t selected = buttonid - Buttons::SELL0;
 			sellstate.select(selected);
 			buystate.selection = -1;
 
 			return Button::State::NORMAL;
-		}
-		else
+		} else
 		{
 			switch (buttonid)
 			{
-			case Buttons::BUY_ITEM:
-				buystate.buy();
+				case Buttons::BUY_ITEM:
+					buystate.buy();
 
-				return Button::State::NORMAL;
-			case Buttons::SELL_ITEM:
-				sellstate.sell(false);
+					return Button::State::NORMAL;
+				case Buttons::SELL_ITEM:
+					sellstate.sell(false);
 
-				return Button::State::NORMAL;
-			case Buttons::EXIT:
-				exit_shop();
+					return Button::State::NORMAL;
+				case Buttons::EXIT:
+					exit_shop();
 
-				return Button::State::PRESSED;
-			case Buttons::CHECKBOX:
-				rightclicksell = !rightclicksell;
-				Configuration::get().set_rightclicksell(rightclicksell);
+					return Button::State::PRESSED;
+				case Buttons::CHECKBOX:
+					rightclicksell = !rightclicksell;
+					Configuration::get().set_rightclicksell(rightclicksell);
 
-				return Button::State::NORMAL;
-			case Buttons::EQUIP:
-				changeselltab(InventoryType::Id::EQUIP);
+					return Button::State::NORMAL;
+				case Buttons::EQUIP:
+					changeselltab(InventoryType::Id::EQUIP);
 
-				return Button::State::IDENTITY;
-			case Buttons::USE:
-				changeselltab(InventoryType::Id::USE);
+					return Button::State::IDENTITY;
+				case Buttons::USE:
+					changeselltab(InventoryType::Id::USE);
 
-				return Button::State::IDENTITY;
-			case Buttons::ETC:
-				changeselltab(InventoryType::Id::ETC);
+					return Button::State::IDENTITY;
+				case Buttons::ETC:
+					changeselltab(InventoryType::Id::ETC);
 
-				return Button::State::IDENTITY;
-			case Buttons::SETUP:
-				changeselltab(InventoryType::Id::SETUP);
+					return Button::State::IDENTITY;
+				case Buttons::SETUP:
+					changeselltab(InventoryType::Id::SETUP);
 
-				return Button::State::IDENTITY;
-			case Buttons::CASH:
-				changeselltab(InventoryType::Id::CASH);
+					return Button::State::IDENTITY;
+				case Buttons::CASH:
+					changeselltab(InventoryType::Id::CASH);
 
-				return Button::State::IDENTITY;
+					return Button::State::IDENTITY;
 			}
 		}
 
@@ -285,8 +285,7 @@ namespace ms
 				show_item(slot, false);
 			else
 				clear_tooltip();
-		}
-		else
+		} else
 		{
 			clear_tooltip();
 		}
@@ -305,14 +304,12 @@ namespace ms
 
 						buttons[i]->set_state(Button::State::MOUSEOVER);
 						ret = Cursor::State::CANCLICK;
-					}
-					else
+					} else
 					{
 						buttons[i]->set_state(Button::State::MOUSEOVER);
 						ret = Cursor::State::IDLE;
 					}
-				}
-				else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
+				} else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -321,8 +318,7 @@ namespace ms
 							if (i >= Buttons::OVERALL && i <= Buttons::CASH)
 							{
 								Sound(Sound::Name::TAB).play();
-							}
-							else
+							} else
 							{
 								if (i != Buttons::CHECKBOX)
 									Sound(Sound::Name::BUTTONCLICK).play();
@@ -331,23 +327,20 @@ namespace ms
 							buttons[i]->set_state(button_pressed(i));
 
 							ret = Cursor::State::IDLE;
-						}
-						else
+						} else
 						{
 							buttons[i]->set_state(button_pressed(i));
 
 							ret = Cursor::State::IDLE;
 						}
-					}
-					else
+					} else
 					{
 						if (i >= Buttons::BUY_ITEM && i <= Buttons::EXIT)
 							ret = Cursor::State::CANCLICK;
 						else
 							ret = Cursor::State::IDLE;
 					}
-				}
-				else if (buttons[i]->get_state() == Button::State::PRESSED)
+				} else if (buttons[i]->get_state() == Button::State::PRESSED)
 				{
 					if (clicked)
 					{
@@ -359,8 +352,7 @@ namespace ms
 						}
 					}
 				}
-			}
-			else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
+			} else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
 			{
 				buttons[i]->set_state(Button::State::NORMAL);
 			}
@@ -461,7 +453,7 @@ namespace ms
 		std::string strid = string_format::extend_id(npcid, 7);
 		npc = nl::nx::npc[strid + ".img"]["stand"]["0"];
 
-		for (auto& button : buttons)
+		for (auto &button : buttons)
 			button.second->set_state(Button::State::NORMAL);
 
 		buttons[Buttons::OVERALL]->set_state(Button::State::PRESSED);
@@ -487,7 +479,8 @@ namespace ms
 		add_rechargable(id, price, pitch, time, 0, buyable);
 	}
 
-	void UIShop::add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice, int16_t buyable)
+	void UIShop::add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice,
+								 int16_t buyable)
 	{
 		auto buyitem = BuyItem(meso, id, price, pitch, time, chargeprice, buyable);
 		buystate.add(buyitem);
@@ -525,18 +518,18 @@ namespace ms
 	{
 		switch (type)
 		{
-		case InventoryType::Id::EQUIP:
-			return Buttons::EQUIP;
-		case InventoryType::Id::USE:
-			return Buttons::USE;
-		case InventoryType::Id::ETC:
-			return Buttons::ETC;
-		case InventoryType::Id::SETUP:
-			return Buttons::SETUP;
-		case InventoryType::Id::CASH:
-			return Buttons::CASH;
-		default:
-			return 0;
+			case InventoryType::Id::EQUIP:
+				return Buttons::EQUIP;
+			case InventoryType::Id::USE:
+				return Buttons::USE;
+			case InventoryType::Id::ETC:
+				return Buttons::ETC;
+			case InventoryType::Id::SETUP:
+				return Buttons::SETUP;
+			case InventoryType::Id::CASH:
+				return Buttons::CASH;
+			default:
+				return 0;
 		}
 	}
 
@@ -548,12 +541,13 @@ namespace ms
 		NpcShopActionPacket().dispatch();
 	}
 
-	UIShop::BuyItem::BuyItem(Texture cur, int32_t i, int32_t p, int32_t pt, int32_t t, int16_t cp, int16_t b) : currency(cur), id(i), price(p), pitch(pt), time(t), chargeprice(cp), buyable(b)
+	UIShop::BuyItem::BuyItem(Texture cur, int32_t i, int32_t p, int32_t pt, int32_t t, int16_t cp, int16_t b)
+			: currency(cur), id(i), price(p), pitch(pt), time(t), chargeprice(cp), buyable(b)
 	{
 		namelabel = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::MINESHAFT);
 		pricelabel = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::MINESHAFT);
 
-		const ItemData& item = ItemData::get(id);
+		const ItemData &item = ItemData::get(id);
 
 		if (item.is_valid())
 		{
@@ -586,7 +580,7 @@ namespace ms
 
 	UIShop::SellItem::SellItem(int32_t item_id, int16_t count, int16_t s, bool sc, Texture cur)
 	{
-		const ItemData& idata = ItemData::get(item_id);
+		const ItemData &idata = ItemData::get(item_id);
 
 		icon = idata.get_icon(false);
 		id = item_id;
@@ -648,7 +642,7 @@ namespace ms
 		selection = -1;
 	}
 
-	void UIShop::BuyState::draw(Point<int16_t> parentpos, const Texture& selected) const
+	void UIShop::BuyState::draw(Point<int16_t> parentpos, const Texture &selected) const
 	{
 		for (int16_t i = 0; i < 9; i++)
 		{
@@ -689,14 +683,14 @@ namespace ms
 		if (selection < 0 || selection >= lastslot)
 			return;
 
-		const BuyItem& item = items[selection];
+		const BuyItem &item = items[selection];
 		int16_t buyable = item.get_buyable();
 		int16_t slot = selection;
 		int32_t itemid = item.get_id();
 
 		if (buyable > 1)
 		{
-			constexpr char* question = "How many are you willing to buy?";
+			constexpr char *question = "How many are you willing to buy?";
 
 			auto onenter = [slot, itemid](int32_t qty)
 			{
@@ -706,10 +700,9 @@ namespace ms
 			};
 
 			UI::get().emplace<UIEnterNumber>(question, onenter, buyable, 1);
-		}
-		else if (buyable > 0)
+		} else if (buyable > 0)
 		{
-			constexpr char* question = "Are you sure you want to buy it?";
+			constexpr char *question = "Are you sure you want to buy it?";
 
 			auto ondecide = [slot, itemid](bool yes)
 			{
@@ -741,7 +734,7 @@ namespace ms
 		tab = InventoryType::Id::NONE;
 	}
 
-	void UIShop::SellState::change_tab(const Inventory& inventory, InventoryType::Id newtab, Texture meso)
+	void UIShop::SellState::change_tab(const Inventory &inventory, InventoryType::Id newtab, Texture meso)
 	{
 		tab = newtab;
 
@@ -763,7 +756,7 @@ namespace ms
 		lastslot = static_cast<int16_t>(items.size());
 	}
 
-	void UIShop::SellState::draw(Point<int16_t> parentpos, const Texture& selected) const
+	void UIShop::SellState::draw(Point<int16_t> parentpos, const Texture &selected) const
 	{
 		for (int16_t i = 0; i <= 8; i++)
 		{
@@ -792,8 +785,7 @@ namespace ms
 		{
 			int16_t realslot = items[absslot].get_slot();
 			UI::get().show_equip(Tooltip::Parent::SHOP, realslot);
-		}
-		else
+		} else
 		{
 			int32_t itemid = items[absslot].get_id();
 			UI::get().show_item(Tooltip::Parent::SHOP, itemid);
@@ -805,14 +797,14 @@ namespace ms
 		if (selection < 0 || selection >= lastslot)
 			return;
 
-		const SellItem& item = items[selection];
+		const SellItem &item = items[selection];
 		int32_t itemid = item.get_id();
 		int16_t sellable = item.get_sellable();
 		int16_t slot = item.get_slot();
 
 		if (sellable > 1)
 		{
-			constexpr char* question = "How many are you willing to sell?";
+			constexpr char *question = "How many are you willing to sell?";
 
 			auto onenter = [itemid, slot](int32_t qty)
 			{
@@ -822,8 +814,7 @@ namespace ms
 			};
 
 			UI::get().emplace<UIEnterNumber>(question, onenter, sellable, 1);
-		}
-		else if (sellable > 0)
+		} else if (sellable > 0)
 		{
 			if (skip_confirmation)
 			{
@@ -831,7 +822,7 @@ namespace ms
 				return;
 			}
 
-			constexpr char* question = "Are you sure you want to sell it?";
+			constexpr char *question = "Are you sure you want to sell it?";
 
 			auto ondecide = [itemid, slot](bool yes)
 			{

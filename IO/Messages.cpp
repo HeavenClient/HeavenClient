@@ -23,20 +23,20 @@
 
 namespace ms
 {
-	const EnumMap<Messages::Type, const char*> Messages::messages =
-	{
-		"",
-		"You cannot use this skill with this weapon.",
-		"You do not have enough hp to use this skill.",
-		"You do not have enough mp to use this skill.",
-		"You do not have enough arrows to use this attack.",
-		"You do not have enough bullets to use this attack.",
-		"You do not have enough throwing stars to use this attack.",
-		"You cannot use this skill as it is on cooldown.",
-		"The scroll lights up and it's mysterious powers have been transferred to the item.",
-		"The scroll lights up but the item remains as if nothing happened.",
-		"The item has been destroyed due to the overwhelming power of the scroll."
-	};
+	const EnumMap<Messages::Type, const char *> Messages::messages =
+			{
+					"",
+					"You cannot use this skill with this weapon.",
+					"You do not have enough hp to use this skill.",
+					"You do not have enough mp to use this skill.",
+					"You do not have enough arrows to use this attack.",
+					"You do not have enough bullets to use this attack.",
+					"You do not have enough throwing stars to use this attack.",
+					"You cannot use this skill as it is on cooldown.",
+					"The scroll lights up and it's mysterious powers have been transferred to the item.",
+					"The scroll lights up but the item remains as if nothing happened.",
+					"The item has been destroyed due to the overwhelming power of the scroll."
+			};
 
 	InChatMessage::InChatMessage(Messages::Type t)
 	{
@@ -52,24 +52,27 @@ namespace ms
 			chatbar->display_message(type, UIChatBar::RED);
 	}
 
-	ForbidSkillMessage::ForbidSkillMessage(SpecialMove::ForbidReason reason, Weapon::Type weapon) : InChatMessage(message_by_reason(reason, weapon)) {}
+
+	ForbidSkillMessage::ForbidSkillMessage(SpecialMove::ForbidReason reason, Weapon::Type weapon) : InChatMessage(
+			message_by_reason(reason, weapon))
+	{}
 
 	Messages::Type ForbidSkillMessage::message_by_reason(SpecialMove::ForbidReason reason, Weapon::Type weapon)
 	{
 		switch (reason)
 		{
-		case SpecialMove::ForbidReason::FBR_WEAPONTYPE:
-			return Messages::Type::SKILL_WEAPONTYPE;
-		case SpecialMove::ForbidReason::FBR_HPCOST:
-			return Messages::Type::SKILL_HPCOST;
-		case SpecialMove::ForbidReason::FBR_MPCOST:
-			return Messages::Type::SKILL_MPCOST;
-		case SpecialMove::ForbidReason::FBR_COOLDOWN:
-			return Messages::Type::SKILL_COOLDOWN;
-		case SpecialMove::ForbidReason::FBR_BULLETCOST:
-			return message_by_weapon(weapon);
-		default:
-			return Messages::Type::NONE;
+			case SpecialMove::FBR_WEAPONTYPE:
+				return Messages::SKILL_WEAPONTYPE;
+			case SpecialMove::FBR_HPCOST:
+				return Messages::SKILL_HPCOST;
+			case SpecialMove::FBR_MPCOST:
+				return Messages::SKILL_MPCOST;
+			case SpecialMove::FBR_COOLDOWN:
+				return Messages::SKILL_COOLDOWN;
+			case SpecialMove::FBR_BULLETCOST:
+				return message_by_weapon(weapon);
+			default:
+				return Messages::NONE;
 		}
 	}
 
@@ -77,13 +80,13 @@ namespace ms
 	{
 		switch (weapon)
 		{
-		case Weapon::Type::BOW:
-		case Weapon::Type::CROSSBOW:
-			return Messages::Type::SKILL_NOARROWS;
-		case Weapon::Type::CLAW:
-			return Messages::Type::SKILL_NOSTARS;
-		default:
-			return Messages::Type::SKILL_NOBULLETS;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+				return Messages::SKILL_NOARROWS;
+			case Weapon::CLAW:
+				return Messages::SKILL_NOSTARS;
+			default:
+				return Messages::SKILL_NOBULLETS;
 		}
 	}
 }

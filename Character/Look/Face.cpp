@@ -38,32 +38,32 @@ namespace ms
 	}
 
 	const EnumMap<Expression::Id, std::string> Expression::names =
-	{
-		"default",
-		"blink",
-		"hit",
-		"smile",
-		"troubled",
-		"cry",
-		"angry",
-		"bewildered",
-		"stunned",
-		"blaze",
-		"bowing",
-		"cheers",
-		"chu",
-		"dam",
-		"despair",
-		"glitter",
-		"hot",
-		"hum",
-		"love",
-		"oops",
-		"pain",
-		"shine",
-		"vomit",
-		"wink"
-	};
+			{
+					"default",
+					"blink",
+					"hit",
+					"smile",
+					"troubled",
+					"cry",
+					"angry",
+					"bewildered",
+					"stunned",
+					"blaze",
+					"bowing",
+					"cheers",
+					"chu",
+					"dam",
+					"despair",
+					"glitter",
+					"hot",
+					"hum",
+					"love",
+					"oops",
+					"pain",
+					"shine",
+					"vomit",
+					"wink"
+			};
 
 	Face::Face(int32_t faceid)
 	{
@@ -77,10 +77,9 @@ namespace ms
 			if (exp == Expression::Id::DEFAULT)
 			{
 				expressions[Expression::Id::DEFAULT].emplace(0, facenode["default"]);
-			}
-			else
+			} else
 			{
-				const std::string& expname = iter.second;
+				const std::string &expname = iter.second;
 				nl::node expnode = facenode[expname];
 
 				for (uint8_t frame = 0; nl::node framenode = expnode[frame]; ++frame)
@@ -88,10 +87,10 @@ namespace ms
 			}
 		}
 
-		name = nl::nx::string["Eqp.img"]["Eqp"]["Face"][std::to_string(faceid)]["name"];
+		name = std::string(nl::nx::string["Eqp.img"]["Eqp"]["Face"][std::to_string(faceid)]["name"]);
 	}
 
-	void Face::draw(Expression::Id expression, uint8_t frame, const DrawArgument& args) const
+	void Face::draw(Expression::Id expression, uint8_t frame, const DrawArgument &args) const
 	{
 		auto frameit = expressions[expression].find(frame);
 
@@ -110,7 +109,7 @@ namespace ms
 		return delayit != expressions[exp].end() ? delayit->second.delay : 100;
 	}
 
-	const std::string& Face::get_name() const
+	const std::string &Face::get_name() const
 	{
 		return name;
 	}

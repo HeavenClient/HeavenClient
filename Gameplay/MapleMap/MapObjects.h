@@ -33,34 +33,43 @@ namespace ms
 	public:
 		// Draw all MapObjects that are on the specified layer
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
-		// Update all MapObjects of this type
-		// Also updates layers (E.g. drawing order)
-		void update(const Physics& physics);
+
+		// Update all mapobjects of this type. Also updates layers eg. drawing order.
+		void update(const Physics &physics);
 
 		// Adds a MapObjects of this type
 		void add(std::unique_ptr<MapObject> mapobject);
-		// Removes the MapObjects with the given oid
+
+		// Removes the mapobject with the given oid.
 		void remove(int32_t oid);
-		// Removes all MapObjects of this type
+
+		// Removes all mapobjects of this type.
 		void clear();
 
 		// Check if a map object with the specified id exists on the map
 		bool contains(int32_t oid) const;
-		// Obtains a pointer to the MapObject with the given oid
+
+		// Obtains a pointer to the mapobject with the given oid.
 		Optional<MapObject> get(int32_t oid);
-		// Obtains a constant pointer to the MapObject with the given oid
+
+		// Obtains a const pointer to the mapobject with the given oid.
 		Optional<const MapObject> get(int32_t oid) const;
 
 		using underlying_t = typename std::unordered_map<int32_t, std::unique_ptr<MapObject>>;
-		// Return a begin iterator
+
+		// Return a begin iterator.
 		underlying_t::iterator begin();
-		// Return an end iterator
+
+		// Return an end iterator.
 		underlying_t::iterator end();
-		// Return a begin iterator
+
+		// Return a begin iterator.
 		underlying_t::const_iterator begin() const;
-		// Return an end iterator
+
+		// Return an end iterator.
 		underlying_t::const_iterator end() const;
-		// Return the size of the iterator
+
+		// Return the size of the iterator.
 		underlying_t::size_type size() const;
 
 	private:

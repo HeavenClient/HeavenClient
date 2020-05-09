@@ -64,8 +64,10 @@ namespace ms
 		buttons[Buttons::BT_SEARCH] = std::make_unique<MapleButton>(WorldMap["BtSearch"]);
 		buttons[Buttons::BT_AUTOFLY] = std::make_unique<MapleButton>(WorldMap["BtAutoFly_1"]);
 		buttons[Buttons::BT_NAVIREG] = std::make_unique<MapleButton>(WorldMap["BtNaviRegister"]);
-		buttons[Buttons::BT_SEARCH_CLOSE] = std::make_unique<MapleButton>(close, close_dimensions + Point<int16_t>(bg_search_dimensions.x(), 0));
-		buttons[Buttons::BT_ALLSEARCH] = std::make_unique<MapleButton>(WorldMapSearch["BtAllsearch"], background_dimensions);
+		buttons[Buttons::BT_SEARCH_CLOSE] = std::make_unique<MapleButton>(close, close_dimensions + Point<int16_t>(
+				bg_search_dimensions.x(), 0));
+		buttons[Buttons::BT_ALLSEARCH] = std::make_unique<MapleButton>(WorldMapSearch["BtAllsearch"],
+																	   background_dimensions);
 
 		Point<int16_t> search_text_pos = Point<int16_t>(bg_dimension_x + 14, 25);
 		Point<int16_t> search_box_dim = Point<int16_t>(83, 15);
@@ -93,7 +95,7 @@ namespace ms
 
 		if (link_images.size() > 0)
 		{
-			for (auto& iter : buttons)
+			for (auto &iter : buttons)
 			{
 				if (const auto button = iter.second.get())
 				{
@@ -183,16 +185,14 @@ namespace ms
 			if (search)
 			{
 				set_search(false);
-			}
-			else
+			} else
 			{
 				if (parent_map == "")
 				{
 					toggle_active();
 
 					update_world(user_map);
-				}
-				else
+				} else
 				{
 					Sound(Sound::Name::SELECTMAP).play();
 
@@ -211,17 +211,17 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::BT_CLOSE:
-			deactivate();
-			break;
-		case Buttons::BT_SEARCH:
-			set_search(!search);
-			break;
-		case Buttons::BT_SEARCH_CLOSE:
-			set_search(false);
-			break;
-		default:
-			break;
+			case Buttons::BT_CLOSE:
+				deactivate();
+				break;
+			case Buttons::BT_SEARCH:
+				set_search(!search);
+				break;
+			case Buttons::BT_SEARCH_CLOSE:
+				set_search(false);
+				break;
+			default:
+				break;
 		}
 
 		if (buttonid >= Buttons::BT_LINK0)
@@ -261,7 +261,8 @@ namespace ms
 				path_img = path.second.path;
 				show_path_img = path_img.is_valid();
 
-				UI::get().show_map(Tooltip::Parent::WORLDMAP, path.second.title, path.second.description, path.second.map_ids[0], path.second.bolded);
+				UI::get().show_map(Tooltip::Parent::WORLDMAP, path.second.title, path.second.description,
+								   path.second.map_ids[0], path.second.bolded);
 				break;
 			}
 		}
@@ -280,8 +281,7 @@ namespace ms
 		{
 			search_text.set_state(Textfield::State::NORMAL);
 			dimension = bg_dimensions + Point<int16_t>(bg_search_dimensions.x(), 0);
-		}
-		else
+		} else
 		{
 			search_text.set_state(Textfield::State::DISABLED);
 			dimension = bg_dimensions;
@@ -296,12 +296,12 @@ namespace ms
 			WorldMap = nl::nx::map["WorldMap"]["WorldMap.img"];
 
 		base_img = WorldMap["BaseImg"][0];
-		parent_map = WorldMap["info"]["parentMap"];
+		parent_map = std::string(WorldMap["info"]["parentMap"]);
 
 		link_images.clear();
 		link_maps.clear();
 
-		for (auto& iter : buttons)
+		for (auto &iter : buttons)
 			if (const auto button = iter.second.get())
 				if (iter.first >= Buttons::BT_LINK0)
 					button->set_active(false);
@@ -314,9 +314,10 @@ namespace ms
 			Texture link_image = l["linkImg"];
 
 			link_images[i] = link_image;
-			link_maps[i] = l["linkMap"];
+			link_maps[i] = std::string(l["linkMap"]);
 
-			buttons[i] = std::make_unique<AreaButton>(base_position - link_image.get_origin(), link_image.get_dimensions());
+			buttons[i] = std::make_unique<AreaButton>(base_position - link_image.get_origin(),
+													  link_image.get_dimensions());
 			buttons[i]->set_active(true);
 
 			i++;
@@ -345,11 +346,14 @@ namespace ms
 			{
 				NxHelper::Map::MapInfo map_info = NxHelper::Map::get_map_info_by_id(mapNo[0]);
 
-				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot, { map_info.description, path, map_info.full_name, type, marker, true, map_ids }));
-			}
-			else
+				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot, {map_info.description, path,
+																					  map_info.full_name, type, marker,
+																					  true, map_ids}));
+			} else
 			{
-				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot, { desc, path, title, type, marker, false, map_ids }));
+				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot,
+																			   {desc, path, title, type, marker, false,
+																				map_ids}));
 			}
 		}
 	}

@@ -31,6 +31,7 @@ namespace ms
 		Background(nl::node src);
 
 		void draw(double viewx, double viewy, float alpha) const;
+
 		void update();
 
 	private:
@@ -81,10 +82,13 @@ namespace ms
 	{
 	public:
 		MapBackgrounds(nl::node src);
+
 		MapBackgrounds();
 
 		void drawbackgrounds(double viewx, double viewy, float alpha) const;
+
 		void drawforegrounds(double viewx, double viewy, float alpha) const;
+
 		void update();
 
 	private:

@@ -65,28 +65,35 @@ namespace ms
 			NUM_LAYERS
 		};
 
-		// Construct a new equip
-		Clothing(int32_t itemid, const BodyDrawInfo& drawinfo);
+		// Construct a new equip.
+		Clothing(int32_t itemid, const BodyDrawInfo &drawinfo);
 
-		// Draw the equip
-		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const;
-		// Check if a part of the equip lies on the specified layer while in the specified stance
+		// Draw the equip.
+		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const;
+
+		// Check if a part of the equip lies on the specified layer while in the specified stance.
 		bool contains_layer(Stance::Id stance, Layer layer) const;
 
 		// Return whether the equip is invisible
 		bool is_transparent() const;
-		// Return whether this equip uses twohanded stances
+
+		// Return whether this equip uses twohanded stances.
 		bool is_twohanded() const;
-		// Return the item id
+
+		// Return the item id.
 		int32_t get_id() const;
-		// Return the equip slot for this cloth
+
+		// Return the equip slot for this cloth.
 		EquipSlot::Id get_eqslot() const;
-		// Return the standing stance to use while equipped
+
+		// Return the standing stance to use while equipped.
 		Stance::Id get_stand() const;
-		// Return the walking stance to use while equipped
+
+		// Return the walking stance to use while equipped.
 		Stance::Id get_walk() const;
+
 		// Return the vslot, used to distinguish some layering types.
-		const std::string& get_vslot() const;
+		const std::string &get_vslot() const;
 
 	private:
 		EnumMap<Stance::Id, EnumMap<Layer, std::unordered_multimap<uint8_t, Texture>, Layer::NUM_LAYERS>> stances;

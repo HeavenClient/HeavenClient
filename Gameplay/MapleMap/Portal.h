@@ -61,24 +61,31 @@ namespace ms
 				valid = mapid < 999999999;
 			}
 
-			WarpInfo() : WarpInfo(999999999, false, {}, {}) {}
+			WarpInfo() : WarpInfo(999999999, false, {}, {})
+			{}
 		};
 
-		Portal(const Animation* animation, Type type, std::string name, bool intramap, Point<int16_t> position, int32_t tomap, std::string toname);
+		Portal(const Animation *animation, Type type, std::string name, bool intramap, Point<int16_t> position,
+			   int32_t tomap, std::string toname);
+
 		Portal();
 
 		void update(Point<int16_t> playerpos);
+
 		void draw(Point<int16_t> viewpos, float alpha) const;
 
 		std::string get_name() const;
+
 		Type get_type() const;
+
 		Point<int16_t> get_position() const;
+
 		Rectangle<int16_t> bounds() const;
 
 		WarpInfo getwarpinfo() const;
 
 	private:
-		const Animation* animation;
+		const Animation *animation;
 		Type type;
 		std::string name;
 		Point<int16_t> position;

@@ -32,12 +32,12 @@ namespace ms
 
 		switch (type)
 		{
-		case Type::BUFF:
-			yscale.set(0.0f);
-			break;
-		case Type::COOLDOWN:
-			yscale.set(1.0f);
-			break;
+			case Type::BUFF:
+				yscale.set(0.0f);
+				break;
+			case Type::COOLDOWN:
+				yscale.set(1.0f);
+				break;
 		}
 	}
 
@@ -50,37 +50,37 @@ namespace ms
 			return;
 
 		cover.draw(
-			DrawArgument(
-				position + Point<int16_t>(0, 30 - interheight),
-				Point<int16_t>(30, interheight)
+				DrawArgument(
+						position + Point<int16_t>(0, 30 - interheight),
+						Point<int16_t>(30, interheight)
 				)
-			);
+		);
 	}
 
 	void IconCover::update()
 	{
 		switch (type)
 		{
-		case Type::BUFF:
-			yscale += scalestep;
+			case Type::BUFF:
+				yscale += scalestep;
 
-			if (yscale.last() >= 1.0f)
-			{
-				yscale.set(1.0f);
-				scalestep = 0.0f;
-			}
+				if (yscale.last() >= 1.0f)
+				{
+					yscale.set(1.0f);
+					scalestep = 0.0f;
+				}
 
-			break;
-		case Type::COOLDOWN:
-			yscale -= scalestep;
+				break;
+			case Type::COOLDOWN:
+				yscale -= scalestep;
 
-			if (yscale.last() <= 0.0f)
-			{
-				yscale.set(0.0f);
-				scalestep = 0.0f;
-			}
+				if (yscale.last() <= 0.0f)
+				{
+					yscale.set(0.0f);
+					scalestep = 0.0f;
+				}
 
-			break;
+				break;
 		}
 	}
 }

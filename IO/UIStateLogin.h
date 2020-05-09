@@ -21,6 +21,11 @@
 
 #include "Components/TextTooltip.h"
 
+#include "../Template/EnumMap.h"
+
+#include <memory>
+#include <list>
+
 namespace ms
 {
 	class UIStateLogin : public UIState
@@ -29,35 +34,59 @@ namespace ms
 		UIStateLogin();
 
 		void draw(float inter, Point<int16_t> cursor) const override;
+
 		void update() override;
 
 		void doubleclick(Point<int16_t> pos) override;
-		void rightclick(Point<int16_t>) override {}
+
+		void rightclick(Point<int16_t>) override
+		{}
+
 		void send_key(KeyType::Id type, int32_t action, bool pressed, bool escape) override;
+
 		Cursor::State send_cursor(Cursor::State mst, Point<int16_t> pos) override;
-		void send_scroll(double) override {}
+
+		void send_scroll(double) override
+		{}
+
 		void send_close() override;
 
-		void drag_icon(Icon*) override {}
+		void drag_icon(Icon *) override
+		{}
+
 		void clear_tooltip(Tooltip::Parent parent) override;
-		void show_equip(Tooltip::Parent, int16_t) override {}
-		void show_item(Tooltip::Parent, int32_t) override {}
-		void show_skill(Tooltip::Parent, int32_t, int32_t, int32_t, int64_t) override {}
+
+		void show_equip(Tooltip::Parent, int16_t) override
+		{}
+
+		void show_item(Tooltip::Parent, int32_t) override
+		{}
+
+		void show_skill(Tooltip::Parent, int32_t, int32_t, int32_t, int64_t) override
+		{}
+
 		void show_text(Tooltip::Parent parent, std::string text) override;
-		void show_map(Tooltip::Parent, std::string, std::string, int32_t, bool) {}
+
+		void show_map(Tooltip::Parent, std::string, std::string, int32_t, bool)
+		{}
 
 		Iterator pre_add(UIElement::Type type, bool toggled, bool focused) override;
+
 		void remove(UIElement::Type type) override;
-		UIElement* get(UIElement::Type type) override;
-		UIElement* get_front();
-		UIElement* get_front(std::list<UIElement::Type> types) override;
-		UIElement* get_front(Point<int16_t> pos) override;
+
+		UIElement *get(UIElement::Type type) override;
+
+		UIElement *get_front();
+
+		UIElement *get_front(std::list<UIElement::Type> types) override;
+
+		UIElement *get_front(Point<int16_t> pos) override;
 
 	private:
 		void remove_cursor(UIElement::Type type);
 
-		template <class T, typename...Args>
-		void emplace(Args&& ...args);
+		template<class T, typename...Args>
+		void emplace(Args &&...args);
 
 		EnumMap<UIElement::Type, UIElement::UPtr, UIElement::Type::NUM_TYPES> elements;
 		UIElement::Type focused;

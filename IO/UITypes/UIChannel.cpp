@@ -65,7 +65,8 @@ namespace ms
 			}
 
 			ch.emplace_back(Channel["ch"][i], Point<int16_t>(19 + 70 * x, 60 + 20 * y));
-			buttons[Buttons::CH + i] = std::make_unique<AreaButton>(Point<int16_t>(11 + 70 * x, 55 + 20 * y), channel[true].get_dimensions());
+			buttons[Buttons::CH + i] = std::make_unique<AreaButton>(Point<int16_t>(11 + 70 * x, 55 + 20 * y),
+																	channel[true].get_dimensions());
 
 			if (i == selected_channel)
 			{
@@ -89,14 +90,14 @@ namespace ms
 		if (current_channel == selected_channel)
 		{
 			channel[true].draw(DrawArgument(position.x() + selected_channel_x, position.y() + selected_channel_y));
-		}
-		else
+		} else
 		{
 			channel[true].draw(DrawArgument(position.x() + selected_channel_x, position.y() + selected_channel_y));
 			channel[false].draw(DrawArgument(position.x() + current_channel_x, position.y() + current_channel_y));
 		}
 
-		for each (auto sprite in ch)
+
+		for (auto &sprite : ch)
 			sprite.draw(position, inter);
 	}
 
@@ -104,7 +105,7 @@ namespace ms
 	{
 		UIElement::update();
 
-		for each (auto sprite in ch)
+		for (auto &sprite : ch)
 			sprite.update();
 	}
 
@@ -115,18 +116,15 @@ namespace ms
 			if (escape)
 			{
 				cancel();
-			}
-			else if (keycode == KeyAction::Id::RETURN)
+			} else if (keycode == KeyAction::Id::RETURN)
 			{
 				change_channel();
-			}
-			else if (keycode == KeyAction::Id::UP)
+			} else if (keycode == KeyAction::Id::UP)
 			{
 				if (selected_channel > 4)
 				{
 					selected_channel -= 5;
-				}
-				else
+				} else
 				{
 					for (size_t i = 0; i < 3; i++)
 						selected_channel += 5;
@@ -137,8 +135,7 @@ namespace ms
 					if (selected_channel > 4)
 					{
 						selected_channel -= 5;
-					}
-					else
+					} else
 					{
 						for (size_t i = 0; i < 3; i++)
 							selected_channel += 5;
@@ -146,14 +143,12 @@ namespace ms
 				}
 
 				update_selected_channel_position();
-			}
-			else if (keycode == KeyAction::Id::DOWN)
+			} else if (keycode == KeyAction::Id::DOWN)
 			{
 				if (selected_channel < 15)
 				{
 					selected_channel += 5;
-				}
-				else
+				} else
 				{
 					for (size_t i = 0; i < 3; i++)
 						selected_channel -= 5;
@@ -164,8 +159,7 @@ namespace ms
 					if (selected_channel < 15)
 					{
 						selected_channel += 5;
-					}
-					else
+					} else
 					{
 						for (size_t i = 0; i < 3; i++)
 							selected_channel -= 5;
@@ -173,8 +167,7 @@ namespace ms
 				}
 
 				update_selected_channel_position();
-			}
-			else if (keycode == KeyAction::Id::LEFT)
+			} else if (keycode == KeyAction::Id::LEFT)
 			{
 				if (selected_channel != 0)
 					selected_channel--;
@@ -190,8 +183,7 @@ namespace ms
 				}
 
 				update_selected_channel_position();
-			}
-			else if (keycode == KeyAction::Id::RIGHT)
+			} else if (keycode == KeyAction::Id::RIGHT)
 			{
 				if (selected_channel != channel_count - 1)
 					selected_channel++;
@@ -232,14 +224,12 @@ namespace ms
 
 						buttons[i]->set_state(Button::State::MOUSEOVER);
 						ret = Cursor::State::CANCLICK;
-					}
-					else
+					} else
 					{
 						buttons[i]->set_state(Button::State::MOUSEOVER);
 						ret = Cursor::State::IDLE;
 					}
-				}
-				else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
+				} else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -249,8 +239,7 @@ namespace ms
 						buttons[i]->set_state(button_pressed(i));
 
 						ret = Cursor::State::IDLE;
-					}
-					else
+					} else
 					{
 						if (i < Buttons::CH)
 							ret = Cursor::State::CANCLICK;
@@ -258,8 +247,7 @@ namespace ms
 							ret = Cursor::State::IDLE;
 					}
 				}
-			}
-			else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
+			} else if (buttons[i]->get_state() == Button::State::MOUSEOVER)
 			{
 				buttons[i]->set_state(Button::State::NORMAL);
 			}
@@ -279,17 +267,16 @@ namespace ms
 		{
 			switch (buttonid)
 			{
-			case Buttons::CANCEL:
-				cancel();
-				break;
-			case Buttons::CHANGE:
-				change_channel();
-				break;
-			default:
-				break;
+				case Buttons::CANCEL:
+					cancel();
+					break;
+				case Buttons::CHANGE:
+					change_channel();
+					break;
+				default:
+					break;
 			}
-		}
-		else
+		} else
 		{
 			if (buttonid - Buttons::CH == current_channel)
 				return Button::State::NORMAL;

@@ -45,7 +45,7 @@ namespace ms
 		if (skill_id == 0)
 			return;
 
-		const SkillData& data = SkillData::get(id);
+		const SkillData &data = SkillData::get(id);
 
 		int32_t masterlevel;
 
@@ -81,8 +81,7 @@ namespace ms
 
 				if (linebreak != mlend)
 					descstr.insert(mlend + 1, "\\n");
-			}
-			else
+			} else
 			{
 				descstr.insert(0, "[" + mltag + ": " + mlstr + "]\\n");
 			}
@@ -93,8 +92,7 @@ namespace ms
 		if (expiration > 0)
 		{
 			// TODO: Blank
-		}
-		else
+		} else
 		{
 			size_t expstart = descstr.find(exptag);
 			size_t expend = descstr.find('#', expstart + 1);

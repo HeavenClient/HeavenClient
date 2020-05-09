@@ -29,7 +29,8 @@
 
 namespace ms
 {
-	UINotice::UINotice(std::string message, NoticeType t, Text::Alignment a) : UIDragElement<PosNOTICE>(), type(t), alignment(a)
+	UINotice::UINotice(std::string message, NoticeType t, Text::Alignment a)
+			: UIDragElement<PosNOTICE>(), type(t), alignment(a)
 	{
 		nl::node src = nl::nx::ui["Basic.img"]["Notice6"];
 
@@ -45,13 +46,11 @@ namespace ms
 		{
 			position.shift_y(-8);
 			question = Text(Text::Font::A11M, alignment, Color::Name::WHITE, message, 200);
-		}
-		else if (type == NoticeType::ENTERNUMBER)
+		} else if (type == NoticeType::ENTERNUMBER)
 		{
 			position.shift_y(-16);
 			question = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, message, 200);
-		}
-		else if (type == NoticeType::OK)
+		} else if (type == NoticeType::OK)
 		{
 			uint16_t maxwidth = top.width() - 6;
 
@@ -68,7 +67,8 @@ namespace ms
 			Sound(Sound::Name::DLGNOTICE).play();
 	}
 
-	UINotice::UINotice(std::string message, NoticeType t) : UINotice(message, t, Text::Alignment::CENTER) {}
+	UINotice::UINotice(std::string message, NoticeType t) : UINotice(message, t, Text::Alignment::CENTER)
+	{}
 
 	void UINotice::draw(bool textfield) const
 	{
@@ -89,8 +89,7 @@ namespace ms
 			start.shift_y(29);
 
 			question.draw(position + Point<int16_t>(13, 13));
-		}
-		else
+		} else
 		{
 			int16_t pos_y = height >= 32 ? height : 32;
 
@@ -121,7 +120,8 @@ namespace ms
 		return offset;
 	}
 
-	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yh, Text::Alignment alignment) : UINotice(message, NoticeType::YESNO, alignment)
+	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yh, Text::Alignment alignment) : UINotice(
+			message, NoticeType::YESNO, alignment)
 	{
 		yesnohandler = yh;
 
@@ -133,7 +133,9 @@ namespace ms
 		buttons[Buttons::NO] = std::make_unique<MapleButton>(src["BtCancel4"], Point<int16_t>(198, belowtext));
 	}
 
-	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler) : UIYesNo(message, yesnohandler, Text::Alignment::CENTER) {}
+	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler) : UIYesNo(message, yesnohandler,
+																								Text::Alignment::CENTER)
+	{}
 
 	void UIYesNo::draw(float alpha) const
 	{
@@ -147,8 +149,7 @@ namespace ms
 		{
 			yesnohandler(true);
 			deactivate();
-		}
-		else if (escape)
+		} else if (escape)
 		{
 			yesnohandler(false);
 			deactivate();
@@ -166,18 +167,19 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::YES:
-			yesnohandler(true);
-			break;
-		case Buttons::NO:
-			yesnohandler(false);
-			break;
+			case Buttons::YES:
+				yesnohandler(true);
+				break;
+			case Buttons::NO:
+				yesnohandler(false);
+				break;
 		}
 
 		return Button::State::PRESSED;
 	}
 
-	UIEnterNumber::UIEnterNumber(std::string message, std::function<void(int32_t)> nh, int32_t m, int32_t quantity) : UINotice(message, NoticeType::ENTERNUMBER)
+	UIEnterNumber::UIEnterNumber(std::string message, std::function<void(int32_t)> nh, int32_t m, int32_t quantity)
+			: UINotice(message, NoticeType::ENTERNUMBER)
 	{
 		numhandler = nh;
 		max = m;
@@ -190,22 +192,23 @@ namespace ms
 		buttons[Buttons::OK] = std::make_unique<MapleButton>(src["BtOK4"], 156, pos_y);
 		buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(src["BtCancel4"], 198, pos_y);
 
-		numfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY, Rectangle<int16_t>(24, 232, belowtext, belowtext + 20), 10);
+		numfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY,
+							 Rectangle<int16_t>(24, 232, belowtext, belowtext + 20), 10);
 		numfield.change_text(std::to_string(quantity));
 
 		numfield.set_enter_callback(
-			[&](std::string numstr)
-			{
-				handlestring(numstr);
-			}
+				[&](std::string numstr)
+				{
+					handlestring(numstr);
+				}
 		);
 
 		numfield.set_key_callback(
-			KeyAction::Id::ESCAPE,
-			[&]()
-			{
-				deactivate();
-			}
+				KeyAction::Id::ESCAPE,
+				[&]()
+				{
+					deactivate();
+				}
 		);
 
 		numfield.set_state(Textfield::State::FOCUSED);
@@ -245,8 +248,7 @@ namespace ms
 		{
 			handlestring(numfield.get_text());
 			deactivate();
-		}
-		else if (escape)
+		} else if (escape)
 		{
 			deactivate();
 		}
@@ -261,12 +263,12 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			handlestring(numfield.get_text());
-			break;
-		case Buttons::CANCEL:
-			deactivate();
-			break;
+			case Buttons::OK:
+				handlestring(numfield.get_text());
+				break;
+			case Buttons::CANCEL:
+				deactivate();
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -288,8 +290,7 @@ namespace ms
 			numfield.set_state(Textfield::State::DISABLED);
 			UI::get().emplace<UIOk>("Only numbers are allowed.", okhandler);
 			return;
-		}
-		else
+		} else
 		{
 			num = std::stoi(numstr);
 		}
@@ -299,14 +300,13 @@ namespace ms
 			numfield.set_state(Textfield::State::DISABLED);
 			UI::get().emplace<UIOk>("You may only enter a number equal to or higher than 1.", okhandler);
 			return;
-		}
-		else if (num > max)
+		} else if (num > max)
 		{
 			numfield.set_state(Textfield::State::DISABLED);
-			UI::get().emplace<UIOk>("You may only enter a number equal to or lower than " + std::to_string(max) + ".", okhandler);
+			UI::get().emplace<UIOk>("You may only enter a number equal to or lower than " + std::to_string(max) + ".",
+									okhandler);
 			return;
-		}
-		else
+		} else
 		{
 			numhandler(num);
 			deactivate();
@@ -338,8 +338,7 @@ namespace ms
 			{
 				okhandler(true);
 				deactivate();
-			}
-			else if (escape)
+			} else if (escape)
 			{
 				okhandler(false);
 				deactivate();
@@ -358,9 +357,9 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			okhandler(true);
-			break;
+			case Buttons::OK:
+				okhandler(true);
+				break;
 		}
 
 		return Button::State::NORMAL;

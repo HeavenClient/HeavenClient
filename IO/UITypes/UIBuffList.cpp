@@ -38,8 +38,7 @@ namespace ms
 			std::string strid = string_format::extend_id(buffid, 7);
 			nl::node src = nl::nx::skill[strid.substr(0, 3) + ".img"]["skill"][strid];
 			icon = src["icon"];
-		}
-		else
+		} else
 		{
 			icon = ItemData::get(-buffid).get_icon(true);
 		}
@@ -83,7 +82,7 @@ namespace ms
 	{
 		Point<int16_t> icpos = position;
 
-		for (auto& icon : icons)
+		for (auto &icon : icons)
 		{
 			icon.second.draw(icpos, alpha);
 			icpos.shift_x(-32);
@@ -122,9 +121,9 @@ namespace ms
 	void UIBuffList::add_buff(int32_t buffid, int32_t duration)
 	{
 		icons.emplace(
-			std::piecewise_construct,
-			std::forward_as_tuple(buffid),
-			std::forward_as_tuple(buffid, duration)
+				std::piecewise_construct,
+				std::forward_as_tuple(buffid),
+				std::forward_as_tuple(buffid, duration)
 		);
 	}
 }

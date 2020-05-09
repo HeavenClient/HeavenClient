@@ -35,20 +35,23 @@ namespace ms
 
 		// Draws the current animation and name/function tags
 		void draw(double viewx, double viewy, float alpha) const override;
-		// Updates the current animation and physics
-		int8_t update(const Physics& physics) override;
 
-		// Changes stance and resets animation
-		void set_stance(const std::string& stance);
+		// Updates the current animation and physics.
+		int8_t update(const Physics &physics) override;
+
+		// Changes stance and resets animation.
+		void set_stance(const std::string &stance);
 
 		// Check whether this is a server-sided NPC
 		bool isscripted() const;
-		// Check if the NPC is in range of the cursor
+
+		// Check if the NPC is in range of the cursor.
 		bool inrange(Point<int16_t> cursorpos, Point<int16_t> viewpos) const;
 
 		// Returns the NPC name
 		std::string get_name();
-		// Returns the NPC's function description or title
+
+		// Returns the NPC's function description or title.
 		std::string get_func();
 
 	private:

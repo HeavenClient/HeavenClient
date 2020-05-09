@@ -37,16 +37,23 @@ namespace ms
 		void draw(float alpha) const override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		void draw_world();
+
 		void add_world(World world);
+
 		void add_recommended_world(RecommendedWorld world);
+
 		void change_world(World selectedWorld);
+
 		void remove_selected();
+
 		void set_region(uint8_t value);
+
 		uint16_t get_worldbyid(uint16_t worldid);
 
 	protected:
@@ -54,8 +61,11 @@ namespace ms
 
 	private:
 		void enter_world();
+
 		void toggle_recommended(bool active);
+
 		void clear_selected_world();
+
 		uint16_t get_next_world(uint16_t id, bool upward);
 
 		enum Buttons : uint16_t

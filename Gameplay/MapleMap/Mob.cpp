@@ -27,7 +27,8 @@
 
 namespace ms
 {
-	Mob::Mob(int32_t oi, int32_t mid, int8_t mode, int8_t st, uint16_t fh, bool newspawn, int8_t tm, Point<int16_t> position) : MapObject(oi)
+	Mob::Mob(int32_t oi, int32_t mid, int8_t mode, int8_t st, uint16_t fh, bool newspawn, int8_t tm,
+			 Point<int16_t> position) : MapObject(oi)
 	{
 		std::string strid = string_format::extend_id(mid, 7);
 		nl::node src = nl::nx::mob[strid + ".img"];
@@ -56,8 +57,7 @@ namespace ms
 		{
 			animations[Stance::STAND] = src["fly"];
 			animations[Stance::MOVE] = src["fly"];
-		}
-		else
+		} else
 		{
 			animations[Stance::STAND] = src["stand"];
 			animations[Stance::MOVE] = src["move"];
@@ -67,7 +67,7 @@ namespace ms
 		animations[Stance::HIT] = src["hit1"];
 		animations[Stance::DIE] = src["die1"];
 
-		name = nl::nx::string["Mob.img"][std::to_string(mid)]["name"];
+		name = std::string(nl::nx::string["Mob.img"][std::to_string(mid)]["name"]);
 
 		nl::node sndsrc = nl::nx::sound["Mob.img"][strid];
 
@@ -98,14 +98,14 @@ namespace ms
 		flydirection = STRAIGHT;
 		counter = 0;
 
-		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name);
+		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG,
+						 name);
 
 		if (newspawn)
 		{
 			fadein = true;
 			opacity.set(0.0f);
-		}
-		else
+		} else
 		{
 			fadein = false;
 			opacity.set(1.0f);
@@ -138,7 +138,7 @@ namespace ms
 		}
 	}
 
-	int8_t Mob::update(const Physics& physics)
+	int8_t Mob::update(const Physics &physics)
 	{
 		if (!active)
 			return phobj.fhlayer;
@@ -158,8 +158,7 @@ namespace ms
 				fading = false;
 				dead = true;
 			}
-		}
-		else if (fadein)
+		} else if (fadein)
 		{
 			opacity += 0.025f;
 
@@ -196,38 +195,37 @@ namespace ms
 
 			switch (stance)
 			{
-			case Stance::MOVE:
-				if (canfly)
-				{
-					phobj.hforce = flip ? flyspeed : -flyspeed;
-
-					switch (flydirection)
+				case Stance::MOVE:
+					if (canfly)
 					{
-					case FlyDirection::UPWARDS:
-						phobj.vforce = -flyspeed;
-						break;
-					case FlyDirection::DOWNWARDS:
-						phobj.vforce = flyspeed;
-						break;
+						phobj.hforce = flip ? flyspeed : -flyspeed;
+
+						switch (flydirection)
+						{
+							case FlyDirection::UPWARDS:
+								phobj.vforce = -flyspeed;
+								break;
+							case FlyDirection::DOWNWARDS:
+								phobj.vforce = flyspeed;
+								break;
+						}
+					} else
+					{
+						phobj.hforce = flip ? speed : -speed;
 					}
-				}
-				else
-				{
-					phobj.hforce = flip ? speed : -speed;
-				}
 
-				break;
-			case Stance::HIT:
-				if (canmove)
-				{
-					double KBFORCE = phobj.onground ? 0.2 : 0.1;
-					phobj.hforce = flip ? -KBFORCE : KBFORCE;
-				}
+					break;
+				case Stance::HIT:
+					if (canmove)
+					{
+						double KBFORCE = phobj.onground ? 0.2 : 0.1;
+						phobj.hforce = flip ? -KBFORCE : KBFORCE;
+					}
 
-				break;
-			case Stance::JUMP:
-				phobj.vforce = -5.0;
-				break;
+					break;
+				case Stance::JUMP:
+					phobj.vforce = -5.0;
+					break;
 			}
 
 			physics.move_object(phobj);
@@ -240,15 +238,15 @@ namespace ms
 
 				switch (stance)
 				{
-				case Stance::HIT:
-					next = counter > 200;
-					break;
-				case Stance::JUMP:
-					next = phobj.onground;
-					break;
-				default:
-					next = aniend && counter > 200;
-					break;
+					case Stance::HIT:
+						next = counter > 200;
+						break;
+					case Stance::JUMP:
+						next = phobj.onground;
+						break;
+					default:
+						next = aniend && counter > 200;
+						break;
 				}
 
 				if (next)
@@ -258,8 +256,7 @@ namespace ms
 					counter = 0;
 				}
 			}
-		}
-		else
+		} else
 		{
 			phobj.normalize();
 			physics.get_fht().update_fh(phobj);
@@ -274,42 +271,40 @@ namespace ms
 		{
 			switch (stance)
 			{
-			case Stance::HIT:
-			case Stance::STAND:
-				set_stance(Stance::MOVE);
-				flip = randomizer.next_bool();
-				break;
-			case Stance::MOVE:
-			case Stance::JUMP:
-				if (canjump && phobj.onground && randomizer.below(0.25f))
-				{
-					set_stance(Stance::JUMP);
-				}
-				else
-				{
-					switch (randomizer.next_int(3))
+				case Stance::HIT:
+				case Stance::STAND:
+					set_stance(Stance::MOVE);
+					flip = randomizer.next_bool();
+					break;
+				case Stance::MOVE:
+				case Stance::JUMP:
+					if (canjump && phobj.onground && randomizer.below(0.25f))
 					{
-					case 0:
-						set_stance(Stance::STAND);
-						break;
-					case 1:
-						set_stance(Stance::MOVE);
-						flip = false;
-						break;
-					case 2:
-						set_stance(Stance::MOVE);
-						flip = true;
-						break;
+						set_stance(Stance::JUMP);
+					} else
+					{
+						switch (randomizer.next_int(3))
+						{
+							case 0:
+								set_stance(Stance::STAND);
+								break;
+							case 1:
+								set_stance(Stance::MOVE);
+								flip = false;
+								break;
+							case 2:
+								set_stance(Stance::MOVE);
+								flip = true;
+								break;
+						}
 					}
-				}
 
-				break;
+					break;
 			}
 
 			if (stance == Stance::MOVE && canfly)
 				flydirection = randomizer.next_enum(FlyDirection::NUM_DIRECTIONS);
-		}
-		else
+		} else
 		{
 			set_stance(Stance::STAND);
 		}
@@ -355,7 +350,7 @@ namespace ms
 		aggro = mode == 2;
 	}
 
-	void Mob::send_movement(Point<int16_t> start, std::vector<Movement>&& in_movements)
+	void Mob::send_movement(Point<int16_t> start, std::vector<Movement> &&in_movements)
 	{
 		if (control)
 			return;
@@ -367,7 +362,7 @@ namespace ms
 		if (movements.empty())
 			return;
 
-		const Movement& lastmove = movements.front();
+		const Movement &lastmove = movements.front();
 
 		uint8_t laststance = lastmove.newstate;
 		set_stance(laststance);
@@ -389,18 +384,18 @@ namespace ms
 	{
 		switch (animation)
 		{
-		case 0:
-			deactivate();
-			break;
-		case 1:
-			dying = true;
+			case 0:
+				deactivate();
+				break;
+			case 1:
+				dying = true;
 
-			apply_death();
-			break;
-		case 2:
-			fading = true;
-			dying = true;
-			break;
+				apply_death();
+				break;
+			case 2:
+				fading = true;
+				dying = true;
+				break;
 		}
 	}
 
@@ -425,7 +420,7 @@ namespace ms
 		showhp.set_for(2000);
 	}
 
-	void Mob::show_effect(const Animation& animation, int8_t pos, int8_t z, bool f)
+	void Mob::show_effect(const Animation &animation, int8_t pos, int8_t z, bool f)
 	{
 		if (!active)
 			return;
@@ -434,17 +429,17 @@ namespace ms
 
 		switch (pos)
 		{
-		case 0:
-			shift = get_head_position(Point<int16_t>());
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
+			case 0:
+				shift = get_head_position(Point<int16_t>());
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
 		}
 
 		effects.add(animation, DrawArgument(shift, f), z);
@@ -464,9 +459,9 @@ namespace ms
 	double Mob::calculate_mindamage(int16_t leveldelta, double damage, bool magic) const
 	{
 		double mindamage =
-			magic ?
-			damage - (1 + 0.01 * leveldelta) * mdef * 0.6 :
-			damage * (1 - 0.01 * leveldelta) - wdef * 0.6;
+				magic ?
+				damage - (1 + 0.01 * leveldelta) * mdef * 0.6 :
+				damage * (1 - 0.01 * leveldelta) - wdef * 0.6;
 
 		return mindamage < 1.0 ? 1.0 : mindamage;
 	}
@@ -474,14 +469,14 @@ namespace ms
 	double Mob::calculate_maxdamage(int16_t leveldelta, double damage, bool magic) const
 	{
 		double maxdamage =
-			magic ?
-			damage - (1 + 0.01 * leveldelta) * mdef * 0.5 :
-			damage * (1 - 0.01 * leveldelta) - wdef * 0.5;
+				magic ?
+				damage - (1 + 0.01 * leveldelta) * mdef * 0.5 :
+				damage * (1 - 0.01 * leveldelta) - wdef * 0.5;
 
 		return maxdamage < 1.0 ? 1.0 : maxdamage;
 	}
 
-	std::vector<std::pair<int32_t, bool>> Mob::calculate_damage(const Attack& attack)
+	std::vector<std::pair<int32_t, bool>> Mob::calculate_damage(const Attack &attack)
 	{
 		double mindamage;
 		double maxdamage;
@@ -496,29 +491,31 @@ namespace ms
 
 		switch (damagetype)
 		{
-		case Attack::DamageType::DMG_WEAPON:
-		case Attack::DamageType::DMG_MAGIC:
-			mindamage = calculate_mindamage(leveldelta, attack.mindamage, damagetype == Attack::DamageType::DMG_MAGIC);
-			maxdamage = calculate_maxdamage(leveldelta, attack.maxdamage, damagetype == Attack::DamageType::DMG_MAGIC);
-			hitchance = calculate_hitchance(leveldelta, attack.accuracy);
-			critical = attack.critical;
-			break;
-		case Attack::DamageType::DMG_FIXED:
-			mindamage = attack.fixdamage;
-			maxdamage = attack.fixdamage;
-			hitchance = 1.0f;
-			critical = 0.0f;
-			break;
+			case Attack::DamageType::DMG_WEAPON:
+			case Attack::DamageType::DMG_MAGIC:
+				mindamage = calculate_mindamage(leveldelta, attack.mindamage,
+												damagetype == Attack::DamageType::DMG_MAGIC);
+				maxdamage = calculate_maxdamage(leveldelta, attack.maxdamage,
+												damagetype == Attack::DamageType::DMG_MAGIC);
+				hitchance = calculate_hitchance(leveldelta, attack.accuracy);
+				critical = attack.critical;
+				break;
+			case Attack::DamageType::DMG_FIXED:
+				mindamage = attack.fixdamage;
+				maxdamage = attack.fixdamage;
+				hitchance = 1.0f;
+				critical = 0.0f;
+				break;
 		}
 
 		std::vector<std::pair<int32_t, bool>> result(attack.hitcount);
 
 		std::generate(
-			result.begin(), result.end(),
-			[&]()
-			{
-				return next_damage(mindamage, maxdamage, hitchance, critical);
-			}
+				result.begin(), result.end(),
+				[&]()
+				{
+					return next_damage(mindamage, maxdamage, hitchance, critical);
+				}
 		);
 
 		update_movement();
@@ -558,8 +555,7 @@ namespace ms
 		if (dying && stance != Stance::DIE)
 		{
 			apply_death();
-		}
-		else if (control && is_alive() && damage >= knockback)
+		} else if (control && is_alive() && damage >= knockback)
 		{
 			flip = toleft;
 			counter = 170;
@@ -593,7 +589,7 @@ namespace ms
 		return active && !dying;
 	}
 
-	bool Mob::is_in_range(const Rectangle<int16_t>& range) const
+	bool Mob::is_in_range(const Rectangle<int16_t> &range) const
 	{
 		if (!active)
 			return false;

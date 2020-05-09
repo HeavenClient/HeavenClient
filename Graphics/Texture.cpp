@@ -62,10 +62,13 @@ namespace ms
 		}
 	}
 
-	Texture::Texture() {}
-	Texture::~Texture() {}
+	Texture::Texture()
+	{}
 
-	void Texture::draw(const DrawArgument& args) const
+	Texture::~Texture()
+	{}
+
+	void Texture::draw(const DrawArgument &args) const
 	{
 		size_t id = bitmap.id();
 
@@ -73,10 +76,10 @@ namespace ms
 			return;
 
 		GraphicsGL::get().draw(
-			bitmap,
-			args.get_rectangle(origin, dimensions),
-			args.get_color(),
-			args.get_angle()
+				bitmap,
+				args.get_rectangle(origin, dimensions),
+				args.get_color(),
+				args.get_angle()
 		);
 	}
 

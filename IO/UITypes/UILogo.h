@@ -31,6 +31,7 @@ namespace ms
 		UILogo();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;

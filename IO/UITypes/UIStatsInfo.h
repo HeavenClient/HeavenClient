@@ -31,11 +31,12 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIStatsInfo(const CharStats& stats);
+		UIStatsInfo(const CharStats &stats);
 
 		void draw(float alpha) const override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
+
 		bool is_in_range(Point<int16_t> cursorpos) const override;
 
 		UIElement::Type get_type() const override;
@@ -78,14 +79,19 @@ namespace ms
 			JUMP,
 			HONOR,
 			// Total
-			NUM_LABELS
+					NUM_LABELS
 		};
 
 		void update_ap();
+
 		void update_simple(StatLabel label, MapleStat::Id stat);
+
 		void update_basevstotal(StatLabel label, MapleStat::Id bstat, EquipStat::Id tstat);
+
 		void update_buffed(StatLabel label, EquipStat::Id stat);
+
 		void send_apup(MapleStat::Id stat) const;
+
 		void set_detail(bool enabled);
 
 		enum Buttons
@@ -106,7 +112,7 @@ namespace ms
 			BT_DETAIL_DETAILCLOSE
 		};
 
-		const CharStats& stats;
+		const CharStats &stats;
 
 		enum Ability
 		{

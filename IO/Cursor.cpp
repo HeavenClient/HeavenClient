@@ -53,16 +53,16 @@ namespace ms
 
 		switch (state)
 		{
-		case Cursor::State::CANCLICK:
-		case Cursor::State::CANCLICK2:
-		case Cursor::State::CANGRAB:
-		case Cursor::State::CLICKING:
-		case Cursor::State::GRABBING:
-			hide_counter = 0;
-			break;
-		default:
-			hide_counter++;
-			break;
+			case Cursor::State::CANCLICK:
+			case Cursor::State::CANCLICK2:
+			case Cursor::State::CANGRAB:
+			case Cursor::State::CLICKING:
+			case Cursor::State::GRABBING:
+				hide_counter = 0;
+				break;
+			default:
+				hide_counter++;
+				break;
 		}
 	}
 

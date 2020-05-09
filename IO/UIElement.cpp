@@ -21,9 +21,14 @@
 
 namespace ms
 {
-	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d, bool a) : position(p), dimension(d), active(a) {}
-	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d) : UIElement(p, d, true) {}
-	UIElement::UIElement() : UIElement(Point<int16_t>(), Point<int16_t>()) {}
+	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d, bool a) : position(p), dimension(d), active(a)
+	{}
+
+	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d) : UIElement(p, d, true)
+	{}
+
+	UIElement::UIElement() : UIElement(Point<int16_t>(), Point<int16_t>())
+	{}
 
 	void UIElement::draw(float alpha) const
 	{
@@ -33,24 +38,24 @@ namespace ms
 
 	void UIElement::draw_sprites(float alpha) const
 	{
-		for (const Sprite& sprite : sprites)
+		for (const Sprite &sprite : sprites)
 			sprite.draw(position, alpha);
 	}
 
 	void UIElement::draw_buttons(float) const
 	{
-		for (auto& iter : buttons)
-			if (const Button* button = iter.second.get())
+		for (auto &iter : buttons)
+			if (const Button *button = iter.second.get())
 				button->draw(position);
 	}
 
 	void UIElement::update()
 	{
-		for (auto& sprite : sprites)
+		for (auto &sprite : sprites)
 			sprite.update();
 
-		for (auto& iter : buttons)
-			if (Button* button = iter.second.get())
+		for (auto &iter : buttons)
+			if (Button *button = iter.second.get())
 				button->update();
 	}
 
@@ -86,7 +91,7 @@ namespace ms
 
 	void UIElement::remove_cursor()
 	{
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			auto button = btit.second.get();
 
@@ -99,7 +104,7 @@ namespace ms
 	{
 		Cursor::State ret = down ? Cursor::State::CLICKING : Cursor::State::IDLE;
 
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(pos))
 			{
@@ -109,8 +114,7 @@ namespace ms
 
 					btit.second->set_state(Button::State::MOUSEOVER);
 					ret = Cursor::State::CANCLICK;
-				}
-				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (down)
 					{
@@ -119,14 +123,12 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 
 						ret = Cursor::State::IDLE;
-					}
-					else
+					} else
 					{
 						ret = Cursor::State::CANCLICK;
 					}
 				}
-			}
-			else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}

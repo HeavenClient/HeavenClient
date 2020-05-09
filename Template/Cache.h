@@ -18,6 +18,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <map>
 #include <cstdint>
 
 namespace ms
@@ -44,9 +45,9 @@ namespace ms
 		}
 
 	private:
-		static std::unordered_map<std::int32_t, T> cache;
+		static std::map<std::int32_t, T> cache;
 	};
 
 	template <typename T>
-	std::unordered_map<std::int32_t, T> Cache<T>::cache;
+	std::map<std::int32_t, T> Cache<T>::cache;
 }

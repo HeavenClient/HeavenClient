@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	CharLook::CharLook(const LookEntry& entry)
+	CharLook::CharLook(const LookEntry &entry)
 	{
 		reset();
 
@@ -29,7 +29,7 @@ namespace ms
 		set_hair(entry.hairid);
 		set_face(entry.faceid);
 
-		for (auto& equip : entry.equips)
+		for (auto &equip : entry.equips)
 			add_equip(equip.second);
 	}
 
@@ -59,10 +59,12 @@ namespace ms
 		expelapsed = 0;
 	}
 
-	void CharLook::draw(const DrawArgument& args, Stance::Id interstance, Expression::Id interexpression, uint8_t interframe, uint8_t interexpframe) const
+	void
+	CharLook::draw(const DrawArgument &args, Stance::Id interstance, Expression::Id interexpression, uint8_t interframe,
+				   uint8_t interexpframe) const
 	{
 		Point<int16_t> faceshift = drawinfo.getfacepos(interstance, interframe);
-		DrawArgument faceargs = args + DrawArgument{ faceshift, false, Point<int16_t>{} };
+		DrawArgument faceargs = args + DrawArgument{faceshift, false, Point<int16_t>{}};
 
 		if (Stance::is_climbing(interstance))
 		{
@@ -185,7 +187,7 @@ namespace ms
 		}
 	}
 
-	void CharLook::draw(const DrawArgument& args, float alpha) const
+	void CharLook::draw(const DrawArgument &args, float alpha) const
 	{
 		if (!body || !hair || !face)
 			return;
@@ -195,7 +197,7 @@ namespace ms
 		if (action)
 			acmove = action->get_move();
 
-		DrawArgument relargs = { acmove, flip };
+		DrawArgument relargs = {acmove, flip};
 
 		Stance::Id interstance = stance.get(alpha);
 		Expression::Id interexpression = expression.get(alpha);
@@ -206,21 +208,20 @@ namespace ms
 		{
 			case Stance::Id::STAND1:
 			case Stance::Id::STAND2:
-			{
 				if (alerted)
 					interstance = Stance::Id::ALERT;
 
 				break;
-			}
 		}
 
 		draw(relargs + args, interstance, interexpression, interframe, interexpframe);
 	}
 
-	void CharLook::draw(Point<int16_t> position, bool flipped, Stance::Id interstance, Expression::Id interexpression) const
+	void CharLook::draw(Point<int16_t> position, bool flipped, Stance::Id interstance,
+						Expression::Id interexpression) const
 	{
 		interstance = equips.adjust_stance(interstance);
-		draw({ position, flipped }, interstance, interexpression, 0, 0);
+		draw({position, flipped}, interstance, interexpression, 0, 0);
 	}
 
 	bool CharLook::update(uint16_t timestep)
@@ -254,16 +255,14 @@ namespace ms
 
 				if (stframe == 0)
 					aniend = true;
-			}
-			else
+			} else
 			{
 				stance.normalize();
 				stframe.normalize();
 
 				stelapsed += timestep;
 			}
-		}
-		else
+		} else
 		{
 			uint16_t delay = action->get_delay();
 			uint16_t delta = delay - stelapsed;
@@ -280,16 +279,14 @@ namespace ms
 					float threshold = static_cast<float>(delta) / timestep;
 					stance.next(action->get_stance(), threshold);
 					stframe.next(action->get_frame(), threshold);
-				}
-				else
+				} else
 				{
 					aniend = true;
 					action = nullptr;
 					actionstr = "";
 					set_stance(Stance::Id::STAND1);
 				}
-			}
-			else
+			} else
 			{
 				stance.normalize();
 				stframe.normalize();
@@ -316,8 +313,7 @@ namespace ms
 				else
 					expression.next(Expression::Id::DEFAULT, fcthreshold);
 			}
-		}
-		else
+		} else
 		{
 			expression.normalize();
 			expframe.normalize();
@@ -335,9 +331,9 @@ namespace ms
 		if (iter == bodytypes.end())
 		{
 			iter = bodytypes.emplace(
-				std::piecewise_construct,
-				std::forward_as_tuple(skin_id),
-				std::forward_as_tuple(skin_id, drawinfo)
+					std::piecewise_construct,
+					std::forward_as_tuple(skin_id),
+					std::forward_as_tuple(skin_id, drawinfo)
 			).first;
 		}
 
@@ -351,9 +347,9 @@ namespace ms
 		if (iter == hairstyles.end())
 		{
 			iter = hairstyles.emplace(
-				std::piecewise_construct,
-				std::forward_as_tuple(hair_id),
-				std::forward_as_tuple(hair_id, drawinfo)
+					std::piecewise_construct,
+					std::forward_as_tuple(hair_id),
+					std::forward_as_tuple(hair_id, drawinfo)
 			).first;
 		}
 
@@ -397,7 +393,7 @@ namespace ms
 		if (weapon_id <= 0)
 			return;
 
-		const WeaponData& weapon = WeaponData::get(weapon_id);
+		const WeaponData &weapon = WeaponData::get(weapon_id);
 
 		uint8_t attacktype = weapon.get_attack();
 
@@ -405,8 +401,7 @@ namespace ms
 		{
 			stance.set(Stance::Id::SHOT);
 			set_action("handgun");
-		}
-		else
+		} else
 		{
 			stance.set(getattackstance(attacktype, degenerate));
 			stframe.set(0);
@@ -467,39 +462,39 @@ namespace ms
 		};
 
 		static const std::array<std::vector<Stance::Id>, Attack::NUM_ATTACKS> degen_stances = {
-			{
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGT1, Stance::Id::SWINGT3 },
-				{ Stance::Id::SWINGT1, Stance::Id::STABT1 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGT1, Stance::Id::STABT1 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGP1, Stance::Id::STABT2 }
-			}
+				{
+						{Stance::Id::NONE},
+						{Stance::Id::NONE},
+						{Stance::Id::NONE},
+						{Stance::Id::SWINGT1, Stance::Id::SWINGT3},
+						{Stance::Id::SWINGT1, Stance::Id::STABT1},
+						{Stance::Id::NONE},
+						{Stance::Id::NONE},
+						{Stance::Id::SWINGT1, Stance::Id::STABT1},
+						{Stance::Id::NONE},
+						{Stance::Id::SWINGP1, Stance::Id::STABT2}
+				}
 		};
 
 		static const std::array<std::vector<Stance::Id>, NUM_ATTACKS> attack_stances = {
-			{
-				{ Stance::Id::NONE },
-				{ Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGO1, Stance::Id::SWINGO2, Stance::Id::SWINGO3 },
-				{ Stance::Id::STABT1, Stance::Id::SWINGP1 },
-				{ Stance::Id::SHOOT1 },
-				{ Stance::Id::SHOOT2 },
-				{ Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGT1, Stance::Id::SWINGT2, Stance::Id::SWINGT3 },
-				{ Stance::Id::SWINGO1, Stance::Id::SWINGO2 },
-				{ Stance::Id::SWINGO1, Stance::Id::SWINGO2 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SHOT }
-			}
+				{
+						{Stance::Id::NONE},
+						{Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGO1, Stance::Id::SWINGO2, Stance::Id::SWINGO3},
+						{Stance::Id::STABT1, Stance::Id::SWINGP1},
+						{Stance::Id::SHOOT1},
+						{Stance::Id::SHOOT2},
+						{Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGT1, Stance::Id::SWINGT2, Stance::Id::SWINGT3},
+						{Stance::Id::SWINGO1, Stance::Id::SWINGO2},
+						{Stance::Id::SWINGO1, Stance::Id::SWINGO2},
+						{Stance::Id::NONE},
+						{Stance::Id::SHOT}
+				}
 		};
 
 		if (attack <= Attack::NONE || attack >= Attack::NUM_ATTACKS)
 			return Stance::Id::STAND1;
 
-		const auto& stances = degenerate ? degen_stances[attack] : attack_stances[attack];
+		const auto &stances = degenerate ? degen_stances[attack] : attack_stances[attack];
 
 		if (stances.empty())
 			return Stance::Id::STAND1;
@@ -531,7 +526,7 @@ namespace ms
 		}
 	}
 
-	void CharLook::set_action(const std::string& acstr)
+	void CharLook::set_action(const std::string &acstr)
 	{
 		if (acstr == actionstr || acstr == "")
 			return;
@@ -539,8 +534,7 @@ namespace ms
 		if (Stance::Id ac_stance = Stance::by_string(acstr))
 		{
 			set_stance(ac_stance);
-		}
-		else
+		} else
 		{
 			action = drawinfo.get_action(acstr, 0);
 
@@ -568,7 +562,7 @@ namespace ms
 
 	bool CharLook::get_alerted() const
 	{
-		return (bool)alerted;
+		return (bool) alerted;
 	}
 
 	bool CharLook::is_twohanded(Stance::Id st) const
@@ -591,8 +585,7 @@ namespace ms
 		if (action)
 		{
 			return drawinfo.get_attackdelay(actionstr, no);
-		}
-		else
+		} else
 		{
 			uint16_t delay = 0;
 
@@ -613,22 +606,22 @@ namespace ms
 		return stance.get();
 	}
 
-	const Body* CharLook::get_body() const
+	const Body *CharLook::get_body() const
 	{
 		return body;
 	}
 
-	const Hair* CharLook::get_hair() const
+	const Hair *CharLook::get_hair() const
 	{
 		return hair;
 	}
 
-	const Face* CharLook::get_face() const
+	const Face *CharLook::get_face() const
 	{
 		return face;
 	}
 
-	const CharEquips& CharLook::get_equips() const
+	const CharEquips &CharLook::get_equips() const
 	{
 		return equips;
 	}

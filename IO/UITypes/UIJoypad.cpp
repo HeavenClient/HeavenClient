@@ -40,7 +40,7 @@ namespace ms
 		buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(Basic["BtCancel4"], Point<int16_t>(124, 303));
 		buttons[Buttons::OK] = std::make_unique<MapleButton>(Basic["BtOK4"], Point<int16_t>(82, 303));
 
-		for each (Text & text in key_text)
+		for (auto &text : key_text)
 			text = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::BLACK, "None");
 
 		dimension = backgrnd[true].get_dimensions();
@@ -87,16 +87,16 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::DEFAULT:
-			break;
-		case Buttons::CANCEL:
-			cancel();
-			break;
-		case Buttons::OK:
-			save();
-			break;
-		default:
-			break;
+			case Buttons::DEFAULT:
+				break;
+			case Buttons::CANCEL:
+				cancel();
+				break;
+			case Buttons::OK:
+				save();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

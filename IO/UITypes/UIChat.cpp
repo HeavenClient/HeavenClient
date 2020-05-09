@@ -95,17 +95,17 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::CLOSE:
-			close();
-			break;
-		case Buttons::CHAT_DUO:
-			break;
-		case Buttons::CHAT_FRIEND:
-			break;
-		case Buttons::CHAT_RANDOM:
-			break;
-		default:
-			break;
+			case Buttons::CLOSE:
+				close();
+				break;
+			case Buttons::CHAT_DUO:
+				break;
+			case Buttons::CHAT_FRIEND:
+				break;
+			case Buttons::CHAT_RANDOM:
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -179,11 +179,11 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::CLOSE:
-			close();
-			break;
-		default:
-			break;
+			case Buttons::CLOSE:
+				close();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

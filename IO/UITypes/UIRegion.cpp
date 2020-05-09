@@ -59,10 +59,12 @@ namespace ms
 		clear_tooltip();
 
 		if (na_rect.contains(cursorpos))
-			UI::get().show_text(Tooltip::Parent::TEXT, "Warning: You may experience latency and connection issues when connecting to the NA server from Europe.");
+			UI::get().show_text(Tooltip::Parent::TEXT,
+								"Warning: You may experience latency and connection issues when connecting to the NA server from Europe.");
 
 		if (eu_rect.contains(cursorpos))
-			UI::get().show_text(Tooltip::Parent::TEXT, "Warning: You may experience latency and connection issues when connecting to the EU server from North America.");
+			UI::get().show_text(Tooltip::Parent::TEXT,
+								"Warning: You may experience latency and connection issues when connecting to the EU server from North America.");
 
 		return UIElement::send_cursor(clicked, cursorpos);
 	}
@@ -78,27 +80,27 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::NA:
-		case Buttons::EU:
-		{
-			// TODO: Update UIWorldSelect after selecting new region
-			//uint8_t region = (buttonid == Buttons::NA) ? 5 : 6;
-
-			if (auto worldselect = UI::get().get_element<UIWorldSelect>())
+			case Buttons::NA:
+			case Buttons::EU:
 			{
-				UI::get().remove(UIElement::Type::REGION);
+				// TODO: Update UIWorldSelect after selecting new region
+				//uint8_t region = (buttonid == Buttons::NA) ? 5 : 6;
 
-				//worldselect->set_region(region);
-				worldselect->makeactive();
+				if (auto worldselect = UI::get().get_element<UIWorldSelect>())
+				{
+					UI::get().remove(UIElement::Type::REGION);
+
+					//worldselect->set_region(region);
+					worldselect->makeactive();
+				}
+
+				break;
 			}
-
-			break;
-		}
-		case Buttons::EXIT:
-			UI::get().quit();
-			break;
-		default:
-			break;
+			case Buttons::EXIT:
+				UI::get().quit();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

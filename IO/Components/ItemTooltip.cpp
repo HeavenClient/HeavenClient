@@ -54,7 +54,7 @@ namespace ms
 		if (itemid == 0)
 			return false;
 
-		const ItemData& idata = ItemData::get(itemid);
+		const ItemData &idata = ItemData::get(itemid);
 
 		itemicon = idata.get_icon(false);
 		untradable = idata.is_untradable();

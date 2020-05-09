@@ -39,6 +39,9 @@ namespace ms
 		ytile = std::max<int16_t>(west.height(), 1);
 	}
 
+	MapleFrame::MapleFrame()
+	{}
+
 	void MapleFrame::draw(Point<int16_t> position, int16_t rwidth, int16_t rheight) const
 	{
 		int16_t numhor = rwidth / xtile + 2;

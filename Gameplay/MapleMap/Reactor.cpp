@@ -50,14 +50,13 @@ namespace ms
 		{
 			// TODO: Handle 'default' animations (horntail reactor floating)
 			normal.draw(absp - shift, alpha);
-		}
-		else
+		} else
 		{
 			animations.at(state - 1).draw(DrawArgument(absp - shift), 1.0);
 		}
 	}
 
-	int8_t Reactor::update(const Physics& physics)
+	int8_t Reactor::update(const Physics &physics)
 	{
 		physics.move_object(phobj);
 
@@ -95,12 +94,14 @@ namespace ms
 		return hittable;
 	}
 
-	bool Reactor::is_in_range(const Rectangle<int16_t>& range) const
+	bool Reactor::is_in_range(const Rectangle<int16_t> &range) const
 	{
 		if (!active)
 			return false;
 
-		Rectangle<int16_t> bounds(Point<int16_t>(-30, -normal.get_dimensions().y()), Point<int16_t>(normal.get_dimensions().x() - 10, 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
+		Rectangle<int16_t> bounds(Point<int16_t>(-30, -normal.get_dimensions().y()),
+								  Point<int16_t>(normal.get_dimensions().x() - 10,
+												 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
 		bounds.shift(get_position());
 
 		return range.overlaps(bounds);

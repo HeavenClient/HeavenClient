@@ -33,7 +33,7 @@ namespace ms
 
 		icon = src["info"]["icon"];
 
-		name = strsrc["bookName"];
+		name = std::string(strsrc["bookName"]);
 
 		for (nl::node sub : src["skill"])
 		{
@@ -46,17 +46,17 @@ namespace ms
 		}
 	}
 
-	const std::vector<std::int32_t>& JobData::get_skills() const
+	const std::vector<std::int32_t> &JobData::get_skills() const
 	{
 		return skills;
 	}
 
-	const std::string& JobData::get_name() const
+	const std::string &JobData::get_name() const
 	{
 		return name;
 	}
 
-	const Texture& JobData::get_icon() const
+	const Texture &JobData::get_icon() const
 	{
 		return icon;
 	}

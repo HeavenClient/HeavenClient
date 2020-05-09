@@ -17,6 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "UIQuit.h"
 
+#include "Timer.h"
 #include "../UI.h"
 #include "../Window.h"
 
@@ -32,7 +33,7 @@
 
 namespace ms
 {
-	UIQuit::UIQuit(const CharStats& st) : screen_adj(212, 114), stats(st)
+	UIQuit::UIQuit(const CharStats &st) : screen_adj(212, 114), stats(st)
 	{
 		nl::node askReward = nl::nx::ui["UIWindow6.img"]["askReward"];
 		nl::node userLog = askReward["userLog"];
@@ -148,7 +149,8 @@ namespace ms
 		auto bounds = Rectangle<int16_t>(lt, rb);
 
 		if (bounds.contains(cursorpos))
-			UI::get().show_text(Tooltip::Parent::TEXT, std::to_string(hours) + "Hour " + std::to_string(minutes) + "Minute");
+			UI::get().show_text(Tooltip::Parent::TEXT,
+								std::to_string(hours) + "Hour " + std::to_string(minutes) + "Minute");
 		else
 			UI::get().clear_tooltip(Tooltip::Parent::TEXT);
 
@@ -175,39 +177,39 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::NO:
-			close();
-			break;
-		case Buttons::YES:
-		{
-			Constants::Constants::get().set_viewwidth(800);
-			Constants::Constants::get().set_viewheight(600);
+			case Buttons::NO:
+				deactivate();
+				break;
+			case Buttons::YES:
+			{
+				Constants::Constants::get().set_viewwidth(800);
+				Constants::Constants::get().set_viewheight(600);
 
-			float fadestep = 0.025f;
+				float fadestep = 0.025f;
 
-			Window::get().fadeout(
-				fadestep,
-				[]()
-				{
-					GraphicsGL::get().clear();
+				Window::get().fadeout(
+						fadestep,
+						[]()
+						{
+							GraphicsGL::get().clear();
 
-					UI::get().change_state(UI::State::LOGIN);
-					UI::get().set_scrollnotice("");
-					Session::get().reconnect();
+							UI::get().change_state(UI::State::LOGIN);
+							UI::get().set_scrollnotice("");
+							Session::get().reconnect();
 
-					UI::get().enable();
-					Timer::get().start();
-					GraphicsGL::get().unlock();
-				}
-			);
+							UI::get().enable();
+							Timer::get().start();
+							GraphicsGL::get().unlock();
+						}
+				);
 
-			GraphicsGL::get().lock();
-			Stage::get().clear();
-			Timer::get().start();
-		}
-		break;
-		default:
-			break;
+				GraphicsGL::get().lock();
+				Stage::get().clear();
+				Timer::get().start();
+			}
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -230,8 +232,8 @@ namespace ms
 			return 0.0f;
 
 		return static_cast<float>(
-			static_cast<double>(exp) / ExpTable::values[level]
-			);
+				static_cast<double>(exp) / ExpTable::values[level]
+		);
 	}
 
 	void UIQuit::close()

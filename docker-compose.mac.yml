@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  heavenclient:
+    volumes:
+      - ${PULSE_FILE:-~/.config/pulse}:/root/.config/pulse
+    environment:
+      PULSE_SERVER: host.docker.internal

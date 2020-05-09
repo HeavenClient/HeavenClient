@@ -42,13 +42,13 @@ namespace ms
 			NUM_LAYERS
 		};
 
-		Body(int32_t skin, const BodyDrawInfo& drawinfo);
+		Body(int32_t skin, const BodyDrawInfo &drawinfo);
 
-		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const;
+		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const;
 
-		const std::string& get_name() const;
+		const std::string &get_name() const;
 
-		static Layer layer_by_name(const std::string& name);
+		static Layer layer_by_name(const std::string &name);
 
 	private:
 		std::unordered_map<uint8_t, Texture> stances[Stance::Id::LENGTH][Layer::NUM_LAYERS];

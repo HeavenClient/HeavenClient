@@ -42,18 +42,18 @@ namespace ms
 	{
 		switch (value)
 		{
-		case -1:
-			return Id::EQUIPPED;
-		case 1:
-			return Id::EQUIP;
-		case 2:
-			return Id::USE;
-		case 3:
-			return Id::SETUP;
-		case 4:
-			return Id::ETC;
-		case 5:
-			return Id::CASH;
+			case -1:
+				return Id::EQUIPPED;
+			case 1:
+				return Id::EQUIP;
+			case 2:
+				return Id::USE;
+			case 3:
+				return Id::SETUP;
+			case 4:
+				return Id::ETC;
+			case 5:
+				return Id::CASH;
 		}
 
 		std::cout << "Unknown InventoryType::Id value: [" << value << "]" << std::endl;

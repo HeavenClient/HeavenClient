@@ -36,14 +36,17 @@ namespace ms
 		UIRaceSelect();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		bool check_name(std::string name) const;
+
 		void send_naming_result(bool nameused);
 
 	protected:
@@ -52,7 +55,9 @@ namespace ms
 	private:
 		void select_class(uint16_t index);
 		void show_charselect();
+
 		Point<int16_t> get_class_pos(size_t index) const;
+
 		std::string to_lower(std::string value) const;
 		uint16_t get_corrected_class_index(uint16_t index) const;
 

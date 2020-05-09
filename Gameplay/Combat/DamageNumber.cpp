@@ -38,8 +38,7 @@ namespace ms
 			{
 				restnum = number.substr(1);
 				multiple = true;
-			}
-			else
+			} else
 			{
 				restnum = "";
 				multiple = false;
@@ -56,8 +55,7 @@ namespace ms
 				{
 					char n = restnum[i + 1];
 					advance = (getadvance(c, false) + getadvance(n, false)) / 2;
-				}
-				else
+				} else
 				{
 					advance = getadvance(c, false);
 				}
@@ -66,8 +64,7 @@ namespace ms
 			}
 
 			shift = total / 2;
-		}
-		else
+		} else
 		{
 			shift = charsets[type][true].getw('M') / 2;
 			miss = true;
@@ -79,7 +76,8 @@ namespace ms
 		opacity.set(1.5f);
 	}
 
-	DamageNumber::DamageNumber() {}
+	DamageNumber::DamageNumber()
+	{}
 
 	void DamageNumber::draw(double viewx, double viewy, float alpha) const
 	{
@@ -89,11 +87,10 @@ namespace ms
 
 		if (miss)
 		{
-			charsets[type][true].draw('M', { position, interopc });
-		}
-		else
+			charsets[type][true].draw('M', {position, interopc});
+		} else
 		{
-			charsets[type][false].draw(firstnum, { position, interopc });
+			charsets[type][false].draw(firstnum, {position, interopc});
 
 			if (multiple)
 			{
@@ -103,8 +100,8 @@ namespace ms
 				for (size_t i = 0; i < restnum.length(); i++)
 				{
 					char c = restnum[i];
-					Point<int16_t> yshift = { 0, (i % 2) ? -2 : 2 };
-					charsets[type][true].draw(c, { position + yshift, interopc });
+					Point<int16_t> yshift = {0, (i % 2) ? -2 : 2};
+					charsets[type][true].draw(c, {position + yshift, interopc});
 
 					int16_t advance;
 
@@ -114,8 +111,7 @@ namespace ms
 						int16_t c_advance = getadvance(c, false);
 						int16_t n_advance = getadvance(n, false);
 						advance = (c_advance + n_advance) / 2;
-					}
-					else
+					} else
 					{
 						advance = getadvance(c, false);
 					}
@@ -131,9 +127,9 @@ namespace ms
 		constexpr size_t LENGTH = 10;
 
 		constexpr int16_t advances[LENGTH] =
-		{
-			24, 20, 22, 22, 24, 23, 24, 22, 24, 24
-		};
+				{
+						24, 20, 22, 22, 24, 23, 24, 22, 24, 24
+				};
 
 		size_t index = c - 48;
 
@@ -143,23 +139,22 @@ namespace ms
 
 			switch (type)
 			{
-			case DamageNumber::Type::CRITICAL:
-				if (first)
-					advance += 8;
-				else
-					advance += 4;
+				case DamageNumber::Type::CRITICAL:
+					if (first)
+						advance += 8;
+					else
+						advance += 4;
 
-				break;
-			default:
-				if (first)
-					advance += 2;
+					break;
+				default:
+					if (first)
+						advance += 2;
 
-				break;
+					break;
 			}
 
 			return advance;
-		}
-		else
+		} else
 		{
 			return 0;
 		}
@@ -187,12 +182,18 @@ namespace ms
 
 	void DamageNumber::init()
 	{
-		charsets[DamageNumber::Type::NORMAL].set(false, nl::nx::effect["BasicEff.img"]["NoRed1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::NORMAL].set(true, nl::nx::effect["BasicEff.img"]["NoRed0"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::CRITICAL].set(false, nl::nx::effect["BasicEff.img"]["NoCri1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::CRITICAL].set(true, nl::nx::effect["BasicEff.img"]["NoCri0"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::TOPLAYER].set(false, nl::nx::effect["BasicEff.img"]["NoViolet1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::TOPLAYER].set(true, nl::nx::effect["BasicEff.img"]["NoViolet0"], Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::NORMAL].set(false, nl::nx::effect["BasicEff.img"]["NoRed1"],
+												 Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::NORMAL].set(true, nl::nx::effect["BasicEff.img"]["NoRed0"],
+												 Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::CRITICAL].set(false, nl::nx::effect["BasicEff.img"]["NoCri1"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::CRITICAL].set(true, nl::nx::effect["BasicEff.img"]["NoCri0"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::TOPLAYER].set(false, nl::nx::effect["BasicEff.img"]["NoViolet1"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::TOPLAYER].set(true, nl::nx::effect["BasicEff.img"]["NoViolet0"],
+												   Charset::Alignment::LEFT);
 	}
 
 	BoolPair<Charset> DamageNumber::charsets[NUM_TYPES];

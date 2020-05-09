@@ -16,7 +16,6 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UICharSelect.h"
-
 #include "UILoginNotice.h"
 #include "UIRaceSelect.h"
 #include "UISoftKey.h"
@@ -35,7 +34,9 @@
 #include "../../Net/Packets/SelectCharPackets.h"
 
 #define NOMINMAX
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #ifdef USE_NX
 #include <nlnx/nx.hpp>
@@ -43,7 +44,13 @@
 
 namespace ms
 {
-	UICharSelect::UICharSelect(std::vector<CharEntry> characters, int8_t characters_count, int32_t slots, int8_t require_pic) : characters(characters), characters_count(characters_count), slots(slots), require_pic(require_pic)
+	UICharSelect::UICharSelect(std::vector<CharEntry> c, int8_t char_count, int32_t s, int8_t rp) : UIElement(
+			Point<int16_t>(0, 0), Point<int16_t>(800, 600)),
+																									characters(c),
+																									characters_count(
+																											char_count),
+																									slots(s),
+																									require_pic(rp)
 	{
 		burning_character = true;
 
@@ -60,7 +67,7 @@ namespace ms
 
 		selected_character = Setting<DefaultCharacter>::get().load();
 		selected_page = selected_character / PAGESIZE;
-		page_count = std::ceil((double)slots / (double)PAGESIZE);
+		page_count = std::ceil((double) slots / (double) PAGESIZE);
 
 		tab = nl::nx::ui["Basic.img"]["Cursor"]["18"]["0"];
 
@@ -132,12 +139,15 @@ namespace ms
 		buttons[Buttons::PAGELEFT] = std::make_unique<MapleButton>(CharSelect["pageL"], Point<int16_t>(98, 491));
 		buttons[Buttons::PAGERIGHT] = std::make_unique<MapleButton>(CharSelect["pageR"], Point<int16_t>(485, 491));
 		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 45));
-		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"], Point<int16_t>(0, 85));
-		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"], Point<int16_t>(-1, 118));
+		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"],
+																   Point<int16_t>(0, 85));
+		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"],
+																	   Point<int16_t>(-1, 118));
 		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < PAGESIZE; i++)
-			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144), Point<int16_t>(50, 90));
+			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144),
+																				 Point<int16_t>(50, 90));
 
 		if (require_pic == 0)
 		{
@@ -146,12 +156,14 @@ namespace ms
 		}
 
 		levelset = Charset(CharSelect["lv"], Charset::Alignment::CENTER);
-		namelabel = OutlinedText(Text::Font::A15B, Text::Alignment::CENTER, Color::Name::WHITE, Color::Name::IRISHCOFFEE);
+		namelabel = OutlinedText(Text::Font::A15B, Text::Alignment::CENTER, Color::Name::WHITE,
+								 Color::Name::IRISHCOFFEE);
 
 		for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
-			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE, Color::Name::TOBACCOBROWN);
+			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE,
+										 Color::Name::TOBACCOBROWN);
 
-		for (CharEntry& entry : characters)
+		for (auto &entry : characters)
 		{
 			charlooks.emplace_back(entry.look);
 			nametags.emplace_back(nametag, Text::Font::A13M, entry.stats.name);
@@ -163,7 +175,8 @@ namespace ms
 		selectedslot_effect[0] = CharSelect["effect"][0];
 		selectedslot_effect[1] = CharSelect["effect"][1];
 
-		chatslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::PORCELAIN, Color::Name::BROWNDERBY);
+		chatslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::PORCELAIN,
+									 Color::Name::BROWNDERBY);
 		chatslotlabel.change_text(get_slot_text());
 
 		update_buttons();
@@ -179,8 +192,8 @@ namespace ms
 		if (Configuration::get().get_auto_login())
 		{
 			SelectCharPicPacket(
-				Configuration::get().get_auto_pic(),
-				Configuration::get().get_auto_cid()
+					Configuration::get().get_auto_pic(),
+					Configuration::get().get_auto_cid()
 			).dispatch();
 		}
 
@@ -201,7 +214,7 @@ namespace ms
 		std::string total = pad_number_with_leading_zero(page_count);
 		std::string current = pad_number_with_leading_zero(selected_page + 1);
 
-		std::list<uint8_t> fliplist = { 2, 3, 6, 7 };
+		std::list<uint8_t> fliplist = {2, 3, 6, 7};
 
 		for (uint8_t i = 0; i < PAGESIZE; i++)
 		{
@@ -216,7 +229,7 @@ namespace ms
 
 				nametags[index].draw(charpos);
 
-				const StatsEntry& character_stats = characters[index].stats;
+				const StatsEntry &character_stats = characters[index].stats;
 
 				if (selectedslot)
 				{
@@ -257,8 +270,7 @@ namespace ms
 
 				if (selectedslot)
 					selectedslot_effect[0].draw(charpos + Point<int16_t>(-5, -298), inter);
-			}
-			else if (i < slots)
+			} else if (i < slots)
 			{
 				Point<int16_t> emptyslotpos = get_character_slot_pos(i, 130, 234);
 
@@ -298,8 +310,7 @@ namespace ms
 				if (timestamp <= 176)
 					charslot_y += 1;
 			}
-		}
-		else
+		} else
 		{
 			if (timestamp <= 176)
 			{
@@ -319,10 +330,10 @@ namespace ms
 		if (!tab_move && tab_move_pos > 0)
 			tab_move_pos -= 1;
 
-		for (CharLook& charlook : charlooks)
+		for (auto &charlook : charlooks)
 			charlook.update(Constants::TIMESTEP);
 
-		for (Animation& effect : selectedslot_effect)
+		for (auto &effect : selectedslot_effect)
 			effect.update();
 
 		emptyslot_effect.update();
@@ -334,18 +345,19 @@ namespace ms
 	void UICharSelect::doubleclick(Point<int16_t> cursorpos)
 	{
 		uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
-		auto& btit = buttons[button_index];
+		auto &btit = buttons[button_index];
 
-		if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
+		if (btit->is_active() && btit->bounds(position).contains(cursorpos) &&
+			btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
 			button_pressed(Buttons::CHARACTER_SELECT);
 	}
 
 	Cursor::State UICharSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
 		Rectangle<int16_t> charslot_bounds = Rectangle<int16_t>(
-			worldpos,
-			worldpos + world_dimensions
-			);
+				worldpos,
+				worldpos + world_dimensions
+		);
 
 		if (charslot_bounds.contains(cursorpos))
 		{
@@ -359,7 +371,7 @@ namespace ms
 
 		Cursor::State ret = clicked ? Cursor::State::CLICKING : Cursor::State::IDLE;
 
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -369,8 +381,7 @@ namespace ms
 
 					btit.second->set_state(Button::State::MOUSEOVER);
 					ret = Cursor::State::CANCLICK;
-				}
-				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -382,15 +393,13 @@ namespace ms
 							btit.second->set_state(Button::State::MOUSEOVER);
 
 						ret = Cursor::State::IDLE;
-					}
-					else
+					} else
 					{
 						if (!tab_active || btit.first != tab_map[tab_index])
 							ret = Cursor::State::CANCLICK;
 					}
 				}
-			}
-			else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				if (!tab_active || btit.first != tab_map[tab_index])
 					btit.second->set_state(Button::State::NORMAL);
@@ -407,25 +416,22 @@ namespace ms
 			if (escape)
 			{
 				button_pressed(Buttons::BACK);
-			}
-			else if (keycode == KeyAction::Id::RETURN)
+			} else if (keycode == KeyAction::Id::RETURN)
 			{
 				if (tab_active)
 				{
 					uint16_t btn_index = tab_map[tab_index];
 
-					auto& btn = buttons[btn_index];
-					Button::State state = btn->get_state();
+					auto &btn = buttons[btn_index];
+					auto state = btn->get_state();
 
 					if (state != Button::State::DISABLED)
 						button_pressed(btn_index);
-				}
-				else
+				} else
 				{
 					button_pressed(Buttons::CHARACTER_SELECT);
 				}
-			}
-			else
+			} else
 			{
 				if (keycode == KeyAction::Id::TAB)
 				{
@@ -437,8 +443,7 @@ namespace ms
 
 						if (!buttons[Buttons::CHARACTER_SELECT]->is_active())
 							tab_index++;
-					}
-					else
+					} else
 					{
 						tab_index++;
 
@@ -452,16 +457,16 @@ namespace ms
 					tab_move = true;
 					tab_move_pos = 0;
 
-					auto& prev_btn = buttons[tab_map[prev_tab]];
-					Button::State prev_state = prev_btn->get_state();
+					auto &prev_btn = buttons[tab_map[prev_tab]];
+					auto prev_state = prev_btn->get_state();
 
 					if (prev_state != Button::State::DISABLED)
 						prev_btn->set_state(Button::State::NORMAL);
 
 					if (tab_active)
 					{
-						auto& btn = buttons[tab_map[tab_index]];
-						Button::State state = btn->get_state();
+						auto &btn = buttons[tab_map[tab_index]];
+						auto state = btn->get_state();
 
 						if (state != Button::State::DISABLED)
 							btn->set_state(Button::State::MOUSEOVER);
@@ -543,7 +548,7 @@ namespace ms
 		return TYPE;
 	}
 
-	void UICharSelect::add_character(CharEntry&& character)
+	void UICharSelect::add_character(CharEntry &&character)
 	{
 		charlooks.emplace_back(character.look);
 		nametags.emplace_back(nametag, Text::Font::A13M, character.stats.name);
@@ -603,15 +608,15 @@ namespace ms
 		}
 	}
 
-	const CharEntry& UICharSelect::get_character(int32_t id)
+	const CharEntry &UICharSelect::get_character(int32_t id)
 	{
-		for (CharEntry& character : characters)
+		for (auto &character : characters)
 			if (character.id == id)
 				return character;
 
 		std::cout << "Invalid character id: [" << id << "]" << std::endl;
 
-		static const CharEntry null_character = { {}, {}, 0 };
+		static const CharEntry null_character = {{}, {}, 0};
 
 		return null_character;
 	}
@@ -768,7 +773,9 @@ namespace ms
 			{
 				std::string url = Configuration::get().get_resetpic();
 
+				#ifdef _WIN32
 				ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+				#endif
 				break;
 			}
 			case Buttons::EDITCHARLIST:
@@ -845,7 +852,8 @@ namespace ms
 		}
 
 		buttons[Buttons::CHARACTER_SELECT]->set_active(character_found);
-		buttons[Buttons::CHARACTER_DELETE]->set_state(character_found ? Button::State::NORMAL : Button::State::DISABLED);
+		buttons[Buttons::CHARACTER_DELETE]->set_state(
+				character_found ? Button::State::NORMAL : Button::State::DISABLED);
 	}
 
 	void UICharSelect::update_selected_character()
@@ -855,7 +863,7 @@ namespace ms
 		charlooks[selected_character].set_stance(Stance::Id::WALK1);
 		nametags[selected_character].set_selected(true);
 
-		const StatsEntry& character_stats = characters[selected_character].stats;
+		const StatsEntry &character_stats = characters[selected_character].stats;
 
 		namelabel.change_text(character_stats.name);
 
@@ -951,15 +959,14 @@ namespace ms
 
 	void UICharSelect::request_pic()
 	{
-		std::function<void(const std::string&)> enterpic = [&](const std::string& entered_pic)
+		std::function<void(const std::string &)> enterpic = [&](const std::string &entered_pic)
 		{
-			std::function<void(const std::string&)> verifypic = [&, entered_pic](const std::string& verify_pic)
+			std::function<void(const std::string &)> verifypic = [&, entered_pic](const std::string &verify_pic)
 			{
 				if (entered_pic == verify_pic)
 				{
 					check_pic(entered_pic);
-				}
-				else
+				} else
 				{
 					std::function<void()> onreturn = [&]()
 					{
@@ -970,15 +977,17 @@ namespace ms
 				}
 			};
 
-			UI::get().emplace<UISoftKey>(verifypic, []() {}, "Please re-enter your new PIC.", Point<int16_t>(24, 0));
+			UI::get().emplace<UISoftKey>(verifypic, []()
+			{}, "Please re-enter your new PIC.", Point<int16_t>(24, 0));
 		};
 
-		UI::get().emplace<UISoftKey>(enterpic, []() {}, "Your new PIC must at least be 6 characters long.", Point<int16_t>(24, 0));
+		UI::get().emplace<UISoftKey>(enterpic, []()
+		{}, "Your new PIC must at least be 6 characters long.", Point<int16_t>(24, 0));
 	}
 
 	void UICharSelect::check_pic(const std::string entered_pic) const
 	{
-		const char* pStr = entered_pic.c_str();
+		const char *pStr = entered_pic.c_str();
 
 		if (pStr == NULL)
 			return;
@@ -992,8 +1001,7 @@ namespace ms
 			if (*pStr == m)
 			{
 				count++;
-			}
-			else
+			} else
 			{
 				count = 0;
 				m = *pStr;
@@ -1011,8 +1019,7 @@ namespace ms
 		if (reptitive)
 		{
 			UI::get().emplace<UILoginNotice>(UILoginNotice::Message::PIC_REPITIVE);
-		}
-		else
+		} else
 		{
 			RegisterPicPacket(
 				characters[selected_character].id,

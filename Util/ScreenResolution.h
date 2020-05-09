@@ -19,8 +19,10 @@
 
 #include "../Configuration.h"
 
+#ifdef _WIN32
 #include <windef.h>
 #include <WinUser.h>
+#endif
 
 namespace ms
 {
@@ -34,8 +36,9 @@ namespace ms
 			// Get a handle to the desktop window
 			const HWND hDesktop = GetDesktopWindow();
 
-			// Get the size of screen to the variable desktop
+			//Get the size of screen to the variable desktop
 			GetWindowRect(hDesktop, &desktop);
+			const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
 			// The top left corner will have coordinates (0, 0) and the bottom right corner will have coordinates (horizontal, vertical)
 			Configuration::get().set_max_width(desktop.right);

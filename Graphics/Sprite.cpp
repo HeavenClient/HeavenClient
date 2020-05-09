@@ -19,10 +19,17 @@
 
 namespace ms
 {
-	Sprite::Sprite(const Animation& a, const DrawArgument& args) : animation(a), stateargs(args) {}
-	Sprite::Sprite(nl::node src, const DrawArgument& args) : animation(src), stateargs(args) {}
-	Sprite::Sprite(nl::node src) : Sprite(src, {}) {}
-	Sprite::Sprite() {}
+	Sprite::Sprite(const Animation &a, const DrawArgument &args) : animation(a), stateargs(args)
+	{}
+
+	Sprite::Sprite(nl::node src, const DrawArgument &args) : animation(src), stateargs(args)
+	{}
+
+	Sprite::Sprite(nl::node src) : Sprite(src, {})
+	{}
+
+	Sprite::Sprite()
+	{}
 
 	void Sprite::draw(Point<int16_t> parentpos, float alpha) const
 	{

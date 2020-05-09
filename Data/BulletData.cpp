@@ -48,12 +48,12 @@ namespace ms
 		return watk;
 	}
 
-	const Animation& BulletData::get_animation() const
+	const Animation &BulletData::get_animation() const
 	{
 		return bullet;
 	}
 
-	const ItemData& BulletData::get_itemdata() const
+	const ItemData &BulletData::get_itemdata() const
 	{
 		return itemdata;
 	}

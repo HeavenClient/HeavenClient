@@ -25,7 +25,9 @@
 
 namespace ms
 {
-	Char::Char(int32_t o, const CharLook& lk, const std::string& name) : MapObject(o), look(lk), look_preview(lk), namelabel(Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name)) {}
+	Char::Char(int32_t o, const CharLook &lk, const std::string &name) : MapObject(o), look(lk), look_preview(lk), namelabel(
+			Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name))
+	{}
 
 	void Char::draw(double viewx, double viewy, float alpha) const
 	{
@@ -38,11 +40,10 @@ namespace ms
 		if (invincible)
 		{
 			float phi = invincible.alpha() * 30;
-			float rgb = 0.9f - 0.5f * std::abs(std::sinf(phi));
+			float rgb = 0.9f - 0.5f * std::abs(std::sin(phi));
 
 			color = Color(rgb, rgb, rgb, 1.0f);
-		}
-		else
+		} else
 		{
 			color = Color::Code::CWHITE;
 		}
@@ -60,7 +61,7 @@ namespace ms
 			look.draw(DrawArgument(absp, scale, scale, opacity), alpha);
 		}
 
-		for (auto& pet : pets)
+		for (auto &pet : pets)
 			if (pet.get_itemid())
 				pet.draw(viewx, viewy, alpha);
 
@@ -70,7 +71,7 @@ namespace ms
 
 		effects.drawabove(absp, alpha);
 
-		for (auto& number : damagenumbers)
+		for (auto &number : damagenumbers)
 			number.draw(viewx, viewy, alpha);
 	}
 
@@ -82,10 +83,10 @@ namespace ms
 	bool Char::update(const Physics& physics, float speed)
 	{
 		damagenumbers.remove_if(
-			[](DamageNumber& number)
-			{
-				return number.update();
-			}
+				[](DamageNumber &number)
+				{
+					return number.update();
+				}
 		);
 
 		effects.update();
@@ -93,24 +94,24 @@ namespace ms
 		invincible.update();
 		ironbody.update();
 
-		for (auto& pet : pets)
+		for (auto &pet : pets)
 		{
 			if (pet.get_itemid())
 			{
 				switch (state)
 				{
-				case State::LADDER:
-				case State::ROPE:
-					pet.set_stance(PetLook::Stance::HANG);
-					break;
-				case State::SWIM:
-					pet.set_stance(PetLook::Stance::FLY);
-					break;
-				default:
-					if (pet.get_stance() == PetLook::Stance::HANG || pet.get_stance() == PetLook::Stance::FLY)
-						pet.set_stance(PetLook::Stance::STAND);
+					case State::LADDER:
+					case State::ROPE:
+						pet.set_stance(PetLook::Stance::HANG);
+						break;
+					case State::SWIM:
+						pet.set_stance(PetLook::Stance::FLY);
+						break;
+					default:
+						if (pet.get_stance() == PetLook::Stance::HANG || pet.get_stance() == PetLook::Stance::FLY)
+							pet.set_stance(PetLook::Stance::STAND);
 
-					break;
+						break;
 				}
 
 				pet.update(physics, get_position());
@@ -134,13 +135,13 @@ namespace ms
 
 		switch (state)
 		{
-		case State::WALK:
-			return static_cast<float>(std::abs(phobj.hspeed));
-		case State::LADDER:
-		case State::ROPE:
-			return static_cast<float>(std::abs(phobj.vspeed));
-		default:
-			return 1.0f;
+			case State::WALK:
+				return static_cast<float>(std::abs(phobj.hspeed));
+			case State::LADDER:
+			case State::ROPE:
+				return static_cast<float>(std::abs(phobj.vspeed));
+			default:
+				return 1.0f;
 		}
 	}
 
@@ -160,7 +161,7 @@ namespace ms
 		return static_cast<uint16_t>(delay / fspeed);
 	}
 
-	int8_t Char::update(const Physics& physics)
+	int8_t Char::update(const Physics &physics)
 	{
 		update(physics, 1.0f);
 
@@ -200,7 +201,7 @@ namespace ms
 		invincible.set_for(2000);
 	}
 
-	void Char::speak(const std::string& line)
+	void Char::speak(const std::string &line)
 	{
 		chatballoon.change_text(line);
 	}
@@ -209,15 +210,15 @@ namespace ms
 	{
 		switch (stat)
 		{
-		case MapleStat::Id::SKIN:
-			look.set_body(id);
-			break;
-		case MapleStat::Id::FACE:
-			look.set_face(id);
-			break;
-		case MapleStat::Id::HAIR:
-			look.set_hair(id);
-			break;
+			case MapleStat::Id::SKIN:
+				look.set_body(id);
+				break;
+			case MapleStat::Id::FACE:
+				look.set_face(id);
+				break;
+			case MapleStat::Id::HAIR:
+				look.set_hair(id);
+				break;
 		}
 	}
 
@@ -228,8 +229,7 @@ namespace ms
 			set_direction(false);
 
 			statebyte -= 1;
-		}
-		else
+		} else
 		{
 			set_direction(true);
 		}
@@ -244,7 +244,7 @@ namespace ms
 		look.set_expression(expression);
 	}
 
-	void Char::attack(const std::string& action)
+	void Char::attack(const std::string &action)
 	{
 		look.set_action(action);
 
@@ -275,7 +275,7 @@ namespace ms
 		if (weapon_id <= 0)
 			return;
 
-		const WeaponData& weapon = WeaponData::get(weapon_id);
+		const WeaponData &weapon = WeaponData::get(weapon_id);
 
 		std::string stance_name = Stance::names[look.get_stance()];
 		int16_t weapon_level = weapon.get_equipdata().get_reqstat(MapleStat::Id::LEVEL);
@@ -284,7 +284,7 @@ namespace ms
 		afterimage = Afterimage(skill_id, ai_name, stance_name, weapon_level);
 	}
 
-	const Afterimage& Char::get_afterimage() const
+	const Afterimage &Char::get_afterimage() const
 	{
 		return afterimage;
 	}
@@ -303,7 +303,8 @@ namespace ms
 		look.set_stance(stance);
 	}
 
-	void Char::add_pet(uint8_t index, int32_t iid, const std::string& name, int32_t uniqueid, Point<int16_t> pos, uint8_t stance, int32_t fhid)
+	void Char::add_pet(uint8_t index, int32_t iid, const std::string &name, int32_t uniqueid, Point<int16_t> pos,
+					   uint8_t stance, int32_t fhid)
 	{
 		if (index > 2)
 			return;
@@ -364,17 +365,17 @@ namespace ms
 		return namelabel.get_text();
 	}
 
-	CharLook& Char::get_look()
+	CharLook &Char::get_look()
 	{
 		return look;
 	}
 
-	const CharLook& Char::get_look() const
+	const CharLook &Char::get_look() const
 	{
 		return look;
 	}
 
-	PhysicsObject& Char::get_phobj()
+	PhysicsObject &Char::get_phobj()
 	{
 		return phobj;
 	}
