@@ -18,7 +18,7 @@
 #pragma once
 
 // USE_ASIO : Use asio for networking, if not defined use Winsock.
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 #define USE_ASIO
 #endif
 

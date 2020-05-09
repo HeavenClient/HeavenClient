@@ -184,7 +184,8 @@ namespace ms
 		GetCurrentDirectoryA(256, buf);
 		strcat_s(buf, sizeof(buf), "\\Icon.png");
 #else
-		buf = GetCurrentWorkingDir() + "/Icon.png";
+		std::string icon_path = GetCurrentWorkingDir() + "/Icon.png";
+		strcpy(buf, icon_path.c_str());
 #endif
 
 		GLFWimage images[1];

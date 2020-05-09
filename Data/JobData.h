@@ -20,6 +20,8 @@
 #include "../Graphics/Texture.h"
 #include "../Template/Cache.h"
 
+#include <vector>
+
 namespace ms
 {
 	// Contains information about a job

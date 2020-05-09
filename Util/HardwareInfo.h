@@ -124,7 +124,7 @@ namespace ms
 			free(hwid);
 			free(macs);
 			#else
-			Configuration::get().set_hwid("001C429F65C6", "2469FF7");
+			Configuration::get().set_hwid("001C429F65C6", "2469FF78");
 			Configuration::get().set_macs("11-22-33-44-55-66");
 			#endif
 		}
