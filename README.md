@@ -7,7 +7,6 @@ HeavenClient is a custom, made-from-scratch game client for Maplestory v83.
 - The client is currently compatible with version 83 servers.
 - The client has only been tested with [HeavenMS](https://github.com/ronancpl/HeavenMS).
 - **[Switch](https://github.com/lain3d/HeavenClientNX)**
-- **[Linux](https://github.com/ryantpayton/HeavenClient/tree/linux)**
 
 ## Configuration
 
@@ -21,14 +20,33 @@ The build can be configured by editing the **MapleStory.h** file. The following 
 The default settings can be configured by editing the **Configuration.h** file. These are also generated after a game session in a file called **Settings**. These can be altered in the same way as **Configuration.h**, although, these do not persist if you delete the file, unlike **Configuration.h**.
 
 ## Building
+### Windows
+1. Open **MapleStory.sln** in Visual Studio 2017 CE
+2. Make sure to use **Windows SDK Version: 8.1** and **Platform Toolset: v140** (If you don't have these, download them)
+   * [Windows 8.1 SDK]
+3. Press **Build** > **Build Solution** or **Ctrl + Shift + B**
+4. After a successful build, you can now run the program by pressing **Debug** > **Start Debugging** or **F5**
+5. Make sure all nx files are present in the parent folder. To convert wz files to nx you can use the [NoLifeWzToNx] project.
+   - Extract the zip
+   - Place your wz files in the **files** folder
+   - Run **start.bat**
+   - See **Required Files** for a list of required nx files
 
-*After cloning you need to check out the linux branch! To do so run ```git checkout linux``` in your HeavenClient directory.*
-
+### Linux
 1. Run ```./build-deps.sh```. We try to build each dependency from source -- if any dependencies fail to build, you could try and find the corresponding package for your linux distro if it exists.
 2. ```mkdir build```
 3. ```cd build```
 4. ```cmake ..```
 5. ```make -j$CORES``` where $CORES is your number of CPU cores
+
+### Mac
+
+1. You must have GCC from brew! ```brew install gcc```
+2. Run ```./build-deps.mac.sh```. We try to build each dependency from source -- if any dependencies fail to build, you could try and find the corresponding package for your linux distro if it exists.
+3. ```mkdir build```
+4. ```cd build```
+5. Tell cmake to use compiler from brew by ``` cmake .. -DCMAKE_C_COMPILER=/usr/local/bin/gcc```
+6. ```make -j$CORES``` where $CORES is your number of CPU cores
 
 This will always be the option with the most performance, but if you are using Mac / are having issues, try out the [Vagrant](#vagrant-setup) or [Docker](#docker-setup---web-vnc) setups. 
 
@@ -44,7 +62,7 @@ This will always be the option with the most performance, but if you are using M
 
 There is an archive of all the NX files listed above available for download [here](https://drive.google.com/file/d/14mujxsm0e4rM0yt029wjabW92dnRX_O7) (Latest: v210).
 
-# Dependencies
+# Dependencies for Linux/Mac
 - Nx library:
 [NoLifeNX](https://github.com/ryantpayton/NoLifeNx)
 
