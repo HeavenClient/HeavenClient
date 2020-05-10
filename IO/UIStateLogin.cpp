@@ -218,7 +218,6 @@ namespace ms
 
 		return nullptr;
 	}
-	// TODO: (rich) fix
 
 	UIElement *UIStateLogin::get_front(Point<int16_t> pos)
 	{
