@@ -18,14 +18,10 @@
 #pragma once
 
 #if defined(__linux__) || defined(__APPLE__)
-
 #include <glad/glad.h>
-
 #else
 #define GLEW_STATIC
 #include <glew.h>
-#else
-#include <glad/glad.h>
 #endif
 
 #include <array>
