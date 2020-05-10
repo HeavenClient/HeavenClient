@@ -55,7 +55,7 @@ namespace ms
 		burning_character = true;
 
 		std::string version_text = Configuration::get().get_version();
-		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
+		version = Text(Text::Font::A11B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
 		pagepos = Point<int16_t>(247, 462);
 		worldpos = Point<int16_t>(586, 46);
@@ -111,15 +111,18 @@ namespace ms
 		nl::node map = nl::nx::map001["Back"]["login.img"];
 		nl::node ani = map["ani"];
 
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
+
 		sprites.emplace_back(map["back"]["13"], Point<int16_t>(392, 297));
 		sprites.emplace_back(ani["17"], Point<int16_t>(151, 283));
 		sprites.emplace_back(ani["18"], Point<int16_t>(365, 252));
 		sprites.emplace_back(ani["19"], Point<int16_t>(191, 208));
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["step"]["2"], Point<int16_t>(40, 0));
 
 		burning_notice = Common["Burning"]["BurningNotice"];
-		burning_count = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::WHITE, "1");
+		burning_count = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::CREAM, "1");
 
 		charinfo = CharSelect["charInfo"];
 		charslot = CharSelect["charSlot"]["0"];
@@ -138,11 +141,9 @@ namespace ms
 		buttons[Buttons::CHARACTER_DELETE] = std::make_unique<MapleButton>(CharSelect["BtDelete"], character_del_pos);
 		buttons[Buttons::PAGELEFT] = std::make_unique<MapleButton>(CharSelect["pageL"], Point<int16_t>(98, 491));
 		buttons[Buttons::PAGERIGHT] = std::make_unique<MapleButton>(CharSelect["pageR"], Point<int16_t>(485, 491));
-		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 45));
-		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"],
-																   Point<int16_t>(0, 85));
-		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"],
-																	   Point<int16_t>(-1, 118));
+		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 80));
+		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"], Point<int16_t>(0, 115));
+		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"], Point<int16_t>(-1, 47));
 		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < PAGESIZE; i++)
@@ -156,8 +157,7 @@ namespace ms
 		}
 
 		levelset = Charset(CharSelect["lv"], Charset::Alignment::CENTER);
-		namelabel = OutlinedText(Text::Font::A15B, Text::Alignment::CENTER, Color::Name::WHITE,
-								 Color::Name::IRISHCOFFEE);
+		namelabel = OutlinedText(Text::Font::A14B, Text::Alignment::CENTER, Color::Name::WHITE, Color::Name::IRISHCOFFEE);
 
 		for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
 			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE,
@@ -166,7 +166,7 @@ namespace ms
 		for (auto &entry : characters)
 		{
 			charlooks.emplace_back(entry.look);
-			nametags.emplace_back(nametag, Text::Font::A13M, entry.stats.name);
+			nametags.emplace_back(nametag, Text::Font::A12M, entry.stats.name);
 		}
 
 		emptyslot_effect = CharSelect["character"]["0"];
@@ -175,9 +175,8 @@ namespace ms
 		selectedslot_effect[0] = CharSelect["effect"][0];
 		selectedslot_effect[1] = CharSelect["effect"][1];
 
-		chatslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::PORCELAIN,
-									 Color::Name::BROWNDERBY);
-		chatslotlabel.change_text(get_slot_text());
+		charslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, Color::Name::JAMBALAYA);
+		charslotlabel.change_text(get_slot_text());
 
 		update_buttons();
 
@@ -204,9 +203,10 @@ namespace ms
 	{
 		UIElement::draw_sprites(inter);
 
-		version.draw(position + Point<int16_t>(707, 1));
+		version.draw(position + Point<int16_t>(707, 4));
+
 		charslot.draw(position + Point<int16_t>(589, 106 - charslot_y));
-		chatslotlabel.draw(position + Point<int16_t>(700, 110 - charslot_y));
+		charslotlabel.draw(position + Point<int16_t>(702, 111 - charslot_y));
 
 		for (Sprite sprite : world_sprites)
 			sprite.draw(position, inter);
@@ -224,10 +224,10 @@ namespace ms
 
 			if (index < characters_count)
 			{
-				Point<int16_t> charpos = get_character_slot_pos(i, 135, 234);
+				Point<int16_t> charpos = get_character_slot_pos(i, 130, 234);
 				DrawArgument chararg = DrawArgument(charpos, flip_character);
 
-				nametags[index].draw(charpos);
+				nametags[index].draw(charpos + Point<int16_t>(2, 1));
 
 				const StatsEntry &character_stats = characters[index].stats;
 
@@ -236,7 +236,7 @@ namespace ms
 					selectedslot_effect[1].draw(charpos + Point<int16_t>(-5, 16), inter);
 
 					int8_t lvy = -115;
-					Point<int16_t> pos_adj = Point<int16_t>(668, 365);
+					Point<int16_t> pos_adj = Point<int16_t>(662, 365);
 
 					charinfo.draw(position + charinfopos);
 
@@ -244,7 +244,7 @@ namespace ms
 					int16_t lvx = levelset.draw(levelstr, pos_adj + Point<int16_t>(12, lvy));
 					levelset.draw('l', pos_adj + Point<int16_t>(1 - lvx / 2, lvy));
 
-					namelabel.draw(pos_adj + Point<int16_t>(8, -106));
+					namelabel.draw(pos_adj + Point<int16_t>(10, -103));
 
 					for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
 					{
@@ -573,7 +573,7 @@ namespace ms
 
 		makeactive();
 
-		chatslotlabel.change_text(get_slot_text());
+		charslotlabel.change_text(get_slot_text());
 	}
 
 	void UICharSelect::remove_character(int32_t id)
@@ -688,7 +688,7 @@ namespace ms
 					{
 						std::function<void()> onok = [&]()
 						{
-							chatslotlabel.change_text(get_slot_text());
+							charslotlabel.change_text(get_slot_text());
 						};
 
 						UI::get().emplace<UILoginNotice>(UILoginNotice::Message::CHAR_DEL_FAIL_NO_PIC, onok);
@@ -698,7 +698,7 @@ namespace ms
 					{
 						std::function<void()> oncancel = [&]()
 						{
-							chatslotlabel.change_text(get_slot_text());
+							charslotlabel.change_text(get_slot_text());
 						};
 
 						std::function<void()> onok = [&, id, oncancel]()
@@ -706,7 +706,7 @@ namespace ms
 							std::function<void(const std::string&)> onok = [&, id](const std::string& pic)
 							{
 								DeleteCharPicPacket(pic, id).dispatch();
-								chatslotlabel.change_text(get_slot_text());
+								charslotlabel.change_text(get_slot_text());
 							};
 
 							UI::get().emplace<UISoftKey>(onok, oncancel);
@@ -725,7 +725,7 @@ namespace ms
 					case 2:
 					{
 						DeleteCharPacket(id).dispatch();
-						chatslotlabel.change_text(get_slot_text());
+						charslotlabel.change_text(get_slot_text());
 						break;
 					}
 				}
@@ -916,15 +916,15 @@ namespace ms
 		switch (index)
 		{
 			case InfoLabel::JOB:
-				return Point<int16_t>(66, -74);
+				return Point<int16_t>(73, -71);
 			case InfoLabel::STR:
-				return Point<int16_t>(-6, -50);
+				return Point<int16_t>(1, -47);
 			case InfoLabel::DEX:
-				return Point<int16_t>(-6, -27);
+				return Point<int16_t>(1, -24);
 			case InfoLabel::INT:
-				return Point<int16_t>(65, -50);
+				return Point<int16_t>(72, -47);
 			case InfoLabel::LUK:
-				return Point<int16_t>(65, -27);
+				return Point<int16_t>(72, -24);
 			case InfoLabel::NUM_LABELS:
 				break;
 			default:
@@ -965,8 +965,12 @@ namespace ms
 			{
 				if (entered_pic == verify_pic)
 				{
-					check_pic(entered_pic);
-				} else
+					RegisterPicPacket(
+						characters[selected_character].id,
+						entered_pic
+					).dispatch();
+				}
+				else
 				{
 					std::function<void()> onreturn = [&]()
 					{
@@ -983,48 +987,5 @@ namespace ms
 
 		UI::get().emplace<UISoftKey>(enterpic, []()
 		{}, "Your new PIC must at least be 6 characters long.", Point<int16_t>(24, 0));
-	}
-
-	void UICharSelect::check_pic(const std::string entered_pic) const
-	{
-		const char *pStr = entered_pic.c_str();
-
-		if (pStr == NULL)
-			return;
-
-		int count = 0;
-		char m = ' ';
-		bool reptitive = false;
-
-		while (*pStr)
-		{
-			if (*pStr == m)
-			{
-				count++;
-			} else
-			{
-				count = 0;
-				m = *pStr;
-			}
-
-			if (count > 2)
-			{
-				reptitive = true;
-				break;
-			}
-
-			pStr++;
-		}
-
-		if (reptitive)
-		{
-			UI::get().emplace<UILoginNotice>(UILoginNotice::Message::PIC_REPITIVE);
-		} else
-		{
-			RegisterPicPacket(
-				characters[selected_character].id,
-				entered_pic
-			).dispatch();
-		}
 	}
 }

@@ -41,11 +41,13 @@ namespace ms
 	UIRaceSelect::UIRaceSelect() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600))
 	{
 		std::string version_text = Configuration::get().get_version();
-		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
+		version = Text(Text::Font::A11B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
 		nl::node Login = nl::nx::ui["Login.img"];
 		nl::node Common = Login["Common"];
 		nl::node RaceSelect = Login["RaceSelect_new"];
+
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
 
 		Point<int16_t> make_pos = RaceSelect["make"]["pos"];
 		Point<int16_t> make_posZero = RaceSelect["make"]["posZero"];
@@ -92,6 +94,7 @@ namespace ms
 		class_isdisabled[Classes::CYGNUSKNIGHTS] = false;
 		class_isdisabled[Classes::ARAN] = false;
 
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
 		back = RaceSelect["Back"]["1"]["0"];
@@ -151,7 +154,7 @@ namespace ms
 
 		UIElement::draw_sprites(inter);
 
-		version.draw(position + Point<int16_t>(707, 1));
+		version.draw(position + Point<int16_t>(707, 4));
 
 		if (selected_class == Classes::KANNA || selected_class == Classes::CHASE)
 		{
@@ -466,7 +469,9 @@ namespace ms
 			}
 			else if (class_index[previous] == Classes::KINESIS)
 			{
-				Music("BgmUI.img/Title").play();
+				std::string LoginMusicNewtro = Configuration::get().get_login_music_newtro();
+
+				Music(LoginMusicNewtro).play();
 			}
 		} else
 		{

@@ -29,14 +29,12 @@ namespace ms
 	class Texture
 	{
 	public:
+		Texture() {};
 		Texture(nl::node source);
+		~Texture() {};
 
-		Texture();
-
-		~Texture();
-
-		void draw(const DrawArgument &args) const;
-
+		void draw(const DrawArgument& args) const;
+		void draw(const DrawArgument& args, const Range<int16_t>& vertical) const;
 		void shift(Point<int16_t> amount);
 
 		bool is_valid() const;
@@ -50,8 +48,6 @@ namespace ms
 		Point<int16_t> get_dimensions() const;
 
 	private:
-		nl::node find_child(nl::node source, std::string link);
-
 		nl::bitmap bitmap;
 		Point<int16_t> origin;
 		Point<int16_t> dimensions;

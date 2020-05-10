@@ -32,11 +32,13 @@ namespace ms
 	UIRegion::UIRegion() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600))
 	{
 		nl::node Common = nl::nx::ui["Login.img"]["Common"];
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
 		nl::node Gateway = nl::nx::ui["Gateway.img"]["WorldSelect"];
 		nl::node na = Gateway["BtButton0"];
 		nl::node eu = Gateway["BtButton1"];
 
 		sprites.emplace_back(Gateway["backgrnd2"]);
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
 		int16_t pos_y = 84;
@@ -97,10 +99,14 @@ namespace ms
 				break;
 			}
 			case Buttons::EXIT:
+			{
 				UI::get().quit();
 				break;
+			}
 			default:
+			{
 				break;
+			}
 		}
 
 		return Button::State::NORMAL;

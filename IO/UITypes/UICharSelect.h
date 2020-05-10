@@ -80,8 +80,6 @@ namespace ms
 
 		void request_pic();
 
-		void check_pic(const std::string entered_pic) const;
-
 		static constexpr uint8_t PAGESIZE = 8;
 
 		enum Buttons : uint16_t
@@ -134,7 +132,7 @@ namespace ms
 		Animation emptyslot_effect;
 		Texture emptyslot;
 		Animation selectedslot_effect[2];
-		OutlinedText chatslotlabel;
+		OutlinedText charslotlabel;
 		int16_t timestamp;
 		uint16_t charslot_y;
 		bool show_timestamp;

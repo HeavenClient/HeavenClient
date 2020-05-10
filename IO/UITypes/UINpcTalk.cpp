@@ -34,8 +34,7 @@ namespace ms
 	UINpcTalk::UINpcTalk() : offset(0), unitrows(0), rowmax(0), show_slider(false), draw_text(false),
 							 formatted_text(""), formatted_text_pos(0), timestep(0)
 	{
-		nl::node UIWindow2 = nl::nx::ui["UIWindow2.img"];
-		nl::node UtilDlgEx = UIWindow2["UtilDlgEx"];
+		nl::node UtilDlgEx = nl::nx::ui["UIWindow2.img"]["UtilDlgEx"];
 
 		top = UtilDlgEx["t"];
 		fill = UtilDlgEx["c"];
@@ -48,13 +47,7 @@ namespace ms
 		buttons[Buttons::CLOSE] = std::make_unique<MapleButton>(UtilDlgEx["BtClose"]);
 		buttons[Buttons::MYLEVEL] = std::make_unique<MapleButton>(UtilDlgEx["BtMyLevel"]);
 		buttons[Buttons::NEXT] = std::make_unique<MapleButton>(UtilDlgEx["BtNext"]);
-
-		// TODO: Replace when _inlink is fixed
-		//buttons[Buttons::NO] = std::make_unique<MapleButton>(UtilDlgEx["BtNo"]);
-
-		nl::node Quest = UIWindow2["Quest"];
-
-		buttons[Buttons::NO] = std::make_unique<MapleButton>(Quest["BtNo"]);
+		buttons[Buttons::NO] = std::make_unique<MapleButton>(UtilDlgEx["BtNo"]);
 		buttons[Buttons::OK] = std::make_unique<MapleButton>(UtilDlgEx["BtOK"]);
 		buttons[Buttons::PREV] = std::make_unique<MapleButton>(UtilDlgEx["BtPrev"]);
 		buttons[Buttons::QAFTER] = std::make_unique<MapleButton>(UtilDlgEx["BtQAfter"]);
@@ -150,6 +143,7 @@ namespace ms
 		{
 			case TalkType::SENDNEXT:
 			case TalkType::SENDOK:
+			{
 				// Type = 0
 				switch (buttonid)
 				{
@@ -161,8 +155,11 @@ namespace ms
 						NpcTalkMorePacket(type, 1).dispatch();
 						break;
 				}
+
 				break;
+			}
 			case TalkType::SENDNEXTPREV:
+			{
 				// Type = 0
 				switch (buttonid)
 				{
@@ -176,8 +173,11 @@ namespace ms
 						NpcTalkMorePacket(type, 0).dispatch();
 						break;
 				}
+
 				break;
+			}
 			case TalkType::SENDYESNO:
+			{
 				// Type = 1
 				switch (buttonid)
 				{
@@ -191,8 +191,11 @@ namespace ms
 						NpcTalkMorePacket(type, 1).dispatch();
 						break;
 				}
+
 				break;
+			}
 			case TalkType::SENDACCEPTDECLINE:
+			{
 				// Type = 1
 				switch (buttonid)
 				{
@@ -206,11 +209,16 @@ namespace ms
 						NpcTalkMorePacket(type, 1).dispatch();
 						break;
 				}
+
 				break;
+			}
 			case TalkType::SENDGETTEXT:
+			{
 				// TODO: What is this?
 				break;
+			}
 			case TalkType::SENDGETNUMBER:
+			{
 				// Type = 3
 				switch (buttonid)
 				{
@@ -221,8 +229,11 @@ namespace ms
 						NpcTalkMorePacket(type, 1).dispatch();
 						break;
 				}
+
 				break;
+			}
 			case TalkType::SENDSIMPLE:
+			{
 				// Type = 4
 				switch (buttonid)
 				{
@@ -234,8 +245,11 @@ namespace ms
 						break;
 				}
 				break;
+			}
 			default:
+			{
 				break;
+			}
 		}
 
 		return Button::State::NORMAL;
@@ -398,9 +412,11 @@ namespace ms
 		switch (type)
 		{
 			case TalkType::SENDOK:
+			{
 				buttons[Buttons::OK]->set_position(Point<int16_t>(471, y_cord));
 				buttons[Buttons::OK]->set_active(true);
 				break;
+			}
 			case TalkType::SENDYESNO:
 			{
 				Point<int16_t> yes_position = Point<int16_t>(389, y_cord);
@@ -419,7 +435,9 @@ namespace ms
 			case TalkType::SENDGETNUMBER:
 			case TalkType::SENDSIMPLE:
 			default:
+			{
 				break;
+			}
 		}
 
 		position = Point<int16_t>(400 - top.width() / 2, 240 - height / 2);

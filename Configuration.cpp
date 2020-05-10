@@ -211,6 +211,21 @@ namespace ms
 		return VERSION;
 	}
 
+	std::string Configuration::get_login_music() const
+	{
+		return LoginMusic;
+	}
+
+	std::string Configuration::get_login_music_sea() const
+	{
+		return LoginMusicSEA;
+	}
+
+	std::string Configuration::get_login_music_newtro() const
+	{
+		return LoginMusicNewtro;
+	}
+
 	std::string Configuration::get_joinlink() const
 	{
 		return JOINLINK;

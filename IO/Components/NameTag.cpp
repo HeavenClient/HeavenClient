@@ -27,6 +27,7 @@ namespace ms
 		textures[false].push_back(src["0"]["0"]);
 		textures[false].push_back(src["0"]["1"]);
 		textures[false].push_back(src["0"]["2"]);
+
 		textures[true].push_back(src["1"]["0"]);
 		textures[true].push_back(src["1"]["1"]);
 		textures[true].push_back(src["1"]["2"]);
@@ -36,12 +37,14 @@ namespace ms
 
 	void NameTag::draw(Point<int16_t> position) const
 	{
-		position = position + Point<int16_t>(1, 2);
+		position.shift(Point<int16_t>(1, 2));
 
 		auto &tag = textures[selected];
 
 		int16_t width = name.width();
-		auto startpos = position - Point<int16_t>(6 + width / 2, -1);
+
+		// If ever changing startpos, confirm with UICharSelect.cpp
+		Point<int16_t> startpos = position - Point<int16_t>(6 + width / 2, 0);
 
 		tag[0].draw(startpos);
 		tag[1].draw(DrawArgument(startpos + Point<int16_t>(6, 0), Point<int16_t>(width, 0)));

@@ -168,22 +168,22 @@ namespace ms
 		buttons[Buttons::BT_BOSS_GO]->set_active(false);
 
 		// Blacklist tab
-		nl::node Blacklist = Main["Blacklist"];
+		nl::node BlackList = Main["BlackList"];
 
-		blacklist_title = Blacklist["base"];
+		blacklist_title = BlackList["base"];
 
-		for (size_t i = 0; i <= 3; i++)
+		for (size_t i = 0; i < 3; i++)
 			blacklist_grid[i] = UserList["Sheet6"][i];
 
 		blacklist_name = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::BLACK, "none", 0);
 
-		nl::node blacklist_taben = Blacklist["Tab"]["enabled"];
-		nl::node blacklist_tabdis = Blacklist["Tab"]["disabled"];
+		nl::node blacklist_taben = BlackList["Tab"]["enabled"];
+		nl::node blacklist_tabdis = BlackList["Tab"]["disabled"];
 
-		buttons[Buttons::BT_BLACKLIST_ADD] = std::make_unique<MapleButton>(Blacklist["BtAdd"]);
-		buttons[Buttons::BT_BLACKLIST_DELETE] = std::make_unique<MapleButton>(Blacklist["BtDelete"]);
-		buttons[Buttons::BT_TAB_BLACKLIST_INDIVIDUAL] = std::make_unique<MapleButton>(Blacklist["TapShowIndividual"]);
-		buttons[Buttons::BT_TAB_BLACKLIST_GUILD] = std::make_unique<MapleButton>(Blacklist["TapShowGuild"]);
+		buttons[Buttons::BT_BLACKLIST_ADD] = std::make_unique<MapleButton>(BlackList["BtAdd"]);
+		buttons[Buttons::BT_BLACKLIST_DELETE] = std::make_unique<MapleButton>(BlackList["BtDelete"]);
+		buttons[Buttons::BT_TAB_BLACKLIST_INDIVIDUAL] = std::make_unique<MapleButton>(BlackList["TapShowIndividual"]);
+		buttons[Buttons::BT_TAB_BLACKLIST_GUILD] = std::make_unique<MapleButton>(BlackList["TapShowGuild"]);
 		buttons[Buttons::BT_BLACKLIST_ADD]->set_active(false);
 		buttons[Buttons::BT_BLACKLIST_DELETE]->set_active(false);
 		buttons[Buttons::BT_TAB_BLACKLIST_INDIVIDUAL]->set_active(false);

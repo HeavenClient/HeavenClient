@@ -212,6 +212,7 @@ namespace ms
 		addfont(FONT_BOLD_STR, Text::Font::A12B, 0, 12);
 		addfont(FONT_NORMAL_STR, Text::Font::A13M, 0, 13);
 		addfont(FONT_BOLD_STR, Text::Font::A13B, 0, 13);
+		addfont(FONT_BOLD_STR, Text::Font::A14B, 0, 14);
 		addfont(FONT_BOLD_STR, Text::Font::A15B, 0, 15);
 		addfont(FONT_NORMAL_STR, Text::Font::A18M, 0, 18);
 
@@ -489,7 +490,7 @@ namespace ms
 		).first->second;
 	}
 
-	void GraphicsGL::draw(const nl::bitmap &bmp, const Rectangle<int16_t> &rect, const Color &color, float angle)
+	void GraphicsGL::draw(const nl::bitmap& bmp, const Rectangle<int16_t>& rect, const Range<int16_t>& vertical, const Color& color, float angle)
 	{
 		if (locked)
 			return;
@@ -500,7 +501,12 @@ namespace ms
 		if (!rect.overlaps(SCREEN))
 			return;
 
-		quads.emplace_back(rect.left(), rect.right(), rect.top(), rect.bottom(), getoffset(bmp), color, angle);
+		Offset offset = getoffset(bmp);
+
+		offset.top += vertical.first();
+		offset.bottom -= vertical.second();
+
+		quads.emplace_back(rect.left(), rect.right(), rect.top() + vertical.first(), rect.bottom() - vertical.second(), offset, color, angle);
 	}
 
 	Text::Layout
@@ -562,6 +568,7 @@ namespace ms
 			switch (text[first])
 			{
 				case '\\':
+				{
 					if (first + 1 < last)
 					{
 						switch (text[first + 1])
@@ -579,7 +586,9 @@ namespace ms
 
 					skip++;
 					break;
+				}
 				case '#':
+				{
 					if (first + 1 < last)
 					{
 						switch (text[first + 1])
@@ -603,6 +612,7 @@ namespace ms
 
 					skip++;
 					break;
+				}
 			}
 		}
 
@@ -728,8 +738,9 @@ namespace ms
 		switch (background)
 		{
 			case Text::Background::NAMETAG:
+			{
 				// If ever changing code in here confirm placements with map 10000
-				for (const Text::Layout::Line &line : layout)
+				for (const Text::Layout::Line& line : layout)
 				{
 					GLshort left = x + line.position.x() - 1;
 					GLshort right = left + w + 3;
@@ -743,6 +754,7 @@ namespace ms
 				}
 
 				break;
+			}
 		}
 
 		for (const Text::Layout::Line &line : layout)

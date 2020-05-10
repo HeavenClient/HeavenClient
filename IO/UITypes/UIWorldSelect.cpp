@@ -43,12 +43,12 @@ namespace ms
 		recommended_worldcount = 0;
 		recommended_worldid = 0;
 		world_selected = false;
-		use_recommended = false;
+		use_recommended = true;
 		show_recommended = false;
 		draw_chatballoon = true;
 
 		std::string version_text = Configuration::get().get_version();
-		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
+		version = Text(Text::Font::A11B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
 		recommended_message = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::JAMBALAYA, "", 100, true, 5);
 
@@ -65,12 +65,13 @@ namespace ms
 		worldsrc = worldselect["BtWorld"]["release"];
 		channelsrc = worldselect["BtChannel"];
 		nl::node common = login["Common"];
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
 
 		set_region(regionid);
 
 		sprites.emplace_back(obj["WorldSelect"]["default"][0], background_pos);
 
-		std::vector<std::string> backgrounds = {"cernium"};
+		std::vector<std::string> backgrounds = { "16thNewtro" };
 		auto backgrounds_size = backgrounds.size();
 
 		if (backgrounds_size > 0)
@@ -87,6 +88,7 @@ namespace ms
 			}
 		}
 
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(common["frame"], Point<int16_t>(400, 300));
 		sprites.emplace_back(common["step"]["1"], Point<int16_t>(40, 0));
 
@@ -171,10 +173,10 @@ namespace ms
 
 		UIElement::draw_buttons(alpha);
 
-		version.draw(position + Point<int16_t>(707, 1));
+		version.draw(position + Point<int16_t>(707, 4));
 
 		if (draw_chatballoon)
-			chatballoon.draw(position + Point<int16_t>(503, 255));
+			chatballoon.draw(position + Point<int16_t>(501, 105));
 	}
 
 	Cursor::State UIWorldSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)

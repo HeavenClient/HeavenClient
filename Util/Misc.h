@@ -60,6 +60,9 @@ namespace ms
 
 		// Cut off a string at a specified length with an ellipsis
 		void format_with_ellipsis(Text& input, size_t length);
+
+		// Convert a string to lowercase letters
+		std::string tolower(std::string str);
 	};
 
 	namespace bytecode

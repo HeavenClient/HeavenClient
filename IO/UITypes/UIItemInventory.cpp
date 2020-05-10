@@ -41,10 +41,9 @@ namespace ms
 	{
 		nl::node Item = nl::nx::ui["UIWindow2.img"]["Item"];
 
-		// TODO: Change these to production
-		backgrnd = Item["backgrnd"];
+		backgrnd = Item["productionBackgrnd"];
 		backgrnd2 = Item["productionBackgrnd2"];
-		backgrnd3 = Item["backgrnd3"];
+		backgrnd3 = Item["productionBackgrnd3"];
 
 		full_backgrnd = Item["FullBackgrnd"];
 		full_backgrnd2 = Item["FullBackgrnd2"];
@@ -263,39 +262,62 @@ namespace ms
 		switch (buttonid)
 		{
 			case Buttons::BT_CLOSE:
+			{
 				toggle_active();
+
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_TAB_EQUIP:
+			{
 				tab = InventoryType::Id::EQUIP;
 				break;
+			}
 			case Buttons::BT_TAB_USE:
+			{
 				tab = InventoryType::Id::USE;
 				break;
+			}
 			case Buttons::BT_TAB_SETUP:
+			{
 				tab = InventoryType::Id::SETUP;
 				break;
+			}
 			case Buttons::BT_TAB_ETC:
+			{
 				tab = InventoryType::Id::ETC;
 				break;
+			}
 			case Buttons::BT_TAB_CASH:
+			{
 				tab = InventoryType::Id::CASH;
 				break;
+			}
 			case Buttons::BT_GATHER:
 			case Buttons::BT_GATHER_SM:
+			{
 				GatherItemsPacket(tab).dispatch();
 				break;
+			}
 			case Buttons::BT_SORT:
 			case Buttons::BT_SORT_SM:
+			{
 				SortItemsPacket(tab).dispatch();
 				break;
+			}
 			case Buttons::BT_FULL:
 			case Buttons::BT_FULL_SM:
+			{
 				set_full(true);
+
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_SMALL:
 			case Buttons::BT_SMALL_SM:
+			{
 				set_full(false);
+
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_COIN:
 			case Buttons::BT_COIN_SM:
 			case Buttons::BT_POINT:
@@ -313,7 +335,9 @@ namespace ms
 			case Buttons::BT_TOAD:
 			case Buttons::BT_TOAD_SM:
 			case Buttons::BT_CASHSHOP:
+			{
 				return Button::State::NORMAL;
+			}
 		}
 
 		if (tab != oldtab)
@@ -342,13 +366,17 @@ namespace ms
 				switch (tab)
 				{
 					case InventoryType::Id::EQUIP:
+					{
 						if (can_wear_equip(slot))
 							EquipItemPacket(slot, inventory.find_equipslot(item_id)).dispatch();
 
 						break;
+					}
 					case InventoryType::Id::USE:
+					{
 						UseItemPacket(slot, item_id).dispatch();
 						break;
+					}
 				}
 			}
 		}
@@ -493,17 +521,23 @@ namespace ms
 			switch (mode)
 			{
 				case Inventory::Modification::ADD:
+				{
 					update_slot(slot);
+
 					newtab = type;
 					newslot = slot;
 					break;
+				}
 				case Inventory::Modification::CHANGECOUNT:
 				case Inventory::Modification::ADDCOUNT:
+				{
 					if (auto icon = get_icon(slot))
 						icon->set_count(arg);
 
 					break;
+				}
 				case Inventory::Modification::SWAP:
+				{
 					if (arg != slot)
 					{
 						update_slot(slot);
@@ -511,9 +545,12 @@ namespace ms
 					}
 
 					break;
+				}
 				case Inventory::Modification::REMOVE:
+				{
 					update_slot(slot);
 					break;
+				}
 			}
 		}
 
@@ -521,16 +558,20 @@ namespace ms
 		{
 			case Inventory::Modification::ADD:
 			case Inventory::Modification::ADDCOUNT:
+			{
 				newtab = type;
 				newslot = slot;
 				break;
+			}
 			case Inventory::Modification::CHANGECOUNT:
 			case Inventory::Modification::SWAP:
 			case Inventory::Modification::REMOVE:
+			{
 				if (newslot == slot && newtab == type)
 					clear_new();
 
 				break;
+			}
 		}
 	}
 
@@ -656,19 +697,28 @@ namespace ms
 
 		switch (reqGender)
 		{
-			case 0: // Male
+			// Male
+			case 0:
+			{
 				if (female)
 					return false;
 
 				break;
-			case 1: // Female
+			}
+			// Female
+			case 1:
+			{
 				if (!female)
 					return false;
 
 				break;
-			case 2: // Unisex
+			}
+			// Unisex
+			case 2:
 			default:
+			{
 				break;
+			}
 		}
 
 		const std::string jobname = stats.get_jobname();
@@ -929,16 +979,19 @@ namespace ms
 		switch (sourcetab)
 		{
 			case InventoryType::Id::EQUIP:
+			{
 				if (eqsource == eqslot)
 					if (parent.can_wear_equip(source))
 						EquipItemPacket(source, eqslot).dispatch();
 
 				Sound(Sound::Name::DRAGEND).play();
-
 				break;
+			}
 			case InventoryType::Id::USE:
+			{
 				ScrollEquipPacket(source, eqslot).dispatch();
 				break;
+			}
 		}
 	}
 

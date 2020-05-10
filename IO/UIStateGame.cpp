@@ -179,31 +179,44 @@ namespace ms
 			switch (type)
 			{
 				case KeyType::Id::MENU:
+				{
 					if (pressed)
 					{
 						switch (action)
 						{
 							case KeyAction::Id::EQUIPMENT:
+							{
 								emplace<UIEquipInventory>(
-										Stage::get().get_player().get_inventory()
-								);
+									Stage::get().get_player().get_inventory()
+									);
+
 								break;
+							}
 							case KeyAction::Id::ITEMS:
+							{
 								emplace<UIItemInventory>(
-										Stage::get().get_player().get_inventory()
-								);
+									Stage::get().get_player().get_inventory()
+									);
+
 								break;
+							}
 							case KeyAction::Id::STATS:
+							{
 								emplace<UIStatsInfo>(
-										Stage::get().get_player().get_stats()
-								);
+									Stage::get().get_player().get_stats()
+									);
+
 								break;
+							}
 							case KeyAction::Id::SKILLS:
+							{
 								emplace<UISkillBook>(
-										Stage::get().get_player().get_stats(),
-										Stage::get().get_player().get_skills()
-								);
+									Stage::get().get_player().get_stats(),
+									Stage::get().get_player().get_skills()
+									);
+
 								break;
+							}
 							case KeyAction::Id::FRIENDS:
 							case KeyAction::Id::PARTY:
 							case KeyAction::Id::BOSSPARTY:
@@ -228,92 +241,134 @@ namespace ms
 								if (userlist && userlist->get_tab() != tab && userlist->is_active())
 								{
 									userlist->change_tab(tab);
-								} else
+								}
+								else
 								{
 									emplace<UIUserList>(tab);
 
 									if (userlist && userlist->get_tab() != tab && userlist->is_active())
 										userlist->change_tab(tab);
 								}
-							}
+
 								break;
+							}
 							case KeyAction::Id::WORLDMAP:
+							{
 								emplace<UIWorldMap>();
 								break;
+							}
 							case KeyAction::Id::MAPLECHAT:
 							{
 								auto chat = UI::get().get_element<UIChat>();
 
 								if (!chat || !chat->is_active())
 									emplace<UIChat>();
-							}
+
 								break;
+							}
 							case KeyAction::Id::MINIMAP:
+							{
 								if (auto minimap = UI::get().get_element<UIMiniMap>())
 									minimap->send_key(action, pressed, escape);
 
 								break;
+							}
 							case KeyAction::Id::QUESTLOG:
+							{
 								emplace<UIQuestLog>(
-										Stage::get().get_player().get_quests()
-								);
-								break;
-							case KeyAction::Id::MENU:
-								if (auto statusbar = UI::get().get_element<UIStatusBar>())
-									statusbar->toggle_menu();
+									Stage::get().get_player().get_quests()
+									);
 
 								break;
-							case KeyAction::Id::QUICKSLOTS:
-								if (auto statusbar = UI::get().get_element<UIStatusBar>())
-									statusbar->toggle_qs();
-
-								break;
-							case KeyAction::Id::CASHSHOP:
-								EnterCashShopPacket().dispatch();
-								break;
-							case KeyAction::Id::TOGGLECHAT:
-								if (auto chatbar = UI::get().get_element<UIChatBar>())
-									if (!chatbar->is_chatfieldopen())
-										chatbar->toggle_chat();
-
-								break;
+							}
 							case KeyAction::Id::KEYBINDINGS:
 							{
 								auto keyconfig = UI::get().get_element<UIKeyConfig>();
 
 								if (!keyconfig || !keyconfig->is_active())
+								{
 									emplace<UIKeyConfig>(
-											Stage::get().get_player().get_inventory(),
-											Stage::get().get_player().get_skills()
-									);
+										Stage::get().get_player().get_inventory(),
+										Stage::get().get_player().get_skills()
+										);
+								}
 								else if (keyconfig && keyconfig->is_active())
+								{
 									keyconfig->close();
+								}
 
 								break;
 							}
+							case KeyAction::Id::TOGGLECHAT:
+							{
+								if (auto chatbar = UI::get().get_element<UIChatBar>())
+									if (!chatbar->is_chatfieldopen())
+										chatbar->toggle_chat();
+
+								break;
+							}
+							case KeyAction::Id::MENU:
+							{
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
+									statusbar->toggle_menu();
+
+								break;
+							}
+							case KeyAction::Id::QUICKSLOTS:
+							{
+								if (auto statusbar = UI::get().get_element<UIStatusBar>())
+									statusbar->toggle_qs();
+
+								break;
+							}
+							case KeyAction::Id::CASHSHOP:
+							{
+								EnterCashShopPacket().dispatch();
+								break;
+							}
+							case KeyAction::Id::EVENT:
+							{
+								emplace<UIEvent>();
+								break;
+							}
+							case KeyAction::Id::CHARINFO:
+							{
+								emplace<UICharInfo>(
+									Stage::get().get_player().get_oid()
+									);
+
+								break;
+							}
+							case KeyAction::Id::CHANGECHANNEL:
+							{
+								emplace<UIChannel>();
+								break;
+							}
 							case KeyAction::Id::MAINMENU:
+							{
 								if (auto statusbar = UI::get().get_element<UIStatusBar>())
 									statusbar->send_key(action, pressed, escape);
 
 								break;
-							case KeyAction::Id::EVENT:
-								emplace<UIEvent>();
-								break;
-							case KeyAction::Id::CHANGECHANNEL:
-								emplace<UIChannel>();
-								break;
+							}
 							default:
-								std::cout << "Action (" << action << ") not handled!" << std::endl;
+							{
+								std::cout << "Unknown KeyAction::Id action: [" << action << "]" << std::endl;
 								break;
+							}
 						}
 					}
+
 					break;
+				}
 				case KeyType::Id::ACTION:
 				case KeyType::Id::FACE:
 				case KeyType::Id::ITEM:
 				case KeyType::Id::SKILL:
+				{
 					Stage::get().send_key(type, action, pressed);
 					break;
+				}
 			}
 		}
 	}

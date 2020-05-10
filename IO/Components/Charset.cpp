@@ -63,6 +63,7 @@ namespace ms
 		switch (alignment)
 		{
 			case Charset::Alignment::CENTER:
+			{
 				for (char c : text)
 				{
 					int16_t width = getw(c);
@@ -74,7 +75,9 @@ namespace ms
 
 				shift -= total / 2;
 				break;
+			}
 			case Charset::Alignment::LEFT:
+			{
 				for (char c : text)
 				{
 					draw(c, args + Point<int16_t>(shift, 0));
@@ -82,7 +85,9 @@ namespace ms
 				}
 
 				break;
+			}
 			case Charset::Alignment::RIGHT:
+			{
 				for (auto iter = text.rbegin(); iter != text.rend(); ++iter)
 				{
 					char c = *iter;
@@ -91,6 +96,7 @@ namespace ms
 				}
 
 				break;
+			}
 		}
 
 		return shift;
@@ -104,25 +110,34 @@ namespace ms
 		switch (alignment)
 		{
 			case Charset::Alignment::CENTER:
+			{
 				shift -= hspace * static_cast<int16_t>(length) / 2;
 				break;
+			}
 			case Charset::Alignment::LEFT:
+			{
 				for (char c : text)
 				{
 					draw(c, args + Point<int16_t>(shift, 0));
+
 					shift += hspace;
 				}
 
 				break;
+			}
 			case Charset::Alignment::RIGHT:
+			{
 				for (auto iter = text.rbegin(); iter != text.rend(); ++iter)
 				{
 					char c = *iter;
+
 					shift += hspace;
+
 					draw(c, args - Point<int16_t>(shift, 0));
 				}
 
 				break;
+			}
 		}
 
 		return shift;

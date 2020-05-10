@@ -131,7 +131,7 @@ namespace ms
 		int16_t icon_width = (icon.get_dimensions().x() * 2) + 4;
 		width = 292;
 
-		line = ColorLine(width + 16, Color::Name::WHITE, 1.0f);
+		line = ColorLine(width + 16, Color::Name::WHITE, 1.0f, false);
 		box = ColorBox(icon_width, icon_width, Color::Name::WHITE, 0.65f);
 	}
 

@@ -39,14 +39,14 @@ namespace ms
 		{
 			switch (level)
 			{
-				case Level::BEGINNER:
-					return Level::FIRST;
-				case Level::FIRST:
-					return Level::SECOND;
-				case Level::SECOND:
-					return Level::THIRD;
+				case BEGINNER:
+					return FIRST;
+				case FIRST:
+					return SECOND;
+				case SECOND:
+					return THIRD;
 				default:
-					return Level::FOURTH;
+					return FOURTH;
 			}
 		}
 

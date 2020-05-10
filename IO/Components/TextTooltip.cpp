@@ -43,6 +43,9 @@ namespace ms
 		int16_t fillwidth = text_label.width();
 		int16_t fillheight = text_label.height();
 
+		if (fillheight < 18)
+			fillheight = 18;
+
 		int16_t max_width = Constants::Constants::get().get_viewwidth();
 		int16_t max_height = Constants::Constants::get().get_viewheight();
 		int16_t cur_width = pos.x() + fillwidth + 21;
@@ -57,20 +60,26 @@ namespace ms
 		if (adj_y > 0)
 			pos.shift_y(adj_y * -1);
 
-		frame.draw(pos + Point<int16_t>(fillwidth / 2 + 2, fillheight - 7), fillwidth - 14, fillheight - 18);
-
 		if (fillheight > 18)
 		{
-			cover.draw(pos + Point<int16_t>(-5, -2));
-			text_label.draw(pos);
-		} else
+			frame.draw(pos + Point<int16_t>(fillwidth / 2, fillheight - 6), fillwidth - 19, fillheight - 17);
+
+			if (fillheight > cover.height())
+				cover.draw(pos + Point<int16_t>(-5, -2));
+			else
+				cover.draw(pos + Point<int16_t>(-5, -2), Range<int16_t>(0, fillheight / 2 - 14 + 2));
+
+			text_label.draw(pos + Point<int16_t>(0, 1));
+		}
+		else
 		{
-			cover.draw(DrawArgument(pos + Point<int16_t>(-5, -2), 0.5f, 0.5f));
-			text_label.draw(pos + Point<int16_t>(1, -3));
+			frame.draw(pos + Point<int16_t>(fillwidth / 2, fillheight - 7), fillwidth - 19, fillheight - 18);
+			cover.draw(pos + Point<int16_t>(-5, -2), Range<int16_t>(0, fillheight + 2));
+			text_label.draw(pos + Point<int16_t>(-1, -2));
 		}
 	}
 
-	bool TextTooltip::set_text(std::string t)
+	bool TextTooltip::set_text(std::string t, uint16_t maxwidth, bool formatted, int16_t line_adj)
 	{
 		if (text == t)
 			return false;
@@ -80,7 +89,7 @@ namespace ms
 		if (text.empty())
 			return false;
 
-		text_label = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, text, 340, true, 2);
+		text_label = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, text, maxwidth, formatted, line_adj);
 
 		return true;
 	}

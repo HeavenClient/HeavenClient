@@ -21,6 +21,9 @@
 #include <nlnx/nx.hpp>
 #endif
 
+#include <locale>
+#include <sstream>
+
 namespace ms
 {
 	namespace string_format
@@ -50,6 +53,17 @@ namespace ms
 				text.pop_back();
 				input.change_text(text + "..");
 			}
+		}
+
+		std::string tolower(std::string str)
+		{
+			std::locale loc;
+			std::stringstream ss;
+
+			for (std::string::size_type i = 0; i < str.length(); ++i)
+				ss << std::tolower(str[i], loc);
+
+			return ss.str();
 		}
 	}
 

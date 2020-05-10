@@ -35,14 +35,12 @@ namespace ms
 	{
 		CUR_TIMESTEP = 0;
 
-		nl::node Login = nl::nx::ui["Login.img"];
-		nl::node Gender = Login["Gender"];
-		nl::node scroll = Gender["scroll"][0];
+		nl::node Gender = nl::nx::ui["Login.img"]["Gender"];
 
 		for (size_t i = 0; i < 3; i++)
-			gender_sprites[i] = scroll[i];
+			gender_sprites[i] = Gender["scroll"]["0"][i];
 
-		sprites.emplace_back(Gender["text"][0], Point<int16_t>(601, 326));
+		sprites.emplace_back(Gender["text"]["0"], Point<int16_t>(601, 326));
 
 		std::vector<std::string> options;
 		options.push_back("Male");
@@ -50,8 +48,7 @@ namespace ms
 
 		uint16_t default_option = 0;
 
-		buttons[Buttons::NO] = std::make_unique<MapleButton>(Login["BtCancel"], Point<int16_t>(650,
-																							   349)); // TODO: _inlink issue: Original: Gender["BtNo"]
+		buttons[Buttons::NO] = std::make_unique<MapleButton>(Gender["BtNo"], Point<int16_t>(650, 349));
 		buttons[Buttons::YES] = std::make_unique<MapleButton>(Gender["BtYes"], Point<int16_t>(578, 349));
 		buttons[Buttons::SELECT] = std::make_unique<MapleComboBox>(MapleComboBox::Type::DEFAULT, options,
 																   default_option, position, Point<int16_t>(510, 283),
@@ -107,24 +104,31 @@ namespace ms
 		switch (buttonid)
 		{
 			case Buttons::NO:
+			{
 				deactivate();
 				okhandler();
-				break;
+
+				return Button::State::NORMAL;
+			}
 			case Buttons::YES:
 			{
 				UI::get().emplace<UILoginWait>();
 
 				uint16_t selected_value = buttons[Buttons::SELECT]->get_selected();
 				GenderPacket(selected_value).dispatch();
-			}
-				break;
-			case Buttons::SELECT:
-				buttons[Buttons::SELECT]->toggle_pressed();
-				break;
-			default:
-				break;
-		}
 
-		return Button::State::NORMAL;
+				return Button::State::NORMAL;
+			}
+			case Buttons::SELECT:
+			{
+				buttons[Buttons::SELECT]->toggle_pressed();
+
+				return Button::State::NORMAL;
+			}
+			default:
+			{
+				return Button::State::DISABLED;
+			}
+		}
 	}
 }

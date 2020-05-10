@@ -20,7 +20,7 @@
 #include "../Cursor.h"
 #include "../Keyboard.h"
 
-#include "../../Graphics/Text.h"
+#include "../../Graphics/Geometry.h"
 
 #include <functional>
 
@@ -36,47 +36,39 @@ namespace ms
 			FOCUSED
 		};
 
-		Textfield(Text::Font font, Text::Alignment alignment, Color::Name color, Rectangle<int16_t> bounds,
-				  size_t limit);
-
 		Textfield();
+		Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Rectangle<int16_t> bounds, size_t limit);
+		Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Color::Name marker_color, float marker_opacity, Rectangle<int16_t> bounds, size_t limit);
 
 		void draw(Point<int16_t> position) const;
-
+		void draw(Point<int16_t> position, Point<int16_t> marker_adjust) const;
 		void update(Point<int16_t> parentpos);
-
 		void send_key(KeyType::Id type, int32_t code, bool down);
-
-		void add_string(const std::string &str);
+		void add_string(const std::string& str);
 
 		void set_state(State state);
-
-		void change_text(const std::string &text);
-
+		void change_text(const std::string& text);
 		void set_cryptchar(int8_t character);
 
 		void set_enter_callback(std::function<void(std::string)> onreturn);
-
 		void set_key_callback(KeyAction::Id key, std::function<void(void)> action);
+		void set_text_callback(std::function<void(void)> action);
 
 		Cursor::State send_cursor(Point<int16_t> cursorpos, bool clicked);
 
 		bool empty() const;
-
 		State get_state() const;
-
 		Rectangle<int16_t> get_bounds() const;
-
-		const std::string &get_text() const;
+		const std::string& get_text() const;
+		bool can_copy_paste() const;
 
 	private:
-		void modifytext(const std::string &);
-
+		void modifytext(const std::string& t);
 		bool belowlimit() const;
 
 		Text textlabel;
 		std::string text;
-		Text marker;
+		ColorLine marker;
 		bool showmarker;
 		uint16_t elapsed;
 		size_t markerpos;
@@ -86,7 +78,8 @@ namespace ms
 		int8_t crypt;
 		State state;
 
-		std::map<int32_t, std::function<void(void)>> callbacks;
 		std::function<void(std::string)> onreturn;
+		std::map<int32_t, std::function<void(void)>> callbacks;
+		std::function<void(void)> ontext;
 	};
 }

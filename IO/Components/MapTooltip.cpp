@@ -201,7 +201,7 @@ namespace ms
 		if (width > fillwidth)
 			fillwidth = width;
 
-		separator = ColorLine(fillwidth - 6, Color::Name::WHITE, 0.40f);
+		separator = ColorLine(fillwidth - 6, Color::Name::WHITE, 0.40f, false);
 
 		if (height > fillheight)
 			fillheight = height;
@@ -228,10 +228,11 @@ namespace ms
 			int16_t desc_width = desc_simple.width();
 			int16_t new_width = (name_width > desc_width) ? name_width : desc_width;
 
-			separator = ColorLine(new_width - 6, Color::Name::WHITE, 0.40f);
-		} else
+			separator = ColorLine(new_width - 6, Color::Name::WHITE, 0.40f, false);
+		}
+		else
 		{
-			separator = ColorLine(fillwidth - 6, Color::Name::WHITE, 0.40f);
+			separator = ColorLine(fillwidth - 6, Color::Name::WHITE, 0.40f, false);
 		}
 
 		fillheight += desc_label.height() + 4;

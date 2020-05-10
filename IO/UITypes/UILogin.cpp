@@ -38,46 +38,58 @@
 
 namespace ms
 {
-	UILogin::UILogin() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600))
+	UILogin::UILogin() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600)), signboard_pos(Point<int16_t>(389, 333))
 	{
 		LoginStartPacket().dispatch();
 
-		Music("BgmUI.img/Title").play();
+		std::string LoginMusicNewtro = Configuration::get().get_login_music_newtro();
+
+		Music(LoginMusicNewtro).play();
 
 		std::string version_text = Configuration::get().get_version();
-		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
+		version = Text(Text::Font::A11B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
-		nl::node map = nl::nx::map001["Back"]["login.img"];
-		nl::node back = map["back"];
-		nl::node ani = map["ani"];
+		nl::node map001 = nl::nx::map001["Back"]["login.img"];
+		nl::node back = map001["back"];
+		nl::node ani = map001["ani"];
 
-		nl::node title = nl::nx::ui["Login.img"]["Title"];
-		nl::node common = nl::nx::ui["Login.img"]["Common"];
+		nl::node Login = nl::nx::ui["Login.img"];
+		nl::node Title = Login["Title"];
+		nl::node Common = Login["Common"];
 
 		nl::node prettyLogo = nl::nx::mapPretty["Back"]["login.img"]["ani"]["16"];
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
 
 		sprites.emplace_back(back["11"], Point<int16_t>(400, 300));
-		sprites.emplace_back(ani["17"], Point<int16_t>(129, 283));
-		sprites.emplace_back(ani["18"], Point<int16_t>(306, 252));
-		sprites.emplace_back(ani["19"], Point<int16_t>(379, 207));
+		sprites.emplace_back(ani["17"], Point<int16_t>(165, 276));
+		sprites.emplace_back(ani["18"], Point<int16_t>(301, 245));
+		sprites.emplace_back(ani["19"], Point<int16_t>(374, 200));
+		sprites.emplace_back(ani["19"], Point<int16_t>(348, 161));
 		sprites.emplace_back(back["35"], Point<int16_t>(399, 260));
-		sprites.emplace_back(prettyLogo, Point<int16_t>(394, 173));
-		sprites.emplace_back(title["signboard"], Point<int16_t>(391, 330));
-		sprites.emplace_back(common["frame"], Point<int16_t>(400, 300));
+		sprites.emplace_back(prettyLogo, Point<int16_t>(409, 144));
+		sprites.emplace_back(Title["signboard"], signboard_pos);
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
+		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
-		buttons[Buttons::BT_LOGIN] = std::make_unique<MapleButton>(title["BtLogin"], Point<int16_t>(454, 279));
-		buttons[Buttons::BT_SAVEID] = std::make_unique<MapleButton>(title["BtLoginIDSave"], Point<int16_t>(303, 332));
-		buttons[Buttons::BT_IDLOST] = std::make_unique<MapleButton>(title["BtLoginIDLost"], Point<int16_t>(375, 332));
-		buttons[Buttons::BT_PASSLOST] = std::make_unique<MapleButton>(title["BtPasswdLost"], Point<int16_t>(447, 332));
-		buttons[Buttons::BT_REGISTER] = std::make_unique<MapleButton>(title["BtNew"], Point<int16_t>(291, 352));
-		buttons[Buttons::BT_HOMEPAGE] = std::make_unique<MapleButton>(title["BtHomePage"], Point<int16_t>(363, 352));
-		buttons[Buttons::BT_QUIT] = std::make_unique<MapleButton>(title["BtQuit"], Point<int16_t>(435, 352));
+		buttons[Buttons::BT_LOGIN] = std::make_unique<MapleButton>(Title["BtLogin"], signboard_pos + Point<int16_t>(62, -51));
+		buttons[Buttons::BT_SAVEID] = std::make_unique<MapleButton>(Title["BtLoginIDSave"], signboard_pos + Point<int16_t>(-89, 5));
+		buttons[Buttons::BT_IDLOST] = std::make_unique<MapleButton>(Title["BtLoginIDLost"], signboard_pos + Point<int16_t>(-17, 5));
+		buttons[Buttons::BT_PASSLOST] = std::make_unique<MapleButton>(Title["BtPasswdLost"], signboard_pos + Point<int16_t>(55, 5));
+		buttons[Buttons::BT_REGISTER] = std::make_unique<MapleButton>(Title["BtNew"], signboard_pos + Point<int16_t>(-101, 25));
+		buttons[Buttons::BT_HOMEPAGE] = std::make_unique<MapleButton>(Title["BtHomePage"], signboard_pos + Point<int16_t>(-29, 25));
+		buttons[Buttons::BT_QUIT] = std::make_unique<MapleButton>(Title["BtQuit"], signboard_pos + Point<int16_t>(43, 25));
 
-		checkbox[false] = title["check"]["0"];
-		checkbox[true] = title["check"]["1"];
+		checkbox[false] = Title["check"]["0"];
+		checkbox[true] = Title["check"]["1"];
 
-		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
-							Rectangle<int16_t>(Point<int16_t>(296, 279), Point<int16_t>(446, 303)), 12);
+		background = ColorBox(dimension.x(), dimension.y(), Color::Name::BLACK, 1.0f);
+
+		Point<int16_t> textbox_pos = signboard_pos + Point<int16_t>(-96, -51);
+		Point<int16_t> textbox_dim = Point<int16_t>(150, 24);
+		int16_t textbox_limit = 12;
+
+#pragma region Account
+		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::SMALT, 0.75f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		account.set_key_callback
 				(
@@ -96,10 +108,13 @@ namespace ms
 						}
 				);
 
-		accountbg = title["ID"];
+		accountbg = Title["ID"];
+#pragma endregion
 
-		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
-							 Rectangle<int16_t>(Point<int16_t>(296, 305), Point<int16_t>(446, 329)), 12);
+#pragma region Password
+		textbox_pos.shift_y(26);
+
+		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::PRUSSIANBLUE, 0.85f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		password.set_key_callback
 				(
@@ -119,7 +134,8 @@ namespace ms
 				);
 
 		password.set_cryptchar('*');
-		passwordbg = title["PW"];
+		passwordbg = Title["PW"];
+#pragma endregion
 
 		saveid = Setting<SaveLogin>::get().load();
 
@@ -148,19 +164,21 @@ namespace ms
 
 	void UILogin::draw(float alpha) const
 	{
+		background.draw(position + Point<int16_t>(0, 7));
+
 		UIElement::draw(alpha);
 
-		version.draw(position + Point<int16_t>(707, 1));
-		account.draw(position);
-		password.draw(position);
+		version.draw(position + Point<int16_t>(707, 4));
+		account.draw(position + Point<int16_t>(1, 0));
+		password.draw(position + Point<int16_t>(1, 3));
 
 		if (account.get_state() == Textfield::State::NORMAL && account.empty())
-			accountbg.draw(DrawArgument(position + Point<int16_t>(291, 279)));
+			accountbg.draw(position + signboard_pos + Point<int16_t>(-101, -51));
 
 		if (password.get_state() == Textfield::State::NORMAL && password.empty())
-			passwordbg.draw(DrawArgument(position + Point<int16_t>(291, 305)));
+			passwordbg.draw(position + signboard_pos + Point<int16_t>(-101, -25));
 
-		checkbox[saveid].draw(DrawArgument(position + Point<int16_t>(291, 335)));
+		checkbox[saveid].draw(position + signboard_pos + Point<int16_t>(-101, 7));
 	}
 
 	void UILogin::update()
@@ -242,27 +260,38 @@ namespace ms
 		switch (id)
 		{
 			case Buttons::BT_LOGIN:
+			{
 				login();
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_REGISTER:
 			case Buttons::BT_HOMEPAGE:
 			case Buttons::BT_PASSLOST:
 			case Buttons::BT_IDLOST:
+			{
 				open_url(id);
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_SAVEID:
+			{
 				saveid = !saveid;
+
 				Setting<SaveLogin>::get().save(saveid);
 
 				return Button::State::MOUSEOVER;
+			}
 			case Buttons::BT_QUIT:
+			{
 				UI::get().quit();
 
 				return Button::State::PRESSED;
+			}
 			default:
-				return Button::State::NORMAL;
+			{
+				return Button::State::DISABLED;
+			}
 		}
 	}
 

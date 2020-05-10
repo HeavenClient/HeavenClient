@@ -73,7 +73,12 @@ namespace ms
 
 		// Get private member VERSION
 		std::string get_version() const;
-
+		// Get private member LoginMusic
+		std::string get_login_music() const;
+		// Get private member LoginMusicSEA
+		std::string get_login_music_sea() const;
+		// Get private member LoginMusicNewtro
+		std::string get_login_music_newtro() const;
 		// Get private member JOINLINK
 		std::string get_joinlink() const;
 
@@ -261,7 +266,10 @@ namespace ms
 
 		const char* FILENAME = "Settings";
 		const char* TITLE = "MapleStory";
-		const char* VERSION = "212.1";
+		const char* VERSION = "213.2";
+		const char* LoginMusic = "BgmUI.img/Title";
+		const char* LoginMusicSEA = "BgmGL.img/OldMaple";
+		const char* LoginMusicNewtro = "BgmEvent2.img/Newtro_Login";
 		const char* JOINLINK = "https://www.nexon.com/account/en/create";
 		const char* WEBSITE = "http://maplestory.nexon.net/";
 		const char* FINDID = "https://www.nexon.com/account/en/login";
@@ -336,15 +344,13 @@ namespace ms
 	// The normal font which will be used
 	struct FontPathNormal : public Configuration::StringEntry
 	{
-		FontPathNormal() : StringEntry("FontPathNormal", "fonts/Roboto/Roboto-Regular.ttf")
-		{}
+		FontPathNormal() : StringEntry("FontPathNormal", "fonts/Arial/Arial.ttf") {}
 	};
 
 	// The bold font which will be used
 	struct FontPathBold : public Configuration::StringEntry
 	{
-		FontPathBold() : StringEntry("FontPathBold", "fonts/Roboto/Roboto-Bold.ttf")
-		{}
+		FontPathBold() : StringEntry("FontPathBold", "fonts/Arial/Arial-Bold.ttf") {}
 	};
 
 	// Music Volume

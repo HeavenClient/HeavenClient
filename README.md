@@ -53,34 +53,32 @@ This will always be the option with the most performance, but if you are using M
 ## Required Files
 
 *Always check **NxFiles.h** for an updated list of required nx files*
-
-- [MapPretty.nx](https://drive.google.com/file/d/1d8HJkWY6ght5OAoJGtsAjNiG2BL1wcle/view?usp=sharing) (v167 GMS Map.wz)
+- [MapPretty.nx] (Trimmed v167 GMS Map.wz)
 - MapLatest.nx (Lastest GMS Map.wz)
 - Map001.nx (Latest GMS Map001.wz)
 - UI.nx (Latest GMS UI.wz)
 - Everything else is from v83 GMS wz files
 
-There is an archive of all the NX files listed above available for download [here](https://drive.google.com/file/d/14mujxsm0e4rM0yt029wjabW92dnRX_O7) (Latest: v210).
+There is an archive of all the NX files listed above available for download [here][1] (Latest: v213.2).
 
-# Dependencies for Linux/Mac
+# Dependencies
 - Nx library:
-[NoLifeNX](https://github.com/ryantpayton/NoLifeNx)
+[NoLifeNx]
 
 - Wz library:
 N/A
 
 - Graphics:
-[GLFW3](http://www.glfw.org/download.html), [GLAD](https://github.com/Dav1dde/glad), [FreeType](http://www.freetype.org/)
+ [GLFW3], [FreeType]
+ Windows: [GLEW] 
+ Linux/Mac [GLAD]
 
 - Audio:
-[OpenAL-soft](https://github.com/kcat/openal-soft), [Alure](https://github.com/kcat/alure)
+ Windows: [Bass]
+ Linux/Mac [OpenAL-soft], [Alure]
 
 - Networking:
-[Asio](http://think-async.com/)
-
----
-
-## In-Game Issues
+[Asio] (optional)
 
 If you experience any kind of in-game glitches, UI rendering issues, or anything else that seems out of the ordinary that other developers are not experiences; Follow these steps in order to hopefully resolve aforementioned issues.
 
@@ -183,3 +181,23 @@ If you feel obligated to donate, to further help and support all parties involve
 Please remember this is ONLY for the HeavenClient development and will only be used in the support of helping further develop the client. *Also please remember to support Nexon as this is not meant to replace anything Nexon offers*
 
 Another important note to remember is that HeavenClient is a free open-sourced client developed for personal use. Do NOT pay for any services requested by anyone in regards to this client. It will always remain open and free of charge. There is no intent to publish this code with any payment in mind. If that ever changes, donations and disclaimers for donations will be removed.
+
+[HeavenMS]:          https://github.com/ronancpl/HeavenMS
+[Switch]:            https://github.com/lain3d/HeavenClientNX
+[Linux]:             https://github.com/ryantpayton/HeavenClient/tree/linux
+[Windows 8.1 SDK]:   https://developer.microsoft.com/en-us/windows/downloads/sdk-archive
+[NoLifeWzToNx]:      https://github.com/ryantpayton/NoLifeWzToNx
+[MapPretty.nx]:      https://drive.google.com/file/d/1F7nUgH3royIS75WsPlYwc7RtdiGPnzd_/view?usp=sharing
+[1]:                 https://drive.google.com/file/d/1LKhOtdDWOFJs8eIvqSx8pvP1ZfHF2rpo/view?usp=sharing
+[NoLifeNx]:          https://github.com/ryantpayton/NoLifeNx
+[GLFW3]:             http://www.glfw.org/download.html
+[GLEW]:              http://glew.sourceforge.net/
+[GLAD]:              https://github.com/Dav1dde/glad/
+[FreeType]:          http://www.freetype.org/
+[Bass]:              http://www.un4seen.com/
+[OpenAL-soft]:       https://github.com/kcat/openal-soft/
+[Alure]:             https://github.com/kcat/alure/
+[Asio]:              http://think-async.com/
+[commit]:            https://github.com/HeavenClient/HeavenClient/commit/a3a95007495b6cded5e34af840a1354fd012c4e0
+[HeavenClient.rar]:  https://drive.google.com/file/d/1--KgFBFqrD6_-07cD-S8dpEimbq5tq0t/view?usp=sharing
+[2]:                 https://paypal.me/pools/c/8frYNoobcY

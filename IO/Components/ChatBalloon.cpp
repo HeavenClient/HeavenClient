@@ -106,7 +106,7 @@ namespace ms
 		xtile = std::max<int16_t>(north.width(), 1);
 		ytile = std::max<int16_t>(west.height(), 1);
 
-		textlabel = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::BLACK, "", 300);
+		textlabel = Text(Text::Font::A13B, Text::Alignment::LEFT, Color::Name::BLACK);
 	}
 
 	void ChatBalloonHorizontal::draw(Point<int16_t> position) const

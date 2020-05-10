@@ -31,7 +31,7 @@ namespace ms
 
 		void draw(Point<int16_t> position) const override;
 
-		bool set_text(std::string text);
+		bool set_text(std::string text, uint16_t maxwidth = 340, bool formatted = true, int16_t line_adj = 2);
 
 	private:
 		MapleFrame frame;

@@ -59,22 +59,20 @@ namespace ms
 	class ColorLine : public Geometry
 	{
 	public:
-		ColorLine(int16_t width, Color::Name color, float opacity);
-
+		ColorLine(int16_t size, Color::Name color, float opacity, bool vertical);
 		ColorLine();
 
-		void setwidth(int16_t width);
-
-		void set_color(Color::Name color);
-
+		void setsize(int16_t size);
+		void setcolor(Color::Name color);
 		void setopacity(float opacity);
 
 		void draw(const DrawArgument &args) const;
 
 	private:
-		int16_t width;
+		int16_t size;
 		Color::Name color;
 		float opacity;
+		bool vertical;
 	};
 
 	class MobHpBar : public Geometry

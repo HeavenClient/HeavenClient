@@ -76,18 +76,15 @@ namespace ms
 		Geometry::draw(absp.x(), absp.y(), absw, absh, color, absopc);
 	}
 
-	ColorLine::ColorLine(int16_t w, Color::Name c, float o) : width(w), color(c), opacity(o)
-	{}
+	ColorLine::ColorLine(int16_t size, Color::Name color, float opacity, bool vertical) : size(size), color(color), opacity(opacity), vertical(vertical) {}
+	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f, false) {}
 
-	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f)
-	{}
-
-	void ColorLine::setwidth(int16_t w)
+	void ColorLine::setsize(int16_t s)
 	{
-		width = w;
+		size = s;
 	}
 
-	void ColorLine::set_color(Color::Name c)
+	void ColorLine::setcolor(Color::Name c)
 	{
 		color = c;
 	}
@@ -100,15 +97,15 @@ namespace ms
 	void ColorLine::draw(const DrawArgument &args) const
 	{
 		Point<int16_t> absp = args.getpos();
+
 		int16_t absw = args.getstretch().x();
-
-		if (absw == 0)
-			absw = width;
-
 		int16_t absh = args.getstretch().y();
 
+		if (absw == 0)
+			absw = vertical ? 1 : size;
+
 		if (absh == 0)
-			absh = 1;
+			absh = vertical ? size : 1;
 
 		absw = static_cast<int16_t>(absw * args.get_xscale());
 		absh = static_cast<int16_t>(absh * args.get_yscale());

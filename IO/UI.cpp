@@ -79,15 +79,15 @@ namespace ms
 	{
 		switch (id)
 		{
-		case State::LOGIN:
-			state = std::make_unique<UIStateLogin>();
-			break;
-		case State::GAME:
-			state = std::make_unique<UIStateGame>();
-			break;
-		case State::CASHSHOP:
-			state = std::make_unique<UIStateCashShop>();
-			break;
+			case State::LOGIN:
+				state = std::make_unique<UIStateLogin>();
+				break;
+			case State::GAME:
+				state = std::make_unique<UIStateGame>();
+				break;
+			case State::CASHSHOP:
+				state = std::make_unique<UIStateCashShop>();
+				break;
 		}
 	}
 
@@ -194,20 +194,23 @@ namespace ms
 		{
 			bool ctrl = is_key_down[keyboard.leftctrlcode()] || is_key_down[keyboard.rightctrlcode()];
 
-			if (ctrl)
+			if (ctrl && pressed)
 			{
-				if (!pressed)
-				{
-					KeyAction::Id action = keyboard.get_ctrl_action(keycode);
+				KeyAction::Id action = keyboard.get_ctrl_action(keycode);
 
-					switch (action)
+				if (action == KeyAction::Id::COPY || action == KeyAction::Id::PASTE)
+				{
+					if (focusedtextfield->can_copy_paste())
 					{
-						case KeyAction::Id::COPY:
-							Window::get().setclipboard(focusedtextfield->get_text());
-							break;
-						case KeyAction::Id::PASTE:
-							focusedtextfield->add_string(Window::get().getclipboard());
-							break;
+						switch (action)
+						{
+							case KeyAction::Id::COPY:
+								Window::get().setclipboard(focusedtextfield->get_text());
+								break;
+							case KeyAction::Id::PASTE:
+								focusedtextfield->add_string(Window::get().getclipboard());
+								break;
+						}
 					}
 				}
 			} else

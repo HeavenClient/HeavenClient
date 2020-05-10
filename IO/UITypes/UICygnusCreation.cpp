@@ -45,7 +45,7 @@ namespace ms
 		named = false;
 
 		std::string version_text = Configuration::get().get_version();
-		version = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
+		version = Text(Text::Font::A11B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
 
 		nl::node Login = nl::nx::ui["Login.img"];
 		nl::node Common = Login["Common"];
@@ -54,6 +54,7 @@ namespace ms
 		nl::node signboard = nl::nx::mapLatest["Obj"]["login.img"]["NewChar"]["signboard"];
 		nl::node board = CustomizeChar["board"];
 		nl::node genderSelect = CustomizeChar["genderSelect"];
+		nl::node frame = nl::nx::mapLatest["Obj"]["login.img"]["Common"]["frame"]["2"]["0"];
 
 		sky = back["2"];
 		cloud = back["27"];
@@ -101,6 +102,7 @@ namespace ms
 		nameboard = CustomizeChar["charName"];
 		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::BLACK, Rectangle<int16_t>(Point<int16_t>(539, 209), Point<int16_t>(631, 252)), 12);
 
+		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["step"]["3"], Point<int16_t>(40, 0));
 
@@ -286,7 +288,7 @@ namespace ms
 			}
 		}
 
-		version.draw(position + Point<int16_t>(707, 1));
+		version.draw(position + Point<int16_t>(707, 4));
 	}
 
 	void UICygnusCreation::update()
@@ -422,6 +424,7 @@ namespace ms
 		switch (buttonid)
 		{
 			case Buttons::BT_CHARC_OK:
+			{
 				if (!gender)
 				{
 					gender = true;
@@ -530,14 +533,18 @@ namespace ms
 						}
 					}
 				}
+			}
 			case BT_BACK:
+			{
 				Sound(Sound::Name::SCROLLUP).play();
 
 				UI::get().remove(UIElement::Type::CLASSCREATION);
 				UI::get().emplace<UIRaceSelect>();
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_CANCEL:
+			{
 				if (charSet)
 				{
 					charSet = false;
@@ -588,6 +595,7 @@ namespace ms
 						return Button::State::NORMAL;
 					}
 				}
+			}
 			case Buttons::BT_CHARC_HAIRC0:
 			case Buttons::BT_CHARC_HAIRC1:
 			case Buttons::BT_CHARC_HAIRC2:
@@ -596,36 +604,47 @@ namespace ms
 			case Buttons::BT_CHARC_HAIRC5:
 			case Buttons::BT_CHARC_HAIRC6:
 			case Buttons::BT_CHARC_HAIRC7:
+			{
 				// TODO: These need to be changed so when you click the color it only assigns the color, not the next in the series.
 				haircolor = (haircolor > 0) ? haircolor - 1 : haircolors[female].size() - 1;
 				newchar.set_hair(hairs[female][hair] + haircolors[female][haircolor]);
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_SKINL:
+			{
 				skin = (skin > 0) ? skin - 1 : skins[female].size() - 1;
 				newchar.set_body(skins[female][skin]);
 				bodyname.change_text(newchar.get_body()->get_name());
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_SKINR:
+			{
 				skin = (skin < skins[female].size() - 1) ? skin + 1 : 0;
 				newchar.set_body(skins[female][skin]);
 				bodyname.change_text(newchar.get_body()->get_name());
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_WEPL:
+			{
 				weapon = (weapon > 0) ? weapon - 1 : weapons[female].size() - 1;
 				newchar.add_equip(weapons[female][weapon]);
 				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_WEPR:
+			{
 				weapon = (weapon < weapons[female].size() - 1) ? weapon + 1 : 0;
 				newchar.add_equip(weapons[female][weapon]);
 				wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_GENDER_M:
+			{
 				if (female)
 				{
 					female = false;
@@ -633,7 +652,9 @@ namespace ms
 				}
 
 				return Button::State::NORMAL;
+			}
 			case Buttons::BT_CHARC_GEMDER_F:
+			{
 				if (!female)
 				{
 					female = true;
@@ -641,6 +662,7 @@ namespace ms
 				}
 
 				return Button::State::NORMAL;
+			}
 		}
 
 		return Button::State::PRESSED;

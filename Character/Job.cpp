@@ -192,6 +192,31 @@ namespace ms
 				return "Corsair";
 			case 1000:
 				return "Noblesse";
+			case 1100:
+			case 1110:
+			case 1111:
+			case 1112:
+				return "Dawn Warrior";
+			case 1200:
+			case 1210:
+			case 1211:
+			case 1212:
+				return "Blaze Wizard";
+			case 1300:
+			case 1310:
+			case 1311:
+			case 1312:
+				return "Wind Archer";
+			case 1400:
+			case 1410:
+			case 1411:
+			case 1412:
+				return "Night Walker";
+			case 1500:
+			case 1510:
+			case 1511:
+			case 1512:
+				return "Thunder Breaker";
 			case 2000:
 			case 2100:
 			case 2110:

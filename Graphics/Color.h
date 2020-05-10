@@ -91,48 +91,57 @@ namespace ms
 			SILVERCHALICE,
 			GRAY,
 			TORCHRED,
+			CREAM,
+			SMALT,
+			PRUSSIANBLUE,
 			NUM_COLORS
 		};
 
 		// Predefined colors by name
 		static constexpr GLfloat colors[Name::NUM_COLORS][3] =
-				{
-						{0.00f, 0.00f, 0.00f}, // Black
-						{1.00f, 1.00f, 1.00f}, // White
-						{1.00f, 1.00f, 0.00f}, // Yellow
-						{0.00f, 0.00f, 1.00f}, // Blue
-						{1.00f, 0.00f, 0.00f}, // Red
-						{0.80f, 0.30f, 0.30f}, // DarkRed
-						{0.50f, 0.25f, 0.00f}, // Brown
-						{0.34f, 0.20f, 0.07f}, // Jambalaya
-						{0.50f, 0.50f, 0.50f}, // Lightgrey
-						{0.25f, 0.25f, 0.25f}, // Darkgrey
-						{1.00f, 0.50f, 0.00f}, // Orange
-						{0.00f, 0.75f, 1.00f}, // Mediumblue
-						{0.50f, 0.00f, 0.50f}, // Violet
-						{0.47f, 0.40f, 0.27f}, // Tobacco Brown
-						{0.74f, 0.74f, 0.67f}, // Eagle
-						{0.60f, 0.60f, 0.54f}, // Lemon Grass
-						{0.20f, 0.20f, 0.27f}, // Tuna
-						{0.94f, 0.94f, 0.94f}, // Gallery
-						{0.60f, 0.60f, 0.60f}, // Dusty Gray
-						{0.34f, 0.34f, 0.34f}, // Emperor
-						{0.20f, 0.20f, 0.20f}, // Mine Shaft
-						{1.00f, 1.00f, 0.87f}, // Half and Half
-						{0.00f, 0.40f, 0.67f}, // Endeavour
-						{0.30f, 0.20f, 0.10f}, // Brown Derby
-						{0.94f, 0.95f, 0.95f}, // Porcelain
-						{0.34f, 0.27f, 0.14f}, // Irish Coffee
-						{0.47f, 0.47f, 0.47f}, // Boulder
-						{0.00f, 0.75f, 0.00f}, // Green (Mob HP Bar)
-						{0.00f, 1.00f, 0.00f}, // Light Green (Mob HP Bar)
-						{0.00f, 0.50f, 0.00f}, // Japanese Laurel (Mob HP Bar)
-						{0.67f, 0.67f, 0.60f}, // Gray Olive
-						{0.80f, 1.00f, 0.00f}, // Electric Lime
-						{1.00f, 0.80f, 0.00f}, // Supernova
-						{0.47f, 1.00f, 0.00f}, // Chartreuse
-						{0.47f, 0.80f, 1.00f}  // Malibu
-				};
+		{
+			{ 0.00f, 0.00f, 0.00f }, // Black
+			{ 1.00f, 1.00f, 1.00f }, // White
+			{ 1.00f, 1.00f, 0.00f }, // Yellow
+			{ 0.00f, 0.00f, 1.00f }, // Blue
+			{ 1.00f, 0.00f, 0.00f }, // Red
+			{ 0.80f, 0.30f, 0.30f }, // DarkRed
+			{ 0.50f, 0.25f, 0.00f }, // Brown
+			{ 0.34f, 0.20f, 0.07f }, // Jambalaya
+			{ 0.50f, 0.50f, 0.50f }, // Lightgrey
+			{ 0.25f, 0.25f, 0.25f }, // Darkgrey
+			{ 1.00f, 0.50f, 0.00f }, // Orange
+			{ 0.00f, 0.75f, 1.00f }, // Mediumblue
+			{ 0.50f, 0.00f, 0.50f }, // Violet
+			{ 0.47f, 0.40f, 0.27f }, // Tobacco Brown
+			{ 0.74f, 0.74f, 0.67f }, // Eagle
+			{ 0.60f, 0.60f, 0.54f }, // Lemon Grass
+			{ 0.20f, 0.20f, 0.27f }, // Tuna
+			{ 0.94f, 0.94f, 0.94f }, // Gallery
+			{ 0.60f, 0.60f, 0.60f }, // Dusty Gray
+			{ 0.34f, 0.34f, 0.34f }, // Emperor
+			{ 0.20f, 0.20f, 0.20f }, // Mine Shaft
+			{ 1.00f, 1.00f, 0.87f }, // Half and Half
+			{ 0.00f, 0.40f, 0.67f }, // Endeavour
+			{ 0.30f, 0.20f, 0.10f }, // Brown Derby
+			{ 0.94f, 0.95f, 0.95f }, // Porcelain
+			{ 0.34f, 0.27f, 0.14f }, // Irish Coffee
+			{ 0.47f, 0.47f, 0.47f }, // Boulder
+			{ 0.00f, 0.75f, 0.00f }, // Green (Mob HP Bar)
+			{ 0.00f, 1.00f, 0.00f }, // Light Green (Mob HP Bar)
+			{ 0.00f, 0.50f, 0.00f }, // Japanese Laurel (Mob HP Bar)
+			{ 0.67f, 0.67f, 0.60f }, // Gray Olive
+			{ 0.80f, 1.00f, 0.00f }, // Electric Lime
+			{ 1.00f, 0.80f, 0.00f }, // Supernova
+			{ 0.47f, 1.00f, 0.00f }, // Chartreuse
+			{ 0.47f, 0.80f, 1.00f }, // Malibu
+			{ 0.67f, 0.67f, 0.67f }, // Silver Chalice
+			{ 0.54f, 0.54f, 0.54f }, // Gray
+			{ 0.94f, 0.00f, 0.20f }, // Torch Red
+			{ 1.00f, 1.00f, 0.80f }, // Cream
+			{ 0.00f, 0.23f, 0.56f }, // Smalt
+			{ 0.01f, 0.19f, 0.28f }  // Prussian Blue
+		};
 
 		// Create a color by an array of real numbers [0.0f, 1.0f]
 		constexpr Color(underlying_t comps) : rgba(comps)
