@@ -55,10 +55,10 @@ namespace ms
 
 			Configuration::get().set_max_width(width);
 			Configuration::get().set_max_height(height);
-#else defined(__APPLE__)
+#elif defined(__APPLE__)
 			auto mainDisplayId = CGMainDisplayID();
-			width = CGDisplayPixelsWide(mainDisplayId);
-			height = CGDisplayPixelsHigh(mainDisplayId);
+			int width = CGDisplayPixelsWide(mainDisplayId);
+			int height = CGDisplayPixelsHigh(mainDisplayId);
 
 			Configuration::get().set_max_width(width);
 			Configuration::get().set_max_height(height);

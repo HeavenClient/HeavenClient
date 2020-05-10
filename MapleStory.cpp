@@ -28,10 +28,6 @@
 #include "Util/WzFiles.h"
 #endif
 
-//#if defined(__linux__) || defined(__APPLE__)
-//#include "Gameplay/Combat/DamageNumber.h"
-//#endif
-
 namespace ms
 {
 	Error init()
