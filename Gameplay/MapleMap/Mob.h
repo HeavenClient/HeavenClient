@@ -49,9 +49,9 @@ namespace ms
 		static std::string nameof(Stance stance)
 		{
 			static const std::string stancenames[NUM_STANCES] =
-					{
-							"move", "stand", "jump", "hit1", "die1", "fly"
-					};
+				{
+					"move", "stand", "jump", "hit1", "die1", "fly"
+				};
 
 			size_t index = (stance - 1) / 2;
 
@@ -71,14 +71,14 @@ namespace ms
 		void draw(double viewx, double viewy, float alpha) const override;
 
 		// Update movement and animations.
-		int8_t update(const Physics &physics) override;
+		int8_t update(const Physics& physics) override;
 
 		// Change this mob's control mode:
 		// 0 - no control, 1 - control, 2 - aggro
 		void set_control(int8_t mode);
 
 		// Send movement to the mob.
-		void send_movement(Point<int16_t> start, std::vector<Movement> &&movements);
+		void send_movement(Point<int16_t> start, std::vector<Movement>&& movements);
 
 		// Kill the mob with the appropriate type:
 		// 0 - make inactive 1 - death animation 2 - fade out
@@ -89,10 +89,10 @@ namespace ms
 		void show_hp(int8_t percentage, uint16_t playerlevel);
 
 		// Show an effect at the mob's position.
-		void show_effect(const Animation &animation, int8_t pos, int8_t z, bool flip);
+		void show_effect(const Animation& animation, int8_t pos, int8_t z, bool flip);
 
 		// Calculate the damage to this mob with the specified attack.
-		std::vector<std::pair<int32_t, bool>> calculate_damage(const Attack &attack);
+		std::vector<std::pair<int32_t, bool>> calculate_damage(const Attack& attack);
 
 		// Apply damage to the mob.
 		void apply_damage(int32_t damage, bool toleft);
@@ -101,7 +101,7 @@ namespace ms
 		MobAttack create_touch_attack() const;
 
 		// Check if this mob collides with the specified rectangle.
-		bool is_in_range(const Rectangle<int16_t> &range) const;
+		bool is_in_range(const Rectangle<int16_t>& range) const;
 
 		// Check if this mob is still alive.
 		bool is_alive() const;

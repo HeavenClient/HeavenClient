@@ -20,13 +20,17 @@
 #include "../MapleStory.h"
 
 #ifdef USE_NX
+
 #include <nlnx/node.hpp>
+
 #else
 #include "../Util/WzFiles.h"
 #endif
 
 #if defined(__linux__) || defined(__APPLE__)
+
 #include <cmath>
+
 #endif
 
 namespace ms
@@ -43,10 +47,12 @@ namespace ms
 		}
 
 		// Construct a point from the specified coordinates
-		constexpr Point(T first, T second) : a(first), b(second) {}
+		constexpr Point(T first, T second) : a(first), b(second)
+		{}
 
 		// Construct a point with coordinates (0, 0)
-		constexpr Point() : Point(0, 0) {}
+		constexpr Point() : Point(0, 0)
+		{}
 
 		// Return the x-coordinate
 		constexpr T x() const
@@ -65,7 +71,7 @@ namespace ms
 		{
 			return static_cast<T>(
 				std::sqrt(a * a + b * b)
-				);
+			);
 		}
 
 		// Check whether the coordinates are equal
@@ -135,81 +141,81 @@ namespace ms
 		}
 
 		// Check whether point is equivalent to the specified point
-		constexpr bool operator == (const Point<T>& v) const
+		constexpr bool operator==(const Point<T>& v) const
 		{
 			return a == v.a && b == v.b;
 		}
 
 		// Check whether point is not equivalent to the specified point
-		constexpr bool operator != (const Point<T>& v) const
+		constexpr bool operator!=(const Point<T>& v) const
 		{
 			return !(*this == v);
 		}
 
 		// Shift the this point by the amounts defined by another point
-		void operator += (Point<T> v)
+		void operator+=(Point<T> v)
 		{
 			a += v.a;
 			b += v.b;
 		}
 
 		// Shift the this point in reverse direction by the amounts defined by another point
-		void operator -= (Point<T> v)
+		void operator-=(Point<T> v)
 		{
 			a -= v.a;
 			b -= v.b;
 		}
 
 		// Return a point whose coordinates are the negation of this point's coordinates
-		constexpr Point<T> operator - () const
+		constexpr Point<T> operator-() const
 		{
-			return { -a, -b };
+			return {-a, -b};
 		}
 
 		// Return a point whose coordinates have been added the specified amount
-		constexpr Point<T> operator + (T v) const
+		constexpr Point<T> operator+(T v) const
 		{
-			return { a + v, b + v };
+			return {a + v, b + v};
 		}
 
 		// Return a point whose coordinates have been subtracted the specified amount
-		constexpr Point<T> operator - (T v) const
+		constexpr Point<T> operator-(T v) const
 		{
-			return { a - v, b - v };
+			return {a - v, b - v};
 		}
 
 		// Return a point whose coordinates have been multiplied by the specified amount
-		constexpr Point<T> operator * (T v) const
+		constexpr Point<T> operator*(T v) const
 		{
-			return { a * v, b * v };
+			return {a * v, b * v};
 		}
 
 		// Return a point whose coordinates have been divided by the specified amount
-		constexpr Point<T> operator / (T v) const
+		constexpr Point<T> operator/(T v) const
 		{
-			return { a / v, b / v };
+			return {a / v, b / v};
 		}
 
 		// Return a point whose coordinates are the sum of this and another points coordinates
-		constexpr Point<T> operator + (Point<T> v) const
+		constexpr Point<T> operator+(Point<T> v) const
 		{
-			return { a + v.a, b + v.b };
+			return {a + v.a, b + v.b};
 		}
 
 		// Return a point whose coordinates are the difference of this and another points coordinates
-		constexpr Point<T> operator - (Point<T> v) const
+		constexpr Point<T> operator-(Point<T> v) const
 		{
-			return { a - v.a, b - v.b };
+			return {a - v.a, b - v.b};
 		}
 
 		// Return a point whose coordinates are the product of this and another points coordinates
-		constexpr Point<T> operator * (Point<T> v) const
+		constexpr Point<T> operator*(Point<T> v) const
 		{
-			return { a / v.a, b / v.b };
+			return {a / v.a, b / v.b};
 		}
 
 		// Return a point whose coordinates are the division of this and another points coordinates
-		constexpr Point<T> operator / (Point<T> v) const
+		constexpr Point<T> operator/(Point<T> v) const
 		{
 			return {
 				a / (v.a == 0 ? 1 : v.a),

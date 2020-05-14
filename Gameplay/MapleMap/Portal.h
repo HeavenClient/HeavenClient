@@ -65,7 +65,7 @@ namespace ms
 			{}
 		};
 
-		Portal(const Animation *animation, Type type, std::string name, bool intramap, Point<int16_t> position,
+		Portal(const Animation* animation, Type type, std::string name, bool intramap, Point<int16_t> position,
 			   int32_t tomap, std::string toname);
 
 		Portal();
@@ -85,7 +85,7 @@ namespace ms
 		WarpInfo getwarpinfo() const;
 
 	private:
-		const Animation *animation;
+		const Animation* animation;
 		Type type;
 		std::string name;
 		Point<int16_t> position;

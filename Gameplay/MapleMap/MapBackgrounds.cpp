@@ -20,7 +20,9 @@
 #include "../../Graphics/GraphicsGL.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -104,7 +106,8 @@ namespace ms
 		if (moveobj.hmobile())
 		{
 			x = moveobj.get_absolute_x(viewx, alpha);
-		} else
+		}
+		else
 		{
 			double shift_x = rx * (WOFFSET - viewx) / 100 + WOFFSET;
 			x = moveobj.get_absolute_x(shift_x, alpha);
@@ -115,7 +118,8 @@ namespace ms
 		if (moveobj.vmobile())
 		{
 			y = moveobj.get_absolute_y(viewy, alpha);
-		} else
+		}
+		else
 		{
 			double shift_y = ry * (HOFFSET - viewy) / 100 + HOFFSET;
 			y = moveobj.get_absolute_y(shift_y, alpha);
@@ -185,22 +189,22 @@ namespace ms
 		if (black)
 			GraphicsGL::get().drawscreenfill(0.0f, 0.0f, 0.0f, 1.0f);
 
-		for (auto &background : backgrounds)
+		for (auto& background : backgrounds)
 			background.draw(viewx, viewy, alpha);
 	}
 
 	void MapBackgrounds::drawforegrounds(double viewx, double viewy, float alpha) const
 	{
-		for (auto &foreground : foregrounds)
+		for (auto& foreground : foregrounds)
 			foreground.draw(viewx, viewy, alpha);
 	}
 
 	void MapBackgrounds::update()
 	{
-		for (auto &background : backgrounds)
+		for (auto& background : backgrounds)
 			background.update();
 
-		for (auto &foreground : foregrounds)
+		for (auto& foreground : foregrounds)
 			foreground.update();
 	}
 }

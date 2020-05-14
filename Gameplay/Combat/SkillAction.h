@@ -29,20 +29,20 @@ namespace ms
 		virtual ~SkillAction()
 		{}
 
-		virtual void apply(Char &target, Attack::Type atype) const = 0;
+		virtual void apply(Char& target, Attack::Type atype) const = 0;
 	};
 
 	class NoAction : public SkillAction
 	{
 	public:
-		void apply(Char &, Attack::Type) const override
+		void apply(Char&, Attack::Type) const override
 		{}
 	};
 
 	class RegularAction : public SkillAction
 	{
 	public:
-		void apply(Char &target, Attack::Type atype) const override;
+		void apply(Char& target, Attack::Type atype) const override;
 	};
 
 	class SingleAction : public SkillAction
@@ -50,7 +50,7 @@ namespace ms
 	public:
 		SingleAction(nl::node src);
 
-		void apply(Char &target, Attack::Type atype) const override;
+		void apply(Char& target, Attack::Type atype) const override;
 
 	private:
 		std::string action;
@@ -61,7 +61,7 @@ namespace ms
 	public:
 		TwoHandedAction(nl::node src);
 
-		void apply(Char &target, Attack::Type atype) const override;
+		void apply(Char& target, Attack::Type atype) const override;
 
 	private:
 		BoolPair<std::string> actions;
@@ -72,7 +72,7 @@ namespace ms
 	public:
 		ByLevelAction(nl::node src, int32_t skillid);
 
-		void apply(Char &target, Attack::Type atype) const override;
+		void apply(Char& target, Attack::Type atype) const override;
 
 	private:
 		std::map<int32_t, std::string> actions;

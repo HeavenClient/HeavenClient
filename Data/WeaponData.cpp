@@ -18,7 +18,9 @@
 #include "WeaponData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -43,7 +45,8 @@ namespace ms
 		{
 			usesounds[false] = soundsrc["Attack"];
 			usesounds[true] = soundsrc["Attack2"];
-		} else
+		}
+		else
 		{
 			usesounds[false] = soundsrc["Attack"];
 			usesounds[true] = soundsrc["Attack"];
@@ -122,12 +125,12 @@ namespace ms
 		return usesounds[degenerate];
 	}
 
-	const std::string &WeaponData::get_afterimage() const
+	const std::string& WeaponData::get_afterimage() const
 	{
 		return afterimage;
 	}
 
-	const EquipData &WeaponData::get_equipdata() const
+	const EquipData& WeaponData::get_equipdata() const
 	{
 		return equipdata;
 	}

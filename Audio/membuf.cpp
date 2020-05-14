@@ -4,11 +4,11 @@
 
 #include "membuf.h"
 
-membuf::membuf(const char *data, unsigned int len)
-		: begin_(data), end_(data + len), current_(data)
+membuf::membuf(const char* data, unsigned int len)
+	: begin_(data), end_(data + len), current_(data)
 {
-	this->setg(const_cast<char_type *>(begin_), const_cast<char_type *>(begin_),
-			   const_cast<char_type *>(end_));
+	this->setg(const_cast<char_type*>(begin_), const_cast<char_type*>(begin_),
+			   const_cast<char_type*>(end_));
 }
 
 membuf::pos_type membuf::seekoff(off_type off,

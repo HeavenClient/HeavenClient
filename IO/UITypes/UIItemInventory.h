@@ -31,7 +31,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIItemInventory(const Inventory &inventory);
+		UIItemInventory(const Inventory& inventory);
 
 		void draw(float inter) const override;
 
@@ -39,7 +39,7 @@ namespace ms
 
 		void doubleclick(Point<int16_t> position) override;
 
-		bool send_icon(const Icon &icon, Point<int16_t> position) override;
+		bool send_icon(const Icon& icon, Point<int16_t> position) override;
 
 		void toggle_active() override;
 
@@ -87,14 +87,14 @@ namespace ms
 
 		Point<int16_t> get_tabpos(InventoryType::Id tab) const;
 
-		Icon *get_icon(int16_t slot);
+		Icon* get_icon(int16_t slot);
 
 		void set_full(bool enabled);
 
 		class ItemIcon : public Icon::Type
 		{
 		public:
-			ItemIcon(const UIItemInventory &parent, InventoryType::Id sourcetab, EquipSlot::Id eqsource, int16_t source,
+			ItemIcon(const UIItemInventory& parent, InventoryType::Id sourcetab, EquipSlot::Id eqsource, int16_t source,
 					 int32_t item_id, int16_t count, bool untradable, bool cashitem);
 
 			void drop_on_stage() const override;
@@ -117,7 +117,7 @@ namespace ms
 			int16_t count;
 			bool untradable;
 			bool cashitem;
-			const UIItemInventory &parent;
+			const UIItemInventory& parent;
 		};
 
 		static constexpr uint16_t ROWS = 8;
@@ -162,7 +162,7 @@ namespace ms
 			BT_CASHSHOP
 		};
 
-		const Inventory &inventory;
+		const Inventory& inventory;
 
 		Animation newitemslot;
 		Animation newitemtab;

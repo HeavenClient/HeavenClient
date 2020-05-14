@@ -67,7 +67,8 @@ namespace ms
 		{
 			lt = parentpos + position - textures[state].get_origin();
 			rb = lt + textures[state].get_dimensions();
-		} else
+		}
+		else
 		{
 			lt = parentpos + position - animations[state].get_origin();
 			rb = lt + animations[state].get_dimensions();

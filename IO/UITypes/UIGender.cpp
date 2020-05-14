@@ -26,7 +26,9 @@
 #include "../../Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -64,10 +66,12 @@ namespace ms
 		if (CUR_TIMESTEP == 0)
 		{
 			gender_sprites[0].draw(position + gender_pos);
-		} else if (CUR_TIMESTEP == Constants::TIMESTEP * 3)
+		}
+		else if (CUR_TIMESTEP == Constants::TIMESTEP * 3)
 		{
 			gender_sprites[1].draw(position + gender_pos);
-		} else if (CUR_TIMESTEP >= Constants::TIMESTEP * 6)
+		}
+		else if (CUR_TIMESTEP >= Constants::TIMESTEP * 6)
 		{
 			gender_sprites[2].draw(position + gender_pos);
 
@@ -85,7 +89,7 @@ namespace ms
 
 	Cursor::State UIGender::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
-		auto &combobox = buttons[Buttons::SELECT];
+		auto& combobox = buttons[Buttons::SELECT];
 
 		if (combobox->is_pressed() && combobox->in_combobox(cursorpos))
 			if (Cursor::State new_state = combobox->send_cursor(clicked, cursorpos))

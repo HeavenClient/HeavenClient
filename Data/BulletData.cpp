@@ -18,7 +18,9 @@
 #include "BulletData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -48,12 +50,12 @@ namespace ms
 		return watk;
 	}
 
-	const Animation &BulletData::get_animation() const
+	const Animation& BulletData::get_animation() const
 	{
 		return bullet;
 	}
 
-	const ItemData &BulletData::get_itemdata() const
+	const ItemData& BulletData::get_itemdata() const
 	{
 		return itemdata;
 	}

@@ -29,7 +29,7 @@ namespace ms
 		virtual ~SkillHitEffect()
 		{}
 
-		virtual void apply(const AttackUser &user, Mob &target) const = 0;
+		virtual void apply(const AttackUser& user, Mob& target) const = 0;
 
 	protected:
 		class Effect
@@ -42,7 +42,7 @@ namespace ms
 				z = src["z"];
 			}
 
-			void apply(Mob &target, bool flip) const
+			void apply(Mob& target, bool flip) const
 			{
 				target.show_effect(animation, pos, z, flip);
 			}
@@ -58,7 +58,7 @@ namespace ms
 	class NoHitEffect : public SkillHitEffect
 	{
 	public:
-		void apply(const AttackUser &, Mob &) const override
+		void apply(const AttackUser&, Mob&) const override
 		{}
 	};
 
@@ -68,7 +68,7 @@ namespace ms
 	public:
 		SingleHitEffect(nl::node src);
 
-		void apply(const AttackUser &user, Mob &target) const override;
+		void apply(const AttackUser& user, Mob& target) const override;
 
 	private:
 		Effect effect;
@@ -80,7 +80,7 @@ namespace ms
 	public:
 		TwoHandedHitEffect(nl::node src);
 
-		void apply(const AttackUser &user, Mob &target) const override;
+		void apply(const AttackUser& user, Mob& target) const override;
 
 	private:
 		BoolPair<Effect> effects;
@@ -92,7 +92,7 @@ namespace ms
 	public:
 		ByLevelHitEffect(nl::node src);
 
-		void apply(const AttackUser &user, Mob &target) const override;
+		void apply(const AttackUser& user, Mob& target) const override;
 
 	private:
 		std::map<uint16_t, Effect> effects;
@@ -104,7 +104,7 @@ namespace ms
 	public:
 		ByLevelTwoHandedHitEffect(nl::node src);
 
-		void apply(const AttackUser &user, Mob &target) const override;
+		void apply(const AttackUser& user, Mob& target) const override;
 
 	private:
 		std::map<uint16_t, BoolPair<Effect>> effects;
@@ -116,7 +116,7 @@ namespace ms
 	public:
 		BySkillLevelHitEffect(nl::node src);
 
-		void apply(const AttackUser &user, Mob &target) const override;
+		void apply(const AttackUser& user, Mob& target) const override;
 
 	private:
 		std::map<int32_t, Effect> effects;

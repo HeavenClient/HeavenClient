@@ -24,13 +24,15 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
 	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler)
-			: okhandler(okhandler), cancelhandler(cancelhandler)
+		: okhandler(okhandler), cancelhandler(cancelhandler)
 	{
 		multiple = false;
 
@@ -59,7 +61,8 @@ namespace ms
 
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(70, 106));
 			buttons[Buttons::NO] = std::make_unique<MapleButton>(Notice["BtNo"], Point<int16_t>(130, 106));
-		} else
+		}
+		else
 		{
 			buttons[Buttons::YES] = std::make_unique<MapleButton>(Notice["BtYes"], Point<int16_t>(100, 106));
 		}
@@ -89,7 +92,8 @@ namespace ms
 					cancelhandler();
 
 				deactivate();
-			} else if (keycode == KeyAction::RETURN)
+			}
+			else if (keycode == KeyAction::RETURN)
 			{
 				okhandler();
 				deactivate();
@@ -136,7 +140,8 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			} else if (keycode == KeyAction::RETURN)
+			}
+			else if (keycode == KeyAction::RETURN)
 			{
 				UI::get().quit();
 				deactivate();
@@ -159,7 +164,8 @@ namespace ms
 		return Button::PRESSED;
 	}
 
-	UIClassConfirm::UIClassConfirm(uint16_t selected_class, bool unavailable, std::function<void()> okhandler) : okhandler(okhandler)
+	UIClassConfirm::UIClassConfirm(uint16_t selected_class, bool unavailable, std::function<void()> okhandler)
+		: okhandler(okhandler)
 	{
 		nl::node RaceSelect = nl::nx::ui["Login.img"]["RaceSelect_new"];
 		nl::node type = unavailable ? RaceSelect["deny"] : RaceSelect["confirm"];
@@ -172,7 +178,7 @@ namespace ms
 		int16_t pos_x = (backgrnd_x - race_x) / 2;
 
 		sprites.emplace_back(backgrnd);
-		sprites.emplace_back(race, Point<int16_t>(pos_x, 10) + (Point<int16_t>)race["origin"]);
+		sprites.emplace_back(race, Point<int16_t>(pos_x, 10) + (Point<int16_t>) race["origin"]);
 
 		if (unavailable)
 		{
@@ -190,7 +196,7 @@ namespace ms
 
 	Cursor::State UIClassConfirm::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
-		for (auto &btit : buttons)
+		for (auto& btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -199,7 +205,8 @@ namespace ms
 					Sound(Sound::Name::BUTTONOVER).play();
 
 					btit.second->set_state(Button::State::MOUSEOVER);
-				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				}
+				else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -208,7 +215,8 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 					}
 				}
-			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			}
+			else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}
@@ -325,7 +333,8 @@ namespace ms
 			if (keycode == KeyAction::Id::RETURN)
 			{
 				confirm();
-			} else if (!login && escape)
+			}
+			else if (!login && escape)
 			{
 				deactivate();
 

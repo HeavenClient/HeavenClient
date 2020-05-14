@@ -83,12 +83,12 @@ namespace ms
 		{
 			switch (type)
 			{
-			case Attack::Type::CLOSE:
-				return OutPacket::Opcode::CLOSE_ATTACK;
-			case Attack::Type::RANGED:
-				return OutPacket::Opcode::RANGED_ATTACK;
-			default:
-				return OutPacket::Opcode::MAGIC_ATTACK;
+				case Attack::Type::CLOSE:
+					return OutPacket::Opcode::CLOSE_ATTACK;
+				case Attack::Type::RANGED:
+					return OutPacket::Opcode::RANGED_ATTACK;
+				default:
+					return OutPacket::Opcode::MAGIC_ATTACK;
 			}
 		}
 	};
@@ -103,7 +103,8 @@ namespace ms
 			TOUCH = -1
 		};
 
-		TakeDamagePacket(int8_t from, uint8_t element, int32_t damage, int32_t mobid, int32_t oid, uint8_t direction) : OutPacket(OutPacket::Opcode::TAKE_DAMAGE)
+		TakeDamagePacket(int8_t from, uint8_t element, int32_t damage, int32_t mobid, int32_t oid, uint8_t direction)
+			: OutPacket(OutPacket::Opcode::TAKE_DAMAGE)
 		{
 			write_time();
 			write_byte(from);
@@ -115,7 +116,10 @@ namespace ms
 		}
 
 		// From mob attack result
-		TakeDamagePacket(const MobAttackResult& result, From from) : TakeDamagePacket(from, 0, result.damage, result.mobid, result.oid, result.direction) {}
+		TakeDamagePacket(const MobAttackResult& result, From from) : TakeDamagePacket(from, 0, result.damage,
+																					  result.mobid, result.oid,
+																					  result.direction)
+		{}
 	};
 
 	// Packet which notifies the server of a skill usage

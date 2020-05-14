@@ -33,7 +33,7 @@ namespace ms
 
 		int32_t get_oid() const;
 
-		std::unique_ptr<MapObject> instantiate(const Physics &physics) const;
+		std::unique_ptr<MapObject> instantiate(const Physics& physics) const;
 
 	private:
 		int32_t oid;
@@ -73,7 +73,7 @@ namespace ms
 
 		int32_t get_oid() const;
 
-		std::unique_ptr<MapObject> instantiate(const Physics &physics) const;
+		std::unique_ptr<MapObject> instantiate(const Physics& physics) const;
 
 	private:
 		int32_t oid;
@@ -94,9 +94,9 @@ namespace ms
 
 		int32_t get_oid() const;
 
-		std::unique_ptr<MapObject> instantiate(const Animation &icon) const;
+		std::unique_ptr<MapObject> instantiate(const Animation& icon) const;
 
-		std::unique_ptr<MapObject> instantiate(const Texture &icon) const;
+		std::unique_ptr<MapObject> instantiate(const Texture& icon) const;
 
 	private:
 		int32_t oid;
@@ -113,7 +113,7 @@ namespace ms
 	class CharSpawn
 	{
 	public:
-		CharSpawn(int32_t cid, const LookEntry &look, uint8_t level, int16_t job, const std::string &name,
+		CharSpawn(int32_t cid, const LookEntry& look, uint8_t level, int16_t job, const std::string& name,
 				  int8_t stance, Point<int16_t> position);
 
 		int32_t get_cid() const;

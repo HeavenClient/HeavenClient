@@ -32,7 +32,7 @@ namespace ms
 		static constexpr bool FOCUSED = true;
 		static constexpr bool TOGGLED = true;
 
-		UIShop(const CharLook &charlook, const Inventory &inventory);
+		UIShop(const CharLook& charlook, const Inventory& inventory);
 
 		void draw(float alpha) const override;
 
@@ -108,8 +108,8 @@ namespace ms
 			NUM_BUTTONS
 		};
 
-		const CharLook &charlook;
-		const Inventory &inventory;
+		const CharLook& charlook;
+		const Inventory& inventory;
 
 		Texture npc;
 		Texture buy_selection;
@@ -187,7 +187,7 @@ namespace ms
 
 			void reset();
 
-			void draw(Point<int16_t> position, const Texture &selected) const;
+			void draw(Point<int16_t> position, const Texture& selected) const;
 
 			void show_item(int16_t slot);
 
@@ -210,9 +210,9 @@ namespace ms
 
 			void reset();
 
-			void change_tab(const Inventory &inventory, InventoryType::Id type, Texture meso);
+			void change_tab(const Inventory& inventory, InventoryType::Id type, Texture meso);
 
-			void draw(Point<int16_t> position, const Texture &selected) const;
+			void draw(Point<int16_t> position, const Texture& selected) const;
 
 			void show_item(int16_t slot);
 

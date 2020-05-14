@@ -23,7 +23,9 @@
 #include <windef.h>
 #include <WinUser.h>
 #elif defined(__linux__)
+
 #include <X11/Xlib.h>
+
 #else defined(__APPLE__)
 #include <CoreGraphics/CGDisplayConfiguration.h>
 #endif
@@ -49,9 +51,9 @@ namespace ms
 			Configuration::get().set_max_height(desktop.bottom);
 #elif defined(__linux__)
 			Display* disp = XOpenDisplay(NULL);
-			Screen*  scrn = DefaultScreenOfDisplay(disp);
+			Screen* scrn = DefaultScreenOfDisplay(disp);
 			int height = scrn->height;
-			int width  = scrn->width;
+			int width = scrn->width;
 
 			Configuration::get().set_max_width(width);
 			Configuration::get().set_max_height(height);

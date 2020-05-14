@@ -40,7 +40,9 @@ namespace ms
 
 	private:
 		bool handle_stat(MapleStat::Id stat, InPacket& recv) const;
+
 		bool need_statsinfo_update(MapleStat::Id stat) const;
+
 		bool need_skillbook_update(MapleStat::Id stat) const;
 	};
 

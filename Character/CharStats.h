@@ -27,7 +27,7 @@ namespace ms
 	class CharStats
 	{
 	public:
-		CharStats(const StatsEntry &entry);
+		CharStats(const StatsEntry& entry);
 
 		CharStats();
 
@@ -42,7 +42,7 @@ namespace ms
 		void add_value(EquipStat::Id stat, int32_t value);
 
 		void add_percent(EquipStat::Id stat, float percent);
-		
+
 		void close_totalstats();
 
 		void set_weapontype(Weapon::Type weapontype);
@@ -68,7 +68,7 @@ namespace ms
 		int32_t get_total(EquipStat::Id stat) const;
 
 		int32_t get_buffdelta(EquipStat::Id stat) const;
-		
+
 		Rectangle<int16_t> get_range() const;
 
 		void set_mapid(int32_t id);
@@ -79,9 +79,9 @@ namespace ms
 
 		int64_t get_exp() const;
 
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
-		const std::string &get_jobname() const;
+		const std::string& get_jobname() const;
 
 		Weapon::Type get_weapontype() const;
 
@@ -115,7 +115,7 @@ namespace ms
 
 		int8_t get_attackspeed() const;
 
-		const Job &get_job() const;
+		const Job& get_job() const;
 
 		bool get_female() const;
 

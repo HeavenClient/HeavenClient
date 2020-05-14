@@ -20,7 +20,9 @@
 #include "../../Constants.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -37,7 +39,8 @@ namespace ms
 					typestr = "dead";
 					break;
 			}
-		} else
+		}
+		else
 		{
 			typestr = std::to_string(type);
 		}
@@ -55,7 +58,7 @@ namespace ms
 	ChatBalloon::ChatBalloon() : ChatBalloon(0)
 	{}
 
-	void ChatBalloon::change_text(const std::string &text)
+	void ChatBalloon::change_text(const std::string& text)
 	{
 		textlabel.change_text(text);
 
@@ -143,7 +146,7 @@ namespace ms
 		textlabel.draw(DrawArgument(left + 6, top - 5));
 	}
 
-	void ChatBalloonHorizontal::change_text(const std::string &text)
+	void ChatBalloonHorizontal::change_text(const std::string& text)
 	{
 		textlabel.change_text(text);
 	}

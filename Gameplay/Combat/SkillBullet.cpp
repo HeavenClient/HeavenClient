@@ -22,7 +22,7 @@
 
 namespace ms
 {
-	Animation RegularBullet::get(const Char &, int32_t bulletid) const
+	Animation RegularBullet::get(const Char&, int32_t bulletid) const
 	{
 		return BulletData::get(bulletid).get_animation();
 	}
@@ -32,7 +32,7 @@ namespace ms
 		ball = src["ball"];
 	}
 
-	Animation SingleBullet::get(const Char &, int32_t) const
+	Animation SingleBullet::get(const Char&, int32_t) const
 	{
 		return ball.animation;
 	}
@@ -48,7 +48,7 @@ namespace ms
 		}
 	}
 
-	Animation BySkillLevelBullet::get(const Char &user, int32_t) const
+	Animation BySkillLevelBullet::get(const Char& user, int32_t) const
 	{
 		int32_t level = user.get_skilllevel(skillid);
 		auto iter = bullets.find(level);

@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	OtherChar::OtherChar(int32_t id, const CharLook &lk, uint8_t lvl, int16_t jb, const std::string &nm, int8_t st,
+	OtherChar::OtherChar(int32_t id, const CharLook& lk, uint8_t lvl, int16_t jb, const std::string& nm, int8_t st,
 						 Point<int16_t> pos) : Char(id, lk, nm)
 	{
 		level = lvl;
@@ -37,18 +37,20 @@ namespace ms
 		attacking = false;
 	}
 
-	int8_t OtherChar::update(const Physics &physics)
+	int8_t OtherChar::update(const Physics& physics)
 	{
 		if (timer > 1)
 		{
 			timer--;
-		} else if (timer == 1)
+		}
+		else if (timer == 1)
 		{
 			if (!movements.empty())
 			{
 				lastmove = movements.front();
 				movements.pop();
-			} else
+			}
+			else
 			{
 				timer = 0;
 			}
@@ -74,7 +76,7 @@ namespace ms
 		return get_layer();
 	}
 
-	void OtherChar::send_movement(const std::vector<Movement> &newmoves)
+	void OtherChar::send_movement(const std::vector<Movement>& newmoves)
 	{
 		movements.push(newmoves.back());
 
@@ -95,7 +97,7 @@ namespace ms
 		attackspeed = as;
 	}
 
-	void OtherChar::update_look(const LookEntry &newlook)
+	void OtherChar::update_look(const LookEntry& newlook)
 	{
 		look = newlook;
 

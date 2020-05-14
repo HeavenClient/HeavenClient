@@ -28,7 +28,7 @@ namespace ms
 		virtual ~SkillUseEffect()
 		{}
 
-		virtual void apply(Char &target) const = 0;
+		virtual void apply(Char& target) const = 0;
 
 	protected:
 		class Effect
@@ -40,7 +40,7 @@ namespace ms
 				z = src["z"];
 			}
 
-			void apply(Char &target) const
+			void apply(Char& target) const
 			{
 				target.show_attack_effect(animation, z);
 			}
@@ -55,7 +55,7 @@ namespace ms
 	class NoUseEffect : public SkillUseEffect
 	{
 	public:
-		void apply(Char &) const override
+		void apply(Char&) const override
 		{}
 	};
 
@@ -65,7 +65,7 @@ namespace ms
 	public:
 		SingleUseEffect(nl::node src);
 
-		void apply(Char &target) const override;
+		void apply(Char& target) const override;
 
 	private:
 		Effect effect;
@@ -78,7 +78,7 @@ namespace ms
 	public:
 		TwoHandedUseEffect(nl::node src);
 
-		void apply(Char &target) const override;
+		void apply(Char& target) const override;
 
 	private:
 		BoolPair<Effect> effects;
@@ -90,7 +90,7 @@ namespace ms
 	public:
 		MultiUseEffect(nl::node src);
 
-		void apply(Char &target) const override;
+		void apply(Char& target) const override;
 
 	private:
 		std::vector<Effect> effects;
@@ -102,7 +102,7 @@ namespace ms
 	public:
 		ByLevelUseEffect(nl::node src);
 
-		void apply(Char &target) const override;
+		void apply(Char& target) const override;
 
 	private:
 		std::map<uint16_t, Effect> effects;
@@ -112,6 +112,6 @@ namespace ms
 	class IronBodyUseEffect : public SkillUseEffect
 	{
 	public:
-		void apply(Char &target) const override;
+		void apply(Char& target) const override;
 	};
 }

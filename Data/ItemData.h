@@ -56,16 +56,16 @@ namespace ms
 		int8_t get_gender() const;
 
 		// Returns the item's name loaded from the String.nx file.
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
 		// Returns the item's description loaded from the String.nx file.
-		const std::string &get_desc() const;
+		const std::string& get_desc() const;
 
 		// Return the item category (also the node name).
-		const std::string &get_category() const;
+		const std::string& get_category() const;
 
 		// Returns one of the item's icons. For each item there is a 'raw' icon and an icon with a drop shadow.
-		const Texture &get_icon(bool raw) const;
+		const Texture& get_icon(bool raw) const;
 
 	private:
 		// Allow the cache to use the constructor

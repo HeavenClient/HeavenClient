@@ -25,7 +25,8 @@ namespace ms
 	class Nominal
 	{
 	public:
-		constexpr Nominal() : now(T()), before(T()), threshold(0.0f) {}
+		constexpr Nominal() : now(T()), before(T()), threshold(0.0f)
+		{}
 
 		T get() const
 		{
@@ -65,32 +66,32 @@ namespace ms
 			threshold = thrs;
 		}
 
-		bool operator == (T value) const
+		bool operator==(T value) const
 		{
 			return now == value;
 		}
 
-		bool operator != (T value) const
+		bool operator!=(T value) const
 		{
 			return now != value;
 		}
 
-		T operator + (T value) const
+		T operator+(T value) const
 		{
 			return now + value;
 		}
 
-		T operator - (T value) const
+		T operator-(T value) const
 		{
 			return now - value;
 		}
 
-		T operator * (T value) const
+		T operator*(T value) const
 		{
 			return now * value;
 		}
 
-		T operator / (T value) const
+		T operator/(T value) const
 		{
 			return now / value;
 		}
@@ -136,90 +137,90 @@ namespace ms
 			return before == now;
 		}
 
-		void operator = (T value)
+		void operator=(T value)
 		{
 			before = now;
 			now = value;
 		}
 
-		void operator += (T value)
+		void operator+=(T value)
 		{
 			before = now;
 			now += value;
 		}
 
-		void operator -= (T value)
+		void operator-=(T value)
 		{
 			before = now;
 			now -= value;
 		}
 
-		bool operator == (T value) const
+		bool operator==(T value) const
 		{
 			return now == value;
 		}
 
-		bool operator != (T value) const
+		bool operator!=(T value) const
 		{
 			return now != value;
 		}
 
-		bool operator < (T value) const
+		bool operator<(T value) const
 		{
 			return now < value;
 		}
 
-		bool operator <= (T value) const
+		bool operator<=(T value) const
 		{
 			return now <= value;
 		}
 
-		bool operator > (T value) const
+		bool operator>(T value) const
 		{
 			return now > value;
 		}
 
-		bool operator >= (T value) const
+		bool operator>=(T value) const
 		{
 			return now >= value;
 		}
 
-		T operator + (T value) const
+		T operator+(T value) const
 		{
 			return now + value;
 		}
 
-		T operator - (T value) const
+		T operator-(T value) const
 		{
 			return now - value;
 		}
 
-		T operator * (T value) const
+		T operator*(T value) const
 		{
 			return now * value;
 		}
 
-		T operator / (T value) const
+		T operator/(T value) const
 		{
 			return now / value;
 		}
 
-		T operator + (Linear<T> value) const
+		T operator+(Linear<T> value) const
 		{
 			return now + value.get();
 		}
 
-		T operator - (Linear<T> value) const
+		T operator-(Linear<T> value) const
 		{
 			return now - value.get();
 		}
 
-		T operator * (Linear<T> value) const
+		T operator*(Linear<T> value) const
 		{
 			return now * value.get();
 		}
 
-		T operator / (Linear<T> value) const
+		T operator/(Linear<T> value) const
 		{
 			return now / value.get();
 		}

@@ -24,12 +24,13 @@ namespace ms
 	SingleHitEffect::SingleHitEffect(nl::node src) : effect(src["hit"]["0"])
 	{}
 
-	void SingleHitEffect::apply(const AttackUser &user, Mob &target) const
+	void SingleHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		effect.apply(target, user.flip);
 	}
 
-	TwoHandedHitEffect::TwoHandedHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"]) {}
+	TwoHandedHitEffect::TwoHandedHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"])
+	{}
 
 	void TwoHandedHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
@@ -45,7 +46,7 @@ namespace ms
 		}
 	}
 
-	void ByLevelHitEffect::apply(const AttackUser &user, Mob &target) const
+	void ByLevelHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		if (effects.empty())
 			return;
@@ -73,7 +74,7 @@ namespace ms
 		}
 	}
 
-	void ByLevelTwoHandedHitEffect::apply(const AttackUser &user, Mob &target) const
+	void ByLevelTwoHandedHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		if (effects.empty())
 			return;
@@ -97,7 +98,7 @@ namespace ms
 		}
 	}
 
-	void BySkillLevelHitEffect::apply(const AttackUser &user, Mob &target) const
+	void BySkillLevelHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		auto iter = effects.find(user.skilllevel);
 

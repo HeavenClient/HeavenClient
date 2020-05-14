@@ -22,9 +22,9 @@
 namespace ms
 {
 	EquipQuality::Id
-	EquipQuality::check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t> &stats)
+	EquipQuality::check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats)
 	{
-		const EquipData &data = EquipData::get(item_id);
+		const EquipData& data = EquipData::get(item_id);
 
 		int16_t delta = 0;
 

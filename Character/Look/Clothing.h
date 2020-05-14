@@ -66,10 +66,10 @@ namespace ms
 		};
 
 		// Construct a new equip.
-		Clothing(int32_t itemid, const BodyDrawInfo &drawinfo);
+		Clothing(int32_t itemid, const BodyDrawInfo& drawinfo);
 
 		// Draw the equip.
-		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const;
+		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const;
 
 		// Check if a part of the equip lies on the specified layer while in the specified stance.
 		bool contains_layer(Stance::Id stance, Layer layer) const;
@@ -93,7 +93,7 @@ namespace ms
 		Stance::Id get_walk() const;
 
 		// Return the vslot, used to distinguish some layering types.
-		const std::string &get_vslot() const;
+		const std::string& get_vslot() const;
 
 	private:
 		EnumMap<Stance::Id, EnumMap<Layer, std::unordered_multimap<uint8_t, Texture>, Layer::NUM_LAYERS>> stances;

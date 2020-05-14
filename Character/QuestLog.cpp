@@ -19,12 +19,12 @@
 
 namespace ms
 {
-	void QuestLog::add_started(int16_t qid, const std::string &qdata)
+	void QuestLog::add_started(int16_t qid, const std::string& qdata)
 	{
 		started[qid] = qdata;
 	}
 
-	void QuestLog::add_in_progress(int16_t qid, int16_t qidl, const std::string &qdata)
+	void QuestLog::add_in_progress(int16_t qid, int16_t qidl, const std::string& qdata)
 	{
 		in_progress[qid] = make_pair(qidl, qdata);
 	}

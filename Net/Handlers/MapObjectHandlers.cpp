@@ -35,11 +35,11 @@ namespace ms
 		uint8_t level = recv.read_byte();
 		std::string name = recv.read_string();
 
-		recv.read_string();	// guildname
-		recv.read_short();	// guildlogobg
-		recv.read_byte();	// guildlogobgcolor
-		recv.read_short();	// guildlogo
-		recv.read_byte();	// guildlogocolor
+		recv.read_string();    // guildname
+		recv.read_short();    // guildlogobg
+		recv.read_byte();    // guildlogobgcolor
+		recv.read_short();    // guildlogo
+		recv.read_byte();    // guildlogocolor
 
 		recv.skip(8);
 
@@ -76,14 +76,14 @@ namespace ms
 
 			if (available == 1)
 			{
-				recv.read_byte();	// 'byte2'
-				recv.read_int();	// petid
-				recv.read_string();	// name
-				recv.read_int();	// unique id
+				recv.read_byte();    // 'byte2'
+				recv.read_int();    // petid
+				recv.read_string();    // name
+				recv.read_int();    // unique id
 				recv.read_int();
-				recv.read_point();	// pos
-				recv.read_byte();	// stance
-				recv.read_int();	// fhid
+				recv.read_point();    // pos
+				recv.read_byte();    // stance
+				recv.read_int();    // fhid
 			}
 			else
 			{
@@ -106,7 +106,7 @@ namespace ms
 		recv.read_byte(); // team
 
 		Stage::get().get_chars().spawn(
-			{ cid, look, level, job, name, stance, position }
+			{cid, look, level, job, name, stance, position}
 		);
 	}
 
@@ -227,7 +227,7 @@ namespace ms
 		recv.skip(4);
 
 		Stage::get().get_mobs().spawn(
-			{ oid, id, 0, stance, fh, effect == -2, team, position }
+			{oid, id, 0, stance, fh, effect == -2, team, position}
 		);
 	}
 
@@ -280,7 +280,7 @@ namespace ms
 				recv.skip(4);
 
 				Stage::get().get_mobs().spawn(
-					{ oid, id, mode, stance, fh, effect == -2, team, position }
+					{oid, id, mode, stance, fh, effect == -2, team, position}
 				);
 			}
 			else
@@ -329,7 +329,7 @@ namespace ms
 		recv.read_short(); // 'ry'
 
 		Stage::get().get_npcs().spawn(
-			{ oid, id, position, flip, fh }
+			{oid, id, position, flip, fh}
 		);
 	}
 
@@ -349,12 +349,12 @@ namespace ms
 			bool flip = recv.read_bool();
 			uint16_t fh = recv.read_short();
 
-			recv.read_short();	// 'rx'
-			recv.read_short();	// 'ry'
-			recv.read_bool();	// 'minimap'
+			recv.read_short();    // 'rx'
+			recv.read_short();    // 'ry'
+			recv.read_bool();    // 'minimap'
 
 			Stage::get().get_npcs().spawn(
-				{ oid, id, position, flip, fh }
+				{oid, id, position, flip, fh}
 			);
 		}
 	}
@@ -392,7 +392,7 @@ namespace ms
 		bool playerdrop = !recv.read_bool();
 
 		Stage::get().get_drops().spawn(
-			{ oid, itemid, meso, owner, dropfrom, dropto, pickuptype, mode, playerdrop }
+			{oid, itemid, meso, owner, dropfrom, dropto, pickuptype, mode, playerdrop}
 		);
 	}
 
@@ -442,7 +442,7 @@ namespace ms
 		// recv.read_byte()
 
 		Stage::get().get_reactors().spawn(
-			{ oid, rid, state, point }
+			{oid, rid, state, point}
 		);
 	}
 

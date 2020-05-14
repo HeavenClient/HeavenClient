@@ -20,7 +20,9 @@
 #include "../Constants.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms

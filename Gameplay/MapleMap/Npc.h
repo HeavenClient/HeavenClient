@@ -37,10 +37,10 @@ namespace ms
 		void draw(double viewx, double viewy, float alpha) const override;
 
 		// Updates the current animation and physics.
-		int8_t update(const Physics &physics) override;
+		int8_t update(const Physics& physics) override;
 
 		// Changes stance and resets animation.
-		void set_stance(const std::string &stance);
+		void set_stance(const std::string& stance);
 
 		// Check whether this is a server-sided NPC
 		bool isscripted() const;

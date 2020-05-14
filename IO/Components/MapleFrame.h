@@ -25,6 +25,7 @@ namespace ms
 	{
 	public:
 		MapleFrame(nl::node src);
+
 		MapleFrame();
 
 		void draw(Point<int16_t> position, int16_t width, int16_t height) const;

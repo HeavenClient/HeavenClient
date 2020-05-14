@@ -24,7 +24,9 @@
 #include "../../Data/ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -57,7 +59,8 @@ namespace ms
 		events.emplace_back(BoolPair<bool>(false, false));
 
 		for (size_t i = 0; i < 3; i++)
-			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF, Color::Name::ENDEAVOUR);
+			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF,
+										Color::Name::ENDEAVOUR);
 
 		for (size_t i = 0; i < 3; i++)
 			event_date[i] = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::WHITE);
@@ -69,16 +72,16 @@ namespace ms
 		label_next = main["label_next"]["0"];
 
 		slider = Slider(
-				Slider::Type::DEFAULT_SILVER, Range<int16_t>(86, 449), 396, 3, event_count,
-				[&](bool upwards)
-				{
-					int16_t shift = upwards ? -1 : 1;
-					bool above = offset + shift >= 0;
-					bool below = offset + shift <= event_count - 3;
+			Slider::Type::DEFAULT_SILVER, Range<int16_t>(86, 449), 396, 3, event_count,
+			[&](bool upwards)
+			{
+				int16_t shift = upwards ? -1 : 1;
+				bool above = offset + shift >= 0;
+				bool below = offset + shift <= event_count - 3;
 
-					if (above && below)
-						offset += shift;
-				}
+				if (above && below)
+					offset += shift;
+			}
 		);
 
 		dimension = bg_dimensions;

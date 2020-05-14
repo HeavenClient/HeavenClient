@@ -26,9 +26,9 @@ namespace ms
 	class Drop : public MapObject
 	{
 	public:
-		virtual int8_t update(const Physics &physics) override;
+		virtual int8_t update(const Physics& physics) override;
 
-		void expire(int8_t, const PhysicsObject *);
+		void expire(int8_t, const PhysicsObject*);
 
 		Rectangle<int16_t> bounds() const;
 
@@ -51,7 +51,7 @@ namespace ms
 		int8_t pickuptype;
 		bool playerdrop;
 
-		const PhysicsObject *looter;
+		const PhysicsObject* looter;
 		State state;
 
 		Point<int16_t> dest;

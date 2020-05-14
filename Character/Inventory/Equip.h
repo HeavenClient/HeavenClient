@@ -35,15 +35,15 @@ namespace ms
 			LENGTH
 		};
 
-		Equip(int32_t item_id, int64_t expiration, const std::string &owner, int16_t flags, uint8_t slots,
-			  uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, uint8_t itemlevel, int16_t itemexp,
+		Equip(int32_t item_id, int64_t expiration, const std::string& owner, int16_t flags, uint8_t slots,
+			  uint8_t level, const EnumMap<EquipStat::Id, uint16_t>& stats, uint8_t itemlevel, int16_t itemexp,
 			  int32_t vicious);
 
 		int32_t get_item_id() const;
 
 		int64_t get_expiration() const;
 
-		const std::string &get_owner() const;
+		const std::string& get_owner() const;
 
 		int16_t get_flags() const;
 

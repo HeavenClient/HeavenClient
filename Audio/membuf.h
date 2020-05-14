@@ -11,7 +11,7 @@
 class membuf : public std::streambuf
 {
 public:
-	membuf(const char *data, unsigned int len);
+	membuf(const char* data, unsigned int len);
 
 private:
 	int_type underflow();
@@ -28,9 +28,9 @@ private:
 
 	pos_type seekpos(pos_type sp_, std::ios_base::openmode which_);
 
-	const char *const begin_;
-	const char *const end_;
-	const char *current_;
+	const char* const begin_;
+	const char* const end_;
+	const char* current_;
 };
 
 

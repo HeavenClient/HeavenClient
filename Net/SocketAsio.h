@@ -20,10 +20,12 @@
 #include "../MapleStory.h"
 
 #ifdef USE_ASIO
+
 #include "NetConstants.h"
 
 #define BOOST_DATE_TIME_NO_LIB
 #define BOOST_REGEX_NO_LIB
+
 #include "asio.hpp"
 
 namespace ms
@@ -43,12 +45,17 @@ namespace ms
 	{
 	public:
 		SocketAsio();
+
 		~SocketAsio();
 
 		bool open(const char* address, const char* port);
+
 		bool close();
+
 		size_t receive(bool* connected);
+
 		const int8_t* get_buffer() const;
+
 		bool dispatch(const int8_t* bytes, size_t length);
 
 	private:

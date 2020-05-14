@@ -39,7 +39,7 @@ namespace ms
 	{
 		position.shift(Point<int16_t>(1, 2));
 
-		auto &tag = textures[selected];
+		auto& tag = textures[selected];
 
 		int16_t width = name.width();
 

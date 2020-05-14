@@ -49,10 +49,10 @@ namespace ms
 		EquipSlot::Id get_eqslot() const;
 
 		// Returns the category name.
-		const std::string &get_type() const;
+		const std::string& get_type() const;
 
 		// Returns the general item data (name, price, etc.).
-		const ItemData &get_itemdata() const;
+		const ItemData& get_itemdata() const;
 
 	private:
 		// Allow the cache to use the constructor
@@ -61,7 +61,7 @@ namespace ms
 		// Load an equip from the game files.
 		EquipData(int32_t id);
 
-		const ItemData &itemdata;
+		const ItemData& itemdata;
 
 		EnumMap<MapleStat::Id, int16_t> reqstats;
 		EnumMap<EquipStat::Id, int16_t> defstats;

@@ -70,13 +70,13 @@ namespace ms
 
 		void send_key(int32_t keycode, bool pressed);
 
-		void set_scrollnotice(const std::string &notice);
+		void set_scrollnotice(const std::string& notice);
 
-		void focus_textfield(Textfield *textfield);
+		void focus_textfield(Textfield* textfield);
 
 		void remove_textfield();
 
-		void drag_icon(Icon *icon);
+		void drag_icon(Icon* icon);
 
 		void add_keymapping(uint8_t no, uint8_t type, int32_t action);
 
@@ -93,7 +93,7 @@ namespace ms
 
 		void show_map(Tooltip::Parent parent, std::string name, std::string description, int32_t mapid, bool bolded);
 
-		Keyboard &get_keyboard();
+		Keyboard& get_keyboard();
 
 		int64_t get_uptime();
 
@@ -101,10 +101,10 @@ namespace ms
 
 		int64_t get_upexp();
 
-		template<class T, typename...Args>
-		Optional<T> emplace(Args &&...args);
+		template <class T, typename...Args>
+		Optional<T> emplace(Args&& ...args);
 
-		template<class T>
+		template <class T>
 		Optional<T> get_element();
 
 		void remove(UIElement::Type type);
@@ -123,25 +123,25 @@ namespace ms
 		bool caps_lock_enabled = false;
 	};
 
-	template<class T, typename...Args>
-	Optional<T> UI::emplace(Args &&...args)
+	template <class T, typename...Args>
+	Optional<T> UI::emplace(Args&& ...args)
 	{
 		if (auto iter = state->pre_add(T::TYPE, T::TOGGLED, T::FOCUSED))
 		{
 			(*iter).second = std::make_unique<T>(
-					std::forward<Args>(args)...
+				std::forward<Args>(args)...
 			);
 		}
 
 		return state->get(T::TYPE);
 	}
 
-	template<class T>
+	template <class T>
 	Optional<T> UI::get_element()
 	{
 		UIElement::Type type = T::TYPE;
-		UIElement *element = state->get(type);
+		UIElement* element = state->get(type);
 
-		return static_cast<T *>(element);
+		return static_cast<T*>(element);
 	}
 }

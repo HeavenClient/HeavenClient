@@ -20,7 +20,9 @@
 #include "Body.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -49,7 +51,8 @@ namespace ms
 						attack_delays[ststr].push_back(attackdelay);
 
 					attackdelay += action.get_delay();
-				} else
+				}
+				else
 				{
 					Stance::Id stance = Stance::by_string(ststr);
 					int16_t delay = framenode["delay"];
@@ -92,13 +95,13 @@ namespace ms
 
 					hand_positions[stance][frame] = bodyshiftmap[Body::Layer::HAND_BELOW_WEAPON]["handMove"];
 					head_positions[stance][frame] =
-							bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"];
+						bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"];
 					face_positions[stance][frame] =
-							bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
-							bodyshiftmap[Body::Layer::HEAD]["brow"];
+						bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
+						bodyshiftmap[Body::Layer::HEAD]["brow"];
 					hair_positions[stance][frame] =
-							bodyshiftmap[Body::Layer::HEAD]["brow"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
-							bodyshiftmap[Body::Layer::BODY]["neck"];
+						bodyshiftmap[Body::Layer::HEAD]["brow"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
+						bodyshiftmap[Body::Layer::BODY]["neck"];
 				}
 			}
 		}
@@ -204,7 +207,7 @@ namespace ms
 		return 0;
 	}
 
-	const BodyAction *BodyDrawInfo::get_action(std::string action, uint8_t frame) const
+	const BodyAction* BodyDrawInfo::get_action(std::string action, uint8_t frame) const
 	{
 		auto action_iter = body_actions.find(action);
 

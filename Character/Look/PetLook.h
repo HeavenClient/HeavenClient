@@ -54,7 +54,7 @@ namespace ms
 
 		void draw(double viewx, double viewy, float alpha) const;
 
-		void update(const Physics &physics, Point<int16_t> charpos);
+		void update(const Physics& physics, Point<int16_t> charpos);
 
 		void set_position(int16_t xpos, int16_t ypos);
 

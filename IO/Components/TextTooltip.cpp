@@ -20,7 +20,9 @@
 #include "../../Constants.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -89,7 +91,8 @@ namespace ms
 		if (text.empty())
 			return false;
 
-		text_label = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, text, maxwidth, formatted, line_adj);
+		text_label = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, text, maxwidth, formatted,
+						  line_adj);
 
 		return true;
 	}

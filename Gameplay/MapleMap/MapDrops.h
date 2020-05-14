@@ -37,13 +37,13 @@ namespace ms
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update all drops.
-		void update(const Physics &physics);
+		void update(const Physics& physics);
 
 		// Spawn a new drop.
-		void spawn(DropSpawn &&spawn);
+		void spawn(DropSpawn&& spawn);
 
 		// Remove a drop.
-		void remove(int32_t oid, int8_t mode, const PhysicsObject *looter);
+		void remove(int32_t oid, int8_t mode, const PhysicsObject* looter);
 
 		// Remove all drops.
 		void clear();

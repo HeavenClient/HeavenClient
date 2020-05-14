@@ -28,9 +28,12 @@ namespace ms
 		text = "";
 	}
 
-	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Rectangle<int16_t> bounds, size_t limit) : Textfield(font, alignment, text_color, text_color, 1.0f, bounds, limit) {}
+	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Rectangle<int16_t> bounds,
+						 size_t limit) : Textfield(font, alignment, text_color, text_color, 1.0f, bounds, limit)
+	{}
 
-	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Color::Name marker_color, float marker_opacity, Rectangle<int16_t> bounds, size_t limit) : bounds(bounds), limit(limit)
+	Textfield::Textfield(Text::Font font, Text::Alignment alignment, Color::Name text_color, Color::Name marker_color,
+						 float marker_opacity, Rectangle<int16_t> bounds, size_t limit) : bounds(bounds), limit(limit)
 	{
 		textlabel = Text(font, alignment, text_color, "", 0, false);
 		marker = ColorLine(12, marker_color, marker_opacity, true);
@@ -334,8 +337,8 @@ namespace ms
 	Rectangle<int16_t> Textfield::get_bounds() const
 	{
 		return Rectangle<int16_t>(
-				bounds.get_left_top() + parentpos,
-				bounds.get_right_bottom() + parentpos
+			bounds.get_left_top() + parentpos,
+			bounds.get_right_bottom() + parentpos
 		);
 	}
 }

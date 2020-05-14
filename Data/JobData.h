@@ -29,13 +29,13 @@ namespace ms
 	{
 	public:
 		// Return the ids of the skills for this job.
-		const std::vector<std::int32_t> &get_skills() const;
+		const std::vector<std::int32_t>& get_skills() const;
 
 		// Return the name of the skill book.
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
 		// Return the book cover icon.
-		const Texture &get_icon() const;
+		const Texture& get_icon() const;
 
 	private:
 		friend Cache<JobData>;

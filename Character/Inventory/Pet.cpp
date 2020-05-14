@@ -19,8 +19,8 @@
 
 namespace ms
 {
-	Pet::Pet(int32_t item_id, int64_t expiration, const std::string &petname, uint8_t level, uint16_t closeness,
+	Pet::Pet(int32_t item_id, int64_t expiration, const std::string& petname, uint8_t level, uint16_t closeness,
 			 uint8_t fullness) : item_id(item_id), expiration(expiration), petname(petname), petlevel(level),
-								 closeness(closeness), fullness(fullness)
+		closeness(closeness), fullness(fullness)
 	{}
 }

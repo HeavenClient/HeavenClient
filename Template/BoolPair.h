@@ -26,9 +26,15 @@ namespace ms
 	{
 	public:
 		template <typename...Args>
-		BoolPair(Args&& ...argsf, Args&& ...argss) : first(std::forward<Args>(argsf)...), second(std::forward<Args>(argss)...) {}
-		BoolPair(T f, T s) : first(f), second(s) {}
-		BoolPair() {}
+		BoolPair(Args&& ...argsf, Args&& ...argss) : first(std::forward<Args>(argsf)...), second(
+			std::forward<Args>(argss)...)
+		{}
+
+		BoolPair(T f, T s) : first(f), second(s)
+		{}
+
+		BoolPair()
+		{}
 
 		template <typename...Args>
 		void set(bool b, Args&& ...args)
@@ -39,12 +45,12 @@ namespace ms
 				second = T(std::forward<Args>(args)...);
 		}
 
-		T& operator [](bool b)
+		T& operator[](bool b)
 		{
 			return b ? first : second;
 		}
 
-		const T& operator [](bool b) const
+		const T& operator[](bool b) const
 		{
 			return b ? first : second;
 		}

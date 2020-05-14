@@ -20,7 +20,7 @@
 namespace ms
 {
 	StatefulIcon::StatefulIcon(std::unique_ptr<Type> type, Texture ntx, Texture dtx, Texture motx) : Icon(
-			std::move(type), ntx, -1)
+		std::move(type), ntx, -1)
 	{
 		ntx.shift({0, 32});
 		dtx.shift({0, 32});

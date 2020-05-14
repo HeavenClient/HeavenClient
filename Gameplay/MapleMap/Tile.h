@@ -20,7 +20,9 @@
 #include "../../Graphics/Texture.h"
 
 #ifdef USE_NX
+
 #include <nlnx/node.hpp>
+
 #endif
 
 namespace ms
@@ -29,10 +31,11 @@ namespace ms
 	class Tile
 	{
 	public:
-		Tile(nl::node src, const std::string &tileset);
+		Tile(nl::node src, const std::string& tileset);
 
 		// Draw the tile
 		void draw(Point<int16_t> viewpos) const;
+
 		// Returns the depth of the tile
 		uint8_t getz() const;
 

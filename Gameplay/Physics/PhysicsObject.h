@@ -153,7 +153,7 @@ namespace ms
 			double interx = x.normalized() ? std::round(x.get()) : x.get(alpha);
 
 			return static_cast<int16_t>(
-					std::round(interx + viewx)
+				std::round(interx + viewx)
 			);
 		}
 
@@ -162,7 +162,7 @@ namespace ms
 			double intery = y.normalized() ? std::round(y.get()) : y.get(alpha);
 
 			return static_cast<int16_t>(
-					std::round(intery + viewy)
+				std::round(intery + viewy)
 			);
 		}
 

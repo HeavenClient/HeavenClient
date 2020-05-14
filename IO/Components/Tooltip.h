@@ -44,6 +44,6 @@ namespace ms
 		virtual ~Tooltip()
 		{}
 
-		virtual void draw(Point<int16_t> cursorpos) const = 0;
+		virtual void draw(Point <int16_t> cursorpos) const = 0;
 	};
 }

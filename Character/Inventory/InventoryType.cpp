@@ -24,14 +24,14 @@ namespace ms
 	InventoryType::Id InventoryType::by_item_id(int32_t item_id)
 	{
 		constexpr Id values_by_id[6] =
-		{
-			NONE,
-			EQUIP,
-			USE,
-			SETUP,
-			ETC,
-			CASH
-		};
+			{
+				NONE,
+				EQUIP,
+				USE,
+				SETUP,
+				ETC,
+				CASH
+			};
 
 		int32_t prefix = item_id / 1000000;
 

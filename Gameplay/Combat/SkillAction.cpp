@@ -21,7 +21,7 @@
 
 namespace ms
 {
-	void RegularAction::apply(Char &target, Attack::Type atype) const
+	void RegularAction::apply(Char& target, Attack::Type atype) const
 	{
 		Weapon::Type weapontype = target.get_weapontype();
 		bool degenerate;
@@ -47,7 +47,7 @@ namespace ms
 		action = std::string(src["action"]["0"]);
 	}
 
-	void SingleAction::apply(Char &target, Attack::Type) const
+	void SingleAction::apply(Char& target, Attack::Type) const
 	{
 		target.attack(action);
 	}
@@ -77,7 +77,7 @@ namespace ms
 		skillid = id;
 	}
 
-	void ByLevelAction::apply(Char &target, Attack::Type) const
+	void ByLevelAction::apply(Char& target, Attack::Type) const
 	{
 		int32_t level = target.get_skilllevel(skillid);
 		auto iter = actions.find(level);

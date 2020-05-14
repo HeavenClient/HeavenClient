@@ -34,7 +34,7 @@ namespace ms
 
 		void update();
 
-		void change_text(const std::string &text);
+		void change_text(const std::string& text);
 
 		void expire();
 
@@ -55,7 +55,7 @@ namespace ms
 
 		void draw(Point<int16_t> position) const;
 
-		void change_text(const std::string &text);
+		void change_text(const std::string& text);
 
 	private:
 		Text textlabel;

@@ -31,7 +31,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIStatsInfo(const CharStats &stats);
+		UIStatsInfo(const CharStats& stats);
 
 		void draw(float alpha) const override;
 
@@ -42,6 +42,7 @@ namespace ms
 		UIElement::Type get_type() const override;
 
 		void update_all_stats();
+
 		void update_stat(MapleStat::Id stat);
 
 	protected:
@@ -51,7 +52,7 @@ namespace ms
 		enum StatLabel
 		{
 			// Normal
-			NAME,
+				NAME,
 			JOB,
 			GUILD,
 			FAME,
@@ -65,7 +66,7 @@ namespace ms
 			LUK,
 			NUM_NORMAL,
 			// Detailed
-			DAMAGE_DETAILED,
+				DAMAGE_DETAILED,
 			DAMAGE_BONUS,
 			BOSS_DAMAGE,
 			FINAL_DAMAGE,
@@ -79,7 +80,7 @@ namespace ms
 			JUMP,
 			HONOR,
 			// Total
-					NUM_LABELS
+				NUM_LABELS
 		};
 
 		void update_ap();
@@ -112,7 +113,7 @@ namespace ms
 			BT_DETAIL_DETAILCLOSE
 		};
 
-		const CharStats &stats;
+		const CharStats& stats;
 
 		enum Ability
 		{

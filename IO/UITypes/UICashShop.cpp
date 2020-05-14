@@ -34,12 +34,15 @@
 #endif
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UICashShop::UICashShop() : preview_index(0), menu_index(1), promotion_index(0), mvp_grade(1), mvp_exp(0.07f), list_offset(0)
+	UICashShop::UICashShop() : preview_index(0), menu_index(1), promotion_index(0), mvp_grade(1), mvp_exp(
+		0.07f), list_offset(0)
 	{
 		nl::node CashShop = nl::nx::ui["CashShop.img"];
 		nl::node Base = CashShop["Base"];
@@ -65,18 +68,23 @@ namespace ms
 			preview_sprites[i] = Preview[i];
 
 		for (size_t i = 0; i < 3; i++)
-			buttons[Buttons::BtPreview1 + i] = std::make_unique<TwoSpriteButton>(Base["Tab"]["Disable"][i], Base["Tab"]["Enable"][i], Point<int16_t>(957 + (i * 17), 46));
+			buttons[Buttons::BtPreview1 + i] = std::make_unique<TwoSpriteButton>(Base["Tab"]["Disable"][i],
+																				 Base["Tab"]["Enable"][i],
+																				 Point<int16_t>(957 + (i * 17), 46));
 
 		buttons[Buttons::BtPreview1]->set_state(Button::State::PRESSED);
 
 		buttons[Buttons::BtExit] = std::make_unique<MapleButton>(CSTab["BtExit"], Point<int16_t>(5, 728));
-		buttons[Buttons::BtChargeNX] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeNX"], Point<int16_t>(5, 554));
-		buttons[Buttons::BtChargeRefresh] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeRefresh"], Point<int16_t>(92, 554));
+		buttons[Buttons::BtChargeNX] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeNX"],
+																	 Point<int16_t>(5, 554));
+		buttons[Buttons::BtChargeRefresh] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeRefresh"],
+																		  Point<int16_t>(92, 554));
 
 		for (size_t i = 0; i < 9; i++)
 			menu_tabs[i] = CSTab["Tab"][i];
 
-		buttons[Buttons::BtChargeRefresh] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeRefresh"], Point<int16_t>(92, 554));
+		buttons[Buttons::BtChargeRefresh] = std::make_unique<MapleButton>(CSGLChargeNX["BtChargeRefresh"],
+																		  Point<int16_t>(92, 554));
 		buttons[Buttons::BtWish] = std::make_unique<MapleButton>(CSStatus["BtWish"], Point<int16_t>(226, 6));
 		buttons[Buttons::BtMileage] = std::make_unique<MapleButton>(CSStatus["BtMileage"], Point<int16_t>(869, 4));
 		buttons[Buttons::BtHelp] = std::make_unique<MapleButton>(CSStatus["BtHelp"], Point<int16_t>(997, 4));
@@ -119,10 +127,13 @@ namespace ms
 		sprites.emplace_back(CSItemSearch["search"], search_pos + Point<int16_t>(35, 8));
 
 		buttons[Buttons::BtBuyAvatar] = std::make_unique<MapleButton>(CSChar["BtBuyAvatar"], Point<int16_t>(642, 305));
-		buttons[Buttons::BtDefaultAvatar] = std::make_unique<MapleButton>(CSChar["BtDefaultAvatar"], Point<int16_t>(716, 305));
+		buttons[Buttons::BtDefaultAvatar] = std::make_unique<MapleButton>(CSChar["BtDefaultAvatar"],
+																		  Point<int16_t>(716, 305));
 		buttons[Buttons::BtInventory] = std::make_unique<MapleButton>(CSChar["BtInventory"], Point<int16_t>(938, 305));
-		buttons[Buttons::BtSaveAvatar] = std::make_unique<MapleButton>(CSChar["BtSaveAvatar"], Point<int16_t>(864, 305));
-		buttons[Buttons::BtTakeoffAvatar] = std::make_unique<MapleButton>(CSChar["BtTakeoffAvatar"], Point<int16_t>(790, 305));
+		buttons[Buttons::BtSaveAvatar] = std::make_unique<MapleButton>(CSChar["BtSaveAvatar"],
+																	   Point<int16_t>(864, 305));
+		buttons[Buttons::BtTakeoffAvatar] = std::make_unique<MapleButton>(CSChar["BtTakeoffAvatar"],
+																		  Point<int16_t>(790, 305));
 
 		charge_charset = Charset(CSGLChargeNX["Number"], Charset::Alignment::RIGHT);
 
@@ -133,28 +144,31 @@ namespace ms
 		for (nl::node item_label : CSEffect)
 			item_labels.emplace_back(item_label);
 
-		items.push_back({ 5220000, Item::Label::HOT,	34000,	11 });
-		items.push_back({ 5220000, Item::Label::HOT,	34000,	11 });
-		items.push_back({ 5220000, Item::Label::HOT,	0,		0 });
-		items.push_back({ 5220000, Item::Label::HOT,	0,		0 });
-		items.push_back({ 5220000, Item::Label::HOT,	10000,	11 });
-		items.push_back({ 5220000, Item::Label::NEW,	0,		0 });
-		items.push_back({ 5220000, Item::Label::SALE,	7000,	0 });
-		items.push_back({ 5220000, Item::Label::NEW,	13440,	0 });
-		items.push_back({ 5220000, Item::Label::NEW,	7480,	0 });
-		items.push_back({ 5220000, Item::Label::NEW,	7480,	0 });
-		items.push_back({ 5220000, Item::Label::NEW,	7480,	0 });
-		items.push_back({ 5220000, Item::Label::NONE,	12000,	11 });
-		items.push_back({ 5220000, Item::Label::NONE,	22000,	11 });
-		items.push_back({ 5220000, Item::Label::NONE,	0,		0 });
-		items.push_back({ 5220000, Item::Label::NONE,	0,		0 });
-		items.push_back({ 5220000, Item::Label::MASTER,	0,		15 });
+		items.push_back({5220000, Item::Label::HOT, 34000, 11});
+		items.push_back({5220000, Item::Label::HOT, 34000, 11});
+		items.push_back({5220000, Item::Label::HOT, 0, 0});
+		items.push_back({5220000, Item::Label::HOT, 0, 0});
+		items.push_back({5220000, Item::Label::HOT, 10000, 11});
+		items.push_back({5220000, Item::Label::NEW, 0, 0});
+		items.push_back({5220000, Item::Label::SALE, 7000, 0});
+		items.push_back({5220000, Item::Label::NEW, 13440, 0});
+		items.push_back({5220000, Item::Label::NEW, 7480, 0});
+		items.push_back({5220000, Item::Label::NEW, 7480, 0});
+		items.push_back({5220000, Item::Label::NEW, 7480, 0});
+		items.push_back({5220000, Item::Label::NONE, 12000, 11});
+		items.push_back({5220000, Item::Label::NONE, 22000, 11});
+		items.push_back({5220000, Item::Label::NONE, 0, 0});
+		items.push_back({5220000, Item::Label::NONE, 0, 0});
+		items.push_back({5220000, Item::Label::MASTER, 0, 15});
 
 		for (size_t i = 0; i < MAX_ITEMS; i++)
 		{
 			div_t div = std::div(i, 7);
 
-			buttons[Buttons::BtBuy + i] = std::make_unique<MapleButton>(CSList["BtBuy"], Point<int16_t>(146, 523) + Point<int16_t>(124 * div.rem, 205 * div.quot));
+			buttons[Buttons::BtBuy + i] = std::make_unique<MapleButton>(CSList["BtBuy"], Point<int16_t>(146, 523) +
+																						 Point<int16_t>(124 * div.rem,
+																										205 *
+																										div.quot));
 
 			item_name[i] = Text(Text::Font::A11B, Text::Alignment::CENTER, Color::Name::MINESHAFT);
 			item_price[i] = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::GRAY);
@@ -220,7 +234,9 @@ namespace ms
 		if (items.size() > 0)
 			item_line.draw(position + Point<int16_t>(139, 566), inter);
 		else
-			item_none.draw(position + Point<int16_t>(137, 372) + Point<int16_t>(BestNew_dim.x() / 2, list_slider.getvertical().length() / 2) - item_none.get_dimensions() / 2, inter);
+			item_none.draw(position + Point<int16_t>(137, 372) +
+						   Point<int16_t>(BestNew_dim.x() / 2, list_slider.getvertical().length() / 2) -
+						   item_none.get_dimensions() / 2, inter);
 
 		for (size_t i = 0; i < MAX_ITEMS; i++)
 		{
@@ -231,24 +247,32 @@ namespace ms
 				div_t div = std::div(i, 7);
 				Item item = items[index];
 
-				item_base.draw(position + Point<int16_t>(137, 372) + Point<int16_t>(124 * div.rem, 205 * div.quot), inter);
-				item.draw(DrawArgument(position + Point<int16_t>(164, 473) + Point<int16_t>(124 * div.rem, 205 * div.quot), 2.0f, 2.0f));
+				item_base.draw(position + Point<int16_t>(137, 372) + Point<int16_t>(124 * div.rem, 205 * div.quot),
+							   inter);
+				item.draw(
+					DrawArgument(position + Point<int16_t>(164, 473) + Point<int16_t>(124 * div.rem, 205 * div.quot),
+								 2.0f, 2.0f));
 
 				if (item.label != Item::Label::NONE)
-					item_labels[item.label + 1].draw(position + Point<int16_t>(152, 372) + Point<int16_t>(124 * div.rem, 205 * div.quot), inter);
+					item_labels[item.label + 1].draw(
+						position + Point<int16_t>(152, 372) + Point<int16_t>(124 * div.rem, 205 * div.quot), inter);
 
 				item_name[i].draw(position + Point<int16_t>(192, 480) + Point<int16_t>(124 * div.rem, 205 * div.quot));
 
 				if (item_discount[i].get_text() == "")
 				{
-					item_price[i].draw(position + Point<int16_t>(195, 499) + Point<int16_t>(124 * div.rem, 205 * div.quot));
+					item_price[i].draw(
+						position + Point<int16_t>(195, 499) + Point<int16_t>(124 * div.rem, 205 * div.quot));
 				}
 				else
 				{
-					item_price[i].draw(position + Point<int16_t>(196, 506) + Point<int16_t>(124 * div.rem, 205 * div.quot));
+					item_price[i].draw(
+						position + Point<int16_t>(196, 506) + Point<int16_t>(124 * div.rem, 205 * div.quot));
 
-					item_discount[i].draw(position + Point<int16_t>(185, 495) + Point<int16_t>(124 * div.rem, 205 * div.quot));
-					item_percent[i].draw(position + Point<int16_t>(198 + (item_discount[i].width() / 2), 495) + Point<int16_t>(124 * div.rem, 205 * div.quot));
+					item_discount[i].draw(
+						position + Point<int16_t>(185, 495) + Point<int16_t>(124 * div.rem, 205 * div.quot));
+					item_percent[i].draw(position + Point<int16_t>(198 + (item_discount[i].width() / 2), 495) +
+										 Point<int16_t>(124 * div.rem, 205 * div.quot));
 				}
 			}
 		}
@@ -269,73 +293,73 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::BtPreview1:
-		case Buttons::BtPreview2:
-		case Buttons::BtPreview3:
-			buttons[preview_index]->set_state(Button::State::NORMAL);
+			case Buttons::BtPreview1:
+			case Buttons::BtPreview2:
+			case Buttons::BtPreview3:
+				buttons[preview_index]->set_state(Button::State::NORMAL);
 
-			preview_index = buttonid;
-			return Button::State::PRESSED;
-		case Buttons::BtExit:
-		{
-			uint16_t width = Setting<Width>::get().load();
-			uint16_t height = Setting<Height>::get().load();
+				preview_index = buttonid;
+				return Button::State::PRESSED;
+			case Buttons::BtExit:
+			{
+				uint16_t width = Setting<Width>::get().load();
+				uint16_t height = Setting<Height>::get().load();
 
-			Constants::Constants::get().set_viewwidth(width);
-			Constants::Constants::get().set_viewheight(height);
+				Constants::Constants::get().set_viewwidth(width);
+				Constants::Constants::get().set_viewheight(height);
 
-			float fadestep = 0.025f;
+				float fadestep = 0.025f;
 
-			Window::get().fadeout(
-				fadestep,
-				[]()
-				{
-					GraphicsGL::get().clear();
-					ChangeMapPacket().dispatch();
-				}
-			);
+				Window::get().fadeout(
+					fadestep,
+					[]()
+					{
+						GraphicsGL::get().clear();
+						ChangeMapPacket().dispatch();
+					}
+				);
 
-			GraphicsGL::get().lock();
-			Stage::get().clear();
-			Timer::get().start();
+				GraphicsGL::get().lock();
+				Stage::get().clear();
+				Timer::get().start();
 
-			return Button::State::NORMAL;
-		}
-		case Buttons::BtNext:
-		{
-			size_t size = promotion_sprites.size() - 1;
+				return Button::State::NORMAL;
+			}
+			case Buttons::BtNext:
+			{
+				size_t size = promotion_sprites.size() - 1;
 
-			promotion_index++;
+				promotion_index++;
 
-			if (promotion_index > size)
-				promotion_index = 0;
+				if (promotion_index > size)
+					promotion_index = 0;
 
-			return Button::State::NORMAL;
-		}
-		case Buttons::BtPrev:
-		{
-			size_t size = promotion_sprites.size() - 1;
+				return Button::State::NORMAL;
+			}
+			case Buttons::BtPrev:
+			{
+				size_t size = promotion_sprites.size() - 1;
 
-			promotion_index--;
+				promotion_index--;
 
-			if (promotion_index < 0)
-				promotion_index = size;
+				if (promotion_index < 0)
+					promotion_index = size;
 
-			return Button::State::NORMAL;
-		}
-		case Buttons::BtChargeNX:
-		{
-			std::string url = Configuration::get().get_chargenx();
+				return Button::State::NORMAL;
+			}
+			case Buttons::BtChargeNX:
+			{
+				std::string url = Configuration::get().get_chargenx();
 
 //todo: open url on linux
 #ifdef _WIN32
-			ShellExecute(NULL, (LPCWSTR) "open", (LPCWSTR) url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+				ShellExecute(NULL, (LPCWSTR) "open", (LPCWSTR) url.c_str(), NULL, NULL, SW_SHOWNORMAL);
 #endif
 
-			return Button::State::NORMAL;
-		}
-		default:
-			break;
+				return Button::State::NORMAL;
+			}
+			default:
+				break;
 		}
 
 		if (buttonid >= Buttons::BtBuy)
@@ -423,7 +447,7 @@ namespace ms
 					uint32_t discount = item.discount_price;
 					price_text = std::to_string(discount);
 
-					float_t percent = (float)discount / price;
+					float_t percent = (float) discount / price;
 					std::string percent_str = std::to_string(percent);
 					percent_text = "(" + percent_str.substr(2, 1) + "%)";
 				}

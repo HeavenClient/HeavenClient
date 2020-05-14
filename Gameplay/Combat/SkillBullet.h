@@ -27,7 +27,7 @@ namespace ms
 		virtual ~SkillBullet()
 		{}
 
-		virtual Animation get(const Char &user, int32_t bulletid) const = 0;
+		virtual Animation get(const Char& user, int32_t bulletid) const = 0;
 
 	protected:
 		struct Ball
@@ -47,7 +47,7 @@ namespace ms
 	class RegularBullet : public SkillBullet
 	{
 	public:
-		Animation get(const Char &user, int32_t bulletid) const override;
+		Animation get(const Char& user, int32_t bulletid) const override;
 	};
 
 	class SingleBullet : public SkillBullet
@@ -55,7 +55,7 @@ namespace ms
 	public:
 		SingleBullet(nl::node src);
 
-		Animation get(const Char &user, int32_t bulletid) const override;
+		Animation get(const Char& user, int32_t bulletid) const override;
 
 	private:
 		Ball ball;
@@ -66,7 +66,7 @@ namespace ms
 	public:
 		BySkillLevelBullet(nl::node src, int32_t skillid);
 
-		Animation get(const Char &user, int32_t bulletid) const override;
+		Animation get(const Char& user, int32_t bulletid) const override;
 
 	private:
 		std::unordered_map<int32_t, Ball> bullets;

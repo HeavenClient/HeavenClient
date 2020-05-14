@@ -55,7 +55,7 @@ namespace ms
 
 		void send_close() override;
 
-		void drag_icon(Icon *icon) override;
+		void drag_icon(Icon* icon) override;
 
 		void clear_tooltip(Tooltip::Parent parent) override;
 
@@ -75,17 +75,17 @@ namespace ms
 
 		void remove(UIElement::Type type) override;
 
-		UIElement *get(UIElement::Type type) override;
+		UIElement* get(UIElement::Type type) override;
 
-		UIElement *get_front(std::list<UIElement::Type> types) override;
+		UIElement* get_front(std::list<UIElement::Type> types) override;
 
-		UIElement *get_front(Point<int16_t> pos) override;
+		UIElement* get_front(Point<int16_t> pos) override;
 
 
 	private:
-		const CharStats &stats;
+		const CharStats& stats;
 
-		bool drop_icon(const Icon &icon, Point<int16_t> pos);
+		bool drop_icon(const Icon& icon, Point<int16_t> pos);
 
 		void remove_icon();
 
@@ -93,13 +93,13 @@ namespace ms
 
 		void remove_cursor(UIElement::Type type);
 
-		template<class T, typename...Args>
-		void emplace(Args &&...args);
+		template <class T, typename...Args>
+		void emplace(Args&& ...args);
 
 		EnumMap<UIElement::Type, UIElement::UPtr, UIElement::Type::NUM_TYPES> elements;
 		std::list<UIElement::Type> elementorder;
 		UIElement::Type focused;
-		UIElement *dragged;
+		UIElement* dragged;
 
 		EquipTooltip eqtooltip;
 		ItemTooltip ittooltip;
@@ -112,12 +112,12 @@ namespace ms
 		Optional<Icon> draggedicon;
 
 		std::map<Icon::IconType, UIElement::Type> icon_map = {
-				{Icon::IconType::NONE,      UIElement::Type::NONE},
-				{Icon::IconType::SKILL,     UIElement::Type::SKILLBOOK},
-				{Icon::IconType::EQUIP,     UIElement::Type::EQUIPINVENTORY},
-				{Icon::IconType::ITEM,      UIElement::Type::ITEMINVENTORY},
-				{Icon::IconType::KEY,       UIElement::Type::KEYCONFIG},
-				{Icon::IconType::NUM_TYPES, UIElement::Type::NUM_TYPES}
+			{Icon::IconType::NONE,      UIElement::Type::NONE},
+			{Icon::IconType::SKILL,     UIElement::Type::SKILLBOOK},
+			{Icon::IconType::EQUIP,     UIElement::Type::EQUIPINVENTORY},
+			{Icon::IconType::ITEM,      UIElement::Type::ITEMINVENTORY},
+			{Icon::IconType::KEY,       UIElement::Type::KEYCONFIG},
+			{Icon::IconType::NUM_TYPES, UIElement::Type::NUM_TYPES}
 		};
 
 		int16_t VWIDTH;

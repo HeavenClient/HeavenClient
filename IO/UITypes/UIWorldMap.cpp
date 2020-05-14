@@ -24,7 +24,9 @@
 #include "../../IO/Components/MapleButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -65,7 +67,7 @@ namespace ms
 		buttons[Buttons::BT_AUTOFLY] = std::make_unique<MapleButton>(WorldMap["BtAutoFly_1"]);
 		buttons[Buttons::BT_NAVIREG] = std::make_unique<MapleButton>(WorldMap["BtNaviRegister"]);
 		buttons[Buttons::BT_SEARCH_CLOSE] = std::make_unique<MapleButton>(close, close_dimensions + Point<int16_t>(
-				bg_search_dimensions.x(), 0));
+			bg_search_dimensions.x(), 0));
 		buttons[Buttons::BT_ALLSEARCH] = std::make_unique<MapleButton>(WorldMapSearch["BtAllsearch"],
 																	   background_dimensions);
 
@@ -95,7 +97,7 @@ namespace ms
 
 		if (link_images.size() > 0)
 		{
-			for (auto &iter : buttons)
+			for (auto& iter : buttons)
 			{
 				if (const auto button = iter.second.get())
 				{
@@ -185,14 +187,16 @@ namespace ms
 			if (search)
 			{
 				set_search(false);
-			} else
+			}
+			else
 			{
 				if (parent_map == "")
 				{
 					toggle_active();
 
 					update_world(user_map);
-				} else
+				}
+				else
 				{
 					Sound(Sound::Name::SELECTMAP).play();
 
@@ -281,7 +285,8 @@ namespace ms
 		{
 			search_text.set_state(Textfield::State::NORMAL);
 			dimension = bg_dimensions + Point<int16_t>(bg_search_dimensions.x(), 0);
-		} else
+		}
+		else
 		{
 			search_text.set_state(Textfield::State::DISABLED);
 			dimension = bg_dimensions;
@@ -301,7 +306,7 @@ namespace ms
 		link_images.clear();
 		link_maps.clear();
 
-		for (auto &iter : buttons)
+		for (auto& iter : buttons)
 			if (const auto button = iter.second.get())
 				if (iter.first >= Buttons::BT_LINK0)
 					button->set_active(false);
@@ -349,7 +354,8 @@ namespace ms
 				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot, {map_info.description, path,
 																					  map_info.full_name, type, marker,
 																					  true, map_ids}));
-			} else
+			}
+			else
 			{
 				map_spots.emplace_back(std::make_pair<Point<int16_t>, MapSpot>(spot,
 																			   {desc, path, title, type, marker, false,

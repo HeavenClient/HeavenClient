@@ -39,7 +39,7 @@ namespace ms
 	enum Opcode : uint16_t
 	{
 		/// Login 1
-		LOGIN_RESULT = 0,
+			LOGIN_RESULT = 0,
 		SERVERSTATUS = 3,
 		SERVERLIST = 10,
 		CHARLIST = 11,
@@ -50,14 +50,14 @@ namespace ms
 		PING = 17,
 
 		/// Login 2
-		RECOMMENDED_WORLDS = 27,
+			RECOMMENDED_WORLDS = 27,
 		CHECK_SPW_RESULT = 28,
 
 		/// Inventory 1
-		MODIFY_INVENTORY = 29,
+			MODIFY_INVENTORY = 29,
 
 		/// Player 2
-		CHANGE_CHANNEL = 16,
+			CHANGE_CHANNEL = 16,
 		CHANGE_STATS = 31,
 		GIVE_BUFF = 32,
 		CANCEL_BUFF = 33,
@@ -65,16 +65,16 @@ namespace ms
 		UPDATE_SKILL = 36,
 
 		/// Messaging 1
-		SHOW_STATUS_INFO = 39,
+			SHOW_STATUS_INFO = 39,
 
 		/// Inventory 2
-		GATHER_RESULT = 52,
+			GATHER_RESULT = 52,
 		SORT_RESULT = 53,
 
 		/// Player 3
 
 		/// Messaging 2
-		SERVER_MESSAGE = 68,
+			SERVER_MESSAGE = 68,
 		WEEK_EVENT_MESSAGE = 77,
 
 		SKILL_MACROS = 124,
@@ -82,19 +82,19 @@ namespace ms
 		FIELD_EFFECT = 138,
 
 		/// MapObject
-		SPAWN_CHAR = 160,
+			SPAWN_CHAR = 160,
 		REMOVE_CHAR = 161,
 
 		/// Messaging
-		CHAT_RECEIVED = 162,
+			CHAT_RECEIVED = 162,
 		SCROLL_RESULT = 167,
 
 		/// MapObject
-		SPAWN_PET = 168,
+			SPAWN_PET = 168,
 		CHAR_MOVED = 185,
 
 		/// Attack
-		ATTACKED_CLOSE = 186,
+			ATTACKED_CLOSE = 186,
 		ATTACKED_RANGED = 187,
 		ATTACKED_MAGIC = 188,
 
@@ -103,10 +103,10 @@ namespace ms
 		SHOW_ITEM_GAIN_INCHAT = 206, // TODO: Rename this (Terribly named)
 
 		/// Player
-		ADD_COOLDOWN = 234,
+			ADD_COOLDOWN = 234,
 
 		/// MapObject
-		SPAWN_MOB = 236,
+			SPAWN_MOB = 236,
 		KILL_MOB = 237,
 		SPAWN_MOB_C = 238,
 		MOB_MOVED = 239,
@@ -120,16 +120,16 @@ namespace ms
 		REMOVE_REACTOR = 280,
 
 		/// NPC Interaction
-		NPC_DIALOGUE = 304,
+			NPC_DIALOGUE = 304,
 		OPEN_NPC_SHOP = 305,
 		CONFIRM_SHOP_TRANSACTION = 306,
 		KEYMAP = 335,
 
 		/// Player Interaction
-		CHAR_INFO = 61,
+			CHAR_INFO = 61,
 
 		/// Cash Shop
-		SET_CASH_SHOP = 127
+			SET_CASH_SHOP = 127
 	};
 
 	PacketSwitch::PacketSwitch()
@@ -218,7 +218,7 @@ namespace ms
 	void PacketSwitch::forward(const int8_t* bytes, size_t length) const
 	{
 		// Wrap the bytes with a parser
-		InPacket recv = { bytes, length };
+		InPacket recv = {bytes, length};
 
 		// Read the opcode to determine handler responsible
 		uint16_t opcode = recv.read_short();

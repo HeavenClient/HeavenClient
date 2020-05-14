@@ -39,7 +39,7 @@ namespace ms
 	{
 	public:
 		// Construct a player object from the given character entry.
-		Player(const CharEntry &entry);
+		Player(const CharEntry& entry);
 
 		Player();
 
@@ -47,7 +47,7 @@ namespace ms
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update the player's animation, physics and states.
-		int8_t update(const Physics &physics) override;
+		int8_t update(const Physics& physics) override;
 
 		// Set flipped ignore if attacking.
 		void set_direction(bool flipped) override;
@@ -77,7 +77,7 @@ namespace ms
 		bool can_attack() const;
 
 		// Return whether the player can use a skill or not.
-		SpecialMove::ForbidReason can_use(const SpecialMove &move) const;
+		SpecialMove::ForbidReason can_use(const SpecialMove& move) const;
 
 		// Create an attack struct using the player's stats.
 		Attack prepare_attack(bool skill) const;
@@ -89,7 +89,7 @@ namespace ms
 		bool is_invincible() const override;
 
 		// Handle an attack to the player.
-		MobAttackResult damage(const MobAttack &attack);
+		MobAttackResult damage(const MobAttack& attack);
 
 		// Apply a buff to the player
 		void give_buff(Buff buff);
@@ -150,34 +150,36 @@ namespace ms
 
 		// Change players x-pos to the ladder x and change stance to Char::LADDER or Char::ROPE.
 		void set_ladder(Optional<const Ladder> ladder);
+
 		// Sets a quick cooldown on climbing so when jumping off a ladder or rope, it doesn't start climb again.
 		void set_climb_cooldown();
+
 		// Checks if the player can climb
 		bool can_climb();
 
 		// Obtain a reference to the player's stats.
-		CharStats &get_stats();
+		CharStats& get_stats();
 
 		// Obtain a reference to the player's stats.
-		const CharStats &get_stats() const;
+		const CharStats& get_stats() const;
 
 		// Obtain a reference to the player's inventory.
-		Inventory &get_inventory();
+		Inventory& get_inventory();
 
 		// Obtain a reference to the player's inventory.
-		const Inventory &get_inventory() const;
+		const Inventory& get_inventory() const;
 
 		// Obtain a reference to the player's skills.
-		SkillBook &get_skills();
+		SkillBook& get_skills();
 
 		// Obtain a reference to the player's questlog.
-		QuestLog &get_quests();
+		QuestLog& get_quests();
 
 		// Obtain a reference to the player's telerock locations.
-		TeleportRock &get_teleport_rock();
+		TeleportRock& get_teleport_rock();
 
 		// Obtain a reference to the player's monsterbook.
-		MonsterBook &get_monsterbook();
+		MonsterBook& get_monsterbook();
 
 	private:
 		CharStats stats;

@@ -54,31 +54,31 @@ namespace ms
 				// The LoginNotice displayed will contain the specific information
 				switch (reason)
 				{
-				case 2:
-					UI::get().emplace<UILoginNotice>(UILoginNotice::Message::BLOCKED_ID, okhandler);
-					break;
-				case 5:
-					UI::get().emplace<UILoginNotice>(UILoginNotice::Message::NOT_REGISTERED, okhandler);
-					break;
-				case 7:
-					UI::get().emplace<UILoginNotice>(UILoginNotice::Message::ALREADY_LOGGED_IN, okhandler);
-					break;
-				case 13:
-					UI::get().emplace<UILoginNotice>(UILoginNotice::Message::UNABLE_TO_LOGIN_WITH_IP, okhandler);
-					break;
-				case 23:
-					UI::get().emplace<UITermsOfService>(okhandler);
-					break;
-				default:
-					// Other reasons
-					if (reason > 0)
-					{
-						auto reasonbyte = static_cast<int8_t>(reason - 1);
+					case 2:
+						UI::get().emplace<UILoginNotice>(UILoginNotice::Message::BLOCKED_ID, okhandler);
+						break;
+					case 5:
+						UI::get().emplace<UILoginNotice>(UILoginNotice::Message::NOT_REGISTERED, okhandler);
+						break;
+					case 7:
+						UI::get().emplace<UILoginNotice>(UILoginNotice::Message::ALREADY_LOGGED_IN, okhandler);
+						break;
+					case 13:
+						UI::get().emplace<UILoginNotice>(UILoginNotice::Message::UNABLE_TO_LOGIN_WITH_IP, okhandler);
+						break;
+					case 23:
+						UI::get().emplace<UITermsOfService>(okhandler);
+						break;
+					default:
+						// Other reasons
+						if (reason > 0)
+						{
+							auto reasonbyte = static_cast<int8_t>(reason - 1);
 
-						UI::get().emplace<UILoginNotice>(reasonbyte, okhandler);
-					}
+							UI::get().emplace<UILoginNotice>(reasonbyte, okhandler);
+						}
 
-					break;
+						break;
 				}
 			}
 			else
@@ -226,14 +226,14 @@ namespace ms
 
 			switch (state)
 			{
-			case 10:
-				message = UILoginNotice::Message::BIRTHDAY_INCORRECT;
-				break;
-			case 20:
-				message = UILoginNotice::Message::INCORRECT_PIC;
-				break;
-			default:
-				message = UILoginNotice::Message::UNKNOWN_ERROR;
+				case 10:
+					message = UILoginNotice::Message::BIRTHDAY_INCORRECT;
+					break;
+				case 20:
+					message = UILoginNotice::Message::INCORRECT_PIC;
+					break;
+				default:
+					message = UILoginNotice::Message::UNKNOWN_ERROR;
 			}
 
 			UI::get().emplace<UILoginNotice>(message);

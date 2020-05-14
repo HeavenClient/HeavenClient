@@ -65,7 +65,7 @@ namespace ms
 	{
 		std::map<int32_t, int32_t> passives;
 
-		for (auto &iter : skillentries)
+		for (auto& iter : skillentries)
 			if (SkillData::get(iter.first).is_passive())
 				passives.emplace(iter.first, iter.second.level);
 

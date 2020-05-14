@@ -21,7 +21,9 @@
 #include "../../Gameplay/Stage.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -112,7 +114,7 @@ namespace ms
 		invpos = ivp;
 		invpos_preview = 0;
 
-		const Player &player = Stage::get().get_player();
+		const Player& player = Stage::get().get_player();
 
 		InventoryType::Id invtype;
 
@@ -129,14 +131,14 @@ namespace ms
 				invtype = InventoryType::Id::NONE;
 		}
 
-		const Inventory &inventory = player.get_inventory();
+		const Inventory& inventory = player.get_inventory();
 		auto oequip = inventory.get_equip(invtype, invpos);
-		const CharStats &stats = player.get_stats();
+		const CharStats& stats = player.get_stats();
 
 		if (invtype == InventoryType::Id::EQUIP)
 		{
 			const int32_t item_id = oequip.get()->get_item_id();
-			const EquipData &equipdata = EquipData::get(item_id);
+			const EquipData& equipdata = EquipData::get(item_id);
 			EquipSlot::Id eqslot = equipdata.get_eqslot();
 
 			if (inventory.has_equipped(eqslot));
@@ -145,18 +147,18 @@ namespace ms
 
 				if (eequip)
 				{
-					const Equip &equip = *eequip;
+					const Equip& equip = *eequip;
 
 					int32_t item_id = equip.get_item_id();
 
-					const EquipData &equipdata = EquipData::get(item_id);
-					const ItemData &itemdata = equipdata.get_itemdata();
+					const EquipData& equipdata = EquipData::get(item_id);
+					const ItemData& itemdata = equipdata.get_itemdata();
 
 					height_preview = 540;
 
 					itemicon_preview = itemdata.get_icon(false);
 
-					for (auto &ms : requirements)
+					for (auto& ms : requirements)
 					{
 						canequip_preview[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 						std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
@@ -303,10 +305,11 @@ namespace ms
 
 					if (is_weapon_preview)
 					{
-						const WeaponData &weapon = WeaponData::get(item_id);
+						const WeaponData& weapon = WeaponData::get(item_id);
 						wepspeed_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
 												"Attack Speed: " + weapon.getspeedstring());
-					} else
+					}
+					else
 					{
 						height_preview -= 18;
 					}
@@ -325,7 +328,8 @@ namespace ms
 
 						hammers_preview = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
 											   "Hammers Applied: " + vicious);
-					} else
+					}
+					else
 					{
 						height_preview -= 36;
 					}
@@ -349,7 +353,8 @@ namespace ms
 
 							statlabels_preview[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
 														  EquipStat::names[es] + std::string(": ") + statstr);
-						} else
+						}
+						else
 						{
 							height_preview -= 18;
 						}
@@ -363,18 +368,18 @@ namespace ms
 		if (!oequip)
 			return;
 
-		const Equip &equip = *oequip;
+		const Equip& equip = *oequip;
 
 		int32_t item_id = equip.get_item_id();
 
-		const EquipData &equipdata = EquipData::get(item_id);
-		const ItemData &itemdata = equipdata.get_itemdata();
+		const EquipData& equipdata = EquipData::get(item_id);
+		const ItemData& itemdata = equipdata.get_itemdata();
 
 		height = 540;
 
 		itemicon = itemdata.get_icon(false);
 
-		for (auto &ms : requirements)
+		for (auto& ms : requirements)
 		{
 			canequip[ms] = stats.get_stat(ms) >= equipdata.get_reqstat(ms);
 			std::string reqstr = std::to_string(equipdata.get_reqstat(ms));
@@ -519,10 +524,11 @@ namespace ms
 
 		if (is_weapon)
 		{
-			const WeaponData &weapon = WeaponData::get(item_id);
+			const WeaponData& weapon = WeaponData::get(item_id);
 			wepspeed = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
 							"Attack Speed: " + weapon.getspeedstring());
-		} else
+		}
+		else
 		{
 			height -= 18;
 		}
@@ -540,7 +546,8 @@ namespace ms
 				vicious.append(" (MAX) ");
 
 			hammers = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Hammers Applied: " + vicious);
-		} else
+		}
+		else
 		{
 			height -= 36;
 		}
@@ -563,7 +570,8 @@ namespace ms
 
 				statlabels[es] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE,
 									  EquipStat::names[es] + std::string(": ") + statstr);
-			} else
+			}
+			else
 			{
 				height -= 18;
 			}
@@ -633,15 +641,18 @@ namespace ms
 			{
 				atkincstr = "m" + atkincstr;
 				atkinc_pos = false;
-			} else if (atkincnum > 0)
+			}
+			else if (atkincnum > 0)
 			{
 				atkincstr = "p" + atkincstr;
 				atkinc_pos = true;
-			} else
+			}
+			else
 			{
 				atkinc_pos = true;
 			}
-		} else
+		}
+		else
 		{
 			atkincstr = "m";
 			atkinc_pos = false;
@@ -668,7 +679,7 @@ namespace ms
 		Point<int16_t> job_position(pos + Point<int16_t>(10, 14));
 		jobsback.draw(job_position);
 
-		for (auto &jbit : okjobs)
+		for (auto& jbit : okjobs)
 			jobs[canequip[MapleStat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
@@ -688,7 +699,7 @@ namespace ms
 			pos.shift_y(stat_y);
 		}
 
-		for (const Text &label : statlabels.values())
+		for (const Text& label : statlabels.values())
 		{
 			if (label.empty())
 				continue;
@@ -768,15 +779,18 @@ namespace ms
 			{
 				atkincstr = "m" + atkincstr;
 				atkinc_pos = false;
-			} else if (atkincnum > 0)
+			}
+			else if (atkincnum > 0)
 			{
 				atkincstr = "p" + atkincstr;
 				atkinc_pos = true;
-			} else
+			}
+			else
 			{
 				atkinc_pos = true;
 			}
-		} else
+		}
+		else
 		{
 			atkincstr = "m";
 			atkinc_pos = false;
@@ -803,7 +817,7 @@ namespace ms
 		Point<int16_t> job_position(pos + Point<int16_t>(10, 14));
 		jobsback.draw(job_position);
 
-		for (auto &jbit : okjobs_preview)
+		for (auto& jbit : okjobs_preview)
 			jobs[canequip_preview[MapleStat::Id::JOB]].at(jbit).draw(job_position);
 
 		line.draw(pos + Point<int16_t>(0, 47));
@@ -823,7 +837,7 @@ namespace ms
 			pos.shift_y(stat_y);
 		}
 
-		for (const Text &label : statlabels_preview.values())
+		for (const Text& label : statlabels_preview.values())
 		{
 			if (label.empty())
 				continue;

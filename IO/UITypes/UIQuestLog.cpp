@@ -20,12 +20,14 @@
 #include "../Components/MapleButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIQuestLog::UIQuestLog(const QuestLog &ql) : UIDragElement<PosQUEST>(), questlog(ql)
+	UIQuestLog::UIQuestLog(const QuestLog& ql) : UIDragElement<PosQUEST>(), questlog(ql)
 	{
 		tab = Buttons::TAB0;
 
@@ -110,7 +112,8 @@ namespace ms
 			if (escape)
 			{
 				deactivate();
-			} else if (keycode == KeyAction::Id::TAB)
+			}
+			else if (keycode == KeyAction::Id::TAB)
 			{
 				uint16_t new_tab = tab;
 

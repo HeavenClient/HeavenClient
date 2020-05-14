@@ -33,12 +33,15 @@
 #endif
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UILogin::UILogin() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600)), signboard_pos(Point<int16_t>(389, 333))
+	UILogin::UILogin() : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600)),
+						 signboard_pos(Point<int16_t>(389, 333))
 	{
 		LoginStartPacket().dispatch();
 
@@ -71,13 +74,20 @@ namespace ms
 		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
 
-		buttons[Buttons::BT_LOGIN] = std::make_unique<MapleButton>(Title["BtLogin"], signboard_pos + Point<int16_t>(62, -51));
-		buttons[Buttons::BT_SAVEID] = std::make_unique<MapleButton>(Title["BtLoginIDSave"], signboard_pos + Point<int16_t>(-89, 5));
-		buttons[Buttons::BT_IDLOST] = std::make_unique<MapleButton>(Title["BtLoginIDLost"], signboard_pos + Point<int16_t>(-17, 5));
-		buttons[Buttons::BT_PASSLOST] = std::make_unique<MapleButton>(Title["BtPasswdLost"], signboard_pos + Point<int16_t>(55, 5));
-		buttons[Buttons::BT_REGISTER] = std::make_unique<MapleButton>(Title["BtNew"], signboard_pos + Point<int16_t>(-101, 25));
-		buttons[Buttons::BT_HOMEPAGE] = std::make_unique<MapleButton>(Title["BtHomePage"], signboard_pos + Point<int16_t>(-29, 25));
-		buttons[Buttons::BT_QUIT] = std::make_unique<MapleButton>(Title["BtQuit"], signboard_pos + Point<int16_t>(43, 25));
+		buttons[Buttons::BT_LOGIN] = std::make_unique<MapleButton>(Title["BtLogin"],
+																   signboard_pos + Point<int16_t>(62, -51));
+		buttons[Buttons::BT_SAVEID] = std::make_unique<MapleButton>(Title["BtLoginIDSave"],
+																	signboard_pos + Point<int16_t>(-89, 5));
+		buttons[Buttons::BT_IDLOST] = std::make_unique<MapleButton>(Title["BtLoginIDLost"],
+																	signboard_pos + Point<int16_t>(-17, 5));
+		buttons[Buttons::BT_PASSLOST] = std::make_unique<MapleButton>(Title["BtPasswdLost"],
+																	  signboard_pos + Point<int16_t>(55, 5));
+		buttons[Buttons::BT_REGISTER] = std::make_unique<MapleButton>(Title["BtNew"],
+																	  signboard_pos + Point<int16_t>(-101, 25));
+		buttons[Buttons::BT_HOMEPAGE] = std::make_unique<MapleButton>(Title["BtHomePage"],
+																	  signboard_pos + Point<int16_t>(-29, 25));
+		buttons[Buttons::BT_QUIT] = std::make_unique<MapleButton>(Title["BtQuit"],
+																  signboard_pos + Point<int16_t>(43, 25));
 
 		checkbox[false] = Title["check"]["0"];
 		checkbox[true] = Title["check"]["1"];
@@ -89,7 +99,8 @@ namespace ms
 		int16_t textbox_limit = 12;
 
 #pragma region Account
-		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::SMALT, 0.75f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
+		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::SMALT, 0.75f,
+							Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		account.set_key_callback
 				(
@@ -114,7 +125,8 @@ namespace ms
 #pragma region Password
 		textbox_pos.shift_y(26);
 
-		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::PRUSSIANBLUE, 0.85f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
+		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::PRUSSIANBLUE,
+							 0.85f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		password.set_key_callback
 				(
@@ -143,21 +155,23 @@ namespace ms
 		{
 			account.change_text(Setting<DefaultAccount>::get().load());
 			password.set_state(Textfield::State::FOCUSED);
-		} else
+		}
+		else
 		{
 			account.set_state(Textfield::State::FOCUSED);
 		}
 
 		if (Configuration::get().get_auto_login())
 		{
-			UI::get().emplace<UILoginWait>([]() {});
+			UI::get().emplace<UILoginWait>([]()
+										   {});
 
 			auto loginwait = UI::get().get_element<UILoginWait>();
 
 			if (loginwait && loginwait->is_active())
 				LoginPacket(
-					Configuration::get().get_auto_acc(),
-					Configuration::get().get_auto_pass()
+						Configuration::get().get_auto_acc(),
+						Configuration::get().get_auto_pass()
 				).dispatch();
 		}
 	}
@@ -250,9 +264,9 @@ namespace ms
 				return;
 		}
 
-		#ifdef _WIN32
+#ifdef _WIN32
 		ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
-		#endif
+#endif
 	}
 
 	Button::State UILogin::button_pressed(uint16_t id)

@@ -73,12 +73,16 @@ namespace ms
 
 		// Get private member VERSION
 		std::string get_version() const;
+
 		// Get private member LoginMusic
 		std::string get_login_music() const;
+
 		// Get private member LoginMusicSEA
 		std::string get_login_music_sea() const;
+
 		// Get private member LoginMusicNewtro
 		std::string get_login_music_newtro() const;
+
 		// Get private member JOINLINK
 		std::string get_joinlink() const;
 
@@ -98,10 +102,10 @@ namespace ms
 		std::string get_chargenx() const;
 
 		// Set private member MACS
-		void set_macs(char *macs);
+		void set_macs(char* macs);
 
 		// Set private member HWID
-		void set_hwid(char *hwid, char *volumeSerialNumber);
+		void set_hwid(char* hwid, char* volumeSerialNumber);
 
 		// Set private member MAXWIDTH
 		void set_max_width(int16_t max_width);
@@ -153,8 +157,10 @@ namespace ms
 
 		// Set the character's selected channel
 		void set_channelid(uint8_t id);
+
 		// Check if the current account is an admin account
 		bool get_admin();
+
 		// Check whether the current account is an admin account
 		void set_admin(bool value);
 
@@ -162,7 +168,7 @@ namespace ms
 		class Entry
 		{
 		protected:
-			Entry(const char *n, const char *v) : name(n), value(v)
+			Entry(const char* n, const char* v) : name(n), value(v)
 			{}
 
 			std::string name;
@@ -261,8 +267,9 @@ namespace ms
 		};
 
 	private:
-		template <typename T>
-		friend struct Setting;
+		template<typename T>
+		friend
+		struct Setting;
 
 		const char* FILENAME = "Settings";
 		const char* TITLE = "MapleStory";
@@ -344,13 +351,15 @@ namespace ms
 	// The normal font which will be used
 	struct FontPathNormal : public Configuration::StringEntry
 	{
-		FontPathNormal() : StringEntry("FontPathNormal", "fonts/Arial/Arial.ttf") {}
+		FontPathNormal() : StringEntry("FontPathNormal", "fonts/Arial/Arial.ttf")
+		{}
 	};
 
 	// The bold font which will be used
 	struct FontPathBold : public Configuration::StringEntry
 	{
-		FontPathBold() : StringEntry("FontPathBold", "fonts/Arial/Arial-Bold.ttf") {}
+		FontPathBold() : StringEntry("FontPathBold", "fonts/Arial/Arial-Bold.ttf")
+		{}
 	};
 
 	// Music Volume
@@ -540,7 +549,8 @@ namespace ms
 	// The default position of UICharInfo
 	struct PosCHARINFO : public Configuration::PointEntry
 	{
-		PosCHARINFO() : PointEntry("PosCHARINFO", "(264, 264)") {}
+		PosCHARINFO() : PointEntry("PosCHARINFO", "(264, 264)")
+		{}
 	};
 
 	// The default type of UIMiniMap
@@ -569,17 +579,18 @@ namespace ms
 	struct Setting
 	{
 		// Access a setting.
-		static T &get()
+		static T& get()
 		{
 			static_assert(std::is_base_of<Configuration::Entry, T>::value,
 						  "template parameter T for Setting must inherit from Configuration::Entry.");
 
-			auto *entry = Configuration::get().settings.get<T>();
+			auto* entry = Configuration::get().settings.get<T>();
 
 			if (entry)
 			{
 				return *entry;
-			} else
+			}
+			else
 			{
 				static T defaultentry;
 				return defaultentry;

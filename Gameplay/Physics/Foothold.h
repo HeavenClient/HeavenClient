@@ -22,7 +22,9 @@
 #include "../../Template/Range.h"
 
 #ifdef USE_NX
+
 #include <nlnx/node.hpp>
+
 #else
 #include "../../Util/WzFiles.h"
 #endif
@@ -34,6 +36,7 @@ namespace ms
 	{
 	public:
 		Foothold();
+
 		Foothold(nl::node src, uint16_t id, uint8_t layer);
 
 		// Returns the foothold id aka the identifier in game data of this platform
@@ -49,10 +52,10 @@ namespace ms
 		uint8_t layer() const;
 
 		// Returns the horizontal component.
-		const Range<int16_t> &horizontal() const;
+		const Range<int16_t>& horizontal() const;
 
 		// Returns the vertical component.
-		const Range<int16_t> &vertical() const;
+		const Range<int16_t>& vertical() const;
 
 		// Return the left edge
 		int16_t l() const;
@@ -97,7 +100,7 @@ namespace ms
 		bool vcontains(int16_t y) const;
 
 		// Check whether this foothold blocks an object.
-		bool is_blocking(const Range<int16_t> &vertical) const;
+		bool is_blocking(const Range<int16_t>& vertical) const;
 
 		// Returns the width.
 		int16_t hdelta() const;

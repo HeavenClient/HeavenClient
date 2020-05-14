@@ -23,7 +23,8 @@ namespace ms
 	class Singleton
 	{
 	public:
-		virtual ~Singleton() {}
+		virtual ~Singleton()
+		{}
 
 		static T& get()
 		{
@@ -31,7 +32,7 @@ namespace ms
 		}
 
 	private:
-		T& operator = (const T&) = delete;
+		T& operator=(const T&) = delete;
 
 		static T instance;
 	};

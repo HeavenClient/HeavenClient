@@ -50,10 +50,10 @@ namespace ms
 			constexpr Stats(float damage, int32_t matk, int32_t fixdamage, int32_t mastery, uint8_t attackcount,
 							uint8_t mobcount, uint8_t bulletcount, int16_t bulletcost, int32_t hpcost, int32_t mpcost,
 							float chance, float critical, float ignoredef, float hrange, Rectangle<int16_t> range)
-					: damage(damage), matk(matk), fixdamage(fixdamage), mastery(mastery), attackcount(attackcount),
-					  mobcount(mobcount), bulletcount(bulletcount), bulletcost(bulletcost), hpcost(hpcost),
-					  mpcost(mpcost), chance(chance), critical(critical), ignoredef(ignoredef), hrange(hrange),
-					  range(range)
+				: damage(damage), matk(matk), fixdamage(fixdamage), mastery(mastery), attackcount(attackcount),
+				mobcount(mobcount), bulletcount(bulletcount), bulletcost(bulletcost), hpcost(hpcost),
+				mpcost(mpcost), chance(chance), critical(critical), ignoredef(ignoredef), hrange(hrange),
+				range(range)
 			{}
 		};
 
@@ -91,24 +91,24 @@ namespace ms
 
 		// Return the stats of one level.
 		// If there are no stats for that level, a default object is returned.
-		const Stats &get_stats(int32_t level) const;
+		const Stats& get_stats(int32_t level) const;
 
 		// Return the name of the skill.
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
 		// Return the description of the skill.
-		const std::string &get_desc() const;
+		const std::string& get_desc() const;
 
 		// Return the description of a level.
 		// If there is no description for this level, a warning message is returned.
-		const std::string &get_level_desc(int32_t level) const;
+		const std::string& get_level_desc(int32_t level) const;
 
 		// Return one of the skill icons.
 		// Cannot fail if type is a valid enum.
-		const Texture &get_icon(Icon icon) const;
+		const Texture& get_icon(Icon icon) const;
 
 		// Return id and level of all required skills.
-		const std::unordered_map<int32_t, int32_t> &get_reqskills() const;
+		const std::unordered_map<int32_t, int32_t>& get_reqskills() const;
 
 	private:
 		// Allow the cache to use the constructor

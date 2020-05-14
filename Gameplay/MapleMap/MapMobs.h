@@ -36,10 +36,10 @@ namespace ms
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update all mobs.
-		void update(const Physics &physics);
+		void update(const Physics& physics);
 
 		// Spawn a new mob.
-		void spawn(MobSpawn &&spawn);
+		void spawn(MobSpawn&& spawn);
 
 		// Kill a mob.
 		void remove(int32_t oid, int8_t effect);
@@ -54,20 +54,20 @@ namespace ms
 		void send_mobhp(int32_t oid, int8_t percent, uint16_t playerlevel);
 
 		// Update a mob's movements.
-		void send_movement(int32_t oid, Point<int16_t> start, std::vector<Movement> &&movements);
+		void send_movement(int32_t oid, Point<int16_t> start, std::vector<Movement>&& movements);
 
 		// Calculate the results of an attack.
 		void
-		send_attack(AttackResult &result, const Attack &attack, const std::vector<int32_t> &targets, uint8_t mobcount);
+		send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t>& targets, uint8_t mobcount);
 
 		// Applies damage to a mob.
-		void apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser &user, const SpecialMove &move);
+		void apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move);
 
 		// Check if the mob with the specified oid exists.
 		bool contains(int32_t oid) const;
 
 		// Return the id of the first mob who collides with the object.
-		int32_t find_colliding(const MovingObject &moveobj) const;
+		int32_t find_colliding(const MovingObject& moveobj) const;
 
 		// Create an attack by the specified mob.
 		MobAttack create_attack(int32_t oid) const;
@@ -79,7 +79,7 @@ namespace ms
 		Point<int16_t> get_mob_head_position(int32_t oid) const;
 
 		// Return all mob map objects
-		MapObjects *get_mobs();
+		MapObjects* get_mobs();
 
 	private:
 		MapObjects mobs;

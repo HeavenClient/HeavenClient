@@ -34,7 +34,7 @@ namespace ms
 
 		Frame();
 
-		void draw(const DrawArgument &args) const;
+		void draw(const DrawArgument& args) const;
 
 		uint8_t start_opacity() const;
 
@@ -77,7 +77,7 @@ namespace ms
 
 		void reset();
 
-		void draw(const DrawArgument &arguments, float alpha) const;
+		void draw(const DrawArgument& arguments, float alpha) const;
 
 		uint16_t get_delay(int16_t frame) const;
 
@@ -92,7 +92,7 @@ namespace ms
 		Rectangle<int16_t> get_bounds() const;
 
 	private:
-		const Frame &get_frame() const;
+		const Frame& get_frame() const;
 
 		std::vector<Frame> frames;
 		bool animated;

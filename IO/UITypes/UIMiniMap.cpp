@@ -26,7 +26,9 @@
 #include "Gameplay/MapleMap/Npc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -75,7 +77,8 @@ namespace ms
 				sprite.draw(position, alpha);
 
 			combined_text.draw(position + Point<int16_t>(7, -3));
-		} else if (type == Type::NORMAL)
+		}
+		else if (type == Type::NORMAL)
 		{
 			for (auto sprite : normal_sprites)
 				sprite.draw(position, alpha);
@@ -92,7 +95,8 @@ namespace ms
 				if (listNpc_enabled)
 					draw_npclist(normal_dimensions, alpha);
 			}
-		} else
+		}
+		else
 		{
 			for (auto sprite : max_sprites)
 				sprite.draw(position, alpha);
@@ -133,7 +137,8 @@ namespace ms
 			{
 				has_map = false;
 				type = Type::MIN;
-			} else
+			}
+			else
 			{
 				has_map = true;
 
@@ -158,11 +163,13 @@ namespace ms
 		{
 			for (auto sprite : min_sprites)
 				sprite.update();
-		} else if (type == Type::NORMAL)
+		}
+		else if (type == Type::NORMAL)
 		{
 			for (auto sprite : normal_sprites)
 				sprite.update();
-		} else
+		}
+		else
 		{
 			for (auto sprite : max_sprites)
 				sprite.update();
@@ -203,7 +210,7 @@ namespace ms
 		if (listNpc_enabled)
 		{
 			Point<int16_t> relative_point = cursor_relative - Point<int16_t>(
-					10 + (type == Type::MAX ? max_dimensions : normal_dimensions).x(), 23);
+				10 + (type == Type::MAX ? max_dimensions : normal_dimensions).x(), 23);
 			Rectangle<int16_t> list_bounds = Rectangle<int16_t>(0, LISTNPC_ITEM_WIDTH, 0, LISTNPC_ITEM_HEIGHT * 8);
 
 			if (list_bounds.contains(relative_point))
@@ -236,7 +243,7 @@ namespace ms
 			{
 				found = true;
 
-				auto n = static_cast<Npc *>(npc->second.get());
+				auto n = static_cast<Npc*>(npc->second.get());
 				std::string name = n->get_name();
 				std::string func = n->get_func();
 
@@ -378,7 +385,8 @@ namespace ms
 			dragarea = dimension;
 
 			set_npclist_active(false);
-		} else
+		}
+		else
 		{
 			bool has_npcs = Stage::get().get_npcs().get_npcs()->size() > 0;
 
@@ -391,7 +399,8 @@ namespace ms
 			{
 				buttons[Buttons::BT_BIG]->set_active(false);
 				buttons[Buttons::BT_SMALL]->set_active(true);
-			} else
+			}
+			else
 			{
 				buttons[Buttons::BT_BIG]->set_active(true);
 				buttons[Buttons::BT_SMALL]->set_active(false);
@@ -454,7 +463,8 @@ namespace ms
 			Min = MiniMap["Window"]["Min"];
 			Normal = MiniMap["Window"]["Normal"];
 			Max = MiniMap["Window"]["Max"];
-		} else
+		}
+		else
 		{
 			Min = MiniMap["Min"];
 			Normal = MiniMap["MinMap"];
@@ -478,7 +488,8 @@ namespace ms
 			m_stretch = 5;
 			down_y_offset = 17 + m_stretch;
 			map_draw_origin_y = 10 + m_stretch - map_dimensions.y();
-		} else
+		}
+		else
 		{
 			m_stretch = map_dimensions.y() - 17;
 			down_y_offset = 17 + m_stretch;
@@ -520,7 +531,8 @@ namespace ms
 		// (7, 10) is the top left corner of the inner window
 		// 114 = 128 (width of left and right borders) - 14 (width of middle borders * 2).
 		// 27 = height of inner frame drawn on up and down borders
-		normal_sprites.emplace_back(MiddleCenter, DrawArgument(Point<int16_t>(7, 10), Point<int16_t>(c_stretch + 114, m_stretch + 27)));
+		normal_sprites.emplace_back(MiddleCenter, DrawArgument(Point<int16_t>(7, 10),
+															   Point<int16_t>(c_stretch + 114, m_stretch + 27)));
 
 		if (has_map)
 			normal_sprites.emplace_back(Map["miniMap"]["canvas"],
@@ -628,8 +640,8 @@ namespace ms
 			if (portal_type == 2)
 			{
 				Point<int16_t> marker_pos =
-						(Point<int16_t>(portal["x"], portal["y"]) + center_offset) / scale - marker_offset +
-						Point<int16_t>(map_draw_origin_x, map_draw_origin_y);
+					(Point<int16_t>(portal["x"], portal["y"]) + center_offset) / scale - marker_offset +
+					Point<int16_t>(map_draw_origin_x, map_draw_origin_y);
 				static_marker_info.emplace_back(portal.name(), marker_pos);
 			}
 		}
@@ -650,7 +662,8 @@ namespace ms
 		if (type == Type::MIN)
 		{
 			dimension = min_dimensions;
-		} else
+		}
+		else
 		{
 			Point<int16_t> base_dims = type == Type::MAX ? max_dimensions : normal_dimensions;
 			dimension = base_dims;
@@ -681,7 +694,7 @@ namespace ms
 		{
 			listNpc_list.emplace_back(npc->second.get());
 
-			auto n = static_cast<Npc *>(npc->second.get());
+			auto n = static_cast<Npc*>(npc->second.get());
 			std::string name = n->get_name();
 			std::string func = n->get_func();
 
@@ -695,31 +708,33 @@ namespace ms
 		}
 
 		for (size_t i = 0; i < listNpc_names.size(); i++)
-			string_format::format_with_ellipsis(listNpc_names[i], LISTNPC_TEXT_WIDTH - (listNpc_names.size() > 8 ? 0 : 20));
+			string_format::format_with_ellipsis(listNpc_names[i],
+												LISTNPC_TEXT_WIDTH - (listNpc_names.size() > 8 ? 0 : 20));
 
 		const Point<int16_t> listNpc_pos = Point<int16_t>(
-				type == Type::MAX ? max_dimensions.x() : normal_dimensions.x(), 0);
+			type == Type::MAX ? max_dimensions.x() : normal_dimensions.x(), 0);
 		int16_t c_stretch = 20;
 		int16_t m_stretch = 102;
 
 		if (listNpc_names.size() > 8)
 		{
 			listNpc_slider = Slider(
-					Slider::DEFAULT_SILVER, Range<int16_t>(23, 11 + LISTNPC_ITEM_HEIGHT * 8),
-					listNpc_pos.x() + LISTNPC_ITEM_WIDTH + 1, 8, listNpc_names.size(),
-					[&](bool upwards)
-					{
-						int16_t shift = upwards ? -1 : 1;
-						bool above = listNpc_offset + shift >= 0;
-						bool below = listNpc_offset + 8 + shift <= listNpc_names.size();
+				Slider::DEFAULT_SILVER, Range<int16_t>(23, 11 + LISTNPC_ITEM_HEIGHT * 8),
+				listNpc_pos.x() + LISTNPC_ITEM_WIDTH + 1, 8, listNpc_names.size(),
+				[&](bool upwards)
+				{
+					int16_t shift = upwards ? -1 : 1;
+					bool above = listNpc_offset + shift >= 0;
+					bool below = listNpc_offset + 8 + shift <= listNpc_names.size();
 
-						if (above && below)
-							listNpc_offset += shift;
-					}
+					if (above && below)
+						listNpc_offset += shift;
+				}
 			);
 
 			c_stretch += 12;
-		} else
+		}
+		else
 		{
 			listNpc_slider.setenabled(false);
 			m_stretch = LISTNPC_ITEM_HEIGHT * listNpc_names.size() - 34;
@@ -743,7 +758,7 @@ namespace ms
 									 DrawArgument(listNpc_pos + Point<int16_t>(CENTER_START_X + c_stretch, 0)));
 		listNpc_sprites.emplace_back(listNpc["sw"], DrawArgument(listNpc_pos + Point<int16_t>(0, M_START + m_stretch)));
 		listNpc_sprites.emplace_back(listNpc["se"], DrawArgument(
-				listNpc_pos + Point<int16_t>(CENTER_START_X + c_stretch, M_START + m_stretch)));
+			listNpc_pos + Point<int16_t>(CENTER_START_X + c_stretch, M_START + m_stretch)));
 
 		listNpc_dimensions = Point<int16_t>(CENTER_START_X * 2 + c_stretch, M_START + m_stretch + 30);
 
@@ -781,9 +796,9 @@ namespace ms
 		if (selected >= 0)
 		{
 			Point<int16_t> npc_pos =
-					(listNpc_list[selected]->get_position() + center_offset) / scale +
-					Point<int16_t>(map_draw_origin_x, map_draw_origin_y - npc_marker.get_dimensions().y() +
-													  (type == Type::MAX ? MAX_ADJ : 0));
+				(listNpc_list[selected]->get_position() + center_offset) / scale +
+				Point<int16_t>(map_draw_origin_x, map_draw_origin_y - npc_marker.get_dimensions().y() +
+												  (type == Type::MAX ? MAX_ADJ : 0));
 
 			selected_marker.draw(position + npc_pos, 0.5f);
 		}
@@ -800,7 +815,8 @@ namespace ms
 		if (choice > listNpc_names.size() || choice < 0)
 		{
 			selected = -1;
-		} else
+		}
+		else
 		{
 			selected = choice != selected ? choice : -1;
 

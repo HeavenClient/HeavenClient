@@ -24,12 +24,13 @@ namespace ms
 	SingleUseEffect::SingleUseEffect(nl::node src) : effect(src["effect"])
 	{}
 
-	void SingleUseEffect::apply(Char &target) const
+	void SingleUseEffect::apply(Char& target) const
 	{
 		effect.apply(target);
 	}
 
-	TwoHandedUseEffect::TwoHandedUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"]) {}
+	TwoHandedUseEffect::TwoHandedUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"])
+	{}
 
 	void TwoHandedUseEffect::apply(Char& target) const
 	{
@@ -51,9 +52,9 @@ namespace ms
 		}
 	}
 
-	void MultiUseEffect::apply(Char &target) const
+	void MultiUseEffect::apply(Char& target) const
 	{
-		for (auto &effect : effects)
+		for (auto& effect : effects)
 			effect.apply(target);
 	}
 
@@ -66,7 +67,7 @@ namespace ms
 		}
 	}
 
-	void ByLevelUseEffect::apply(Char &target) const
+	void ByLevelUseEffect::apply(Char& target) const
 	{
 		if (effects.empty())
 			return;
@@ -82,7 +83,7 @@ namespace ms
 		iter->second.apply(target);
 	}
 
-	void IronBodyUseEffect::apply(Char &target) const
+	void IronBodyUseEffect::apply(Char& target) const
 	{
 		target.show_iron_body();
 	}

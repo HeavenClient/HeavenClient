@@ -21,7 +21,9 @@
 #include "../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -67,10 +69,10 @@ namespace ms
 			int32_t level = string_conversion::or_default<int32_t>(sub.name(), -1);
 
 			stats.emplace(
-					std::piecewise_construct,
-					std::forward_as_tuple(level),
-					std::forward_as_tuple(damage, matk, fixdamage, mastery, attackcount, mobcount, bulletcount,
-										  bulletcost, hpcost, mpcost, chance, critical, ignoredef, hrange, range)
+				std::piecewise_construct,
+				std::forward_as_tuple(level),
+				std::forward_as_tuple(damage, matk, fixdamage, mastery, attackcount, mobcount, bulletcount,
+									  bulletcost, hpcost, mpcost, chance, critical, ignoredef, hrange, range)
 			);
 		}
 
@@ -101,56 +103,56 @@ namespace ms
 	int32_t SkillData::flags_of(int32_t id) const
 	{
 		static const std::unordered_map<int32_t, int32_t> skill_flags =
-				{
-						// Beginner
-						{SkillId::THREE_SNAILS,           ATTACK},
-						// Warrior
-						{SkillId::POWER_STRIKE,           ATTACK},
-						{SkillId::SLASH_BLAST,            ATTACK},
-						// Fighter
-						// Page
-						// Crusader
-						{SkillId::SWORD_PANIC,            ATTACK},
-						{SkillId::AXE_PANIC,              ATTACK},
-						{SkillId::SWORD_COMA,             ATTACK},
-						{SkillId::AXE_COMA,               ATTACK},
-						// Hero
-						{SkillId::RUSH_HERO,              ATTACK},
-						{SkillId::BRANDISH,               ATTACK},
-						// Page
-						// White Knight
-						{SkillId::CHARGE,                 ATTACK},
-						// Paladin
-						{SkillId::RUSH_PALADIN,           ATTACK},
-						{SkillId::BLAST,                  ATTACK},
-						{SkillId::HEAVENS_HAMMER,         ATTACK},
-						// Spearman
-						// Dragon Knight
-						{SkillId::DRAGON_BUSTER,          ATTACK},
-						{SkillId::DRAGON_FURY,            ATTACK},
-						{SkillId::PA_BUSTER,              ATTACK},
-						{SkillId::PA_FURY,                ATTACK},
-						{SkillId::SACRIFICE,              ATTACK},
-						{SkillId::DRAGONS_ROAR,           ATTACK},
-						// Dark Knight
-						{SkillId::RUSH_DK,                ATTACK},
-						// Mage
-						{SkillId::ENERGY_BOLT,            ATTACK | RANGED},
-						{SkillId::MAGIC_CLAW,             ATTACK | RANGED},
-						// F/P Mage
-						{SkillId::SLOW_FP,                ATTACK},
-						{SkillId::FIRE_ARROW,             ATTACK | RANGED},
-						{SkillId::POISON_BREATH,          ATTACK | RANGED},
-						// F/P ArchMage
-						{SkillId::EXPLOSION,              ATTACK},
-						{SkillId::POISON_BREATH,          ATTACK},
-						{SkillId::SEAL_FP,                ATTACK},
-						{SkillId::ELEMENT_COMPOSITION_FP, ATTACK | RANGED},
-						//
-						{SkillId::FIRE_DEMON,             ATTACK},
-						{SkillId::PARALYZE,               ATTACK | RANGED},
-						{SkillId::METEOR_SHOWER,          ATTACK}
-				};
+			{
+				// Beginner
+				{SkillId::THREE_SNAILS,           ATTACK},
+				// Warrior
+				{SkillId::POWER_STRIKE,           ATTACK},
+				{SkillId::SLASH_BLAST,            ATTACK},
+				// Fighter
+				// Page
+				// Crusader
+				{SkillId::SWORD_PANIC,            ATTACK},
+				{SkillId::AXE_PANIC,              ATTACK},
+				{SkillId::SWORD_COMA,             ATTACK},
+				{SkillId::AXE_COMA,               ATTACK},
+				// Hero
+				{SkillId::RUSH_HERO,              ATTACK},
+				{SkillId::BRANDISH,               ATTACK},
+				// Page
+				// White Knight
+				{SkillId::CHARGE,                 ATTACK},
+				// Paladin
+				{SkillId::RUSH_PALADIN,           ATTACK},
+				{SkillId::BLAST,                  ATTACK},
+				{SkillId::HEAVENS_HAMMER,         ATTACK},
+				// Spearman
+				// Dragon Knight
+				{SkillId::DRAGON_BUSTER,          ATTACK},
+				{SkillId::DRAGON_FURY,            ATTACK},
+				{SkillId::PA_BUSTER,              ATTACK},
+				{SkillId::PA_FURY,                ATTACK},
+				{SkillId::SACRIFICE,              ATTACK},
+				{SkillId::DRAGONS_ROAR,           ATTACK},
+				// Dark Knight
+				{SkillId::RUSH_DK,                ATTACK},
+				// Mage
+				{SkillId::ENERGY_BOLT,            ATTACK | RANGED},
+				{SkillId::MAGIC_CLAW,             ATTACK | RANGED},
+				// F/P Mage
+				{SkillId::SLOW_FP,                ATTACK},
+				{SkillId::FIRE_ARROW,             ATTACK | RANGED},
+				{SkillId::POISON_BREATH,          ATTACK | RANGED},
+				// F/P ArchMage
+				{SkillId::EXPLOSION,              ATTACK},
+				{SkillId::POISON_BREATH,          ATTACK},
+				{SkillId::SEAL_FP,                ATTACK},
+				{SkillId::ELEMENT_COMPOSITION_FP, ATTACK | RANGED},
+				//
+				{SkillId::FIRE_DEMON,             ATTACK},
+				{SkillId::PARALYZE,               ATTACK | RANGED},
+				{SkillId::METEOR_SHOWER,          ATTACK}
+			};
 
 		auto iter = skill_flags.find(id);
 
@@ -185,7 +187,7 @@ namespace ms
 		return reqweapon;
 	}
 
-	const SkillData::Stats &SkillData::get_stats(int32_t level) const
+	const SkillData::Stats& SkillData::get_stats(int32_t level) const
 	{
 		auto iter = stats.find(level);
 
@@ -200,17 +202,17 @@ namespace ms
 		return iter->second;
 	}
 
-	const std::string &SkillData::get_name() const
+	const std::string& SkillData::get_name() const
 	{
 		return name;
 	}
 
-	const std::string &SkillData::get_desc() const
+	const std::string& SkillData::get_desc() const
 	{
 		return desc;
 	}
 
-	const std::string &SkillData::get_level_desc(int32_t level) const
+	const std::string& SkillData::get_level_desc(int32_t level) const
 	{
 		auto iter = levels.find(level);
 
@@ -219,18 +221,19 @@ namespace ms
 			static const std::string null_level = "Missing level description.";
 
 			return null_level;
-		} else
+		}
+		else
 		{
 			return iter->second;
 		}
 	}
 
-	const Texture &SkillData::get_icon(Icon icon) const
+	const Texture& SkillData::get_icon(Icon icon) const
 	{
 		return icons[icon];
 	}
 
-	const std::unordered_map<int32_t, int32_t> &SkillData::get_reqskills() const
+	const std::unordered_map<int32_t, int32_t>& SkillData::get_reqskills() const
 	{
 		return reqskills;
 	}

@@ -26,13 +26,15 @@
 #include "../../Net/Packets/NpcInteractionPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
 	UINpcTalk::UINpcTalk() : offset(0), unitrows(0), rowmax(0), show_slider(false), draw_text(false),
-							 formatted_text(""), formatted_text_pos(0), timestep(0)
+		formatted_text(""), formatted_text_pos(0), timestep(0)
 	{
 		nl::node UtilDlgEx = nl::nx::ui["UIWindow2.img"]["UtilDlgEx"];
 
@@ -100,7 +102,8 @@ namespace ms
 			text.draw(position + Point<int16_t>(162, 19 - offset * 400),
 					  Range<int16_t>(text_min_height, text_min_height + height - 18));
 			slider.draw(position);
-		} else
+		}
+		else
 		{
 			int16_t y_adj = height - min_height;
 			text.draw(position + Point<int16_t>(166, 48 - y_adj));
@@ -124,11 +127,13 @@ namespace ms
 
 					formatted_text_pos++;
 					timestep = 0;
-				} else
+				}
+				else
 				{
 					draw_text = false;
 				}
-			} else
+			}
+			else
 			{
 				timestep++;
 			}
@@ -298,7 +303,7 @@ namespace ms
 	}
 
 	// TODO: Move this to GraphicsGL?
-	std::string UINpcTalk::format_text(const std::string &tx, const int32_t &npcid)
+	std::string UINpcTalk::format_text(const std::string& tx, const int32_t& npcid)
 	{
 		std::string formatted_text = tx;
 		size_t begin = formatted_text.find("#p");
@@ -346,7 +351,7 @@ namespace ms
 		return formatted_text;
 	}
 
-	void UINpcTalk::change_text(int32_t npcid, int8_t msgtype, int16_t, int8_t speakerbyte, const std::string &tx)
+	void UINpcTalk::change_text(int32_t npcid, int8_t msgtype, int16_t, int8_t speakerbyte, const std::string& tx)
 	{
 		type = get_by_value(msgtype);
 
@@ -371,7 +376,8 @@ namespace ms
 
 			std::string namestr = nl::nx::string["Npc.img"][std::to_string(npcid)]["name"];
 			name.change_text(namestr);
-		} else
+		}
+		else
 		{
 			speaker = Texture();
 			name.change_text("");
@@ -392,13 +398,14 @@ namespace ms
 				int16_t slider_y = top.height() - 7;
 				slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(slider_y, slider_y + height - 20),
 								top.width() - 26, unitrows, rowmax, onmoved);
-			} else
+			}
+			else
 			{
 				height = text_height;
 			}
 		}
 
-		for (auto &button : buttons)
+		for (auto& button : buttons)
 		{
 			button.second->set_active(false);
 			button.second->set_state(Button::State::NORMAL);

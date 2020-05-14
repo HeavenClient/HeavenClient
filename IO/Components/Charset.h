@@ -37,11 +37,11 @@ namespace ms
 
 		Charset();
 
-		void draw(int8_t character, const DrawArgument &args) const;
+		void draw(int8_t character, const DrawArgument& args) const;
 
-		int16_t draw(const std::string &text, const DrawArgument &args) const;
+		int16_t draw(const std::string& text, const DrawArgument& args) const;
 
-		int16_t draw(const std::string &text, int16_t hspace, const DrawArgument &args) const;
+		int16_t draw(const std::string& text, int16_t hspace, const DrawArgument& args) const;
 
 		int16_t getw(int8_t character) const;
 

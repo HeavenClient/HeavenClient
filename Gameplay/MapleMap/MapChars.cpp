@@ -24,11 +24,11 @@ namespace ms
 		chars.draw(layer, viewx, viewy, alpha);
 	}
 
-	void MapChars::update(const Physics &physics)
+	void MapChars::update(const Physics& physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
 		{
-			const CharSpawn &spawn = spawns.front();
+			const CharSpawn& spawn = spawns.front();
 
 			int32_t cid = spawn.get_cid();
 			Optional<OtherChar> ochar = get_char(cid);
@@ -36,7 +36,8 @@ namespace ms
 			if (ochar)
 			{
 				// TODO: Blank
-			} else
+			}
+			else
 			{
 				chars.add(spawn.instantiate());
 			}
@@ -45,7 +46,7 @@ namespace ms
 		chars.update(physics);
 	}
 
-	void MapChars::spawn(CharSpawn &&spawn)
+	void MapChars::spawn(CharSpawn&& spawn)
 	{
 		spawns.emplace(std::move(spawn));
 	}
@@ -60,18 +61,18 @@ namespace ms
 		chars.clear();
 	}
 
-	MapObjects *MapChars::get_chars()
+	MapObjects* MapChars::get_chars()
 	{
 		return &chars;
 	}
 
-	void MapChars::send_movement(int32_t cid, const std::vector<Movement> &movements)
+	void MapChars::send_movement(int32_t cid, const std::vector<Movement>& movements)
 	{
 		if (Optional<OtherChar> otherchar = get_char(cid))
 			otherchar->send_movement(movements);
 	}
 
-	void MapChars::update_look(int32_t cid, const LookEntry &look)
+	void MapChars::update_look(int32_t cid, const LookEntry& look)
 	{
 		if (Optional<OtherChar> otherchar = get_char(cid))
 			otherchar->update_look(look);

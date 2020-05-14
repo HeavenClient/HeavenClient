@@ -50,10 +50,10 @@ namespace ms
 			return;
 
 		cover.draw(
-				DrawArgument(
-						position + Point<int16_t>(0, 30 - interheight),
-						Point<int16_t>(30, interheight)
-				)
+			DrawArgument(
+				position + Point<int16_t>(0, 30 - interheight),
+				Point<int16_t>(30, interheight)
+			)
 		);
 	}
 

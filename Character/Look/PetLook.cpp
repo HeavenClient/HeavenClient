@@ -18,7 +18,9 @@
 #include "PetLook.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -67,7 +69,7 @@ namespace ms
 		namelabel.draw(absp);
 	}
 
-	void PetLook::update(const Physics &physics, Point<int16_t> charpos)
+	void PetLook::update(const Physics& physics, Point<int16_t> charpos)
 	{
 		static const double PETWALKFORCE = 0.35;
 		static const double PETFLYFORCE = 0.2;
@@ -81,7 +83,8 @@ namespace ms
 				if (curpos.distance(charpos) > 150)
 				{
 					set_position(charpos.x(), charpos.y());
-				} else
+				}
+				else
 				{
 					if (charpos.x() - curpos.x() > 50)
 					{
@@ -89,13 +92,15 @@ namespace ms
 						flip = true;
 
 						set_stance(Stance::MOVE);
-					} else if (charpos.x() - curpos.x() < -50)
+					}
+					else if (charpos.x() - curpos.x() < -50)
 					{
 						phobj.hforce = -PETWALKFORCE;
 						flip = false;
 
 						set_stance(Stance::MOVE);
-					} else
+					}
+					else
 					{
 						phobj.hforce = 0.0;
 
@@ -114,17 +119,20 @@ namespace ms
 				if ((charpos - curpos).length() > 250)
 				{
 					set_position(charpos.x(), charpos.y());
-				} else
+				}
+				else
 				{
 					if (charpos.x() - curpos.x() > 50)
 					{
 						phobj.hforce = PETFLYFORCE;
 						flip = true;
-					} else if (charpos.x() - curpos.x() < -50)
+					}
+					else if (charpos.x() - curpos.x() < -50)
 					{
 						phobj.hforce = -PETFLYFORCE;
 						flip = false;
-					} else
+					}
+					else
 					{
 						phobj.hforce = 0.0f;
 					}

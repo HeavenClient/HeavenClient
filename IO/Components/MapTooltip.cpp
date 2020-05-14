@@ -20,7 +20,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -70,7 +72,8 @@ namespace ms
 					name_simple.draw(pos);
 				else
 					name_simple.draw(pos + Point<int16_t>(1, -3));
-			} else
+			}
+			else
 			{
 				int16_t name_width = name_label.width();
 				int16_t name_height = name_label.height();
@@ -104,7 +107,8 @@ namespace ms
 				separator.draw(pos + SEPARATOR_ADJ);
 				desc_simple.draw(pos + Point<int16_t>(half_width, -3));
 			}
-		} else
+		}
+		else
 		{
 			int16_t cur_width = pos.x() + fillwidth + 21;
 			int16_t cur_height = pos.y() + fillheight + 40;
@@ -134,7 +138,8 @@ namespace ms
 				desc_label.draw(pos + Point<int16_t>(4, 0));
 
 				pos.shift_y(desc_label.height() + BOTTOM_PADDING);
-			} else
+			}
+			else
 			{
 				pos.shift_y(name_height + BOTTOM_PADDING);
 			}
@@ -254,7 +259,8 @@ namespace ms
 									 life_object.second);
 				fillheight += mob_labels->height() + 2;
 				m++;
-			} else if (life_object.first == "n" && n < MAX_LIFE)
+			}
+			else if (life_object.first == "n" && n < MAX_LIFE)
 			{
 				npc_labels[n] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::MALIBU, life_object.second);
 				fillheight += npc_labels->height() + 2;

@@ -57,10 +57,10 @@ namespace ms
 		Sound get_usesound(bool degenerate) const;
 
 		// Return the name of the afterimage
-		const std::string &get_afterimage() const;
+		const std::string& get_afterimage() const;
 
 		// Return the general equip data
-		const EquipData &get_equipdata() const;
+		const EquipData& get_equipdata() const;
 
 	private:
 		// Allow the cache to use the constructor
@@ -69,7 +69,7 @@ namespace ms
 		// Load a weapon from the game files
 		WeaponData(int32_t id);
 
-		const EquipData &equipdata;
+		const EquipData& equipdata;
 
 		Weapon::Type type;
 		bool twohanded;

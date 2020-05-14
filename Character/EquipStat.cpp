@@ -32,25 +32,25 @@ namespace ms
 		}
 
 		const char* names[Id::LENGTH] =
-		{
-			"STR",
-			"DEX",
-			"INT",
-			"LUK",
-			"MaxHP",
-			"MaxMP",
-			"Attack Power",
-			"Magic Attack",
-			"Defense",
+			{
+				"STR",
+				"DEX",
+				"INT",
+				"LUK",
+				"MaxHP",
+				"MaxMP",
+				"Attack Power",
+				"Magic Attack",
+				"Defense",
 
-			// TODO: Does current GMS use these anymore?
-			"MAGIC DEFENSE",
-			"ACCURACY",
-			"AVOID",
-			"HANDS",
+				// TODO: Does current GMS use these anymore?
+				"MAGIC DEFENSE",
+				"ACCURACY",
+				"AVOID",
+				"HANDS",
 
-			"Speed",
-			"Jump"
-		};
+				"Speed",
+				"Jump"
+			};
 	}
 }

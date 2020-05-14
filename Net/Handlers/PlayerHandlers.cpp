@@ -64,29 +64,29 @@ namespace ms
 
 		switch (stat)
 		{
-		case MapleStat::Id::SKIN:
-			player.change_look(stat, recv.read_short());
-			break;
-		case MapleStat::Id::FACE:
-		case MapleStat::Id::HAIR:
-			player.change_look(stat, recv.read_int());
-			break;
-		case MapleStat::Id::LEVEL:
-			player.change_level(recv.read_byte());
-			break;
-		case MapleStat::Id::JOB:
-			player.change_job(recv.read_short());
-			break;
-		case MapleStat::Id::EXP:
-			player.get_stats().set_exp(recv.read_int());
-			break;
-		case MapleStat::Id::MESO:
-			player.get_inventory().set_meso(recv.read_int());
-			break;
-		default:
-			player.get_stats().set_stat(stat, recv.read_short());
-			recalculate = true;
-			break;
+			case MapleStat::Id::SKIN:
+				player.change_look(stat, recv.read_short());
+				break;
+			case MapleStat::Id::FACE:
+			case MapleStat::Id::HAIR:
+				player.change_look(stat, recv.read_int());
+				break;
+			case MapleStat::Id::LEVEL:
+				player.change_level(recv.read_byte());
+				break;
+			case MapleStat::Id::JOB:
+				player.change_job(recv.read_short());
+				break;
+			case MapleStat::Id::EXP:
+				player.get_stats().set_exp(recv.read_int());
+				break;
+			case MapleStat::Id::MESO:
+				player.get_inventory().set_meso(recv.read_int());
+				break;
+			default:
+				player.get_stats().set_stat(stat, recv.read_short());
+				recalculate = true;
+				break;
 		}
 
 		bool update_statsinfo = need_statsinfo_update(stat);
@@ -112,19 +112,19 @@ namespace ms
 	{
 		switch (stat)
 		{
-		case MapleStat::Id::JOB:
-		case MapleStat::Id::STR:
-		case MapleStat::Id::DEX:
-		case MapleStat::Id::INT:
-		case MapleStat::Id::LUK:
-		case MapleStat::Id::HP:
-		case MapleStat::Id::MAXHP:
-		case MapleStat::Id::MP:
-		case MapleStat::Id::MAXMP:
-		case MapleStat::Id::AP:
-			return true;
-		default:
-			return false;
+			case MapleStat::Id::JOB:
+			case MapleStat::Id::STR:
+			case MapleStat::Id::DEX:
+			case MapleStat::Id::INT:
+			case MapleStat::Id::LUK:
+			case MapleStat::Id::HP:
+			case MapleStat::Id::MAXHP:
+			case MapleStat::Id::MP:
+			case MapleStat::Id::MAXMP:
+			case MapleStat::Id::AP:
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -132,11 +132,11 @@ namespace ms
 	{
 		switch (stat)
 		{
-		case MapleStat::Id::JOB:
-		case MapleStat::Id::SP:
-			return true;
-		default:
-			return false;
+			case MapleStat::Id::JOB:
+			case MapleStat::Id::SP:
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -147,9 +147,9 @@ namespace ms
 
 		switch (secondmask)
 		{
-		case Buffstat::BATTLESHIP:
-			handle_buff(recv, Buffstat::BATTLESHIP);
-			return;
+			case Buffstat::BATTLESHIP:
+				handle_buff(recv, Buffstat::BATTLESHIP);
+				return;
 		}
 
 		for (auto& iter : Buffstat::first_codes)
@@ -169,7 +169,7 @@ namespace ms
 		int32_t skillid = recv.read_int();
 		int32_t duration = recv.read_int();
 
-		Stage::get().get_player().give_buff({ bs, value, skillid, duration });
+		Stage::get().get_player().give_buff({bs, value, skillid, duration});
 
 		if (auto bufflist = UI::get().get_element<UIBuffList>())
 			bufflist->add_buff(skillid, duration);
@@ -208,11 +208,11 @@ namespace ms
 
 		for (uint8_t i = 0; i < size; i++)
 		{
-			recv.read_string();	// name
-			recv.read_byte();	// 'shout' byte
-			recv.read_int();	// skill 1
-			recv.read_int();	// skill 2
-			recv.read_int();	// skill 3
+			recv.read_string();    // name
+			recv.read_byte();    // 'shout' byte
+			recv.read_int();    // skill 1
+			recv.read_int();    // skill 2
+			recv.read_int();    // skill 3
 		}
 	}
 

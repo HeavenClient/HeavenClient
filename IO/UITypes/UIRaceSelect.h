@@ -54,11 +54,13 @@ namespace ms
 
 	private:
 		void select_class(uint16_t index);
+
 		void show_charselect();
 
 		Point<int16_t> get_class_pos(size_t index) const;
 
 		std::string to_lower(std::string value) const;
+
 		uint16_t get_corrected_class_index(uint16_t index) const;
 
 		static constexpr uint16_t INDEX_COUNT = 5;

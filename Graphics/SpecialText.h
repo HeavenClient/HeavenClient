@@ -50,7 +50,7 @@ namespace ms
 			inner.draw(parentpos);
 		}
 
-		void change_text(const std::string &text)
+		void change_text(const std::string& text)
 		{
 			inner.change_text(text);
 			l.change_text(text);
@@ -90,7 +90,7 @@ namespace ms
 			top.draw(parentpos);
 		}
 
-		void change_text(const std::string &text)
+		void change_text(const std::string& text)
 		{
 			top.change_text(text);
 			shadow.change_text(text);

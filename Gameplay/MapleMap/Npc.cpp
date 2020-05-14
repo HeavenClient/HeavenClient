@@ -18,7 +18,9 @@
 #include "Npc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -92,7 +94,7 @@ namespace ms
 		}
 	}
 
-	int8_t Npc::update(const Physics &physics)
+	int8_t Npc::update(const Physics& physics)
 	{
 		if (!active)
 			return phobj.fhlayer;
@@ -114,7 +116,7 @@ namespace ms
 		return phobj.fhlayer;
 	}
 
-	void Npc::set_stance(const std::string &st)
+	void Npc::set_stance(const std::string& st)
 	{
 		if (stance != st)
 		{
@@ -142,15 +144,15 @@ namespace ms
 		Point<int16_t> absp = get_position() + viewpos;
 
 		Point<int16_t> dim =
-				animations.count(stance) ?
-				animations.at(stance).get_dimensions() :
-				Point<int16_t>();
+			animations.count(stance) ?
+			animations.at(stance).get_dimensions() :
+			Point<int16_t>();
 
 		return Rectangle<int16_t>(
-				absp.x() - dim.x() / 2,
-				absp.x() + dim.x() / 2,
-				absp.y() - dim.y(),
-				absp.y()
+			absp.x() - dim.x() / 2,
+			absp.x() + dim.x() / 2,
+			absp.y() - dim.y(),
+			absp.y()
 		).contains(cursorpos);
 	}
 

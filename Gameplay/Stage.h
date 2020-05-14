@@ -51,7 +51,7 @@ namespace ms
 		void clear();
 
 		// Construct the player from a character entry.
-		void loadplayer(const CharEntry &entry);
+		void loadplayer(const CharEntry& entry);
 
 		// Call 'draw()' of all objects on stage
 		void draw(float alpha) const;
@@ -72,25 +72,25 @@ namespace ms
 		bool is_player(int32_t cid) const;
 
 		// Returns a reference to the NPCs on the current map.
-		MapNpcs &get_npcs();
+		MapNpcs& get_npcs();
 
 		// Returns a reference to the other characters on the current map.
-		MapChars &get_chars();
+		MapChars& get_chars();
 
 		// Returns a reference to the mobs on the current map.
-		MapMobs &get_mobs();
+		MapMobs& get_mobs();
 
 		// Returns a reference to the reactors on the current map.
-		MapReactors &get_reactors();
+		MapReactors& get_reactors();
 
 		// Returns a reference to the drops on the current map.
-		MapDrops &get_drops();
+		MapDrops& get_drops();
 
 		// Returns a reference to the Player.
-		Player &get_player();
+		Player& get_player();
 
 		// Return a reference to the attack and buff component.
-		Combat &get_combat();
+		Combat& get_combat();
 
 		// Returns the current map ID.
 		int32_t get_mapid();
@@ -103,8 +103,10 @@ namespace ms
 
 		// Get the total up time of the client
 		int64_t get_uptime();
+
 		// Get the level at the start of the client
 		uint16_t get_uplevel();
+
 		// Get the EXP at the start of the client
 		int64_t get_upexp();
 

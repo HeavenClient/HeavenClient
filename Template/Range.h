@@ -24,10 +24,12 @@ namespace ms
 	{
 	public:
 		// Construct a range from the specified values
-		constexpr Range(const T& first, const T& second) : a(first), b(second) {}
+		constexpr Range(const T& first, const T& second) : a(first), b(second)
+		{}
 
 		// Construct a range of (0, 0)
-		constexpr Range() : Range(0, 0) {}
+		constexpr Range() : Range(0, 0)
+		{}
 
 		// Return the first value
 		constexpr const T& first() const
@@ -96,39 +98,39 @@ namespace ms
 		}
 
 		// Check whether the range is equivalent to another range
-		constexpr bool operator == (const Range<T>& v) const
+		constexpr bool operator==(const Range<T>& v) const
 		{
 			return a == v.a && b == v.b;
 		}
 
 		// Check whether the range is not equivalent to another range
-		constexpr bool operator != (const Range<T>& v) const
+		constexpr bool operator!=(const Range<T>& v) const
 		{
 			return !(*this == v);
 		}
 
 		// Shift this range by the amounts defined by another range
-		constexpr Range<T> operator + (const Range<T>& v) const
+		constexpr Range<T> operator+(const Range<T>& v) const
 		{
-			return { a + v.a, b + v.b };
+			return {a + v.a, b + v.b};
 		}
 
 		// Shift this range by the negative amounts defined by another range
-		constexpr Range<T> operator - (const Range<T>& v) const
+		constexpr Range<T> operator-(const Range<T>& v) const
 		{
-			return { a - v.a, b - v.b };
+			return {a - v.a, b - v.b};
 		}
 
 		// Return the negative of this range
-		constexpr Range<T> operator - () const
+		constexpr Range<T> operator-() const
 		{
-			return { -a, -b };
+			return {-a, -b};
 		}
 
 		// Construct a symmetric range around mid
 		static Range<T> symmetric(const T& mid, const T& tail)
 		{
-			return { mid - tail, mid + tail };
+			return {mid - tail, mid + tail};
 		}
 
 	private:

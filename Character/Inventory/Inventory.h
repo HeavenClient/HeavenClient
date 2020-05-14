@@ -72,15 +72,15 @@ namespace ms
 
 		// Add a general item.
 		void add_item(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint16_t count,
-					  const std::string &owner, int16_t flag);
+					  const std::string& owner, int16_t flag);
 
 		// Add a pet item.
 		void add_pet(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire,
-					 const std::string &name, int8_t level, int16_t closeness, int8_t fullness);
+					 const std::string& name, int8_t level, int16_t closeness, int8_t fullness);
 
 		// Add an equip item.
 		void add_equip(InventoryType::Id type, int16_t slot, int32_t itemid, bool cash, int64_t expire, uint8_t slots,
-					   uint8_t level, const EnumMap<EquipStat::Id, uint16_t> &stats, const std::string &owner,
+					   uint8_t level, const EnumMap<EquipStat::Id, uint16_t>& stats, const std::string& owner,
 					   int16_t flag, uint8_t itemlevel, uint16_t itemexp, int32_t vicious);
 
 		// Check if the use inventory contains at least one projectile

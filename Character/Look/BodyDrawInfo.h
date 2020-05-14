@@ -46,7 +46,8 @@ namespace ms
 			{
 				delay = sgndelay;
 				attackframe = true;
-			} else if (sgndelay < 0)
+			}
+			else if (sgndelay < 0)
 			{
 				delay = -sgndelay;
 				attackframe = false;
@@ -114,7 +115,7 @@ namespace ms
 
 		uint8_t next_actionframe(std::string action, uint8_t frame) const;
 
-		const BodyAction *get_action(std::string action, uint8_t frame) const;
+		const BodyAction* get_action(std::string action, uint8_t frame) const;
 
 	private:
 		std::unordered_map<uint8_t, Point<int16_t>> body_positions[Stance::Id::LENGTH];

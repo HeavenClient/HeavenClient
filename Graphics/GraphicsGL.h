@@ -25,15 +25,20 @@
 #include "../Util/QuadTree.h"
 
 #ifndef _WIN32
+
 #include <glad/glad.h>
+
 #else
 #include <glew.h>
 #endif
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #ifdef USE_NX
+
 #include <nlnx/bitmap.hpp>
+
 #endif
 
 namespace ms
@@ -55,13 +60,19 @@ namespace ms
 
 		// Add a bitmap to the available resources
 		void addbitmap(const nl::bitmap& bmp);
+
 		// Draw the bitmap with the given parameters
-		void draw(const nl::bitmap& bmp, const Rectangle<int16_t>& rect, const Range<int16_t>& vertical, const Color& color, float angle);
+		void
+		draw(const nl::bitmap& bmp, const Rectangle<int16_t>& rect, const Range<int16_t>& vertical, const Color& color,
+			 float angle);
 
 		// Create a layout for the text with the parameters specified
-		Text::Layout createlayout(const std::string& text, Text::Font font, Text::Alignment alignment, int16_t maxwidth, bool formatted, int16_t line_adj);
+		Text::Layout createlayout(const std::string& text, Text::Font font, Text::Alignment alignment, int16_t maxwidth,
+								  bool formatted, int16_t line_adj);
+
 		// Draw a text with the given parameters
-		void drawtext(const DrawArgument& args, const Range<int16_t>& vertical, const std::string& text, const Text::Layout& layout, Text::Font font, Color::Name color, Text::Background back);
+		void drawtext(const DrawArgument& args, const Range<int16_t>& vertical, const std::string& text,
+					  const Text::Layout& layout, Text::Font font, Color::Name color, Text::Background back);
 
 		// Draw a rectangle filled with the specified color.
 		void drawrectangle(int16_t x, int16_t y, int16_t width, int16_t height, float red, float green, float blue,
@@ -85,7 +96,7 @@ namespace ms
 	private:
 		void clearinternal();
 
-		bool addfont(const char *name, Text::Font id, FT_UInt width, FT_UInt height);
+		bool addfont(const char* name, Text::Font id, FT_UInt width, FT_UInt height);
 
 		struct Offset
 		{
@@ -112,7 +123,7 @@ namespace ms
 		};
 
 		// Add a bitmap to the available resources.
-		const Offset &getoffset(const nl::bitmap &bmp);
+		const Offset& getoffset(const nl::bitmap& bmp);
 
 		struct Leftover
 		{
@@ -166,7 +177,7 @@ namespace ms
 			static const size_t LENGTH = 4;
 			Vertex vertices[LENGTH];
 
-			Quad(GLshort left, GLshort right, GLshort top, GLshort bottom, const Offset &offset, const Color &color,
+			Quad(GLshort left, GLshort right, GLshort top, GLshort bottom, const Offset& offset, const Color& color,
 				 GLfloat rotation)
 			{
 				vertices[0] = {left, top, offset.left, offset.top, color};
@@ -232,10 +243,10 @@ namespace ms
 		class LayoutBuilder
 		{
 		public:
-			LayoutBuilder(const Font &font, Text::Alignment alignment, int16_t maxwidth, bool formatted,
+			LayoutBuilder(const Font& font, Text::Alignment alignment, int16_t maxwidth, bool formatted,
 						  int16_t line_adj);
 
-			size_t add(const char *text, size_t prev, size_t first, size_t last);
+			size_t add(const char* text, size_t prev, size_t first, size_t last);
 
 			Text::Layout finish(size_t first, size_t last);
 
@@ -244,7 +255,7 @@ namespace ms
 
 			void add_line();
 
-			const Font &font;
+			const Font& font;
 
 			Text::Alignment alignment;
 			Text::Font fontid;

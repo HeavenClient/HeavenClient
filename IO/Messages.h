@@ -28,7 +28,7 @@ namespace ms
 		{
 			NONE,
 			// Cannot use a skill
-					SKILL_WEAPONTYPE,
+				SKILL_WEAPONTYPE,
 			SKILL_HPCOST,
 			SKILL_MPCOST,
 			SKILL_NOARROWS,
@@ -37,13 +37,13 @@ namespace ms
 			SKILL_COOLDOWN,
 
 			// Scrolling result
-					SCROLL_SUCCESS,
+				SCROLL_SUCCESS,
 			SCROLL_FAILURE,
 			SCROLL_DESTROYED,
 			LENGTH
 		};
 
-		extern const EnumMap<Type, const char *> messages;
+		extern const EnumMap<Type, const char*> messages;
 	};
 
 	class InChatMessage

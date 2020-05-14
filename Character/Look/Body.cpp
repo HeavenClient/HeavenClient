@@ -20,12 +20,14 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	Body::Body(int32_t skin, const BodyDrawInfo &drawinfo)
+	Body::Body(int32_t skin, const BodyDrawInfo& drawinfo)
 	{
 		std::string strid = string_format::extend_id(skin, 2);
 		nl::node bodynode = nl::nx::character["000020" + strid + ".img"];
@@ -34,7 +36,7 @@ namespace ms
 		for (auto iter : Stance::names)
 		{
 			Stance::Id stance = iter.first;
-			const std::string &stancename = iter.second;
+			const std::string& stancename = iter.second;
 
 			nl::node stancenode = bodynode[stancename];
 
@@ -70,8 +72,8 @@ namespace ms
 						}
 
 						stances[stance][layer]
-								.emplace(frame, partnode)
-								.first->second.shift(shift);
+							.emplace(frame, partnode)
+							.first->second.shift(shift);
 					}
 				}
 
@@ -80,33 +82,33 @@ namespace ms
 					Point<int16_t> shift = drawinfo.get_head_position(stance, frame);
 
 					stances[stance][Body::Layer::HEAD]
-							.emplace(frame, headsfnode)
-							.first->second.shift(shift);
+						.emplace(frame, headsfnode)
+						.first->second.shift(shift);
 				}
 			}
 		}
 
 		constexpr size_t NUM_SKINTYPES = 12;
 
-		constexpr char *skintypes[NUM_SKINTYPES] =
-				{
-						"Light",
-						"Tan",
-						"Dark",
-						"Pale",
-						"Blue",
-						"Green",
-						"", "", "",
-						"Grey",
-						"Pink",
-						"Red"
-				};
+		constexpr char* skintypes[NUM_SKINTYPES] =
+			{
+				"Light",
+				"Tan",
+				"Dark",
+				"Pale",
+				"Blue",
+				"Green",
+				"", "", "",
+				"Grey",
+				"Pink",
+				"Red"
+			};
 
 		size_t index = skin;
 		name = (index < NUM_SKINTYPES) ? skintypes[index] : "";
 	}
 
-	void Body::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const
+	void Body::draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const
 	{
 		auto frameit = stances[stance][layer].find(frame);
 
@@ -116,12 +118,12 @@ namespace ms
 		frameit->second.draw(args);
 	}
 
-	const std::string &Body::get_name() const
+	const std::string& Body::get_name() const
 	{
 		return name;
 	}
 
-	Body::Layer Body::layer_by_name(const std::string &name)
+	Body::Layer Body::layer_by_name(const std::string& name)
 	{
 		auto layer_iter = layers_by_name.find(name);
 
@@ -137,17 +139,17 @@ namespace ms
 	}
 
 	const std::unordered_map<std::string, Body::Layer> Body::layers_by_name =
-			{
-					{"body",                      Body::Layer::BODY},
-					{"backBody",                  Body::Layer::BODY},
-					{"arm",                       Body::Layer::ARM},
-					{"armBelowHead",              Body::Layer::ARM_BELOW_HEAD},
-					{"armBelowHeadOverMailChest", Body::Layer::ARM_BELOW_HEAD_OVER_MAIL},
-					{"armOverHair",               Body::Layer::ARM_OVER_HAIR},
-					{"armOverHairBelowWeapon",    Body::Layer::ARM_OVER_HAIR_BELOW_WEAPON},
-					{"handBelowWeapon",           Body::Layer::HAND_BELOW_WEAPON},
-					{"handOverHair",              Body::Layer::HAND_OVER_HAIR},
-					{"handOverWeapon",            Body::Layer::HAND_OVER_WEAPON},
-					{"head",                      Body::Layer::HEAD}
-			};
+		{
+			{"body",                      Body::Layer::BODY},
+			{"backBody",                  Body::Layer::BODY},
+			{"arm",                       Body::Layer::ARM},
+			{"armBelowHead",              Body::Layer::ARM_BELOW_HEAD},
+			{"armBelowHeadOverMailChest", Body::Layer::ARM_BELOW_HEAD_OVER_MAIL},
+			{"armOverHair",               Body::Layer::ARM_OVER_HAIR},
+			{"armOverHairBelowWeapon",    Body::Layer::ARM_OVER_HAIR_BELOW_WEAPON},
+			{"handBelowWeapon",           Body::Layer::HAND_BELOW_WEAPON},
+			{"handOverHair",              Body::Layer::HAND_OVER_HAIR},
+			{"handOverWeapon",            Body::Layer::HAND_OVER_WEAPON},
+			{"head",                      Body::Layer::HEAD}
+		};
 }

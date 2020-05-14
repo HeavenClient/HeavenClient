@@ -27,7 +27,9 @@
 #include "../Net/Packets/GameplayPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -58,7 +60,7 @@ namespace ms
 		state = State::ACTIVE;
 	}
 
-	void Stage::loadplayer(const CharEntry &entry)
+	void Stage::loadplayer(const CharEntry& entry)
 	{
 		player = entry;
 		playable = player;
@@ -88,7 +90,8 @@ namespace ms
 		std::string strid = string_format::extend_id(mapid, 9);
 		std::string prefix = std::to_string(mapid / 100000000);
 
-		nl::node src = mapid == -1 ? nl::nx::ui["CashShopPreview.img"] : nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
+		nl::node src =
+			mapid == -1 ? nl::nx::ui["CashShopPreview.img"] : nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
 
 		tilesobjs = MapTilesObjs(src);
 		backgrounds = MapBackgrounds(src["back"]);
@@ -211,11 +214,12 @@ namespace ms
 			Point<int16_t> startpos = physics.get_y_below(spawnpoint);
 
 			player.respawn(startpos, mapinfo.is_underwater());
-		} else if (warpinfo.valid)
+		}
+		else if (warpinfo.valid)
 		{
 			ChangeMapPacket(false, -1, warpinfo.name, false).dispatch();
 
-			CharStats &stats = Stage::get().get_player().get_stats();
+			CharStats& stats = Stage::get().get_player().get_stats();
 
 			stats.set_mapid(warpinfo.mapid);
 
@@ -293,37 +297,37 @@ namespace ms
 		return cid == player.get_oid();
 	}
 
-	MapNpcs &Stage::get_npcs()
+	MapNpcs& Stage::get_npcs()
 	{
 		return npcs;
 	}
 
-	MapChars &Stage::get_chars()
+	MapChars& Stage::get_chars()
 	{
 		return chars;
 	}
 
-	MapMobs &Stage::get_mobs()
+	MapMobs& Stage::get_mobs()
 	{
 		return mobs;
 	}
 
-	MapReactors &Stage::get_reactors()
+	MapReactors& Stage::get_reactors()
 	{
 		return reactors;
 	}
 
-	MapDrops &Stage::get_drops()
+	MapDrops& Stage::get_drops()
 	{
 		return drops;
 	}
 
-	Player &Stage::get_player()
+	Player& Stage::get_player()
 	{
 		return player;
 	}
 
-	Combat &Stage::get_combat()
+	Combat& Stage::get_combat()
 	{
 		return combat;
 	}

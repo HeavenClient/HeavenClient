@@ -20,7 +20,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -50,13 +52,14 @@ namespace ms
 		{
 			// TODO: Handle 'default' animations (horntail reactor floating)
 			normal.draw(absp - shift, alpha);
-		} else
+		}
+		else
 		{
 			animations.at(state - 1).draw(DrawArgument(absp - shift), 1.0);
 		}
 	}
 
-	int8_t Reactor::update(const Physics &physics)
+	int8_t Reactor::update(const Physics& physics)
 	{
 		physics.move_object(phobj);
 
@@ -94,7 +97,7 @@ namespace ms
 		return hittable;
 	}
 
-	bool Reactor::is_in_range(const Rectangle<int16_t> &range) const
+	bool Reactor::is_in_range(const Rectangle<int16_t>& range) const
 	{
 		if (!active)
 			return false;

@@ -23,7 +23,9 @@
 #include "../Components/TwoSpriteButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -60,13 +62,13 @@ namespace ms
 		MapleComboBox::Type type = static_cast<MapleComboBox::Type>(std::stoi(ctype));
 
 		std::vector<std::string> resolutions =
-				{
-						"800 x 600 ( 4 : 3 )",
-						"1024 x 768 ( 4 : 3 )",
-						"1280 x 720 ( 16 : 9 )",
-						"1366 x 768 ( 16 : 9 )",
-						"1920 x 1080 ( 16 : 9 ) - Beta"
-				};
+			{
+				"800 x 600 ( 4 : 3 )",
+				"1024 x 768 ( 4 : 3 )",
+				"1280 x 720 ( 16 : 9 )",
+				"1366 x 768 ( 16 : 9 )",
+				"1920 x 1080 ( 16 : 9 ) - Beta"
+			};
 
 		int16_t max_width = Configuration::get().get_max_width();
 		int16_t max_height = Configuration::get().get_max_height();
@@ -215,7 +217,7 @@ namespace ms
 		if (dragged)
 			return dstate;
 
-		auto &button = buttons[Buttons::SELECT_RES];
+		auto& button = buttons[Buttons::SELECT_RES];
 
 		if (button->is_pressed())
 		{
@@ -223,7 +225,8 @@ namespace ms
 			{
 				if (Cursor::State new_state = button->send_cursor(clicked, cursorpos))
 					return new_state;
-			} else
+			}
+			else
 			{
 				remove_cursor();
 			}

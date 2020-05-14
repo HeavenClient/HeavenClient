@@ -22,7 +22,9 @@
 #include "../../Net/Packets/MessagingPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -70,7 +72,7 @@ namespace ms
 		for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
 		{
 			buttons[Buttons::BT_TAB_0 + i] = std::make_unique<MapleButton>(view["tab"], Point<int16_t>(
-					chattab_x + (i * chattab_span), chattab_y));
+				chattab_x + (i * chattab_span), chattab_y));
 			buttons[Buttons::BT_TAB_0 + i]->set_active(chatopen ? true : false);
 			chattab_text[ChatTab::CHT_ALL + i] = Text(Text::Font::A12M, Text::Alignment::CENTER, Color::Name::DUSTYGRAY,
 													  ChatTabText[i]);
@@ -96,63 +98,65 @@ namespace ms
 		chatfield.set_state(chatopen ? Textfield::State::NORMAL : Textfield::State::DISABLED);
 
 		chatfield.set_enter_callback(
-				[&](std::string msg)
+			[&](std::string msg)
+			{
+				if (msg.size() > 0)
 				{
-					if (msg.size() > 0)
+					size_t last = msg.find_last_not_of(' ');
+
+					if (last != std::string::npos)
 					{
-						size_t last = msg.find_last_not_of(' ');
+						msg.erase(last + 1);
 
-						if (last != std::string::npos)
-						{
-							msg.erase(last + 1);
+						GeneralChatPacket(msg, true).dispatch();
 
-							GeneralChatPacket(msg, true).dispatch();
-
-							lastentered.push_back(msg);
-							lastpos = lastentered.size();
-						} else
-						{
-							toggle_chatfield();
-						}
-
-						chatfield.change_text("");
-					} else
+						lastentered.push_back(msg);
+						lastpos = lastentered.size();
+					}
+					else
 					{
 						toggle_chatfield();
 					}
+
+					chatfield.change_text("");
 				}
+				else
+				{
+					toggle_chatfield();
+				}
+			}
 		);
 
 		chatfield.set_key_callback(
-				KeyAction::Id::UP,
-				[&]()
+			KeyAction::Id::UP,
+			[&]()
+			{
+				if (lastpos > 0)
 				{
-					if (lastpos > 0)
-					{
-						lastpos--;
-						chatfield.change_text(lastentered[lastpos]);
-					}
+					lastpos--;
+					chatfield.change_text(lastentered[lastpos]);
 				}
+			}
 		);
 
 		chatfield.set_key_callback(
-				KeyAction::Id::DOWN,
-				[&]()
+			KeyAction::Id::DOWN,
+			[&]()
+			{
+				if (lastentered.size() > 0 && lastpos < lastentered.size() - 1)
 				{
-					if (lastentered.size() > 0 && lastpos < lastentered.size() - 1)
-					{
-						lastpos++;
-						chatfield.change_text(lastentered[lastpos]);
-					}
+					lastpos++;
+					chatfield.change_text(lastentered[lastpos]);
 				}
+			}
 		);
 
 		chatfield.set_key_callback(
-				KeyAction::Id::ESCAPE,
-				[&]()
-				{
-					toggle_chatfield(false);
-				}
+			KeyAction::Id::ESCAPE,
+			[&]()
+			{
+				toggle_chatfield(false);
+			}
 		);
 
 		//int16_t slider_x = 394;
@@ -184,7 +188,7 @@ namespace ms
 
 			if (chatrows > 1)
 				chatspace[1].draw(
-						DrawArgument(position + Point<int16_t>(0, -28) + pos_adj, Point<int16_t>(0, 28 + chattop)));
+					DrawArgument(position + Point<int16_t>(0, -28) + pos_adj, Point<int16_t>(0, 28 + chattop)));
 
 			chatspace[2].draw(position + Point<int16_t>(0, -28) + pos_adj);
 			chatspace[3].draw(position + Point<int16_t>(0, -15 + chattop) + pos_adj);
@@ -210,7 +214,8 @@ namespace ms
 
 				rowtexts.at(rowid).draw(position + Point<int16_t>(9, getchattop(chatopen) - yshift - 21) + pos_adj);
 			}
-		} else
+		}
+		else
 		{
 			auto pos_adj = chatfieldopen ? Point<int16_t>(0, -28) : Point<int16_t>(0, 0);
 
@@ -238,7 +243,7 @@ namespace ms
 
 			for (size_t i = 0; i < ChatTab::NUM_CHATTAB; i++)
 				chattab_text[ChatTab::CHT_ALL + i].draw(
-						position + Point<int16_t>(chattab_x + (i * chattab_span) + 25, chattab_y - 3) + pos_adj);
+					position + Point<int16_t>(chattab_x + (i * chattab_span) + 25, chattab_y - 3) + pos_adj);
 		}
 	}
 
@@ -252,7 +257,7 @@ namespace ms
 			buttons[BT_TAB_0 + i]->set_position(Point<int16_t>(chattab_x + (i * chattab_span), chattab_y) + pos_adj);
 
 		buttons[Buttons::BT_TAB_0 + ChatTab::NUM_CHATTAB]->set_position(
-				Point<int16_t>(chattab_x + (ChatTab::NUM_CHATTAB * chattab_span), chattab_y) + pos_adj);
+			Point<int16_t>(chattab_x + (ChatTab::NUM_CHATTAB * chattab_span), chattab_y) + pos_adj);
 		buttons[Buttons::BT_CLOSECHAT]->set_position(closechat + Point<int16_t>(0, chattab_y) + pos_adj);
 
 		chatfield.update(position);
@@ -286,7 +291,8 @@ namespace ms
 				return new_state;
 
 			return check_dragtop(clicking, cursorpos);
-		} else
+		}
+		else
 		{
 			return UIDragElement::send_cursor(clicking, cursorpos);
 		}
@@ -350,62 +356,73 @@ namespace ms
 				//dimension.set_y(getchatbarheight());
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				dragchattop = false;
 			}
-		} else if (in_chattop)
+		}
+		else if (in_chattop)
 		{
 			if (clicking)
 			{
 				dragchattop = true;
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				return Cursor::State::CHATBARVDRAG;
 			}
-		} else if (in_chattopleft)
+		}
+		else if (in_chattopleft)
 		{
 			if (clicking)
 			{
 				//dragchattopleft = true;
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				return Cursor::State::CHATBARBRTLDRAG;
 			}
-		} else if (in_chattopright)
+		}
+		else if (in_chattopright)
 		{
 			if (clicking)
 			{
 				//dragchattopright = true;
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				return Cursor::State::CHATBARBLTRDRAG;
 			}
-		} else if (in_chatleft)
+		}
+		else if (in_chatleft)
 		{
 			if (clicking)
 			{
 				//dragchatleft = true;
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				return Cursor::State::CHATBARHDRAG;
 			}
-		} else if (in_chatright)
+		}
+		else if (in_chatright)
 		{
 			if (clicking)
 			{
 				//dragchatright = true;
 
 				return Cursor::State::CLICKING;
-			} else
+			}
+			else
 			{
 				return Cursor::State::CHATBARHDRAG;
 			}
@@ -421,7 +438,7 @@ namespace ms
 		return bounds.contains(cursorpos);
 	}
 
-	void UIChatBar::send_chatline(const std::string &line, LineType type)
+	void UIChatBar::send_chatline(const std::string& line, LineType type)
 	{
 		rowmax++;
 		rowpos = rowmax;
@@ -447,9 +464,9 @@ namespace ms
 		}
 
 		rowtexts.emplace(
-				std::piecewise_construct,
-				std::forward_as_tuple(rowmax),
-				std::forward_as_tuple(Text::Font::A11M, Text::Alignment::LEFT, color, line, 480)
+			std::piecewise_construct,
+			std::forward_as_tuple(rowmax),
+			std::forward_as_tuple(Text::Font::A11M, Text::Alignment::LEFT, color, line, 480)
 		);
 	}
 
@@ -511,7 +528,8 @@ namespace ms
 			chatfield.set_state(Textfield::State::FOCUSED);
 
 			//dimension.shift_y(getchatbarheight());
-		} else
+		}
+		else
 		{
 			buttons[Buttons::BT_CHAT]->set_active(false);
 			buttons[Buttons::BT_HELP]->set_active(false);

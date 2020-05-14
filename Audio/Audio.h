@@ -112,6 +112,7 @@ namespace ms
 	};
 }
 #else
+
 #include "../Error.h"
 #include "../MapleStory.h"
 
@@ -123,7 +124,9 @@ namespace ms
 #include <array>
 
 #ifdef USE_NX
+
 #include <nlnx/node.hpp>
+
 #else
 #include "../Util/WzFiles.h"
 #endif
@@ -135,12 +138,12 @@ namespace ms
 class FileFactory final : public alure::FileIOFactory
 {
 private:
-	std::unordered_map<std::string, membuf *> *audiodb;
+	std::unordered_map<std::string, membuf*>* audiodb;
 public:
-	FileFactory(std::unordered_map<std::string, membuf *> *audiodb_in) : audiodb(audiodb_in)
+	FileFactory(std::unordered_map<std::string, membuf*>* audiodb_in) : audiodb(audiodb_in)
 	{}
 
-	alure::UniquePtr<std::istream> openFile(const alure::String &name) noexcept override
+	alure::UniquePtr<std::istream> openFile(const alure::String& name) noexcept override
 	{
 		auto stream = alure::MakeUnique<std::istream>(audiodb->at(name));
 		if (stream->fail())
@@ -245,7 +248,7 @@ namespace ms
 
 	private:
 		std::string path;
-		static std::unordered_map<std::string, membuf *> audiodb;
+		static std::unordered_map<std::string, membuf*> audiodb;
 		static alure::DeviceManager devMgr;
 		static alure::Device dev;
 		static alure::Context ctx;

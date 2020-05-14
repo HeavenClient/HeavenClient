@@ -26,12 +26,21 @@ namespace ms
 	class Rectangle
 	{
 	public:
-		Rectangle(nl::node sourceLeftTop, nl::node sourceRightBottom) : left_top(sourceLeftTop), right_bottom(sourceRightBottom) {}
-		Rectangle(nl::node source) : left_top(source["lt"]), right_bottom(source["rb"]) {}
+		Rectangle(nl::node sourceLeftTop, nl::node sourceRightBottom) : left_top(sourceLeftTop), right_bottom(
+			sourceRightBottom)
+		{}
 
-		constexpr Rectangle(Point<T> leftTop, Point<T> rightBottom) : left_top(leftTop), right_bottom(rightBottom) {}
-		constexpr Rectangle(T left, T right, T top, T bottom) : left_top(left, top), right_bottom(right, bottom) {}
-		constexpr Rectangle() {}
+		Rectangle(nl::node source) : left_top(source["lt"]), right_bottom(source["rb"])
+		{}
+
+		constexpr Rectangle(Point<T> leftTop, Point<T> rightBottom) : left_top(leftTop), right_bottom(rightBottom)
+		{}
+
+		constexpr Rectangle(T left, T right, T top, T bottom) : left_top(left, top), right_bottom(right, bottom)
+		{}
+
+		constexpr Rectangle()
+		{}
 
 		constexpr T width() const
 		{
@@ -100,12 +109,12 @@ namespace ms
 
 		constexpr Range<T> get_horizontal() const
 		{
-			return { left(), right() };
+			return {left(), right()};
 		}
 
 		constexpr Range<T> get_vertical() const
 		{
-			return { top(), bottom() };
+			return {top(), bottom()};
 		}
 
 		void shift(const Point<T>& v)

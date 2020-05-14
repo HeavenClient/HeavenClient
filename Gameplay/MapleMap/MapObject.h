@@ -34,7 +34,7 @@ namespace ms
 		virtual void draw(double viewx, double viewy, float alpha) const = 0;
 
 		// Updates the object and returns the updated layer.
-		virtual int8_t update(const Physics &physics);
+		virtual int8_t update(const Physics& physics);
 
 		// Reactivates the object.
 		virtual void makeactive();

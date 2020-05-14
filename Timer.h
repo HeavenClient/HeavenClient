@@ -33,7 +33,8 @@ namespace ms
 			start();
 		}
 
-		~Timer() {}
+		~Timer()
+		{}
 
 		// Start the timer by setting the last measurement to now.
 		void start()
@@ -68,7 +69,8 @@ namespace ms
 			start();
 		}
 
-		~ContinuousTimer() {}
+		~ContinuousTimer()
+		{}
 
 		// Return now from the clock to be used to calculate elapsed time later.
 		point start()

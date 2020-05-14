@@ -106,7 +106,8 @@ namespace ms
 	{
 	public:
 		// Requests the list of worlds and channels
-		ServerRequestPacket() : OutPacket(OutPacket::Opcode::SERVERLIST_REQUEST) {}
+		ServerRequestPacket() : OutPacket(OutPacket::Opcode::SERVERLIST_REQUEST)
+		{}
 	};
 
 	// Opcode: PLAYER_LOGIN(20)
@@ -125,6 +126,7 @@ namespace ms
 	{
 	public:
 		// Sends whenever we hit the start of the Login screen
-		LoginStartPacket() : OutPacket(OutPacket::Opcode::LOGIN_START) {}
+		LoginStartPacket() : OutPacket(OutPacket::Opcode::LOGIN_START)
+		{}
 	};
 }

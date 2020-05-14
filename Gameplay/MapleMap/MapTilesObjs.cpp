@@ -43,16 +43,16 @@ namespace ms
 
 	void TilesObjs::update()
 	{
-		for (auto &iter : objs)
+		for (auto& iter : objs)
 			iter.second.update();
 	}
 
 	void TilesObjs::draw(Point<int16_t> viewpos, float alpha) const
 	{
-		for (auto &iter : objs)
+		for (auto& iter : objs)
 			iter.second.draw(viewpos, alpha);
 
-		for (auto &iter : tiles)
+		for (auto& iter : tiles)
 			iter.second.draw(viewpos);
 	}
 

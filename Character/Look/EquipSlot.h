@@ -43,19 +43,19 @@ namespace ms
 			RING3 = 15,
 			RING4 = 16,
 			PENDANT1 = 17,
-			TAMEDMOB = 18,	// TODO: Where is this now?
-			SADDLE = 19,	// TODO: Where is this now?
+			TAMEDMOB = 18,    // TODO: Where is this now?
+			SADDLE = 19,    // TODO: Where is this now?
 			MEDAL = 49,
 			BELT = 50,
-			POCKET,		// TODO: What is the proper value for this?
-			BOOK,		// TODO: What is the proper value for this?
-			PENDANT2,	// TODO: What is the proper value for this?
-			SHOULDER,	// TODO: What is the proper value for this?
-			ANDROID,	// TODO: What is the proper value for this?
-			EMBLEM,		// TODO: What is the proper value for this?
-			BADGE,		// TODO: What is the proper value for this?
-			SUBWEAPON,	// TODO: What is the proper value for this?
-			HEART,		// TODO: What is the proper value for this?
+			POCKET,        // TODO: What is the proper value for this?
+			BOOK,        // TODO: What is the proper value for this?
+			PENDANT2,    // TODO: What is the proper value for this?
+			SHOULDER,    // TODO: What is the proper value for this?
+			ANDROID,    // TODO: What is the proper value for this?
+			EMBLEM,        // TODO: What is the proper value for this?
+			BADGE,        // TODO: What is the proper value for this?
+			SUBWEAPON,    // TODO: What is the proper value for this?
+			HEART,        // TODO: What is the proper value for this?
 			LENGTH
 		};
 

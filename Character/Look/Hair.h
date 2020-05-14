@@ -40,13 +40,13 @@ namespace ms
 			NUM_LAYERS
 		};
 
-		Hair(int32_t hairid, const BodyDrawInfo &drawinfo);
+		Hair(int32_t hairid, const BodyDrawInfo& drawinfo);
 
-		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument &args) const;
+		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const;
 
-		const std::string &get_name() const;
+		const std::string& get_name() const;
 
-		const std::string &getcolor() const;
+		const std::string& getcolor() const;
 
 	private:
 		std::unordered_map<uint8_t, Texture> stances[Stance::Id::LENGTH][Layer::NUM_LAYERS];

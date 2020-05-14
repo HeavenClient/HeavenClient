@@ -29,7 +29,8 @@ namespace ms
 		{
 			mapwalls = Range<int16_t>(info["VRLeft"], info["VRRight"]);
 			mapborders = Range<int16_t>(info["VRTop"], info["VRBottom"]);
-		} else
+		}
+		else
 		{
 			mapwalls = walls;
 			mapborders = borders;
@@ -78,7 +79,7 @@ namespace ms
 
 	Optional<const Seat> MapInfo::findseat(Point<int16_t> position) const
 	{
-		for (auto &seat : seats)
+		for (auto& seat : seats)
 			if (seat.inrange(position))
 				return seat;
 
@@ -87,7 +88,7 @@ namespace ms
 
 	Optional<const Ladder> MapInfo::findladder(Point<int16_t> position, bool upwards) const
 	{
-		for (auto &ladder : ladders)
+		for (auto& ladder : ladders)
 			if (ladder.inrange(position, upwards))
 				return ladder;
 

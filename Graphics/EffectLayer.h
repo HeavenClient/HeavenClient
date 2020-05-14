@@ -36,19 +36,19 @@ namespace ms
 
 		void update();
 
-		void add(const Animation &effect, const DrawArgument &args, int8_t z, float speed);
+		void add(const Animation& effect, const DrawArgument& args, int8_t z, float speed);
 
-		void add(const Animation &effect, const DrawArgument &args, int8_t z);
+		void add(const Animation& effect, const DrawArgument& args, int8_t z);
 
-		void add(const Animation &effect, const DrawArgument &args);
+		void add(const Animation& effect, const DrawArgument& args);
 
-		void add(const Animation &effect);
+		void add(const Animation& effect);
 
 	private:
 		class Effect
 		{
 		public:
-			Effect(const Animation &a, const DrawArgument &args, float s) : sprite(a, args), speed(s)
+			Effect(const Animation& a, const DrawArgument& args, float s) : sprite(a, args), speed(s)
 			{}
 
 			void draw(Point<int16_t> position, float alpha) const
@@ -59,7 +59,7 @@ namespace ms
 			bool update()
 			{
 				return sprite.update(
-						static_cast<uint16_t>(Constants::TIMESTEP * speed)
+					static_cast<uint16_t>(Constants::TIMESTEP * speed)
 				);
 			}
 

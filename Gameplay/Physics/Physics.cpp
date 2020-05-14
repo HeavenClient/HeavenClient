@@ -35,7 +35,7 @@ namespace ms
 	Physics::Physics()
 	{}
 
-	void Physics::move_object(PhysicsObject &phobj) const
+	void Physics::move_object(PhysicsObject& phobj) const
 	{
 		// Determine which platform the object is currently on
 		fht.update_fh(phobj);
@@ -64,7 +64,7 @@ namespace ms
 		phobj.move();
 	}
 
-	void Physics::move_normal(PhysicsObject &phobj) const
+	void Physics::move_normal(PhysicsObject& phobj) const
 	{
 		phobj.vacc = 0.0;
 		phobj.hacc = 0.0;
@@ -77,7 +77,8 @@ namespace ms
 			if (phobj.hacc == 0.0 && phobj.hspeed < 0.1 && phobj.hspeed > -0.1)
 			{
 				phobj.hspeed = 0.0;
-			} else
+			}
+			else
 			{
 				double inertia = phobj.hspeed / GROUNDSLIP;
 				double slopef = phobj.fhslope;
@@ -89,7 +90,8 @@ namespace ms
 
 				phobj.hacc -= (FRICTION + SLOPEFACTOR * (1.0 + slopef * -inertia)) * inertia;
 			}
-		} else if (phobj.is_flag_not_set(PhysicsObject::Flag::NOGRAVITY))
+		}
+		else if (phobj.is_flag_not_set(PhysicsObject::Flag::NOGRAVITY))
 		{
 			phobj.vacc += GRAVFORCE;
 		}
@@ -101,7 +103,7 @@ namespace ms
 		phobj.vspeed += phobj.vacc;
 	}
 
-	void Physics::move_flying(PhysicsObject &phobj) const
+	void Physics::move_flying(PhysicsObject& phobj) const
 	{
 		phobj.hacc = phobj.hforce;
 		phobj.vacc = phobj.vforce;
@@ -121,7 +123,7 @@ namespace ms
 			phobj.vspeed = 0.0;
 	}
 
-	void Physics::move_swimming(PhysicsObject &phobj) const
+	void Physics::move_swimming(PhysicsObject& phobj) const
 	{
 		phobj.hacc = phobj.hforce;
 		phobj.vacc = phobj.vforce;
@@ -151,7 +153,7 @@ namespace ms
 		return Point<int16_t>(position.x(), ground - 1);
 	}
 
-	const FootholdTree &Physics::get_fht() const
+	const FootholdTree& Physics::get_fht() const
 	{
 		return fht;
 	}

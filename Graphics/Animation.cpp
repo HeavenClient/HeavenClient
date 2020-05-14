@@ -41,15 +41,18 @@ namespace ms
 		if (hasa0 && hasa1)
 		{
 			opacities = {src["a0"], src["a1"]};
-		} else if (hasa0)
+		}
+		else if (hasa0)
 		{
 			uint8_t a0 = src["a0"];
 			opacities = {a0, 255 - a0};
-		} else if (hasa1)
+		}
+		else if (hasa1)
 		{
 			uint8_t a1 = src["a1"];
 			opacities = {255 - a1, a1};
-		} else
+		}
+		else
 		{
 			opacities = {255, 255};
 		}
@@ -74,7 +77,7 @@ namespace ms
 		scales = {0, 0};
 	}
 
-	void Frame::draw(const DrawArgument &args) const
+	void Frame::draw(const DrawArgument& args) const
 	{
 		texture.draw(args);
 	}
@@ -131,7 +134,8 @@ namespace ms
 		if (istexture)
 		{
 			frames.push_back(src);
-		} else
+		}
+		else
 		{
 			std::set<int16_t> frameids;
 
@@ -146,7 +150,7 @@ namespace ms
 				}
 			}
 
-			for (auto &fid : frameids)
+			for (auto& fid : frameids)
 			{
 				auto sub = src[std::to_string(fid)];
 				frames.push_back(sub);
@@ -181,7 +185,7 @@ namespace ms
 		framestep = 1;
 	}
 
-	void Animation::draw(const DrawArgument &args, float alpha) const
+	void Animation::draw(const DrawArgument& args, float alpha) const
 	{
 		int16_t interframe = frame.get(alpha);
 		float interopc = opacity.get(alpha) / 255;
@@ -203,7 +207,7 @@ namespace ms
 
 	bool Animation::update(uint16_t timestep)
 	{
-		const Frame &framedata = get_frame();
+		const Frame& framedata = get_frame();
 
 		opacity += framedata.opcstep(timestep);
 
@@ -229,23 +233,27 @@ namespace ms
 				{
 					framestep = -framestep;
 					ended = false;
-				} else if (framestep == -1 && frame == 0)
+				}
+				else if (framestep == -1 && frame == 0)
 				{
 					framestep = -framestep;
 					ended = true;
-				} else
+				}
+				else
 				{
 					ended = false;
 				}
 
 				nextframe = frame + framestep;
-			} else
+			}
+			else
 			{
 				if (frame == lastframe)
 				{
 					nextframe = 0;
 					ended = true;
-				} else
+				}
+				else
 				{
 					nextframe = frame + 1;
 					ended = false;
@@ -265,7 +273,8 @@ namespace ms
 			xyscale.set(frames[nextframe].start_scale());
 
 			return ended;
-		} else
+		}
+		else
 		{
 			frame.normalize();
 
@@ -315,7 +324,7 @@ namespace ms
 		return get_frame().get_bounds();
 	}
 
-	const Frame &Animation::get_frame() const
+	const Frame& Animation::get_frame() const
 	{
 		return frames[frame.get()];
 	}

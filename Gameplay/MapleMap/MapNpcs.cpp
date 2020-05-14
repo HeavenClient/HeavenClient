@@ -28,11 +28,11 @@ namespace ms
 		npcs.draw(layer, viewx, viewy, alpha);
 	}
 
-	void MapNpcs::update(const Physics &physics)
+	void MapNpcs::update(const Physics& physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
 		{
-			const NpcSpawn &spawn = spawns.front();
+			const NpcSpawn& spawn = spawns.front();
 
 			int32_t oid = spawn.get_oid();
 			Optional<MapObject> npc = npcs.get(oid);
@@ -46,7 +46,7 @@ namespace ms
 		npcs.update(physics);
 	}
 
-	void MapNpcs::spawn(NpcSpawn &&spawn)
+	void MapNpcs::spawn(NpcSpawn&& spawn)
 	{
 		spawns.emplace(std::move(spawn));
 	}
@@ -62,16 +62,16 @@ namespace ms
 		npcs.clear();
 	}
 
-	MapObjects *MapNpcs::get_npcs()
+	MapObjects* MapNpcs::get_npcs()
 	{
 		return &npcs;
 	}
 
 	Cursor::State MapNpcs::send_cursor(bool pressed, Point<int16_t> position, Point<int16_t> viewpos)
 	{
-		for (auto &map_object : npcs)
+		for (auto& map_object : npcs)
 		{
-			Npc *npc = static_cast<Npc *>(map_object.second.get());
+			Npc* npc = static_cast<Npc*>(map_object.second.get());
 
 			if (npc && npc->is_active() && npc->inrange(position, viewpos))
 			{
@@ -81,7 +81,8 @@ namespace ms
 					TalkToNPCPacket(npc->get_oid()).dispatch();
 
 					return Cursor::State::IDLE;
-				} else
+				}
+				else
 				{
 					return Cursor::State::CANCLICK;
 				}

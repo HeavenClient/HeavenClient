@@ -18,7 +18,9 @@
 #include "DamageNumber.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -38,7 +40,8 @@ namespace ms
 			{
 				restnum = number.substr(1);
 				multiple = true;
-			} else
+			}
+			else
 			{
 				restnum = "";
 				multiple = false;
@@ -55,7 +58,8 @@ namespace ms
 				{
 					char n = restnum[i + 1];
 					advance = (getadvance(c, false) + getadvance(n, false)) / 2;
-				} else
+				}
+				else
 				{
 					advance = getadvance(c, false);
 				}
@@ -64,7 +68,8 @@ namespace ms
 			}
 
 			shift = total / 2;
-		} else
+		}
+		else
 		{
 			shift = charsets[type][true].getw('M') / 2;
 			miss = true;
@@ -88,7 +93,8 @@ namespace ms
 		if (miss)
 		{
 			charsets[type][true].draw('M', {position, interopc});
-		} else
+		}
+		else
 		{
 			charsets[type][false].draw(firstnum, {position, interopc});
 
@@ -111,7 +117,8 @@ namespace ms
 						int16_t c_advance = getadvance(c, false);
 						int16_t n_advance = getadvance(n, false);
 						advance = (c_advance + n_advance) / 2;
-					} else
+					}
+					else
 					{
 						advance = getadvance(c, false);
 					}
@@ -127,9 +134,9 @@ namespace ms
 		constexpr size_t LENGTH = 10;
 
 		constexpr int16_t advances[LENGTH] =
-				{
-						24, 20, 22, 22, 24, 23, 24, 22, 24, 24
-				};
+			{
+				24, 20, 22, 22, 24, 23, 24, 22, 24, 24
+			};
 
 		size_t index = c - 48;
 
@@ -154,7 +161,8 @@ namespace ms
 			}
 
 			return advance;
-		} else
+		}
+		else
 		{
 			return 0;
 		}

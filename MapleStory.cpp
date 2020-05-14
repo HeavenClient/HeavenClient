@@ -23,7 +23,9 @@
 #include "Util/ScreenResolution.h"
 
 #ifdef USE_NX
+
 #include "Util/NxFiles.h"
+
 #else
 #include "Util/WzFiles.h"
 #endif
@@ -47,14 +49,10 @@ namespace ms
 		if (Error error = Window::get().init())
 			return error;
 
-
-		if (Error error = Sound::init())
-			return error;
-
 		if (Error error = Music::init())
 			return error;
-
-
+		if (Error error = Sound::init())
+			return error;
 
 		Char::init();
 		DamageNumber::init();
@@ -122,7 +120,8 @@ namespace ms
 				{
 					period += elapsed;
 					samples++;
-				} else if (period)
+				}
+				else if (period)
 				{
 					int64_t fps = (samples * 1000000) / period;
 
@@ -142,8 +141,8 @@ namespace ms
 		// Initialize and check for errors
 		if (Error error = init())
 		{
-			const char *message = error.get_message();
-			const char *args = error.get_args();
+			const char* message = error.get_message();
+			const char* args = error.get_args();
 			bool can_retry = error.can_retry();
 
 			std::cout << "Error: " << message << std::endl;
@@ -159,7 +158,8 @@ namespace ms
 
 			if (can_retry && command == "retry")
 				start();
-		} else
+		}
+		else
 		{
 			loop();
 		}

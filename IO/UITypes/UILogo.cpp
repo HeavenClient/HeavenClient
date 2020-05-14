@@ -24,7 +24,9 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -51,14 +53,16 @@ namespace ms
 			if (!nexon_ended)
 			{
 				Nexon.draw(position + Point<int16_t>(440, 360), inter);
-			} else
+			}
+			else
 			{
 				if (!wizet_ended)
 					Wizet.draw(position + Point<int16_t>(263, 195), inter);
 				else
 					WizetEnd.draw(position + Point<int16_t>(263, 195));
 			}
-		} else
+		}
+		else
 		{
 			WizetEnd.draw(position + Point<int16_t>(263, 195));
 		}
@@ -69,12 +73,14 @@ namespace ms
 		if (!nexon_ended)
 		{
 			nexon_ended = Nexon.update();
-		} else
+		}
+		else
 		{
 			if (!wizet_ended)
 			{
 				wizet_ended = Wizet.update();
-			} else
+			}
+			else
 			{
 				Configuration::get().set_start_shown(true);
 

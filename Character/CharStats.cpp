@@ -21,9 +21,9 @@
 
 namespace ms
 {
-	CharStats::CharStats(const StatsEntry &s) : name(s.name), petids(s.petids), exp(s.exp), mapid(s.mapid),
-												portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats),
-												female(s.female)
+	CharStats::CharStats(const StatsEntry& s) : name(s.name), petids(s.petids), exp(s.exp), mapid(s.mapid),
+		portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats),
+		female(s.female)
 	{
 		job = basestats[MapleStat::Id::JOB];
 
@@ -271,12 +271,12 @@ namespace ms
 		return exp;
 	}
 
-	const std::string &CharStats::get_name() const
+	const std::string& CharStats::get_name() const
 	{
 		return name;
 	}
 
-	const std::string &CharStats::get_jobname() const
+	const std::string& CharStats::get_jobname() const
 	{
 		return job.get_name();
 	}
@@ -361,7 +361,7 @@ namespace ms
 		return attackspeed;
 	}
 
-	const Job &CharStats::get_job() const
+	const Job& CharStats::get_job() const
 	{
 		return job;
 	}

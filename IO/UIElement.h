@@ -95,7 +95,7 @@ namespace ms
 		virtual Button::State button_pressed(uint16_t buttonid)
 		{ return Button::State::DISABLED; }
 
-		virtual bool send_icon(const Icon &icon, Point<int16_t> cursorpos)
+		virtual bool send_icon(const Icon& icon, Point<int16_t> cursorpos)
 		{ return true; }
 
 		virtual void doubleclick(Point<int16_t> cursorpos)

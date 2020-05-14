@@ -20,7 +20,9 @@
 #include "../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -46,17 +48,17 @@ namespace ms
 		}
 	}
 
-	const std::vector<std::int32_t> &JobData::get_skills() const
+	const std::vector<std::int32_t>& JobData::get_skills() const
 	{
 		return skills;
 	}
 
-	const std::string &JobData::get_name() const
+	const std::string& JobData::get_name() const
 	{
 		return name;
 	}
 
-	const Texture &JobData::get_icon() const
+	const Texture& JobData::get_icon() const
 	{
 		return icon;
 	}

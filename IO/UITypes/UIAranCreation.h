@@ -54,7 +54,7 @@ namespace ms
 	private:
 		void randomize_look();
 
-		const std::string &get_equipname(EquipSlot::Id slot) const;
+		const std::string& get_equipname(EquipSlot::Id slot) const;
 
 		enum Buttons : uint16_t
 		{

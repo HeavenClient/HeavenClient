@@ -92,7 +92,7 @@ namespace ms
 		return 0;
 	}
 
-	const std::string &Job::get_name() const
+	const std::string& Job::get_name() const
 	{
 		return name;
 	}

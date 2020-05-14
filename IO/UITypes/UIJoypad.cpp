@@ -20,7 +20,9 @@
 #include "../Components/MapleButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -40,7 +42,7 @@ namespace ms
 		buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(Basic["BtCancel4"], Point<int16_t>(124, 303));
 		buttons[Buttons::OK] = std::make_unique<MapleButton>(Basic["BtOK4"], Point<int16_t>(82, 303));
 
-		for (auto &text : key_text)
+		for (auto& text : key_text)
 			text = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::BLACK, "None");
 
 		dimension = backgrnd[true].get_dimensions();

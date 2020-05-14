@@ -29,12 +29,15 @@
 #include "../../Net/Packets/PlayerPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UISkillBook::SkillIcon::SkillIcon(int32_t id) : skill_id(id) {}
+	UISkillBook::SkillIcon::SkillIcon(int32_t id) : skill_id(id)
+	{}
 
 	void UISkillBook::SkillIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
 	{
@@ -54,7 +57,7 @@ namespace ms
 
 	UISkillBook::SkillDisplayMeta::SkillDisplayMeta(int32_t i, int32_t l) : id(i), level(l)
 	{
-		const SkillData &data = SkillData::get(id);
+		const SkillData& data = SkillData::get(id);
 
 		Texture ntx = data.get_icon(SkillData::Icon::NORMAL);
 		Texture dtx = data.get_icon(SkillData::Icon::DISABLED);
@@ -79,7 +82,7 @@ namespace ms
 		}
 	}
 
-	void UISkillBook::SkillDisplayMeta::draw(const DrawArgument &args) const
+	void UISkillBook::SkillDisplayMeta::draw(const DrawArgument& args) const
 	{
 		icon->draw(args.getpos());
 		name_text.draw(args + Point<int16_t>(38, -5));
@@ -96,14 +99,14 @@ namespace ms
 		return level;
 	}
 
-	StatefulIcon *UISkillBook::SkillDisplayMeta::get_icon() const
+	StatefulIcon* UISkillBook::SkillDisplayMeta::get_icon() const
 	{
 		return icon.get();
 	}
 
-	UISkillBook::UISkillBook(const CharStats &in_stats, const SkillBook &in_skillbook)
-			: UIDragElement<PosSKILL>(), stats(in_stats), skillbook(in_skillbook), grabbing(false), tab(0),
-			  macro_enabled(false), sp_enabled(false)
+	UISkillBook::UISkillBook(const CharStats& in_stats, const SkillBook& in_skillbook)
+		: UIDragElement<PosSKILL>(), stats(in_stats), skillbook(in_skillbook), grabbing(false), tab(0),
+		macro_enabled(false), sp_enabled(false)
 	{
 		nl::node Skill = nl::nx::ui["UIWindow2.img"]["Skill"];
 		nl::node main = Skill["main"];
@@ -200,16 +203,16 @@ namespace ms
 		splabel = Text(Text::Font::A12M, Text::Alignment::RIGHT, Color::Name::BLACK);
 
 		slider = Slider(
-				Slider::Type::DEFAULT_SILVER, Range<int16_t>(93, 317), 295, ROWS, 1,
-				[&](bool upwards)
-				{
-					int16_t shift = upwards ? -1 : 1;
-					bool above = offset + shift >= 0;
-					bool below = offset + 4 + shift <= skillcount;
+			Slider::Type::DEFAULT_SILVER, Range<int16_t>(93, 317), 295, ROWS, 1,
+			[&](bool upwards)
+			{
+				int16_t shift = upwards ? -1 : 1;
+				bool above = offset + shift >= 0;
+				bool below = offset + 4 + shift <= skillcount;
 
-					if (above && below)
-						change_offset(offset + shift);
-				}
+				if (above && below)
+					change_offset(offset + shift);
+			}
 		);
 
 		change_job(stats.get_stat(MapleStat::Id::JOB));
@@ -244,14 +247,16 @@ namespace ms
 				if (check_required(skills[i].get_id()))
 				{
 					skille.draw(pos);
-				} else
+				}
+				else
 				{
 					skilld.draw(pos);
 					skills[i].get_icon()->set_state(StatefulIcon::State::DISABLED);
 				}
 
 				skills[i].draw(pos + SKILL_META_OFFSET);
-			} else
+			}
+			else
 			{
 				skillb.draw(pos);
 			}
@@ -434,7 +439,7 @@ namespace ms
 
 	void UISkillBook::doubleclick(Point<int16_t> cursorpos)
 	{
-		const SkillDisplayMeta *skill = skill_by_position(cursorpos - position);
+		const SkillDisplayMeta* skill = skill_by_position(cursorpos - position);
 
 		if (skill)
 		{
@@ -503,11 +508,13 @@ namespace ms
 							UI::get().drag_icon(skills[i].get_icon());
 
 							return Cursor::State::GRABBING;
-						} else
+						}
+						else
 						{
 							return Cursor::State::IDLE;
 						}
-					} else
+					}
+					else
 					{
 						skills[i].get_icon()->set_state(StatefulIcon::State::MOUSEOVER);
 						show_skill(skills[i].get_id());
@@ -528,7 +535,8 @@ namespace ms
 				skills[i].get_icon()->set_state(StatefulIcon::State::NORMAL);
 			}
 			clear_tooltip();
-		} else
+		}
+		else
 		{
 			grabbing = false;
 		}
@@ -546,7 +554,8 @@ namespace ms
 					set_skillpoint(false);
 				else
 					close();
-			} else if (keycode == KeyAction::Id::TAB)
+			}
+			else if (keycode == KeyAction::Id::TAB)
 			{
 				clear_tooltip();
 
@@ -624,7 +633,8 @@ namespace ms
 
 			beginner_sp = remaining_beginner_sp;
 			splabel.change_text(std::to_string(beginner_sp));
-		} else
+		}
+		else
 		{
 			sp = stats.get_stat(MapleStat::Id::SP);
 			splabel.change_text(std::to_string(sp));
@@ -646,7 +656,7 @@ namespace ms
 		Job::Level joblevel = joblevel_by_tab(tab);
 		uint16_t subid = job.get_subjob(joblevel);
 
-		const JobData &data = JobData::get(subid);
+		const JobData& data = JobData::get(subid);
 
 		bookicon = data.get_icon();
 		booktext.change_text(data.get_name());
@@ -748,7 +758,7 @@ namespace ms
 		int32_t level = skills[row].get_level();
 		int32_t used = 1;
 
-		const SkillData &skillData = SkillData::get(id);
+		const SkillData& skillData = SkillData::get(id);
 		std::string name = skillData.get_name();
 		int16_t cur_sp = std::stoi(splabel.get_text());
 
@@ -766,7 +776,8 @@ namespace ms
 			buttons[Buttons::BT_SPDOWN]->set_state(Button::State::DISABLED);
 			buttons[Buttons::BT_SPMAX]->set_state(Button::State::DISABLED);
 			buttons[Buttons::BT_SPUP]->set_state(Button::State::DISABLED);
-		} else
+		}
+		else
 		{
 			buttons[Buttons::BT_SPDOWN]->set_state(Button::State::DISABLED);
 			buttons[Buttons::BT_SPMAX]->set_state(Button::State::NORMAL);
@@ -801,7 +812,7 @@ namespace ms
 		}
 	}
 
-	const UISkillBook::SkillDisplayMeta *UISkillBook::skill_by_position(Point<int16_t> cursorpos) const
+	const UISkillBook::SkillDisplayMeta* UISkillBook::skill_by_position(Point<int16_t> cursorpos) const
 	{
 		int16_t x = cursorpos.x();
 

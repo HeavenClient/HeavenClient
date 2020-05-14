@@ -28,7 +28,7 @@ namespace ms
 	public:
 		template <typename...Args>
 		// Initialize with an initializer list
-		EnumMap(Args&& ... args) : m_values{ { std::forward<Args>(args)... } }
+		EnumMap(Args&& ... args) : m_values{{std::forward<Args>(args)...}}
 		{
 			static_assert(std::is_enum<K>::value, "Template parameter 'K' for EnumMap must be an enum.");
 
@@ -51,10 +51,10 @@ namespace ms
 		template <typename...Args>
 		void emplace(K key, Args&& ...args)
 		{
-			m_values[key] = { std::forward<Args>(args)... };
+			m_values[key] = {std::forward<Args>(args)...};
 		}
 
-		V& operator [](K key)
+		V& operator[](K key)
 		{
 			return m_values[key];
 		}
@@ -65,21 +65,24 @@ namespace ms
 		}
 
 		template <typename T>
-		class base_iterator : public std::iterator<std::forward_iterator_tag, V> {
+		class base_iterator : public std::iterator<std::forward_iterator_tag, V>
+		{
 
 		public:
 			using index_type = typename std::underlying_type<K>::type;
 
-			base_iterator(T* p, index_type i) : value(p), index(i) {}
+			base_iterator(T* p, index_type i) : value(p), index(i)
+			{}
 
 			struct node
 			{
 				K first;
 				T& second;
 
-				node(K f, T& s) : first(f), second(s) {}
+				node(K f, T& s) : first(f), second(s)
+				{}
 
-				node& operator =(const node&) = delete;
+				node& operator=(const node&) = delete;
 
 				void set(const T& t)
 				{
@@ -87,9 +90,9 @@ namespace ms
 				}
 			};
 
-			node operator *()
+			node operator*()
 			{
-				return node{ first(), second() };
+				return node{first(), second()};
 			}
 
 			explicit operator bool() const
@@ -110,18 +113,18 @@ namespace ms
 					return *(value + index);
 			}
 
-			base_iterator& operator ++()
+			base_iterator& operator++()
 			{
 				index++;
 				return *this;
 			}
 
-			bool operator != (const base_iterator& other) const
+			bool operator!=(const base_iterator& other) const
 			{
 				return index != other.index;
 			}
 
-			bool operator == (const base_iterator& other) const
+			bool operator==(const base_iterator& other) const
 			{
 				return index == other.index;
 			}
@@ -138,32 +141,32 @@ namespace ms
 
 		iterator find(K key)
 		{
-			return { m_values.data(), key };
+			return {m_values.data(), key};
 		}
 
 		const_iterator find(K key) const
 		{
-			return { m_values.data(), key };
+			return {m_values.data(), key};
 		}
 
 		iterator begin()
 		{
-			return { m_values.data(), 0 };
+			return {m_values.data(), 0};
 		}
 
 		iterator end()
 		{
-			return { m_values.data(), LENGTH };
+			return {m_values.data(), LENGTH};
 		}
 
 		const_iterator begin() const
 		{
-			return { m_values.data(), 0 };
+			return {m_values.data(), 0};
 		}
 
 		const_iterator end() const
 		{
-			return { m_values.data(), LENGTH };
+			return {m_values.data(), LENGTH};
 		}
 
 		const std::array<K, LENGTH>& keys() const

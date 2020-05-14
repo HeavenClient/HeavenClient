@@ -31,17 +31,17 @@ namespace ms
 	{
 		CashShopParser::parseCharacterInfo(recv);
 
-		recv.skip_byte();	// Not MTS
-		recv.skip_string();	// account_name
+		recv.skip_byte();    // Not MTS
+		recv.skip_string();    // account_name
 		recv.skip_int();
 
 		int16_t specialcashitem_size = recv.read_short();
 
 		for (size_t i = 0; i < specialcashitem_size; i++)
 		{
-			recv.skip_int();	// sn
-			recv.skip_int();	// mod
-			recv.skip_byte();	// info
+			recv.skip_int();    // sn
+			recv.skip_int();    // mod
+			recv.skip_byte();    // info
 		}
 
 		recv.skip(121);

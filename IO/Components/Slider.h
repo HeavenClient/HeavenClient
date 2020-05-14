@@ -40,6 +40,7 @@ namespace ms
 		void setrows(int16_t unitrows, int16_t rowmax);
 
 		void setvertical(Range<int16_t> vertical);
+
 		Range<int16_t> getvertical() const;
 
 		void draw(Point<int16_t> position) const;
@@ -53,7 +54,7 @@ namespace ms
 		enum Type
 		{
 			/// Default
-			LINE_CYAN,
+				LINE_CYAN,
 			LINE_CONTESSA = 2,
 			SMALL_HAVELOCKBLUE,
 			NORMAL_CALYPSO,
@@ -80,7 +81,7 @@ namespace ms
 			ARROWS_TORYBLUE,
 			THIN_SLATEGRAY,
 			/// Custom
-			CHATBAR
+				CHATBAR
 		};
 
 	private:

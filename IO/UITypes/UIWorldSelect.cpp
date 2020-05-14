@@ -32,7 +32,9 @@
 #include "../../Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -71,7 +73,7 @@ namespace ms
 
 		sprites.emplace_back(obj["WorldSelect"]["default"][0], background_pos);
 
-		std::vector<std::string> backgrounds = { "16thNewtro" };
+		std::vector<std::string> backgrounds = {"16thNewtro"};
 		auto backgrounds_size = backgrounds.size();
 
 		if (backgrounds_size > 0)
@@ -82,7 +84,8 @@ namespace ms
 				int32_t index = randomizer.next_int(backgrounds_size);
 
 				sprites.emplace_back(obj["WorldSelect"][backgrounds[index]][0], background_pos);
-			} else
+			}
+			else
 			{
 				sprites.emplace_back(obj["WorldSelect"][backgrounds[0]][0], background_pos);
 			}
@@ -124,8 +127,8 @@ namespace ms
 			std::string ch = std::to_string(i);
 
 			buttons[Buttons::BT_CHANNEL0 + i] = std::make_unique<TwoSpriteButton>(
-					channelsrc["button:" + ch]["normal"]["0"], channelsrc["button:" + ch]["keyFocused"]["0"],
-					channelsrc_pos);
+				channelsrc["button:" + ch]["normal"]["0"], channelsrc["button:" + ch]["keyFocused"]["0"],
+				channelsrc_pos);
 			buttons[Buttons::BT_CHANNEL0 + i]->set_active(false);
 		}
 
@@ -182,13 +185,13 @@ namespace ms
 	Cursor::State UIWorldSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
 		Rectangle<int16_t> channels_bounds = Rectangle<int16_t>(
-				position + channelsrc_pos,
-				position + channelsrc_pos + channels_background.get_dimensions()
+			position + channelsrc_pos,
+			position + channelsrc_pos + channels_background.get_dimensions()
 		);
 
 		Rectangle<int16_t> worlds_bounds = Rectangle<int16_t>(
-				position + worldsrc_pos,
-				position + worldsrc_pos + worlds_background.get_dimensions()
+			position + worldsrc_pos,
+			position + worldsrc_pos + worlds_background.get_dimensions()
 		);
 
 		if (world_selected && !channels_bounds.contains(cursorpos) && !worlds_bounds.contains(cursorpos))
@@ -202,7 +205,7 @@ namespace ms
 
 		Cursor::State ret = clicked ? Cursor::State::CLICKING : Cursor::State::IDLE;
 
-		for (auto &btit : buttons)
+		for (auto& btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -212,7 +215,8 @@ namespace ms
 
 					btit.second->set_state(Button::State::MOUSEOVER);
 					ret = Cursor::State::CANCLICK;
-				} else if (btit.second->get_state() == Button::State::PRESSED)
+				}
+				else if (btit.second->get_state() == Button::State::PRESSED)
 				{
 					if (clicked)
 					{
@@ -221,25 +225,29 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 
 						ret = Cursor::State::IDLE;
-					} else
-					{
-						ret = Cursor::State::CANCLICK;
 					}
-				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
-				{
-					if (clicked)
-					{
-						Sound(Sound::Name::BUTTONCLICK).play();
-
-						btit.second->set_state(button_pressed(btit.first));
-
-						ret = Cursor::State::IDLE;
-					} else
+					else
 					{
 						ret = Cursor::State::CANCLICK;
 					}
 				}
-			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				{
+					if (clicked)
+					{
+						Sound(Sound::Name::BUTTONCLICK).play();
+
+						btit.second->set_state(button_pressed(btit.first));
+
+						ret = Cursor::State::IDLE;
+					}
+					else
+					{
+						ret = Cursor::State::CANCLICK;
+					}
+				}
+			}
+			else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}
@@ -280,7 +288,8 @@ namespace ms
 						button_pressed(next_channel - COLUMNS + Buttons::BT_CHANNEL0);
 					else
 						button_pressed(next_channel + Buttons::BT_CHANNEL0);
-				} else if (keycode == KeyAction::Id::DOWN)
+				}
+				else if (keycode == KeyAction::Id::DOWN)
 				{
 					auto next_channel = (selected_channel + COLUMNS >= channel_total ? current_col : selected_channel +
 																									 COLUMNS);
@@ -292,7 +301,8 @@ namespace ms
 						button_pressed(next_channel + COLUMNS + Buttons::BT_CHANNEL0);
 					else
 						button_pressed(next_channel + Buttons::BT_CHANNEL0);
-				} else if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::TAB)
+				}
+				else if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::TAB)
 				{
 					if (selected_channel != 0)
 						selected_channel--;
@@ -300,7 +310,8 @@ namespace ms
 						selected_channel = channel_total - 1;
 
 					button_pressed(selected_channel + Buttons::BT_CHANNEL0);
-				} else if (keycode == KeyAction::Id::RIGHT)
+				}
+				else if (keycode == KeyAction::Id::RIGHT)
 				{
 					if (selected_channel != channel_total - 1)
 						selected_channel++;
@@ -308,20 +319,24 @@ namespace ms
 						selected_channel = 0;
 
 					button_pressed(selected_channel + Buttons::BT_CHANNEL0);
-				} else if (escape)
+				}
+				else if (escape)
 				{
 					world_selected = false;
 
 					clear_selected_world();
-				} else if (keycode == KeyAction::Id::RETURN)
+				}
+				else if (keycode == KeyAction::Id::RETURN)
 				{
 					button_pressed(Buttons::BT_ENTERWORLD);
 				}
-			} else if (show_recommended)
+			}
+			else if (show_recommended)
 			{
 				if (escape || keycode == KeyAction::Id::RETURN)
 					toggle_recommended(false);
-			} else
+			}
+			else
 			{
 				auto selected_world = worldid;
 				auto world_count = worldcount - 1;
@@ -351,7 +366,8 @@ namespace ms
 					worldid = static_cast<uint8_t>(selected_world);
 
 					buttons[Buttons::BT_WORLD0 + worldid]->set_state(Button::State::PRESSED);
-				} else if (escape)
+				}
+				else if (escape)
 				{
 					auto quitconfirm = UI::get().get_element<UIQuitConfirm>();
 
@@ -359,14 +375,16 @@ namespace ms
 						return UI::get().send_key(keycode, pressed);
 					else
 						button_pressed(Buttons::BT_QUITGAME);
-				} else if (keycode == KeyAction::Id::RETURN)
+				}
+				else if (keycode == KeyAction::Id::RETURN)
 				{
 					auto quitconfirm = UI::get().get_element<UIQuitConfirm>();
 
 					if (quitconfirm && quitconfirm->is_active())
 					{
 						return UI::get().send_key(keycode, pressed);
-					} else
+					}
+					else
 					{
 						bool found = false;
 
@@ -483,7 +501,7 @@ namespace ms
 			buttons[Buttons::BT_WORLD0 + i] = std::make_unique<TwoSpriteButton>(worldbtn["normal"]["0"],
 																				worldbtn["keyFocused"]["0"],
 																				worldsrc_pos + Point<int16_t>(
-																						region["origin"][i + 1]));
+																					region["origin"][i + 1]));
 			buttons[Buttons::BT_WORLD0 + i]->set_active(false);
 		}
 	}
@@ -500,24 +518,28 @@ namespace ms
 			enter_world();
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_QUITGAME)
+		}
+		else if (id == Buttons::BT_QUITGAME)
 		{
 			UI::get().emplace<UIQuitConfirm>();
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWRECOMMENDED)
+		}
+		else if (id == Buttons::BT_VIEWRECOMMENDED)
 		{
 			world_selected = false;
 			clear_selected_world();
 			toggle_recommended(true);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWALL)
+		}
+		else if (id == Buttons::BT_VIEWALL)
 		{
 			toggle_recommended(false);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWRECOMMENDED_SELECT)
+		}
+		else if (id == Buttons::BT_VIEWRECOMMENDED_SELECT)
 		{
 			buttons[Buttons::BT_WORLD0 + worldid]->set_state(Button::State::NORMAL);
 
@@ -528,12 +550,14 @@ namespace ms
 			toggle_recommended(false);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWRECOMMENDED_CANCEL)
+		}
+		else if (id == Buttons::BT_VIEWRECOMMENDED_CANCEL)
 		{
 			toggle_recommended(false);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWRECOMMENDED_PREV)
+		}
+		else if (id == Buttons::BT_VIEWRECOMMENDED_PREV)
 		{
 			if (recommended_worldid > 0)
 				recommended_worldid--;
@@ -543,7 +567,8 @@ namespace ms
 			recommended_message.change_text(recommended_worlds[recommended_worldid].message);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_VIEWRECOMMENDED_NEXT)
+		}
+		else if (id == Buttons::BT_VIEWRECOMMENDED_NEXT)
 		{
 			if (recommended_worldid < recommended_worldcount - 1)
 				recommended_worldid++;
@@ -553,14 +578,16 @@ namespace ms
 			recommended_message.change_text(recommended_worlds[recommended_worldid].message);
 
 			return Button::State::NORMAL;
-		} else if (id == Buttons::BT_CHANGEREGION)
+		}
+		else if (id == Buttons::BT_CHANGEREGION)
 		{
 			UI::get().emplace<UIRegion>();
 
 			deactivate();
 
 			return Button::State::NORMAL;
-		} else if (id >= Buttons::BT_WORLD0 && id < Buttons::BT_CHANNEL0)
+		}
+		else if (id >= Buttons::BT_WORLD0 && id < Buttons::BT_CHANNEL0)
 		{
 			toggle_recommended(false);
 
@@ -575,7 +602,8 @@ namespace ms
 			change_world(worlds[worldid]);
 
 			return Button::State::PRESSED;
-		} else if (id >= Buttons::BT_CHANNEL0 && id < Buttons::BT_ENTERWORLD)
+		}
+		else if (id >= Buttons::BT_CHANNEL0 && id < Buttons::BT_ENTERWORLD)
 		{
 			uint8_t selectedch = static_cast<uint8_t>(id - Buttons::BT_CHANNEL0);
 
@@ -585,13 +613,15 @@ namespace ms
 				channelid = static_cast<uint8_t>(id - Buttons::BT_CHANNEL0);
 				buttons[Buttons::BT_CHANNEL0 + channelid]->set_state(Button::State::PRESSED);
 				Sound(Sound::Name::WORLDSELECT).play();
-			} else
+			}
+			else
 			{
 				enter_world();
 			}
 
 			return Button::State::PRESSED;
-		} else
+		}
+		else
 		{
 			return Button::State::NORMAL;
 		}
@@ -627,7 +657,8 @@ namespace ms
 			{
 				buttons[Buttons::BT_VIEWRECOMMENDED_PREV]->set_state(Button::State::DISABLED);
 				buttons[Buttons::BT_VIEWRECOMMENDED_NEXT]->set_state(Button::State::DISABLED);
-			} else
+			}
+			else
 			{
 				buttons[Buttons::BT_VIEWRECOMMENDED_PREV]->set_state(Button::State::NORMAL);
 				buttons[Buttons::BT_VIEWRECOMMENDED_NEXT]->set_state(Button::State::NORMAL);
@@ -681,7 +712,8 @@ namespace ms
 				default:
 					break;
 			}
-		} else
+		}
+		else
 		{
 			switch (id)
 			{

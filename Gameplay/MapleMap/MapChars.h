@@ -33,10 +33,10 @@ namespace ms
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update all characters.
-		void update(const Physics &physics);
+		void update(const Physics& physics);
 
 		// Spawn a new character, if it has not been spawned yet.
-		void spawn(CharSpawn &&spawn);
+		void spawn(CharSpawn&& spawn);
 
 		// Remove a character.
 		void remove(int32_t cid);
@@ -45,13 +45,13 @@ namespace ms
 		void clear();
 
 		// Returns a reference to the MapObjects object.
-		MapObjects *get_chars();
+		MapObjects* get_chars();
 
 		// Update a characters movement.
-		void send_movement(int32_t cid, const std::vector<Movement> &movements);
+		void send_movement(int32_t cid, const std::vector<Movement>& movements);
 
 		// Update a characters look.
-		void update_look(int32_t cid, const LookEntry &look);
+		void update_look(int32_t cid, const LookEntry& look);
 
 		Optional<OtherChar> get_char(int32_t cid);
 

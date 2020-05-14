@@ -36,7 +36,7 @@ namespace ms
 			{
 				layer = static_cast<uint8_t>(std::stoi(basef.name()));
 			}
-			catch (const std::exception &ex)
+			catch (const std::exception& ex)
 			{
 				std::cout << __func__ << ": " << ex.what() << std::endl;
 				continue;
@@ -52,16 +52,16 @@ namespace ms
 					{
 						id = static_cast<uint16_t>(std::stoi(lastf.name()));
 					}
-					catch (const std::exception &ex)
+					catch (const std::exception& ex)
 					{
 						std::cout << __func__ << ": " << ex.what() << std::endl;
 						continue;
 					}
 
-					const Foothold &foothold = footholds.emplace(
-							std::piecewise_construct,
-							std::forward_as_tuple(id),
-							std::forward_as_tuple(lastf, id, layer)
+					const Foothold& foothold = footholds.emplace(
+						std::piecewise_construct,
+						std::forward_as_tuple(id),
+						std::forward_as_tuple(lastf, id, layer)
 					).first->second;
 
 					if (foothold.l() < leftw)
@@ -95,7 +95,7 @@ namespace ms
 	FootholdTree::FootholdTree()
 	{}
 
-	void FootholdTree::limit_movement(PhysicsObject &phobj) const
+	void FootholdTree::limit_movement(PhysicsObject& phobj) const
 	{
 		if (phobj.hmobile())
 		{
@@ -125,8 +125,8 @@ namespace ms
 			double next_y = phobj.next_y();
 
 			auto ground = Range<double>(
-					get_fh(phobj.fhid).ground_below(phobj.crnt_x()),
-					get_fh(phobj.fhid).ground_below(phobj.next_x())
+				get_fh(phobj.fhid).ground_below(phobj.crnt_x()),
+				get_fh(phobj.fhid).ground_below(phobj.next_x())
 			);
 
 			bool collision = crnt_y <= ground.first() && next_y >= ground.second();
@@ -136,7 +136,8 @@ namespace ms
 				phobj.limity(ground.second());
 
 				limit_movement(phobj);
-			} else
+			}
+			else
 			{
 				if (next_y < borders.first())
 					phobj.limity(borders.first());
@@ -146,12 +147,12 @@ namespace ms
 		}
 	}
 
-	void FootholdTree::update_fh(PhysicsObject &phobj) const
+	void FootholdTree::update_fh(PhysicsObject& phobj) const
 	{
 		if (phobj.type == PhysicsObject::Type::FIXATED && phobj.fhid > 0)
 			return;
 
-		const Foothold &curfh = get_fh(phobj.fhid);
+		const Foothold& curfh = get_fh(phobj.fhid);
 		bool checkslope = false;
 
 		double x = phobj.crnt_x();
@@ -168,12 +169,13 @@ namespace ms
 				phobj.fhid = get_fhid_below(x, y);
 			else
 				checkslope = true;
-		} else
+		}
+		else
 		{
 			phobj.fhid = get_fhid_below(x, y);
 		}
 
-		const Foothold &nextfh = get_fh(phobj.fhid);
+		const Foothold& nextfh = get_fh(phobj.fhid);
 		phobj.fhslope = nextfh.slope();
 
 		double ground = nextfh.ground_below(x);
@@ -207,7 +209,8 @@ namespace ms
 				double nextground = get_fh(belowid).ground_below(x);
 				phobj.enablejd = (nextground - ground) < 600.0;
 				phobj.groundbelow = ground + 1.0;
-			} else
+			}
+			else
 			{
 				phobj.enablejd = false;
 			}
@@ -225,7 +228,7 @@ namespace ms
 		}
 	}
 
-	const Foothold &FootholdTree::get_fh(uint16_t fhid) const
+	const Foothold& FootholdTree::get_fh(uint16_t fhid) const
 	{
 		auto iter = footholds.find(fhid);
 
@@ -239,29 +242,30 @@ namespace ms
 	{
 		auto shorty = static_cast<int16_t>(fy);
 		Range<int16_t> vertical(shorty - 50, shorty - 1);
-		const Foothold &cur = get_fh(curid);
+		const Foothold& cur = get_fh(curid);
 
 		if (left)
 		{
-			const Foothold &prev = get_fh(cur.prev());
+			const Foothold& prev = get_fh(cur.prev());
 
 			if (prev.is_blocking(vertical))
 				return cur.l();
 
-			const Foothold &prev_prev = get_fh(prev.prev());
+			const Foothold& prev_prev = get_fh(prev.prev());
 
 			if (prev_prev.is_blocking(vertical))
 				return prev.l();
 
 			return walls.first();
-		} else
+		}
+		else
 		{
-			const Foothold &next = get_fh(cur.next());
+			const Foothold& next = get_fh(cur.next());
 
 			if (next.is_blocking(vertical))
 				return cur.r();
 
-			const Foothold &next_next = get_fh(next.next());
+			const Foothold& next_next = get_fh(next.next());
 
 			if (next_next.is_blocking(vertical))
 				return next.r();
@@ -272,7 +276,7 @@ namespace ms
 
 	double FootholdTree::get_edge(uint16_t curid, bool left) const
 	{
-		const Foothold &fh = get_fh(curid);
+		const Foothold& fh = get_fh(curid);
 
 		if (left)
 		{
@@ -281,21 +285,22 @@ namespace ms
 			if (!previd)
 				return fh.l();
 
-			const Foothold &prev = get_fh(previd);
+			const Foothold& prev = get_fh(previd);
 			uint16_t prev_previd = prev.prev();
 
 			if (!prev_previd)
 				return prev.l();
 
 			return walls.first();
-		} else
+		}
+		else
 		{
 			uint16_t nextid = fh.next();
 
 			if (!nextid)
 				return fh.r();
 
-			const Foothold &next = get_fh(nextid);
+			const Foothold& next = get_fh(nextid);
 			uint16_t next_nextid = next.next();
 
 			if (!next_nextid)
@@ -315,7 +320,7 @@ namespace ms
 
 		for (auto iter = range.first; iter != range.second; ++iter)
 		{
-			const Foothold &fh = footholds.at(iter->second);
+			const Foothold& fh = footholds.at(iter->second);
 			double ycomp = fh.ground_below(fx);
 
 			if (comp >= ycomp && ycomp >= fy)
@@ -332,10 +337,11 @@ namespace ms
 	{
 		if (uint16_t fhid = get_fhid_below(position.x(), position.y()))
 		{
-			const Foothold &fh = get_fh(fhid);
+			const Foothold& fh = get_fh(fhid);
 
 			return static_cast<int16_t>(fh.ground_below(position.x()));
-		} else
+		}
+		else
 		{
 			return borders.second();
 		}

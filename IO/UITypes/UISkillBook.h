@@ -35,7 +35,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UISkillBook(const CharStats &stats, const SkillBook &skillbook);
+		UISkillBook(const CharStats& stats, const SkillBook& skillbook);
 
 		void draw(float alpha) const override;
 
@@ -66,9 +66,15 @@ namespace ms
 		public:
 			SkillIcon(int32_t skill_id);
 
-			void drop_on_stage() const override {}
-			void drop_on_equips(EquipSlot::Id) const override {}
-			bool drop_on_items(InventoryType::Id, EquipSlot::Id, int16_t, bool) const override { return true; }
+			void drop_on_stage() const override
+			{}
+
+			void drop_on_equips(EquipSlot::Id) const override
+			{}
+
+			bool drop_on_items(InventoryType::Id, EquipSlot::Id, int16_t, bool) const override
+			{ return true; }
+
 			void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const override;
 
 			void set_count(int16_t) override
@@ -88,13 +94,13 @@ namespace ms
 		public:
 			SkillDisplayMeta(int32_t id, int32_t level);
 
-			void draw(const DrawArgument &args) const;
+			void draw(const DrawArgument& args) const;
 
 			int32_t get_id() const;
 
 			int32_t get_level() const;
 
-			StatefulIcon *get_icon() const;
+			StatefulIcon* get_icon() const;
 
 		private:
 			int32_t id;
@@ -124,7 +130,7 @@ namespace ms
 
 		Job::Level joblevel_by_tab(uint16_t tab) const;
 
-		const UISkillBook::SkillDisplayMeta *skill_by_position(Point<int16_t> cursorpos) const;
+		const UISkillBook::SkillDisplayMeta* skill_by_position(Point<int16_t> cursorpos) const;
 
 		void close();
 
@@ -173,8 +179,8 @@ namespace ms
 		static constexpr Point<int16_t> SKILL_META_OFFSET = Point<int16_t>(2, 2);
 		static constexpr Point<int16_t> LINE_OFFSET = Point<int16_t>(0, 37);
 
-		const CharStats &stats;
-		const SkillBook &skillbook;
+		const CharStats& stats;
+		const SkillBook& skillbook;
 
 		Slider slider;
 		Texture skille;

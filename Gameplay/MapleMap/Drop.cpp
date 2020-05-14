@@ -20,7 +20,7 @@
 namespace ms
 {
 	Drop::Drop(int32_t id, int32_t own, Point<int16_t> start, Point<int16_t> dst, int8_t type, int8_t mode, bool pldrp)
-			: MapObject(id)
+		: MapObject(id)
 	{
 		owner = own;
 		set_position(start.x(), start.y() - 4);
@@ -54,7 +54,7 @@ namespace ms
 		}
 	}
 
-	int8_t Drop::update(const Physics &physics)
+	int8_t Drop::update(const Physics& physics)
 	{
 		physics.move_object(phobj);
 
@@ -67,7 +67,8 @@ namespace ms
 				state = Drop::State::FLOATING;
 				angle.set(0.0f);
 				set_position(dest.x(), dest.y() - 4);
-			} else
+			}
+			else
 			{
 				static const float SPINSTEP = 0.2f;
 				angle += SPINSTEP;
@@ -105,7 +106,7 @@ namespace ms
 		return phobj.fhlayer;
 	}
 
-	void Drop::expire(int8_t type, const PhysicsObject *lt)
+	void Drop::expire(int8_t type, const PhysicsObject* lt)
 	{
 		switch (type)
 		{

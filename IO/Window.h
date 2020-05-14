@@ -27,9 +27,11 @@
 #include <glfw3.h>
 #include <GL/gl.h>
 #else
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
+
 #endif
 
 #include <functional>
@@ -40,6 +42,7 @@
 #else
 
 #include <unistd.h>
+
 #define GetCurrentDir getcwd
 #endif
 
@@ -70,7 +73,7 @@ namespace ms
 
 		void check_events();
 
-		void setclipboard(const std::string &text) const;
+		void setclipboard(const std::string& text) const;
 
 		std::string getclipboard() const;
 
@@ -79,8 +82,8 @@ namespace ms
 	private:
 		void updateopc();
 
-		GLFWwindow *glwnd;
-		GLFWwindow *context;
+		GLFWwindow* glwnd;
+		GLFWwindow* context;
 		bool fullscreen;
 		float opacity;
 		float opcstep;

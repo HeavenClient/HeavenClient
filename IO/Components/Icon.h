@@ -59,12 +59,23 @@ namespace ms
 
 		class NullType : public Type
 		{
-			void drop_on_stage() const override {}
-			void drop_on_equips(EquipSlot::Id) const override {}
-			bool drop_on_items(InventoryType::Id, EquipSlot::Id, int16_t, bool) const override { return true; }
-			void drop_on_bindings(Point<int16_t>, bool) const override {}
-			void set_count(int16_t) override {}
-			IconType get_type() override { return IconType::NONE; }
+			void drop_on_stage() const override
+			{}
+
+			void drop_on_equips(EquipSlot::Id) const override
+			{}
+
+			bool drop_on_items(InventoryType::Id, EquipSlot::Id, int16_t, bool) const override
+			{ return true; }
+
+			void drop_on_bindings(Point<int16_t>, bool) const override
+			{}
+
+			void set_count(int16_t) override
+			{}
+
+			IconType get_type() override
+			{ return IconType::NONE; }
 		};
 
 		Icon(std::unique_ptr<Type> type, Texture texture, int16_t count);
@@ -72,8 +83,11 @@ namespace ms
 		Icon();
 
 		void drop_on_stage() const;
+
 		void drop_on_equips(EquipSlot::Id eqslot) const;
+
 		bool drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const;
+
 		void drop_on_bindings(Point<int16_t> cursorposition, bool remove) const;
 
 		void set_count(int16_t count);

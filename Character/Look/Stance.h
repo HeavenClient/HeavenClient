@@ -70,7 +70,7 @@ namespace ms
 
 		Id by_id(uint8_t id);
 
-		Id by_string(const std::string &name);
+		Id by_string(const std::string& name);
 
 		bool is_climbing(Id value);
 

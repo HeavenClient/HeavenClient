@@ -20,7 +20,9 @@
 #include "DrawArgument.h"
 
 #ifdef USE_NX
+
 #include <nlnx/bitmap.hpp>
+
 #endif
 
 namespace ms
@@ -29,12 +31,18 @@ namespace ms
 	class Texture
 	{
 	public:
-		Texture() {};
+		Texture()
+		{};
+
 		Texture(nl::node source);
-		~Texture() {};
+
+		~Texture()
+		{};
 
 		void draw(const DrawArgument& args) const;
+
 		void draw(const DrawArgument& args, const Range<int16_t>& vertical) const;
+
 		void shift(Point<int16_t> amount);
 
 		bool is_valid() const;

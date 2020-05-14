@@ -75,6 +75,7 @@ namespace ms
 
 		// Find a seat the player's position
 		Optional<const Seat> findseat(Point<int16_t> position) const;
+
 		// Find a ladder at the player's position
 		// !upwards - implies downwards
 		Optional<const Ladder> findladder(Point<int16_t> position, bool upwards) const;

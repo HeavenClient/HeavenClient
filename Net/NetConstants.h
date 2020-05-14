@@ -20,7 +20,9 @@
 #include <cstdint>
 
 #if defined(__linux__) || defined(__APPLE__)
+
 #include "unistd.h"
+
 #endif
 
 namespace ms

@@ -50,13 +50,13 @@ namespace ms
 
 		UIElement::Type get_type() const override;
 
-		void add_character(CharEntry &&character);
+		void add_character(CharEntry&& character);
 
 		void post_add_character();
 
 		void remove_character(int32_t id);
 
-		const CharEntry &get_character(int32_t id);
+		const CharEntry& get_character(int32_t id);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;

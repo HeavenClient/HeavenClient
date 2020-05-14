@@ -20,12 +20,14 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	Afterimage::Afterimage(int32_t skill_id, const std::string &name, const std::string &stance_name, int16_t level)
+	Afterimage::Afterimage(int32_t skill_id, const std::string& name, const std::string& stance_name, int16_t level)
 	{
 		nl::node src;
 
@@ -60,7 +62,7 @@ namespace ms
 		displayed = true;
 	}
 
-	void Afterimage::draw(uint8_t stframe, const DrawArgument &args, float alpha) const
+	void Afterimage::draw(uint8_t stframe, const DrawArgument& args, float alpha) const
 	{
 		if (!displayed && stframe >= firstframe)
 			animation.draw(args, alpha);

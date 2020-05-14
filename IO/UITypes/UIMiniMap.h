@@ -32,7 +32,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIMiniMap(const CharStats &stats);
+		UIMiniMap(const CharStats& stats);
 
 		void draw(float alpha) const override;
 
@@ -41,7 +41,9 @@ namespace ms
 		void remove_cursor() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> pos) override;
+
 		void send_scroll(double yoffset) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -133,7 +135,7 @@ namespace ms
 		bool listNpc_enabled;
 		nl::node listNpc;
 		std::vector<Sprite> listNpc_sprites;
-		std::vector<MapObject *> listNpc_list;
+		std::vector<MapObject*> listNpc_list;
 		std::vector<Text> listNpc_names;
 		std::vector<std::string> listNpc_full_names;
 
@@ -144,6 +146,6 @@ namespace ms
 		int16_t selected;
 		Animation selected_marker;
 
-		const CharStats &stats;
+		const CharStats& stats;
 	};
 }

@@ -57,7 +57,7 @@ namespace ms
 
 		Cursor::State check_dragtop(bool clicking, Point<int16_t> cursorpos);
 
-		void send_chatline(const std::string &line, LineType type);
+		void send_chatline(const std::string& line, LineType type);
 
 		void display_message(Messages::Type line, UIChatBar::LineType type);
 
@@ -120,14 +120,14 @@ namespace ms
 		};
 
 		std::vector<std::string> ChatTabText =
-				{
-						"All",
-						"Battle",
-						"Party",
-						"Friend",
-						"Guild",
-						"Alliance"
-				};
+			{
+				"All",
+				"Battle",
+				"Party",
+				"Friend",
+				"Guild",
+				"Alliance"
+			};
 
 		bool chatopen;
 		bool chatopen_persist;

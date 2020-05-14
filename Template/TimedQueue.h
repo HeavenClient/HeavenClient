@@ -66,15 +66,17 @@ namespace ms
 			T value;
 			int64_t when;
 
-			Timed(int64_t w, const T& v) : when{ w }, value{ v } {}
+			Timed(int64_t w, const T& v) : when{w}, value{v}
+			{}
 
 			template <typename...Args>
-			Timed(int64_t w, Args&& ...args) : when{ w }, value{ std::forward<Args>(args)... } {}
+			Timed(int64_t w, Args&& ...args) : when{w}, value{std::forward<Args>(args)...}
+			{}
 		};
 
 		struct TimedComparator
 		{
-			bool operator ()(const Timed& a, const Timed& b) const
+			bool operator()(const Timed& a, const Timed& b) const
 			{
 				return a.when > b.when;
 			}

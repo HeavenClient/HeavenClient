@@ -61,10 +61,13 @@ namespace ms
 
 		// Draw look, NameTag, effects and chat bubble.
 		void draw(double viewx, double viewy, float alpha) const override;
+
 		// Draw look
 		void draw_preview(Point<int16_t> position, float alpha) const;
+
 		// Update look and movements
 		int8_t update(const Physics& physics) override;
+
 		// Return the current map layer, or seven if on a ladder or rope.
 		int8_t get_layer() const override;
 
@@ -93,7 +96,7 @@ namespace ms
 		virtual void set_state(State newstate);
 
 		// Change the character's stance to an attack action.
-		void attack(const std::string &action);
+		void attack(const std::string& action);
 
 		// Change the character's stance to an attack stance.
 		void attack(Stance::Id stance);
@@ -105,7 +108,7 @@ namespace ms
 		void set_afterimage(int32_t skill_id);
 
 		// Return the current afterimage.
-		const Afterimage &get_afterimage() const;
+		const Afterimage& get_afterimage() const;
 
 		// Display an animation as an effect with the character
 		void show_attack_effect(Animation animation, int8_t z);
@@ -120,7 +123,7 @@ namespace ms
 		void show_damage(int32_t damage);
 
 		// Display a chat bubble with the specified line in it.
-		void speak(const std::string &line);
+		void speak(const std::string& line);
 
 		// Change a part of the character's look.
 		void change_look(MapleStat::Id stat, int32_t id);
@@ -132,7 +135,7 @@ namespace ms
 		void set_expression(int32_t expression);
 
 		// Add a pet with the specified stats.
-		void add_pet(uint8_t index, int32_t iid, const std::string &name, int32_t uniqueid, Point<int16_t> pos,
+		void add_pet(uint8_t index, int32_t iid, const std::string& name, int32_t uniqueid, Point<int16_t> pos,
 					 uint8_t stance, int32_t fhid);
 
 		// Remove a pet with the specified index and reason.
@@ -140,6 +143,7 @@ namespace ms
 
 		// Return if the character is facing left
 		bool getflip() const;
+
 		// Return the name of this character
 		std::string get_name() const;
 
@@ -156,22 +160,22 @@ namespace ms
 		Weapon::Type get_weapontype() const;
 
 		// Obtain a reference to this character's look.
-		CharLook &get_look();
+		CharLook& get_look();
 
 		// Obtain a const reference to this character's look.
-		const CharLook &get_look() const;
+		const CharLook& get_look() const;
 
 		// Return a reference to this characters's physics.
-		PhysicsObject &get_phobj();
+		PhysicsObject& get_phobj();
 
 		// Initialize character effects
 		static void init();
 
 	protected:
-		Char(int32_t oid, const CharLook &look, const std::string &name);
+		Char(int32_t oid, const CharLook& look, const std::string& name);
 
 		// Update the character's animation with the given speed.
-		bool update(const Physics &physics, float speed);
+		bool update(const Physics& physics, float speed);
 
 		// Get a speed modifier for the current stance.
 		float get_stancespeed() const;

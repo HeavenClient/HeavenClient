@@ -35,7 +35,7 @@ namespace ms
 			SENDYESNO,
 
 			// TODO: Unconfirmed
-					SENDNEXT,
+				SENDNEXT,
 			SENDNEXTPREV,
 			SENDACCEPTDECLINE,
 			SENDGETTEXT,
@@ -60,7 +60,7 @@ namespace ms
 
 		UIElement::Type get_type() const override;
 
-		void change_text(int32_t npcid, int8_t msgtype, int16_t style, int8_t speaker, const std::string &text);
+		void change_text(int32_t npcid, int8_t msgtype, int16_t style, int8_t speaker, const std::string& text);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
@@ -68,7 +68,7 @@ namespace ms
 	private:
 		TalkType get_by_value(int8_t value);
 
-		std::string format_text(const std::string &tx, const int32_t &npcid);
+		std::string format_text(const std::string& tx, const int32_t& npcid);
 
 		static constexpr int16_t MAX_HEIGHT = 248;
 

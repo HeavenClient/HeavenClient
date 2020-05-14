@@ -32,13 +32,13 @@ namespace ms
 	class CharLook
 	{
 	public:
-		CharLook(const LookEntry &entry);
+		CharLook(const LookEntry& entry);
 
 		CharLook();
 
 		void reset();
 
-		void draw(const DrawArgument &args, float alpha) const;
+		void draw(const DrawArgument& args, float alpha) const;
 
 		void draw(Point<int16_t> pos, bool flip, Stance::Id stance, Expression::Id expression) const;
 
@@ -51,6 +51,7 @@ namespace ms
 		void set_face(int32_t faceid);
 
 		void add_equip(int32_t equipid);
+
 		void remove_equip(EquipSlot::Id slot);
 
 		void attack(bool degenerate);
@@ -61,7 +62,7 @@ namespace ms
 
 		void set_expression(Expression::Id expression);
 
-		void set_action(const std::string &action);
+		void set_action(const std::string& action);
 
 		void set_direction(bool mirrored);
 
@@ -77,13 +78,13 @@ namespace ms
 
 		Stance::Id get_stance() const;
 
-		const Body *get_body() const;
+		const Body* get_body() const;
 
-		const Hair *get_hair() const;
+		const Hair* get_hair() const;
 
-		const Face *get_face() const;
+		const Face* get_face() const;
 
-		const CharEquips &get_equips() const;
+		const CharEquips& get_equips() const;
 
 		// Initialize drawinfo
 		static void init();
@@ -91,7 +92,7 @@ namespace ms
 	private:
 		void updatetwohanded();
 
-		void draw(const DrawArgument &args, Stance::Id interstance, Expression::Id interexp, uint8_t interframe,
+		void draw(const DrawArgument& args, Stance::Id interstance, Expression::Id interexp, uint8_t interframe,
 				  uint8_t interfcframe) const;
 
 		uint16_t get_delay(Stance::Id stance, uint8_t frame) const;
@@ -111,13 +112,13 @@ namespace ms
 
 		bool flip;
 
-		const BodyAction *action;
+		const BodyAction* action;
 		std::string actionstr;
 		uint8_t actframe;
 
-		const Body *body;
-		const Hair *hair;
-		const Face *face;
+		const Body* body;
+		const Hair* hair;
+		const Face* face;
 		CharEquips equips;
 
 		Randomizer randomizer;

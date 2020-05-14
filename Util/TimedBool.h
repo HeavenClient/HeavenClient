@@ -58,7 +58,8 @@ namespace ms
 				{
 					value = false;
 					delay = 0;
-				} else
+				}
+				else
 				{
 					delay -= timestep;
 				}

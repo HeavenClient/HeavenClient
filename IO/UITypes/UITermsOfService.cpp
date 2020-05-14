@@ -25,7 +25,9 @@
 #include "Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -1064,19 +1066,19 @@ namespace ms
 		int16_t slider_y = 77;
 
 		slider = Slider(
-				Slider::Type::LINE_PUNGA, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
-				[&](bool upwards)
-				{
-					int16_t shift = upwards ? -1 : 1;
-					bool above = offset + shift >= 0;
-					bool below = offset + shift <= max_rows - unit_rows;
+			Slider::Type::LINE_PUNGA, Range<int16_t>(slider_y, slider_y + 305), 574, unit_rows, max_rows,
+			[&](bool upwards)
+			{
+				int16_t shift = upwards ? -1 : 1;
+				bool above = offset + shift >= 0;
+				bool below = offset + shift <= max_rows - unit_rows;
 
-					if (above && below)
-					{
-						offset += shift;
-						update_accept(offset);
-					}
+				if (above && below)
+				{
+					offset += shift;
+					update_accept(offset);
 				}
+			}
 		);
 
 		update_accept(offset);

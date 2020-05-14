@@ -32,6 +32,7 @@ namespace ms
 	{
 	public:
 		TilesObjs(nl::node src);
+
 		TilesObjs();
 
 		void draw(Point<int16_t> viewpos, float alpha) const;

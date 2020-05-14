@@ -38,6 +38,7 @@ namespace ms
 		UICashShop();
 
 		void draw(float inter) const;
+
 		void update() override;
 
 		Button::State button_pressed(uint16_t buttonid);
@@ -82,7 +83,9 @@ namespace ms
 				NONE
 			};
 
-			Item(int32_t itemid, Label label, int32_t discount, uint16_t count) : label(label), discount_price(discount), count(count), data(ItemData::get(itemid)) {}
+			Item(int32_t itemid, Label label, int32_t discount, uint16_t count) : label(label), discount_price(
+				discount), count(count), data(ItemData::get(itemid))
+			{}
 
 			Label label;
 			int32_t discount_price;

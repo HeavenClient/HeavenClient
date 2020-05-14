@@ -261,6 +261,7 @@ namespace ms
 }
 
 #else
+
 #include "Audio.h"
 
 #include "../Configuration.h"
@@ -268,8 +269,10 @@ namespace ms
 #include <AL/alc.h>
 
 #ifdef USE_NX
+
 #include <nlnx/audio.hpp>
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -280,7 +283,7 @@ namespace ms
 	alure::Context Music::ctx;
 	alure::Source Music::music_src;
 	alure::Buffer Music::music_buff;
-	std::unordered_map<std::string, membuf *> Music::audiodb;
+	std::unordered_map<std::string, membuf*> Music::audiodb;
 	size_t Sound::source_inc;
 	alure::Source Sound::sound_srcs[100];
 
@@ -336,7 +339,8 @@ namespace ms
 		if (itemids.find(fitemid) != itemids.end())
 		{
 			id = itemids.at(fitemid);
-		} else
+		}
+		else
 		{
 			auto pid = (10000 * (itemid / 10000));
 			auto fpid = format_id(pid);
@@ -436,7 +440,7 @@ namespace ms
 	{
 		nl::audio ad = src;
 
-		auto data = reinterpret_cast<const char *>(ad.data());
+		auto data = reinterpret_cast<const char*>(ad.data());
 
 		if (data)
 		{
@@ -446,7 +450,8 @@ namespace ms
 			Music::audiodb[id_s] = new membuf(data + 82, ad.length() - 82);
 
 			return id;
-		} else
+		}
+		else
 		{
 			return 0;
 		}
@@ -498,7 +503,7 @@ namespace ms
 		} catch (std::out_of_range e)
 		{
 			nl::audio ad = nl::nx::sound.resolve(path);
-			auto data = reinterpret_cast<const char *>(ad.data());
+			auto data = reinterpret_cast<const char*>(ad.data());
 			audiodb[path] = new membuf(data + 82, ad.length() - 82);
 		}
 
@@ -523,7 +528,7 @@ namespace ms
 		} catch (std::out_of_range e)
 		{
 			nl::audio ad = nl::nx::sound.resolve(path);
-			auto data = reinterpret_cast<const char *>(ad.data());
+			auto data = reinterpret_cast<const char*>(ad.data());
 			audiodb[path] = new membuf(data + 82, ad.length() - 82);
 		}
 

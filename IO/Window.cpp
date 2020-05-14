@@ -23,6 +23,7 @@
 #include "../Timer.h"
 
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "stb_image.h"
 
 #ifdef _WIN32
@@ -46,19 +47,19 @@ namespace ms
 		glfwTerminate();
 	}
 
-	void error_callback(int no, const char *description)
+	void error_callback(int no, const char* description)
 	{
 		std::cout << "GLFW error [" << no << "]: " << description << std::endl;
 	}
 
-	void key_callback(GLFWwindow *, int key, int, int action, int)
+	void key_callback(GLFWwindow*, int key, int, int action, int)
 	{
 		UI::get().send_key(key, action != GLFW_RELEASE);
 	}
 
 	std::chrono::time_point<std::chrono::steady_clock> start = ContinuousTimer::get().start();
 
-	void mousekey_callback(GLFWwindow *, int button, int action, int)
+	void mousekey_callback(GLFWwindow*, int button, int action, int)
 	{
 		switch (button)
 		{
@@ -94,7 +95,7 @@ namespace ms
 		}
 	}
 
-	void cursor_callback(GLFWwindow *, double xpos, double ypos)
+	void cursor_callback(GLFWwindow*, double xpos, double ypos)
 	{
 		int16_t x = static_cast<int16_t>(xpos);
 		int16_t y = static_cast<int16_t>(ypos);
@@ -102,17 +103,17 @@ namespace ms
 		UI::get().send_cursor(pos);
 	}
 
-	void focus_callback(GLFWwindow *, int focused)
+	void focus_callback(GLFWwindow*, int focused)
 	{
 		UI::get().send_focus(focused);
 	}
 
-	void scroll_callback(GLFWwindow *, double xoffset, double yoffset)
+	void scroll_callback(GLFWwindow*, double xoffset, double yoffset)
 	{
 		UI::get().send_scroll(yoffset);
 	}
 
-	void close_callback(GLFWwindow *window)
+	void close_callback(GLFWwindow* window)
 	{
 		UI::get().send_close();
 
@@ -145,11 +146,11 @@ namespace ms
 			glfwDestroyWindow(glwnd);
 
 		glwnd = glfwCreateWindow(
-				width,
-				height,
-				Configuration::get().get_title().c_str(),
-				fullscreen ? glfwGetPrimaryMonitor() : nullptr,
-				context
+			width,
+			height,
+			Configuration::get().get_title().c_str(),
+			fullscreen ? glfwGetPrimaryMonitor() : nullptr,
+			context
 		);
 
 		if (!glwnd)
@@ -225,7 +226,8 @@ namespace ms
 			{
 				opacity = 1.0f;
 				opcstep = 0.0f;
-			} else if (opacity <= 0.0f)
+			}
+			else if (opacity <= 0.0f)
 			{
 				opacity = 0.0f;
 				opcstep = -opcstep;
@@ -273,14 +275,14 @@ namespace ms
 		fadeprocedure = fadeproc;
 	}
 
-	void Window::setclipboard(const std::string &text) const
+	void Window::setclipboard(const std::string& text) const
 	{
 		glfwSetClipboardString(glwnd, text.c_str());
 	}
 
 	std::string Window::getclipboard() const
 	{
-		const char *text = glfwGetClipboardString(glwnd);
+		const char* text = glfwGetClipboardString(glwnd);
 
 		return text ? text : "";
 	}

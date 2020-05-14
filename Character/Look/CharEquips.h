@@ -40,10 +40,10 @@ namespace ms
 
 		// Draw an equip.
 		void draw(EquipSlot::Id slot, Stance::Id stance, Clothing::Layer layer, uint8_t frame,
-				  const DrawArgument &args) const;
+				  const DrawArgument& args) const;
 
 		// Add an equip, if not in cache, the equip is created from the files.
-		void add_equip(int32_t itemid, const BodyDrawInfo &drawinfo);
+		void add_equip(int32_t itemid, const BodyDrawInfo& drawinfo);
 
 		// Remove an equip.
 		void remove_equip(EquipSlot::Id slot);
@@ -76,7 +76,7 @@ namespace ms
 		int32_t get_weapon() const;
 
 	private:
-		EnumMap<EquipSlot::Id, const Clothing *> clothes;
+		EnumMap<EquipSlot::Id, const Clothing*> clothes;
 
 		static std::unordered_map<int32_t, Clothing> cloth_cache;
 	};

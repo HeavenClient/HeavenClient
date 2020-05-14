@@ -28,7 +28,7 @@ namespace ms
 	class StatusInfo
 	{
 	public:
-		StatusInfo(const std::string &str, Color::Name color);
+		StatusInfo(const std::string& str, Color::Name color);
 
 		void draw(Point<int16_t> position, float alpha) const;
 
@@ -61,7 +61,7 @@ namespace ms
 
 		UIElement::Type get_type() const override;
 
-		void show_status(Color::Name color, const std::string &message);
+		void show_status(Color::Name color, const std::string& message);
 
 	private:
 		static constexpr size_t MAX_MESSAGES = 6;

@@ -28,12 +28,14 @@
 #include "../../Net/Session.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIQuit::UIQuit(const CharStats &st) : screen_adj(212, 114), stats(st)
+	UIQuit::UIQuit(const CharStats& st) : screen_adj(212, 114), stats(st)
 	{
 		nl::node askReward = nl::nx::ui["UIWindow6.img"]["askReward"];
 		nl::node userLog = askReward["userLog"];
@@ -188,19 +190,19 @@ namespace ms
 				float fadestep = 0.025f;
 
 				Window::get().fadeout(
-						fadestep,
-						[]()
-						{
-							GraphicsGL::get().clear();
+					fadestep,
+					[]()
+					{
+						GraphicsGL::get().clear();
 
-							UI::get().change_state(UI::State::LOGIN);
-							UI::get().set_scrollnotice("");
-							Session::get().reconnect();
+						UI::get().change_state(UI::State::LOGIN);
+						UI::get().set_scrollnotice("");
+						Session::get().reconnect();
 
-							UI::get().enable();
-							Timer::get().start();
-							GraphicsGL::get().unlock();
-						}
+						UI::get().enable();
+						Timer::get().start();
+						GraphicsGL::get().unlock();
+					}
 				);
 
 				GraphicsGL::get().lock();
@@ -232,7 +234,7 @@ namespace ms
 			return 0.0f;
 
 		return static_cast<float>(
-				static_cast<double>(exp) / ExpTable::values[level]
+			static_cast<double>(exp) / ExpTable::values[level]
 		);
 	}
 

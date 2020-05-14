@@ -43,13 +43,14 @@ namespace ms
 			EVENT
 		};
 
-		UIStatusBar(const CharStats &stats);
+		UIStatusBar(const CharStats& stats);
 
 		void draw(float alpha) const override;
 
 		void update() override;
 
 		bool is_in_range(Point<int16_t> cursorpos) const override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -127,7 +128,7 @@ namespace ms
 			BT_EVENT_DAILY
 		};
 
-		const CharStats &stats;
+		const CharStats& stats;
 
 		Gauge expbar;
 		Gauge hpbar;

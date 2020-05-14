@@ -26,7 +26,8 @@ namespace ms
 	{
 	public:
 		// Request the server to warp the player to a different map
-		ChangeMapPacket(bool died, int32_t targetid, const std::string& targetp, bool usewheel) : OutPacket(OutPacket::Opcode::CHANGEMAP)
+		ChangeMapPacket(bool died, int32_t targetid, const std::string& targetp, bool usewheel) : OutPacket(
+			OutPacket::Opcode::CHANGEMAP)
 		{
 			write_byte(died);
 			write_int(targetid);
@@ -36,7 +37,8 @@ namespace ms
 		}
 
 		// Request the server to exit the cash shop
-		ChangeMapPacket() : OutPacket(OutPacket::Opcode::CHANGEMAP) {}
+		ChangeMapPacket() : OutPacket(OutPacket::Opcode::CHANGEMAP)
+		{}
 	};
 
 	// Opcode: ENTER_CASHSHOP(40)
@@ -44,7 +46,8 @@ namespace ms
 	{
 	public:
 		// Requests the server to warp the player into the cash shop
-		EnterCashShopPacket() : OutPacket(OutPacket::Opcode::ENTER_CASHSHOP) {}
+		EnterCashShopPacket() : OutPacket(OutPacket::Opcode::ENTER_CASHSHOP)
+		{}
 	};
 
 	// Opcode: MOVE_PLAYER(41)
@@ -85,14 +88,16 @@ namespace ms
 	class CreatePartyPacket : public PartyOperationPacket
 	{
 	public:
-		CreatePartyPacket() : PartyOperationPacket(PartyOperationPacket::Operation::CREATE) {}
+		CreatePartyPacket() : PartyOperationPacket(PartyOperationPacket::Operation::CREATE)
+		{}
 	};
 
 	// Leaves a party
 	class LeavePartyPacket : public PartyOperationPacket
 	{
 	public:
-		LeavePartyPacket() : PartyOperationPacket(PartyOperationPacket::Operation::LEAVE) {}
+		LeavePartyPacket() : PartyOperationPacket(PartyOperationPacket::Operation::LEAVE)
+		{}
 	};
 
 	// Joins a party
@@ -172,7 +177,9 @@ namespace ms
 	{
 	public:
 		// Updates a mob's position with the server
-		MoveMobPacket(int32_t oid, int16_t type, int8_t skillb, int8_t skill0, int8_t skill1, int8_t skill2, int8_t skill3, int8_t skill4, Point<int16_t> startpos, const Movement& movement) : MovementPacket(OutPacket::Opcode::MOVE_MONSTER)
+		MoveMobPacket(int32_t oid, int16_t type, int8_t skillb, int8_t skill0, int8_t skill1, int8_t skill2,
+					  int8_t skill3, int8_t skill4, Point<int16_t> startpos, const Movement& movement) : MovementPacket(
+			OutPacket::Opcode::MOVE_MONSTER)
 		{
 			write_int(oid);
 			write_short(type);
@@ -211,7 +218,8 @@ namespace ms
 	{
 	public:
 		// Requests damaging a reactor
-		DamageReactorPacket(int32_t oid, Point<int16_t> position, int16_t stance, int skillid) : OutPacket(OutPacket::Opcode::DAMAGE_REACTOR)
+		DamageReactorPacket(int32_t oid, Point<int16_t> position, int16_t stance, int skillid) : OutPacket(
+			OutPacket::Opcode::DAMAGE_REACTOR)
 		{
 			write_int(oid);
 			write_point(position);
@@ -226,7 +234,8 @@ namespace ms
 	{
 	public:
 		// Requests the server to set map transition complete
-		PlayerMapTransferPacket() : OutPacket(OutPacket::Opcode::PLAYER_MAP_TRANSFER) {}
+		PlayerMapTransferPacket() : OutPacket(OutPacket::Opcode::PLAYER_MAP_TRANSFER)
+		{}
 	};
 
 	// Opcode: PLAYER_UPDATE(223)
@@ -234,6 +243,7 @@ namespace ms
 	{
 	public:
 		// Finished updating player stats
-		PlayerUpdatePacket() : OutPacket(OutPacket::Opcode::PLAYER_UPDATE) {}
+		PlayerUpdatePacket() : OutPacket(OutPacket::Opcode::PLAYER_UPDATE)
+		{}
 	};
 }

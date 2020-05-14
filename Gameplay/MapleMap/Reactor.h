@@ -32,7 +32,7 @@ namespace ms
 
 		void draw(double viewx, double viewy, float alpha) const override;
 
-		int8_t update(const Physics &physics);
+		int8_t update(const Physics& physics);
 
 		void set_state(int8_t state);
 
@@ -41,7 +41,7 @@ namespace ms
 		bool is_hittable() const;
 
 		// Check if this mob collides with the specified rectangle.
-		bool is_in_range(const Rectangle<int16_t> &range) const;
+		bool is_in_range(const Rectangle<int16_t>& range) const;
 
 	private:
 		int32_t oid;

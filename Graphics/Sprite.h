@@ -25,9 +25,9 @@ namespace ms
 	class Sprite
 	{
 	public:
-		Sprite(const Animation &animation, const DrawArgument &stateargs);
+		Sprite(const Animation& animation, const DrawArgument& stateargs);
 
-		Sprite(nl::node src, const DrawArgument &stateargs);
+		Sprite(nl::node src, const DrawArgument& stateargs);
 
 		Sprite(nl::node src);
 
@@ -40,8 +40,11 @@ namespace ms
 		bool update();
 
 		int16_t width() const;
+
 		int16_t height() const;
+
 		Point<int16_t> get_origin() const;
+
 		Point<int16_t> get_dimensions() const;
 
 	private:

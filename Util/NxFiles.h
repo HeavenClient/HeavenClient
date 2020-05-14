@@ -20,6 +20,7 @@
 #include "../MapleStory.h"
 
 #ifdef USE_NX
+
 #include "../Error.h"
 
 #include <array>
@@ -33,27 +34,27 @@ namespace ms
 
 		// Names of the needed game files
 		constexpr std::array<const char*, NUM_FILES> filenames =
-		{
-			"Base.nx",
-			"Character.nx",
-			"Effect.nx",
-			"Etc.nx",
-			"Item.nx",
-			"Map.nx",
-			"Map001.nx",	// From latest
-			"MapLatest.nx",	// From latest
-			"MapPretty.nx",	// From v167
-			"Mob.nx",
-			"Morph.nx",
-			"Npc.nx",
-			"Quest.nx",
-			"Reactor.nx",
-			"Skill.nx",
-			"Sound.nx",	
-			"String.nx",
-			"TamingMob.nx",
-			"UI.nx"			// From v209.2,
-		};
+			{
+				"Base.nx",
+				"Character.nx",
+				"Effect.nx",
+				"Etc.nx",
+				"Item.nx",
+				"Map.nx",
+				"Map001.nx",    // From latest
+				"MapLatest.nx",    // From latest
+				"MapPretty.nx",    // From v167
+				"Mob.nx",
+				"Morph.nx",
+				"Npc.nx",
+				"Quest.nx",
+				"Reactor.nx",
+				"Skill.nx",
+				"Sound.nx",
+				"String.nx",
+				"TamingMob.nx",
+				"UI.nx"            // From v209.2,
+			};
 
 		// Initialize NX
 		// When successful test if the UI file is the correct version

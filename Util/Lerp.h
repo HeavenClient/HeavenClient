@@ -19,7 +19,7 @@
 
 namespace ms
 {
-	template<typename T>
+	template <typename T>
 	constexpr T lerp(T first, T second, float alpha)
 	{
 		return alpha <= 0.0f ? first

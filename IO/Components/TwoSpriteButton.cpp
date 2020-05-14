@@ -20,7 +20,7 @@
 namespace ms
 {
 	TwoSpriteButton::TwoSpriteButton(nl::node nsrc, nl::node ssrc, Point<int16_t> np, Point<int16_t> sp) : textures(
-			ssrc, nsrc), npos(np), spos(sp)
+		ssrc, nsrc), npos(np), spos(sp)
 	{
 		state = Button::State::NORMAL;
 		active = true;
@@ -59,7 +59,8 @@ namespace ms
 		{
 			absp = parentpos + spos - textures[selected].get_origin();
 			dim = textures[selected].get_dimensions();
-		} else
+		}
+		else
 		{
 			absp = parentpos + npos - textures[selected].get_origin();
 			dim = textures[selected].get_dimensions();

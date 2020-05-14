@@ -22,14 +22,16 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
 	MapleComboBox::MapleComboBox(Type type, std::vector<std::string> o, uint16_t default_option, Point<int16_t> ppos,
 								 Point<int16_t> pos, int64_t w) : options(o), selected_index(default_option),
-																  parentpos(ppos), rwidth(w)
+		parentpos(ppos), rwidth(w)
 	{
 		std::string combobox = "ComboBox";
 
@@ -54,7 +56,7 @@ namespace ms
 		textures[Button::State::DISABLED][1] = src["disabled"][1];
 		textures[Button::State::DISABLED][2] = src["disabled"][2];
 
-		for (auto &option : options)
+		for (auto& option : options)
 			option_text.push_back(Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::BLACK, option));
 
 		Text::Font selected_font = Text::Font::A12M;
@@ -76,12 +78,12 @@ namespace ms
 		current_rect = ColorBox(width() - 2, HEIGHT - 2, Color::Name::GRAYOLIVE, 1.0f);
 
 		Point<int16_t> option_pos =
-				Point<int16_t>(position.x(), position.y() + textures[state][0].get_dimensions().y()) + parentpos;
+			Point<int16_t>(position.x(), position.y() + textures[state][0].get_dimensions().y()) + parentpos;
 
 		for (size_t i = 0; i < option_text.size(); i++)
 			buttons[i] = std::make_unique<AreaButton>(
-					Point<int16_t>(option_pos.x() + 1, option_pos.y() + (i * HEIGHT) + 1),
-					Point<int16_t>(width() - 2, HEIGHT - 2));
+				Point<int16_t>(option_pos.x() + 1, option_pos.y() + (i * HEIGHT) + 1),
+				Point<int16_t>(width() - 2, HEIGHT - 2));
 
 		current_pos = 0;
 		current_shown = false;
@@ -118,8 +120,8 @@ namespace ms
 			if (pressed)
 			{
 				Point<int16_t> pos =
-						Point<int16_t>(position.x(), position.y() + textures[state][0].get_dimensions().y()) +
-						parentpos;
+					Point<int16_t>(position.x(), position.y() + textures[state][0].get_dimensions().y()) +
+					parentpos;
 
 				background.draw(pos + Point<int16_t>(0, 2));
 				rect.draw(pos + Point<int16_t>(1, 3));
@@ -162,7 +164,7 @@ namespace ms
 		current_shown = false;
 		option_text[last_shown].change_color(Color::Name::BLACK);
 
-		for (auto &btit : buttons)
+		for (auto& btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -172,7 +174,8 @@ namespace ms
 
 					btit.second->set_state(Button::State::MOUSEOVER);
 					ret = Cursor::State::CANCLICK;
-				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				}
+				else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
@@ -181,7 +184,8 @@ namespace ms
 						btit.second->set_state(button_pressed(btit.first));
 
 						ret = Cursor::State::IDLE;
-					} else
+					}
+					else
 					{
 						ret = Cursor::State::CANCLICK;
 						current_pos = btit.first * HEIGHT;
@@ -190,7 +194,8 @@ namespace ms
 						option_text[btit.first].change_color(Color::Name::WHITE);
 					}
 				}
-			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			}
+			else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				btit.second->set_state(Button::State::NORMAL);
 			}
@@ -202,8 +207,8 @@ namespace ms
 	bool MapleComboBox::in_combobox(Point<int16_t> cursorpos)
 	{
 		Point<int16_t> lt =
-				Point<int16_t>(position.x() + 1, position.y() + textures[state][0].get_dimensions().y() + 1) +
-				parentpos;
+			Point<int16_t>(position.x() + 1, position.y() + textures[state][0].get_dimensions().y() + 1) +
+			parentpos;
 		Point<int16_t> rb = lt + Point<int16_t>(width() - 2, options.size() * HEIGHT - 2);
 
 		return Rectangle<int16_t>(lt, rb).contains(cursorpos);

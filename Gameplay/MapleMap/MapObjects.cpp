@@ -21,7 +21,7 @@ namespace ms
 {
 	void MapObjects::draw(Layer::Id layer, double viewx, double viewy, float alpha) const
 	{
-		for (auto &oid : layers[layer])
+		for (auto& oid : layers[layer])
 		{
 			auto mmo = get(oid);
 
@@ -30,13 +30,13 @@ namespace ms
 		}
 	}
 
-	void MapObjects::update(const Physics &physics)
+	void MapObjects::update(const Physics& physics)
 	{
 		for (auto iter = objects.begin(); iter != objects.end();)
 		{
 			bool remove_mob = false;
 
-			if (auto &mmo = iter->second)
+			if (auto& mmo = iter->second)
 			{
 				int8_t oldlayer = mmo->get_layer();
 				int8_t newlayer = mmo->update(physics);
@@ -44,13 +44,15 @@ namespace ms
 				if (newlayer == -1)
 				{
 					remove_mob = true;
-				} else if (newlayer != oldlayer)
+				}
+				else if (newlayer != oldlayer)
 				{
 					int32_t oid = iter->first;
 					layers[oldlayer].erase(oid);
 					layers[newlayer].insert(oid);
 				}
-			} else
+			}
+			else
 			{
 				remove_mob = true;
 			}
@@ -66,7 +68,7 @@ namespace ms
 	{
 		objects.clear();
 
-		for (auto &layer : layers)
+		for (auto& layer : layers)
 			layer.clear();
 	}
 

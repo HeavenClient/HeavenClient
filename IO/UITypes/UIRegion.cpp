@@ -24,7 +24,9 @@
 #include "../Components/MapleButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms

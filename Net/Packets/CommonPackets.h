@@ -26,6 +26,7 @@ namespace ms
 	class PongPacket : public OutPacket
 	{
 	public:
-		PongPacket() : OutPacket(PONG) {}
+		PongPacket() : OutPacket(PONG)
+		{}
 	};
 }

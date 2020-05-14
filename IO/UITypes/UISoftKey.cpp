@@ -25,12 +25,17 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text, Point<int16_t> tooltip_pos) : UIElement(Point<int16_t>(104, 140), Point<int16_t>(0, 0)), ok_callback(ok_callback), cancel_callback(cancel_callback), tooltip_pos(tooltip_pos), highCase(false)
+	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text,
+						 Point<int16_t> tooltip_pos) : UIElement(Point<int16_t>(104, 140),
+																 Point<int16_t>(0, 0)), ok_callback(
+		ok_callback), cancel_callback(cancel_callback), tooltip_pos(tooltip_pos), highCase(false)
 	{
 		nl::node SoftKey = nl::nx::ui["Login.img"]["Common"]["SoftKey"];
 		nl::node backgrnd = SoftKey["backgrnd"];
@@ -139,8 +144,10 @@ namespace ms
 			}
 			else
 			{
-				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key], keypos(i, 1));
-				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key], keypos(i, 1));
+				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key],
+																			   keypos(i, 1));
+				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key],
+																				keypos(i, 1));
 			}
 		}
 #pragma endregion
@@ -195,8 +202,10 @@ namespace ms
 			}
 			else
 			{
-				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key], keypos(i, 2));
-				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key], keypos(i, 2));
+				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key],
+																			   keypos(i, 2));
+				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key],
+																				keypos(i, 2));
 			}
 		}
 #pragma endregion
@@ -238,8 +247,10 @@ namespace ms
 			}
 			else
 			{
-				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key], keypos(i, 3));
-				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key], keypos(i, 3));
+				BtCaseKeys[caseKeyIndex][true] = std::make_unique<MapleButton>(SoftKey["BtHighCase"][key],
+																			   keypos(i, 3));
+				BtCaseKeys[caseKeyIndex][false] = std::make_unique<MapleButton>(SoftKey["BtLowCase"][key],
+																				keypos(i, 3));
 			}
 		}
 #pragma endregion
@@ -247,7 +258,8 @@ namespace ms
 
 		Point<int16_t> textfield_tl = Point<int16_t>(350, 205);
 
-		textfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR, Rectangle<int16_t>(textfield_tl, textfield_tl + Point<int16_t>(117, 20)), MAX_TEXT_LEN);
+		textfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR,
+							  Rectangle<int16_t>(textfield_tl, textfield_tl + Point<int16_t>(117, 20)), MAX_TEXT_LEN);
 		textfield.set_cryptchar('*');
 
 		textfield.set_enter_callback(
@@ -259,7 +271,8 @@ namespace ms
 
 		textfield.set_key_callback(
 			KeyAction::Id::ESCAPE,
-			[&]() {
+			[&]()
+			{
 				button_pressed(Buttons::BtCancel);
 			}
 		);
@@ -279,9 +292,17 @@ namespace ms
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text) : UISoftKey(ok_callback, cancel_callback, tooltip_text, Point<int16_t>(0, 0)) {}
-	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback) : UISoftKey(ok_callback, cancel_callback, "") {}
-	UISoftKey::UISoftKey(OkCallback ok_callback) : UISoftKey(ok_callback, []() {}) {}
+	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text) : UISoftKey(
+		ok_callback, cancel_callback, tooltip_text, Point<int16_t>(0, 0))
+	{}
+
+	UISoftKey::UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback) : UISoftKey(ok_callback,
+																							 cancel_callback, "")
+	{}
+
+	UISoftKey::UISoftKey(OkCallback ok_callback) : UISoftKey(ok_callback, []()
+	{})
+	{}
 
 	void UISoftKey::draw(float inter) const
 	{
@@ -414,7 +435,8 @@ namespace ms
 					if (ok_callback)
 						ok_callback(pic);
 				}
-			} else
+			}
+			else
 			{
 				clear_tooltip();
 				show_text("The PIC needs to be at least 6 characters long.");
@@ -502,7 +524,7 @@ namespace ms
 
 			return Button::State::NORMAL;
 		}
-		// Row 3
+			// Row 3
 		else if (buttonid >= ROW_MAX && buttonid < ROW_MAX * 2)
 		{
 			std::string string_index = row3keys[buttonid - ROW_MAX];
@@ -517,7 +539,7 @@ namespace ms
 
 			return Button::State::NORMAL;
 		}
-		// Row 4
+			// Row 4
 		else if (buttonid >= ROW_MAX * 2 && buttonid < ROW_MAX * 2 + ROW4_MAX)
 		{
 			std::string string_index = row4keys[buttonid - ROW_MAX * 2];
@@ -610,7 +632,9 @@ namespace ms
 		if (requirements)
 		{
 			clear_tooltip();
-			show_text("Your 2nd password must have at least two of the following: uppercase letters, lowercase letters, numbers, and special characters.", 242, true, 1);
+			show_text(
+				"Your 2nd password must have at least two of the following: uppercase letters, lowercase letters, numbers, and special characters.",
+				242, true, 1);
 
 			return false;
 		}

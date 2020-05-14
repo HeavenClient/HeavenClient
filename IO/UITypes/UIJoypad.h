@@ -61,15 +61,15 @@ namespace ms
 		enum Setting : uint8_t
 		{
 			// Joypad name
-					NAME,
+				NAME,
 
 			// Keys
-					ATTACK,
+				ATTACK,
 			JUMP,
 			PICKUP,
 
 			// Hot keys
-					HOTKEY0,
+				HOTKEY0,
 			HOTKEY1,
 			HOTKEY2,
 			HOTKEY3,

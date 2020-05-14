@@ -22,7 +22,9 @@
 #include "../../Data/ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -47,18 +49,19 @@ namespace ms
 		drops.draw(layer, viewx, viewy, alpha);
 	}
 
-	void MapDrops::update(const Physics &physics)
+	void MapDrops::update(const Physics& physics)
 	{
 		for (; !spawns.empty(); spawns.pop())
 		{
-			const DropSpawn &spawn = spawns.front();
+			const DropSpawn& spawn = spawns.front();
 
 			int32_t oid = spawn.get_oid();
 
 			if (Optional<MapObject> drop = drops.get(oid))
 			{
 				drop->makeactive();
-			} else
+			}
+			else
 			{
 				int32_t itemid = spawn.get_itemid();
 				bool meso = spawn.is_meso();
@@ -70,18 +73,18 @@ namespace ms
 												? BUNDLE : (itemid > 49)
 														   ? GOLD : BRONZE;
 
-					const Animation &icon = mesoicons[mesotype];
+					const Animation& icon = mesoicons[mesotype];
 					drops.add(spawn.instantiate(icon));
 				}
 				else if (const ItemData& itemdata = ItemData::get(itemid))
 				{
-					const Texture &icon = itemdata.get_icon(true);
+					const Texture& icon = itemdata.get_icon(true);
 					drops.add(spawn.instantiate(icon));
 				}
 			}
 		}
 
-		for (auto &mesoicon : mesoicons)
+		for (auto& mesoicon : mesoicons)
 			mesoicon.update();
 
 		drops.update(physics);
@@ -89,12 +92,12 @@ namespace ms
 		lootenabled = true;
 	}
 
-	void MapDrops::spawn(DropSpawn &&spawn)
+	void MapDrops::spawn(DropSpawn&& spawn)
 	{
 		spawns.emplace(std::move(spawn));
 	}
 
-	void MapDrops::remove(int32_t oid, int8_t mode, const PhysicsObject *looter)
+	void MapDrops::remove(int32_t oid, int8_t mode, const PhysicsObject* looter)
 	{
 		if (Optional<Drop> drop = drops.get(oid))
 			drop->expire(mode, looter);
@@ -110,7 +113,7 @@ namespace ms
 		if (!lootenabled)
 			return {0, {}};
 
-		for (auto &mmo : drops)
+		for (auto& mmo : drops)
 		{
 			Optional<const Drop> drop = mmo.second.get();
 

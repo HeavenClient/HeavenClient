@@ -18,7 +18,9 @@
 #include "ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -82,7 +84,8 @@ namespace ms
 			desc = std::string(strsrc["desc"]);
 
 			valid = true;
-		} else
+		}
+		else
 		{
 			valid = false;
 		}
@@ -90,24 +93,24 @@ namespace ms
 
 	std::string ItemData::get_eqcategory(int32_t id) const
 	{
-		constexpr char *categorynames[15] =
-				{
-						"Cap",
-						"Accessory",
-						"Accessory",
-						"Accessory",
-						"Coat",
-						"Longcoat",
-						"Pants",
-						"Shoes",
-						"Glove",
-						"Shield",
-						"Cape",
-						"Ring",
-						"Accessory",
-						"Accessory",
-						"Accessory"
-				};
+		constexpr char* categorynames[15] =
+			{
+				"Cap",
+				"Accessory",
+				"Accessory",
+				"Accessory",
+				"Coat",
+				"Longcoat",
+				"Pants",
+				"Shoes",
+				"Glove",
+				"Shield",
+				"Cape",
+				"Ring",
+				"Accessory",
+				"Accessory",
+				"Accessory"
+			};
 
 		int32_t index = get_item_prefix(id) - 100;
 
@@ -186,22 +189,22 @@ namespace ms
 		return gender;
 	}
 
-	const std::string &ItemData::get_name() const
+	const std::string& ItemData::get_name() const
 	{
 		return name;
 	}
 
-	const std::string &ItemData::get_desc() const
+	const std::string& ItemData::get_desc() const
 	{
 		return desc;
 	}
 
-	const std::string &ItemData::get_category() const
+	const std::string& ItemData::get_category() const
 	{
 		return category;
 	}
 
-	const Texture &ItemData::get_icon(bool raw) const
+	const Texture& ItemData::get_icon(bool raw) const
 	{
 		return icons[raw];
 	}

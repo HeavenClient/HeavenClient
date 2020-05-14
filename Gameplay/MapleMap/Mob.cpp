@@ -22,7 +22,9 @@
 #include "../../Net/Packets/GameplayPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -57,7 +59,8 @@ namespace ms
 		{
 			animations[Stance::STAND] = src["fly"];
 			animations[Stance::MOVE] = src["fly"];
-		} else
+		}
+		else
 		{
 			animations[Stance::STAND] = src["stand"];
 			animations[Stance::MOVE] = src["move"];
@@ -105,7 +108,8 @@ namespace ms
 		{
 			fadein = true;
 			opacity.set(0.0f);
-		} else
+		}
+		else
 		{
 			fadein = false;
 			opacity.set(1.0f);
@@ -138,7 +142,7 @@ namespace ms
 		}
 	}
 
-	int8_t Mob::update(const Physics &physics)
+	int8_t Mob::update(const Physics& physics)
 	{
 		if (!active)
 			return phobj.fhlayer;
@@ -158,7 +162,8 @@ namespace ms
 				fading = false;
 				dead = true;
 			}
-		} else if (fadein)
+		}
+		else if (fadein)
 		{
 			opacity += 0.025f;
 
@@ -209,7 +214,8 @@ namespace ms
 								phobj.vforce = flyspeed;
 								break;
 						}
-					} else
+					}
+					else
 					{
 						phobj.hforce = flip ? speed : -speed;
 					}
@@ -256,7 +262,8 @@ namespace ms
 					counter = 0;
 				}
 			}
-		} else
+		}
+		else
 		{
 			phobj.normalize();
 			physics.get_fht().update_fh(phobj);
@@ -281,7 +288,8 @@ namespace ms
 					if (canjump && phobj.onground && randomizer.below(0.25f))
 					{
 						set_stance(Stance::JUMP);
-					} else
+					}
+					else
 					{
 						switch (randomizer.next_int(3))
 						{
@@ -304,7 +312,8 @@ namespace ms
 
 			if (stance == Stance::MOVE && canfly)
 				flydirection = randomizer.next_enum(FlyDirection::NUM_DIRECTIONS);
-		} else
+		}
+		else
 		{
 			set_stance(Stance::STAND);
 		}
@@ -350,7 +359,7 @@ namespace ms
 		aggro = mode == 2;
 	}
 
-	void Mob::send_movement(Point<int16_t> start, std::vector<Movement> &&in_movements)
+	void Mob::send_movement(Point<int16_t> start, std::vector<Movement>&& in_movements)
 	{
 		if (control)
 			return;
@@ -362,7 +371,7 @@ namespace ms
 		if (movements.empty())
 			return;
 
-		const Movement &lastmove = movements.front();
+		const Movement& lastmove = movements.front();
 
 		uint8_t laststance = lastmove.newstate;
 		set_stance(laststance);
@@ -420,7 +429,7 @@ namespace ms
 		showhp.set_for(2000);
 	}
 
-	void Mob::show_effect(const Animation &animation, int8_t pos, int8_t z, bool f)
+	void Mob::show_effect(const Animation& animation, int8_t pos, int8_t z, bool f)
 	{
 		if (!active)
 			return;
@@ -459,9 +468,9 @@ namespace ms
 	double Mob::calculate_mindamage(int16_t leveldelta, double damage, bool magic) const
 	{
 		double mindamage =
-				magic ?
-				damage - (1 + 0.01 * leveldelta) * mdef * 0.6 :
-				damage * (1 - 0.01 * leveldelta) - wdef * 0.6;
+			magic ?
+			damage - (1 + 0.01 * leveldelta) * mdef * 0.6 :
+			damage * (1 - 0.01 * leveldelta) - wdef * 0.6;
 
 		return mindamage < 1.0 ? 1.0 : mindamage;
 	}
@@ -469,14 +478,14 @@ namespace ms
 	double Mob::calculate_maxdamage(int16_t leveldelta, double damage, bool magic) const
 	{
 		double maxdamage =
-				magic ?
-				damage - (1 + 0.01 * leveldelta) * mdef * 0.5 :
-				damage * (1 - 0.01 * leveldelta) - wdef * 0.5;
+			magic ?
+			damage - (1 + 0.01 * leveldelta) * mdef * 0.5 :
+			damage * (1 - 0.01 * leveldelta) - wdef * 0.5;
 
 		return maxdamage < 1.0 ? 1.0 : maxdamage;
 	}
 
-	std::vector<std::pair<int32_t, bool>> Mob::calculate_damage(const Attack &attack)
+	std::vector<std::pair<int32_t, bool>> Mob::calculate_damage(const Attack& attack)
 	{
 		double mindamage;
 		double maxdamage;
@@ -511,11 +520,11 @@ namespace ms
 		std::vector<std::pair<int32_t, bool>> result(attack.hitcount);
 
 		std::generate(
-				result.begin(), result.end(),
-				[&]()
-				{
-					return next_damage(mindamage, maxdamage, hitchance, critical);
-				}
+			result.begin(), result.end(),
+			[&]()
+			{
+				return next_damage(mindamage, maxdamage, hitchance, critical);
+			}
 		);
 
 		update_movement();
@@ -555,7 +564,8 @@ namespace ms
 		if (dying && stance != Stance::DIE)
 		{
 			apply_death();
-		} else if (control && is_alive() && damage >= knockback)
+		}
+		else if (control && is_alive() && damage >= knockback)
 		{
 			flip = toleft;
 			counter = 170;
@@ -589,7 +599,7 @@ namespace ms
 		return active && !dying;
 	}
 
-	bool Mob::is_in_range(const Rectangle<int16_t> &range) const
+	bool Mob::is_in_range(const Rectangle<int16_t>& range) const
 	{
 		if (!active)
 			return false;

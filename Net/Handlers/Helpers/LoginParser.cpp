@@ -56,7 +56,7 @@ namespace ms
 		int8_t wid = recv.read_byte();
 
 		if (wid == -1)
-			return { {}, {}, {}, 0, 0, wid };
+			return {{}, {}, {}, 0, 0, wid};
 
 		std::string name = recv.read_string();
 		uint8_t flag = recv.read_byte();
@@ -79,7 +79,7 @@ namespace ms
 
 		recv.skip(2);
 
-		return { name, message, chloads, channelcount, flag, wid };
+		return {name, message, chloads, channelcount, flag, wid};
 	}
 
 	RecommendedWorld LoginParser::parse_recommended_world(InPacket& recv)
@@ -87,11 +87,11 @@ namespace ms
 		int32_t wid = recv.read_int();
 
 		if (wid == -1)
-			return { {}, wid };
+			return {{}, wid};
 
 		std::string message = recv.read_string();
 
-		return { message, wid };
+		return {message, wid};
 	}
 
 	CharEntry LoginParser::parse_charentry(InPacket& recv)
@@ -115,7 +115,7 @@ namespace ms
 			stats.jobrank = std::make_pair(curjobrank, jobrankmc);
 		}
 
-		return { stats, look, cid };
+		return {stats, look, cid};
 	}
 
 	StatsEntry LoginParser::parse_stats(InPacket& recv)
@@ -126,9 +126,9 @@ namespace ms
 		statsentry.name = recv.read_padded_string(13);
 		statsentry.female = recv.read_bool();
 
-		recv.read_byte();	// skin
-		recv.read_int();	// face
-		recv.read_int();	// hair
+		recv.read_byte();    // skin
+		recv.read_int();    // face
+		recv.read_int();    // hair
 
 		for (size_t i = 0; i < 3; i++)
 			statsentry.petids.push_back(recv.read_long());

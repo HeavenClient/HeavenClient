@@ -35,7 +35,7 @@ namespace ms
 		void draw(Layer::Id layer, double viewx, double viewy, float alpha) const;
 
 		// Update all mapobjects of this type. Also updates layers eg. drawing order.
-		void update(const Physics &physics);
+		void update(const Physics& physics);
 
 		// Adds a MapObjects of this type
 		void add(std::unique_ptr<MapObject> mapobject);

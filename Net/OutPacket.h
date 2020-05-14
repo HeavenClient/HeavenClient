@@ -22,8 +22,10 @@
 #include <vector>
 
 #if defined(__linux__) || defined(__APPLE__)
+
 #include "stdio.h"
-#endif 
+
+#endif
 
 namespace ms
 {
@@ -41,7 +43,7 @@ namespace ms
 		enum Opcode : uint16_t
 		{
 			/// Login
-			LOGIN = 1,
+				LOGIN = 1,
 			CHARLIST_REQUEST = 5,
 			SERVERSTATUS_REQUEST = 6,
 			ACCEPT_TOS = 7,
@@ -58,7 +60,7 @@ namespace ms
 			LOGIN_START = 35, // Custom name
 
 			/// Gameplay 1
-			CHANGEMAP = 38,
+				CHANGEMAP = 38,
 			ENTER_CASHSHOP = 40,
 			MOVE_PLAYER = 41,
 			CLOSE_ATTACK = 44,
@@ -67,33 +69,33 @@ namespace ms
 			TAKE_DAMAGE = 48,
 
 			/// Messaging
-			GENERAL_CHAT = 49,
+				GENERAL_CHAT = 49,
 
 			/// NPC Interaction
-			TALK_TO_NPC = 58,
+				TALK_TO_NPC = 58,
 			NPC_TALK_MORE = 60,
 			NPC_SHOP_ACTION = 61,
 
 			/// Player Interaction
-			CHAR_INFO_REQUEST = 97,
+				CHAR_INFO_REQUEST = 97,
 
 			/// Inventory
-			GATHER_ITEMS = 69,
+				GATHER_ITEMS = 69,
 			SORT_ITEMS = 70,
 			MOVE_ITEM = 71,
 			USE_ITEM = 72,
 			SCROLL_EQUIP = 86,
 
 			/// Player
-			SPEND_AP = 87,
+				SPEND_AP = 87,
 			SPEND_SP = 90,
 			CHANGE_KEYMAP = 135,
 
 			/// Skill
-			USE_SKILL = 91,
+				USE_SKILL = 91,
 
 			/// Gameplay 2
-			PARTY_OPERATION = 124,
+				PARTY_OPERATION = 124,
 			ADMIN_COMMAND = 128,
 			MOVE_MONSTER = 188,
 			PICKUP_ITEM = 202,
@@ -105,28 +107,36 @@ namespace ms
 	protected:
 		// Skip a number of bytes (filled with zeros)
 		void skip(size_t count);
+
 		// Write a byte
 		void write_byte(int8_t ch);
+
 		// Write a short
 		void write_short(int16_t sh);
+
 		// Write an int
 		void write_int(int32_t in);
+
 		// Write a long
 		void write_long(int64_t lg);
 
 		// Write a point
 		// One short for x and one for y
 		void write_point(Point<int16_t> point);
+
 		// Write a timestamp as an integer
 		void write_time();
+
 		// Write a string
 		// Writes the length as a short and then each individual character as a byte
 		void write_string(const std::string& str);
+
 		// Write a random int
 		void write_random();
 
 		// Write the MACS and then write the HWID of the computer
 		void write_hardware_info();
+
 		// Function to convert hexadecimal to decimal
 		int32_t hex_to_dec(std::string hexVal);
 

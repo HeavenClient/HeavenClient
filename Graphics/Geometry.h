@@ -47,7 +47,7 @@ namespace ms
 
 		void setopacity(float opacity);
 
-		void draw(const DrawArgument &args) const;
+		void draw(const DrawArgument& args) const;
 
 	private:
 		int16_t width;
@@ -60,13 +60,16 @@ namespace ms
 	{
 	public:
 		ColorLine(int16_t size, Color::Name color, float opacity, bool vertical);
+
 		ColorLine();
 
 		void setsize(int16_t size);
+
 		void setcolor(Color::Name color);
+
 		void setopacity(float opacity);
 
-		void draw(const DrawArgument &args) const;
+		void draw(const DrawArgument& args) const;
 
 	private:
 		int16_t size;

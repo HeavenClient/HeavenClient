@@ -43,7 +43,7 @@ namespace ms
 	{
 		for (auto iter : elements)
 		{
-			UIElement *element = iter.second.get();
+			UIElement* element = iter.second.get();
 
 			if (element && element->is_active())
 				element->draw(inter);
@@ -57,7 +57,7 @@ namespace ms
 	{
 		for (auto iter : elements)
 		{
-			UIElement *element = iter.second.get();
+			UIElement* element = iter.second.get();
 
 			if (element && element->is_active())
 				element->update();
@@ -72,12 +72,13 @@ namespace ms
 
 	void UIStateLogin::send_key(KeyType::Id type, int32_t action, bool pressed, bool escape)
 	{
-		if (UIElement *focusedelement = get(focused))
+		if (UIElement* focusedelement = get(focused))
 		{
 			if (focusedelement->is_active())
 			{
 				return focusedelement->send_key(action, pressed, escape);
-			} else
+			}
+			else
 			{
 				focused = UIElement::Type::NONE;
 
@@ -97,20 +98,23 @@ namespace ms
 				remove_cursor(focusedelement->get_type());
 
 				return focusedelement->send_cursor(clicked, cursorpos);
-			} else
+			}
+			else
 			{
 				focused = UIElement::Type::NONE;
 
 				return cursorstate;
 			}
-		} else
+		}
+		else
 		{
 			if (auto front = get_front())
 			{
 				remove_cursor(front->get_type());
 
 				return front->send_cursor(clicked, cursorpos);
-			} else
+			}
+			else
 			{
 				return Cursor::State::IDLE;
 			}
@@ -150,13 +154,13 @@ namespace ms
 		}
 	}
 
-	template<class T, typename...Args>
-	void UIStateLogin::emplace(Args &&...args)
+	template <class T, typename...Args>
+	void UIStateLogin::emplace(Args&& ...args)
 	{
 		if (auto iter = pre_add(T::TYPE, T::TOGGLED, T::FOCUSED))
 		{
 			(*iter).second = std::make_unique<T>(
-					std::forward<Args>(args)...
+				std::forward<Args>(args)...
 			);
 		}
 	}
@@ -176,25 +180,25 @@ namespace ms
 		if (focused == type)
 			focused = UIElement::Type::NONE;
 
-		if (auto &element = elements[type])
+		if (auto& element = elements[type])
 		{
 			element->deactivate();
 			element.release();
 		}
 	}
 
-	UIElement *UIStateLogin::get(UIElement::Type type)
+	UIElement* UIStateLogin::get(UIElement::Type type)
 	{
 		return elements[type].get();
 	}
 
-	UIElement *UIStateLogin::get_front()
+	UIElement* UIStateLogin::get_front()
 	{
-		UIElement *front = nullptr;
+		UIElement* front = nullptr;
 
 		for (auto iter : elements)
 		{
-			auto &element = iter.second;
+			auto& element = iter.second;
 
 			if (element && element->is_active())
 				front = element.get();
@@ -203,14 +207,14 @@ namespace ms
 		return front;
 	}
 
-	UIElement *UIStateLogin::get_front(std::list<UIElement::Type> types)
+	UIElement* UIStateLogin::get_front(std::list<UIElement::Type> types)
 	{
 		auto begin = types.rbegin();
 		auto end = types.rend();
 
 		for (auto iter = begin; iter != end; ++iter)
 		{
-			auto &element = elements[*iter];
+			auto& element = elements[*iter];
 
 			if (element && element->is_active())
 				return element.get();
@@ -219,14 +223,14 @@ namespace ms
 		return nullptr;
 	}
 
-	UIElement *UIStateLogin::get_front(Point<int16_t> pos)
+	UIElement* UIStateLogin::get_front(Point<int16_t> pos)
 	{
 		auto begin = elements.values().rbegin();
 		auto end = elements.values().rend();
 
 		for (auto iter = begin; iter != end; ++iter)
 		{
-			auto &element = *iter;
+			auto& element = *iter;
 
 			if (element && element->is_active() && element->is_in_range(pos))
 				return element.get();
@@ -239,7 +243,7 @@ namespace ms
 	{
 		for (auto iter : elements)
 		{
-			auto &element = iter.second;
+			auto& element = iter.second;
 
 			if (element && element->is_active() && element->get_type() != type)
 				element->remove_cursor();

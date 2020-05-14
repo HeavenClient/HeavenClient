@@ -33,7 +33,7 @@ namespace ms
 		static constexpr bool FOCUSED = false;
 		static constexpr bool TOGGLED = true;
 
-		UIQuestLog(const QuestLog &questLog);
+		UIQuestLog(const QuestLog& questLog);
 
 		void draw(float inter) const override;
 
@@ -60,7 +60,7 @@ namespace ms
 			MY_LOCATION
 		};
 
-		const QuestLog &questlog;
+		const QuestLog& questlog;
 		uint16_t tab;
 		std::vector<Sprite> notice_sprites;
 		Textfield search;

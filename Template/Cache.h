@@ -30,7 +30,8 @@ namespace ms
 	class Cache
 	{
 	public:
-		virtual ~Cache() {}
+		virtual ~Cache()
+		{}
 
 		// Return a ref to the game object with the specified id.
 		// If the object is not in cache, it is created.
@@ -39,7 +40,7 @@ namespace ms
 			auto iter = cache.find(id);
 
 			if (iter == cache.end())
-				iter = cache.emplace(id, T{ id }).first;
+				iter = cache.emplace(id, T{id}).first;
 
 			return iter->second;
 		}

@@ -20,6 +20,7 @@
 namespace ms
 {
 #pragma region Base
+
 	void PlayerState::play_jumpsound() const
 	{
 		Sound(Sound::Name::JUMP).play();
@@ -39,9 +40,11 @@ namespace ms
 	{
 		return player.is_key_down(KeyAction::Id::RIGHT) && !player.is_key_down(KeyAction::Id::LEFT);
 	}
+
 #pragma endregion
 
 #pragma region Null
+
 	void PlayerNullState::update_state(Player& player) const
 	{
 		Char::State state;
@@ -53,19 +56,23 @@ namespace ms
 				state = Char::State::WALK;
 
 				player.set_direction(false);
-			} else if (player.is_key_down(KeyAction::Id::RIGHT))
+			}
+			else if (player.is_key_down(KeyAction::Id::RIGHT))
 			{
 				state = Char::State::WALK;
 
 				player.set_direction(true);
-			} else if (player.is_key_down(KeyAction::Id::DOWN))
+			}
+			else if (player.is_key_down(KeyAction::Id::DOWN))
 			{
 				state = Char::State::PRONE;
-			} else
+			}
+			else
 			{
 				state = Char::State::STAND;
 			}
-		} else
+		}
+		else
 		{
 			Optional<const Ladder> ladder = player.get_ladder();
 
@@ -78,15 +85,17 @@ namespace ms
 		player.get_phobj().clear_flags();
 		player.set_state(state);
 	}
+
 #pragma endregion
 
 #pragma region Standing
+
 	void PlayerStandState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
 	}
 
-	void PlayerStandState::send_action(Player &player, KeyAction::Id ka, bool down) const
+	void PlayerStandState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (player.is_attacking())
 			return;
@@ -99,7 +108,7 @@ namespace ms
 		}
 	}
 
-	void PlayerStandState::update(Player &player) const
+	void PlayerStandState::update(Player& player) const
 	{
 		if (player.get_phobj().enablejd == false)
 			player.get_phobj().set_flag(PhysicsObject::Flag::CHECKBELOW);
@@ -122,20 +131,22 @@ namespace ms
 			player.set_state(Char::State::PRONE);
 	}
 
-	void PlayerStandState::update_state(Player &player) const
+	void PlayerStandState::update_state(Player& player) const
 	{
 		if (!player.get_phobj().onground)
 			player.set_state(Char::State::FALL);
 	}
+
 #pragma endregion
 
 #pragma region Walking
+
 	void PlayerWalkState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
 	}
 
-	void PlayerWalkState::send_action(Player &player, KeyAction::Id ka, bool down) const
+	void PlayerWalkState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (player.is_attacking())
 			return;
@@ -156,7 +167,7 @@ namespace ms
 		}
 	}
 
-	void PlayerWalkState::update(Player &player) const
+	void PlayerWalkState::update(Player& player) const
 	{
 		if (player.get_phobj().enablejd == false)
 			player.get_phobj().set_flag(PhysicsObject::Flag::CHECKBELOW);
@@ -184,20 +195,23 @@ namespace ms
 		}
 	}
 
-	void PlayerWalkState::update_state(Player &player) const
+	void PlayerWalkState::update_state(Player& player) const
 	{
 		if (player.get_phobj().onground)
 		{
 			if (!haswalkinput(player) || player.get_phobj().hspeed == 0.0f)
 				player.set_state(Char::State::STAND);
-		} else
+		}
+		else
 		{
 			player.set_state(Char::State::FALL);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Falling
+
 	void PlayerFallState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
@@ -221,7 +235,7 @@ namespace ms
 			player.set_direction(true);
 	}
 
-	void PlayerFallState::update_state(Player &player) const
+	void PlayerFallState::update_state(Player& player) const
 	{
 		if (player.get_phobj().onground)
 		{
@@ -235,9 +249,11 @@ namespace ms
 			player.set_state(Char::State::SWIM);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Prone
+
 	void PlayerProneState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (down && ka == KeyAction::Id::JUMP)
@@ -252,7 +268,7 @@ namespace ms
 		}
 	}
 
-	void PlayerProneState::update(Player &player) const
+	void PlayerProneState::update(Player& player) const
 	{
 		if (player.get_phobj().enablejd == false)
 			player.get_phobj().set_flag(PhysicsObject::Flag::CHECKBELOW);
@@ -272,9 +288,11 @@ namespace ms
 			player.set_state(Char::State::WALK);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Sitting
+
 	void PlayerSitState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (down)
@@ -295,15 +313,17 @@ namespace ms
 			}
 		}
 	}
+
 #pragma endregion
 
 #pragma region Flying
+
 	void PlayerFlyState::initialize(Player& player) const
 	{
 		player.get_phobj().type = player.is_underwater() ? PhysicsObject::Type::SWIMMING : PhysicsObject::Type::FLYING;
 	}
 
-	void PlayerFlyState::send_action(Player &player, KeyAction::Id ka, bool down) const
+	void PlayerFlyState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (down)
 		{
@@ -319,7 +339,7 @@ namespace ms
 		}
 	}
 
-	void PlayerFlyState::update(Player &player) const
+	void PlayerFlyState::update(Player& player) const
 	{
 		if (player.is_attacking())
 			return;
@@ -335,7 +355,7 @@ namespace ms
 			player.get_phobj().vforce = player.get_flyforce();
 	}
 
-	void PlayerFlyState::update_state(Player &player) const
+	void PlayerFlyState::update_state(Player& player) const
 	{
 		if (player.get_phobj().onground && player.is_underwater())
 		{
@@ -346,15 +366,18 @@ namespace ms
 				state = Char::State::WALK;
 
 				player.set_direction(false);
-			} else if (player.is_key_down(KeyAction::Id::RIGHT))
+			}
+			else if (player.is_key_down(KeyAction::Id::RIGHT))
 			{
 				state = Char::State::WALK;
 
 				player.set_direction(true);
-			} else if (player.is_key_down(KeyAction::Id::DOWN))
+			}
+			else if (player.is_key_down(KeyAction::Id::DOWN))
 			{
 				state = Char::State::PRONE;
-			} else
+			}
+			else
 			{
 				state = Char::State::STAND;
 			}
@@ -362,9 +385,11 @@ namespace ms
 			player.set_state(state);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Climbing
+
 	void PlayerClimbState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::FIXATED;
@@ -400,7 +425,7 @@ namespace ms
 		}
 	}
 
-	void PlayerClimbState::update_state(Player &player) const
+	void PlayerClimbState::update_state(Player& player) const
 	{
 		int16_t y = player.get_phobj().get_y();
 		bool downwards = player.is_key_down(KeyAction::Id::DOWN);
@@ -410,11 +435,12 @@ namespace ms
 			cancel_ladder(player);
 	}
 
-	void PlayerClimbState::cancel_ladder(Player &player) const
+	void PlayerClimbState::cancel_ladder(Player& player) const
 	{
 		player.set_state(Char::State::FALL);
 		player.set_ladder(nullptr);
 		player.set_climb_cooldown();
 	}
+
 #pragma endregion
 }

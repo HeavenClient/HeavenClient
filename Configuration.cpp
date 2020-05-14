@@ -98,7 +98,7 @@ namespace ms
 		}
 
 		// Replace default values with loaded values.
-		for (auto &setting : settings)
+		for (auto& setting : settings)
 		{
 			auto rsiter = rawsettings.find(setting.second->name);
 
@@ -115,7 +115,7 @@ namespace ms
 		if (config.is_open())
 		{
 			// Save settings line by line.
-			for (auto &setting : settings)
+			for (auto& setting : settings)
 				config << setting.second->to_string() << std::endl;
 		}
 	}
@@ -261,7 +261,7 @@ namespace ms
 		MACS = macs;
 	}
 
-	void Configuration::set_hwid(char *hwid, char *volumeSerialNumber)
+	void Configuration::set_hwid(char* hwid, char* volumeSerialNumber)
 	{
 		VolumeSerialNumber = volumeSerialNumber;
 

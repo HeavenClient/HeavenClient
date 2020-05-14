@@ -22,12 +22,16 @@
 #include "../../Net/Session.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UILoginWait::UILoginWait() : UILoginWait([]() {}) {}
+	UILoginWait::UILoginWait() : UILoginWait([]()
+											 {})
+	{}
 
 	UILoginWait::UILoginWait(std::function<void()> okhandler) : okhandler(okhandler)
 	{
