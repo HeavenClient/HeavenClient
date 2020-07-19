@@ -20,7 +20,9 @@
 #include "../../Constants.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -53,7 +55,8 @@ namespace ms
 		duration = 0;
 	}
 
-	ChatBalloon::ChatBalloon() : ChatBalloon(0) {}
+	ChatBalloon::ChatBalloon() : ChatBalloon(0)
+	{}
 
 	void ChatBalloon::change_text(const std::string& text)
 	{

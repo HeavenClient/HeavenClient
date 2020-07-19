@@ -62,7 +62,7 @@ namespace ms
 		npcs.clear();
 	}
 
-	MapObjects * MapNpcs::get_npcs()
+	MapObjects* MapNpcs::get_npcs()
 	{
 		return &npcs;
 	}

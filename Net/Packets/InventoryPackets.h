@@ -52,7 +52,8 @@ namespace ms
 	class MoveItemPacket : public OutPacket
 	{
 	public:
-		MoveItemPacket(InventoryType::Id type, int16_t slot, int16_t action, int16_t qty) : OutPacket(OutPacket::Opcode::MOVE_ITEM)
+		MoveItemPacket(InventoryType::Id type, int16_t slot, int16_t action, int16_t qty) : OutPacket(
+			OutPacket::Opcode::MOVE_ITEM)
 		{
 			write_time();
 			write_byte(type);
@@ -67,7 +68,8 @@ namespace ms
 	class EquipItemPacket : public MoveItemPacket
 	{
 	public:
-		EquipItemPacket(int16_t src, EquipSlot::Id dest) : MoveItemPacket(InventoryType::Id::EQUIP, src, -dest, 1) {}
+		EquipItemPacket(int16_t src, EquipSlot::Id dest) : MoveItemPacket(InventoryType::Id::EQUIP, src, -dest, 1)
+		{}
 	};
 
 	// Packet which requests that an item is unequipped
@@ -75,7 +77,8 @@ namespace ms
 	class UnequipItemPacket : public MoveItemPacket
 	{
 	public:
-		UnequipItemPacket(int16_t src, int16_t dest) : MoveItemPacket(InventoryType::Id::EQUIPPED, -src, dest, 1) {}
+		UnequipItemPacket(int16_t src, int16_t dest) : MoveItemPacket(InventoryType::Id::EQUIPPED, -src, dest, 1)
+		{}
 	};
 
 	// A packet which requests that an 'USE' item is used
@@ -105,7 +108,8 @@ namespace ms
 			WHITESCROLL = 0x02
 		};
 
-		ScrollEquipPacket(int16_t source, EquipSlot::Id target, uint8_t flags) : OutPacket(OutPacket::Opcode::SCROLL_EQUIP)
+		ScrollEquipPacket(int16_t source, EquipSlot::Id target, uint8_t flags) : OutPacket(
+			OutPacket::Opcode::SCROLL_EQUIP)
 		{
 			write_time();
 			write_short(source);
@@ -113,6 +117,7 @@ namespace ms
 			write_short(flags);
 		}
 
-		ScrollEquipPacket(int16_t source, EquipSlot::Id target) : ScrollEquipPacket(source, target, 0) {}
+		ScrollEquipPacket(int16_t source, EquipSlot::Id target) : ScrollEquipPacket(source, target, 0)
+		{}
 	};
 }

@@ -21,9 +21,14 @@
 
 namespace ms
 {
-	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d, bool a) : position(p), dimension(d), active(a) {}
-	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d) : UIElement(p, d, true) {}
-	UIElement::UIElement() : UIElement(Point<int16_t>(), Point<int16_t>()) {}
+	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d, bool a) : position(p), dimension(d), active(a)
+	{}
+
+	UIElement::UIElement(Point<int16_t> p, Point<int16_t> d) : UIElement(p, d, true)
+	{}
+
+	UIElement::UIElement() : UIElement(Point<int16_t>(), Point<int16_t>())
+	{}
 
 	void UIElement::draw(float alpha) const
 	{

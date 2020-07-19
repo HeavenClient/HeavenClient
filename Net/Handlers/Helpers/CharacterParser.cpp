@@ -48,9 +48,9 @@ namespace ms
 		recv.skip(2);
 
 		InventoryType::Id toparse[4] =
-		{
-			InventoryType::USE, InventoryType::SETUP, InventoryType::ETC, InventoryType::CASH
-		};
+			{
+				InventoryType::USE, InventoryType::SETUP, InventoryType::ETC, InventoryType::CASH
+			};
 
 		for (size_t i = 0; i < 4; i++)
 		{
@@ -209,17 +209,17 @@ namespace ms
 
 		for (int16_t i = 0; i < nysize; i++)
 		{
-			recv.read_int();	// NewYear Id
-			recv.read_int();	// NewYear SenderId
-			recv.read_string();	// NewYear SenderName
-			recv.read_bool();	// NewYear enderCardDiscarded
-			recv.read_long();	// NewYear DateSent
-			recv.read_int();	// NewYear ReceiverId
-			recv.read_string();	// NewYear ReceiverName
-			recv.read_bool();	// NewYear eceiverCardDiscarded
-			recv.read_bool();	// NewYear eceiverCardReceived
-			recv.read_long();	// NewYear DateReceived
-			recv.read_string();	// NewYear Message
+			recv.read_int();    // NewYear Id
+			recv.read_int();    // NewYear SenderId
+			recv.read_string();    // NewYear SenderName
+			recv.read_bool();    // NewYear enderCardDiscarded
+			recv.read_long();    // NewYear DateSent
+			recv.read_int();    // NewYear ReceiverId
+			recv.read_string();    // NewYear ReceiverName
+			recv.read_bool();    // NewYear eceiverCardDiscarded
+			recv.read_bool();    // NewYear eceiverCardReceived
+			recv.read_long();    // NewYear DateReceived
+			recv.read_string();    // NewYear Message
 		}
 	}
 

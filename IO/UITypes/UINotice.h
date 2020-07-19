@@ -39,6 +39,7 @@ namespace ms
 		};
 
 		UINotice(std::string message, NoticeType type, Text::Alignment alignment);
+
 		UINotice(std::string message, NoticeType type);
 
 		void draw(bool textfield) const;
@@ -63,6 +64,7 @@ namespace ms
 	{
 	public:
 		UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler, Text::Alignment alignment);
+
 		UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler);
 
 		void draw(float alpha) const override;
@@ -86,12 +88,15 @@ namespace ms
 	class UIEnterNumber : public UINotice
 	{
 	public:
-		UIEnterNumber(std::string message, std::function<void(int32_t number)> numhandler, int32_t max, int32_t quantity);
+		UIEnterNumber(std::string message, std::function<void(int32_t number)> numhandler, int32_t max,
+					  int32_t quantity);
 
 		void draw(float alpha) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool pressed, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;

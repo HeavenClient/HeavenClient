@@ -20,7 +20,9 @@
 #include "../../Graphics/GraphicsGL.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -68,32 +70,32 @@ namespace ms
 
 		switch (type)
 		{
-		case Type::HTILED:
-		case Type::HMOVEA:
-			htile = VWIDTH / cx + 3;
-			break;
-		case Type::VTILED:
-		case Type::VMOVEA:
-			vtile = VHEIGHT / cy + 3;
-			break;
-		case Type::TILED:
-		case Type::HMOVEB:
-		case Type::VMOVEB:
-			htile = VWIDTH / cx + 3;
-			vtile = VHEIGHT / cy + 3;
-			break;
+			case Type::HTILED:
+			case Type::HMOVEA:
+				htile = VWIDTH / cx + 3;
+				break;
+			case Type::VTILED:
+			case Type::VMOVEA:
+				vtile = VHEIGHT / cy + 3;
+				break;
+			case Type::TILED:
+			case Type::HMOVEB:
+			case Type::VMOVEB:
+				htile = VWIDTH / cx + 3;
+				vtile = VHEIGHT / cy + 3;
+				break;
 		}
 
 		switch (type)
 		{
-		case Type::HMOVEA:
-		case Type::HMOVEB:
-			moveobj.hspeed = rx / 16;
-			break;
-		case Type::VMOVEA:
-		case Type::VMOVEB:
-			moveobj.vspeed = ry / 16;
-			break;
+			case Type::HMOVEA:
+			case Type::HMOVEB:
+				moveobj.hspeed = rx / 16;
+				break;
+			case Type::VMOVEA:
+			case Type::VMOVEB:
+				moveobj.vspeed = ry / 16;
+				break;
 		}
 	}
 
@@ -179,7 +181,8 @@ namespace ms
 		black = src["0"]["bS"].get_string() == "";
 	}
 
-	MapBackgrounds::MapBackgrounds() {}
+	MapBackgrounds::MapBackgrounds()
+	{}
 
 	void MapBackgrounds::drawbackgrounds(double viewx, double viewy, float alpha) const
 	{

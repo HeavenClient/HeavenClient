@@ -28,7 +28,9 @@
 #include "../../Net/Packets/PlayerPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -73,7 +75,8 @@ namespace ms
 		buttons[Buttons::BT_DETAILOPEN] = std::make_unique<MapleButton>(main["BtDetailOpen"]);
 		buttons[Buttons::BT_DETAILCLOSE] = std::make_unique<MapleButton>(main["BtDetailClose"]);
 		buttons[Buttons::BT_ABILITY] = std::make_unique<MapleButton>(detail["BtAbility"], Point<int16_t>(212, 0));
-		buttons[Buttons::BT_DETAIL_DETAILCLOSE] = std::make_unique<MapleButton>(detail["BtHpUp"], Point<int16_t>(212, 0));
+		buttons[Buttons::BT_DETAIL_DETAILCLOSE] = std::make_unique<MapleButton>(detail["BtHpUp"],
+																				Point<int16_t>(212, 0));
 
 		buttons[Buttons::BT_HYPERSTATOPEN]->set_active(false);
 		buttons[Buttons::BT_DETAILCLOSE]->set_active(false);
@@ -111,7 +114,8 @@ namespace ms
 		statlabels[StatLabel::CRITICAL_RATE] = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::EMPEROR);
 		statlabels[StatLabel::CRITICAL_DAMAGE] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR);
 		statlabels[StatLabel::STATUS_RESISTANCE] = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::EMPEROR);
-		statlabels[StatLabel::KNOCKBACK_RESISTANCE] = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::EMPEROR);
+		statlabels[StatLabel::KNOCKBACK_RESISTANCE] = Text(Text::Font::A11M, Text::Alignment::RIGHT,
+														   Color::Name::EMPEROR);
 		statlabels[StatLabel::DEFENSE] = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::EMPEROR);
 		statlabels[StatLabel::SPEED] = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::EMPEROR);
 		statlabels[StatLabel::JUMP] = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::EMPEROR);
@@ -207,29 +211,37 @@ namespace ms
 
 		statlabels[StatLabel::NAME].change_text(stats.get_name());
 		statlabels[StatLabel::GUILD].change_text("-");
-		statlabels[StatLabel::HP].change_text(std::to_string(stats.get_stat(MapleStat::Id::HP)) + " / " + std::to_string(stats.get_total(EquipStat::Id::HP)));
-		statlabels[StatLabel::MP].change_text(std::to_string(stats.get_stat(MapleStat::Id::MP)) + " / " + std::to_string(stats.get_total(EquipStat::Id::MP)));
+		statlabels[StatLabel::HP].change_text(std::to_string(stats.get_stat(MapleStat::Id::HP)) + " / " +
+											  std::to_string(stats.get_total(EquipStat::Id::HP)));
+		statlabels[StatLabel::MP].change_text(std::to_string(stats.get_stat(MapleStat::Id::MP)) + " / " +
+											  std::to_string(stats.get_total(EquipStat::Id::MP)));
 
 		update_basevstotal(StatLabel::STR, MapleStat::Id::STR, EquipStat::Id::STR);
 		update_basevstotal(StatLabel::DEX, MapleStat::Id::DEX, EquipStat::Id::DEX);
 		update_basevstotal(StatLabel::INT, MapleStat::Id::INT, EquipStat::Id::INT);
 		update_basevstotal(StatLabel::LUK, MapleStat::Id::LUK, EquipStat::Id::LUK);
 
-		statlabels[StatLabel::DAMAGE].change_text(std::to_string(stats.get_mindamage()) + " ~ " + std::to_string(stats.get_maxdamage()));
+		statlabels[StatLabel::DAMAGE].change_text(
+			std::to_string(stats.get_mindamage()) + " ~ " + std::to_string(stats.get_maxdamage()));
 
 		if (stats.is_damage_buffed())
 			statlabels[StatLabel::DAMAGE].change_color(Color::Name::RED);
 		else
 			statlabels[StatLabel::DAMAGE].change_color(Color::Name::EMPEROR);
 
-		statlabels[StatLabel::DAMAGE_DETAILED].change_text(std::to_string(stats.get_mindamage()) + " ~ " + std::to_string(stats.get_maxdamage()));
+		statlabels[StatLabel::DAMAGE_DETAILED].change_text(
+			std::to_string(stats.get_mindamage()) + " ~ " + std::to_string(stats.get_maxdamage()));
 		statlabels[StatLabel::DAMAGE_BONUS].change_text("0%");
-		statlabels[StatLabel::BOSS_DAMAGE].change_text(std::to_string(static_cast<int32_t>(stats.get_bossdmg() * 100)) + "%");
+		statlabels[StatLabel::BOSS_DAMAGE].change_text(
+			std::to_string(static_cast<int32_t>(stats.get_bossdmg() * 100)) + "%");
 		statlabels[StatLabel::FINAL_DAMAGE].change_text("0%");
-		statlabels[StatLabel::IGNORE_DEFENSE].change_text(std::to_string(static_cast<int32_t>(stats.get_ignoredef())) + "%");
-		statlabels[StatLabel::CRITICAL_RATE].change_text(std::to_string(static_cast<int32_t>(stats.get_critical() * 100)) + "%");
+		statlabels[StatLabel::IGNORE_DEFENSE].change_text(
+			std::to_string(static_cast<int32_t>(stats.get_ignoredef())) + "%");
+		statlabels[StatLabel::CRITICAL_RATE].change_text(
+			std::to_string(static_cast<int32_t>(stats.get_critical() * 100)) + "%");
 		statlabels[StatLabel::CRITICAL_DAMAGE].change_text("0.00%");
-		statlabels[StatLabel::STATUS_RESISTANCE].change_text(std::to_string(static_cast<int32_t>(stats.get_resistance())));
+		statlabels[StatLabel::STATUS_RESISTANCE].change_text(
+			std::to_string(static_cast<int32_t>(stats.get_resistance())));
 		statlabels[StatLabel::KNOCKBACK_RESISTANCE].change_text("0%");
 
 		update_buffed(StatLabel::DEFENSE, EquipStat::Id::WDEF);
@@ -358,7 +370,8 @@ namespace ms
 			case Buttons::BT_HYPERSTATCLOSE:
 			{
 				if (player.get_level() < 140)
-					UI::get().emplace<UIOk>("You can use the Hyper Stat at Lv. 140 and above.", [](bool) {});
+					UI::get().emplace<UIOk>("You can use the Hyper Stat at Lv. 140 and above.", [](bool)
+					{});
 
 				break;
 			}

@@ -145,7 +145,7 @@ namespace ms
 
 		Point<int16_t> get_position() const
 		{
-			return { get_x(), get_y() };
+			return {get_x(), get_y()};
 		}
 
 		int16_t get_absolute_x(double viewx, float alpha) const
@@ -154,7 +154,7 @@ namespace ms
 
 			return static_cast<int16_t>(
 				std::round(interx + viewx)
-				);
+			);
 		}
 
 		int16_t get_absolute_y(double viewy, float alpha) const
@@ -163,12 +163,12 @@ namespace ms
 
 			return static_cast<int16_t>(
 				std::round(intery + viewy)
-				);
+			);
 		}
 
 		Point<int16_t> get_absolute(double viewx, double viewy, float alpha) const
 		{
-			return { get_absolute_x(viewx, alpha), get_absolute_y(viewy, alpha) };
+			return {get_absolute_x(viewx, alpha), get_absolute_y(viewy, alpha)};
 		}
 	};
 

@@ -20,21 +20,26 @@
 #include "../Graphics/Texture.h"
 #include "../Template/Cache.h"
 
+#include <vector>
+
 namespace ms
 {
 	// Contains information about a job
 	class JobData : public Cache<JobData>
 	{
 	public:
-		// Return the ids of the skills for this job
+		// Return the ids of the skills for this job.
 		const std::vector<std::int32_t>& get_skills() const;
-		// Return the name of the skill book
+
+		// Return the name of the skill book.
 		const std::string& get_name() const;
-		// Return the book cover icon
+
+		// Return the book cover icon.
 		const Texture& get_icon() const;
 
 	private:
 		friend Cache<JobData>;
+
 		JobData(int32_t id);
 
 		Texture icon;

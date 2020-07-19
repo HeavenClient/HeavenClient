@@ -20,7 +20,9 @@
 #include <iostream>
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -48,7 +50,8 @@ namespace ms
 
 					if (layer_iter == layers_by_name.end())
 					{
-						std::cout << "Unknown Hair::Layer name: [" << layername << "]\tLocation: [" << hairnode.name() << "][" << stancename << "][" << frame << "]" << std::endl;
+						std::cout << "Unknown Hair::Layer name: [" << layername << "]\tLocation: [" << hairnode.name()
+								  << "][" << stancename << "][" << frame << "]" << std::endl;
 						continue;
 					}
 
@@ -64,14 +67,14 @@ namespace ms
 			}
 		}
 
-		name = nl::nx::string["Eqp.img"]["Eqp"]["Hair"][std::to_string(hairid)]["name"];
+		name = std::string(nl::nx::string["Eqp.img"]["Eqp"]["Hair"][std::to_string(hairid)]["name"]);
 
 		constexpr size_t NUM_COLORS = 8;
 
 		constexpr char* haircolors[NUM_COLORS] =
-		{
-			"Black", "Red", "Orange", "Blonde", "Green", "Blue", "Violet", "Brown"
-		};
+			{
+				"Black", "Red", "Orange", "Blonde", "Green", "Blue", "Violet", "Brown"
+			};
 
 		size_t index = hairid % 10;
 		color = (index < NUM_COLORS) ? haircolors[index] : "";
@@ -98,14 +101,14 @@ namespace ms
 	}
 
 	const std::unordered_map<std::string, Hair::Layer> Hair::layers_by_name =
-	{
-		{ "hair",					Hair::Layer::DEFAULT		},
-		{ "hairBelowBody",			Hair::Layer::BELOWBODY		},
-		{ "hairOverHead",			Hair::Layer::OVERHEAD		},
-		{ "hairShade",				Hair::Layer::SHADE			},
-		{ "backHair",				Hair::Layer::BACK			},
-		{ "backHairBelowCap",		Hair::Layer::BELOWCAP		},
-		{ "backHairBelowCapNarrow",	Hair::Layer::BELOWCAPNARROW },
-		{ "backHairBelowCapWide",	Hair::Layer::BELOWCAPWIDE	}
-	};
+		{
+			{"hair",                   Hair::Layer::DEFAULT},
+			{"hairBelowBody",          Hair::Layer::BELOWBODY},
+			{"hairOverHead",           Hair::Layer::OVERHEAD},
+			{"hairShade",              Hair::Layer::SHADE},
+			{"backHair",               Hair::Layer::BACK},
+			{"backHairBelowCap",       Hair::Layer::BELOWCAP},
+			{"backHairBelowCapNarrow", Hair::Layer::BELOWCAPNARROW},
+			{"backHairBelowCapWide",   Hair::Layer::BELOWCAPWIDE}
+		};
 }

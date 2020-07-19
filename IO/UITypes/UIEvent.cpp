@@ -24,7 +24,9 @@
 #include "../../Data/ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -57,7 +59,8 @@ namespace ms
 		events.emplace_back(BoolPair<bool>(false, false));
 
 		for (size_t i = 0; i < 3; i++)
-			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF, Color::Name::ENDEAVOUR);
+			event_title[i] = ShadowText(Text::Font::A18M, Text::Alignment::LEFT, Color::Name::HALFANDHALF,
+										Color::Name::ENDEAVOUR);
 
 		for (size_t i = 0; i < 3; i++)
 			event_date[i] = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::WHITE);
@@ -210,10 +213,10 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::CLOSE:
-			close();
-		default:
-			break;
+			case Buttons::CLOSE:
+				close();
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -228,40 +231,40 @@ namespace ms
 	{
 		switch (id)
 		{
-		case 0:
-			return "LINE FRIENDS";
-		case 1:
-			return "LINE FRIENDS Coin Shop";
-		case 2:
-			return "[14th Street] Big Bang Store";
-		case 3:
-			return "[14th Street] Override Fashion Marketing";
-		case 4:
-			return "[14th Street] Dance Battle V";
-		case 5:
-			return "MapleStory 14th Anniversary Appre..";
-		case 6:
-			return "[14th Street] Big Bang Store Season..";
-		case 7:
-			return "[14th Street] Maplelin Star Grub!";
-		case 8:
-			return "[14th Street] Sub-Zero Hunt";
-		case 9:
-			return "[14th Street] The Legends Return!";
-		case 10:
-			return "[14th Street] Renegade Personal Training";
-		case 11:
-			return "[14th Street] Round-We-Go Cafe Rising Heroes!";
-		case 12:
-			return "[14th Street] Big Bang Attack!";
-		case 13:
-			return "[14th Street] Spiegelmann's Art Retrieval";
-		case 14:
-			return "[14th Street] 14th Street Sky";
-		case 15:
-			return "[Sunny Sunday] Perks Abound!";
-		default:
-			return "";
+			case 0:
+				return "LINE FRIENDS";
+			case 1:
+				return "LINE FRIENDS Coin Shop";
+			case 2:
+				return "[14th Street] Big Bang Store";
+			case 3:
+				return "[14th Street] Override Fashion Marketing";
+			case 4:
+				return "[14th Street] Dance Battle V";
+			case 5:
+				return "MapleStory 14th Anniversary Appre..";
+			case 6:
+				return "[14th Street] Big Bang Store Season..";
+			case 7:
+				return "[14th Street] Maplelin Star Grub!";
+			case 8:
+				return "[14th Street] Sub-Zero Hunt";
+			case 9:
+				return "[14th Street] The Legends Return!";
+			case 10:
+				return "[14th Street] Renegade Personal Training";
+			case 11:
+				return "[14th Street] Round-We-Go Cafe Rising Heroes!";
+			case 12:
+				return "[14th Street] Big Bang Attack!";
+			case 13:
+				return "[14th Street] Spiegelmann's Art Retrieval";
+			case 14:
+				return "[14th Street] 14th Street Sky";
+			case 15:
+				return "[Sunny Sunday] Perks Abound!";
+			default:
+				return "";
 		}
 	}
 
@@ -269,33 +272,33 @@ namespace ms
 	{
 		switch (id)
 		{
-		case 0:
-		case 1:
-		case 2:
-			return "04/24/2019 - 05/21/2019, 23:59";
-		case 3:
-			return "04/24/2019 - 05/07/2019, 23:59";
-		case 4:
-			return "04/24/2019 - 06/11/2019, 23:59";
-		case 5:
-			return "05/11/2019 - 05/11/2019, 23:59";
-		case 6:
-		case 10:
-		case 11:
-		case 12:
-			return "05/22/2019 - 06/11/2019, 23:59";
-		case 7:
-		case 8:
-			return "05/08/2019 - 05/21/2019, 23:59";
-		case 9:
-			return "05/08/2019 - 06/11/2019, 23:59";
-		case 13:
-		case 14:
-			return "05/29/2019 - 06/11/2019, 23:59";
-		case 15:
-			return "05/05/2019 - 05/05/2019, 23:59";
-		default:
-			return "";
+			case 0:
+			case 1:
+			case 2:
+				return "04/24/2019 - 05/21/2019, 23:59";
+			case 3:
+				return "04/24/2019 - 05/07/2019, 23:59";
+			case 4:
+				return "04/24/2019 - 06/11/2019, 23:59";
+			case 5:
+				return "05/11/2019 - 05/11/2019, 23:59";
+			case 6:
+			case 10:
+			case 11:
+			case 12:
+				return "05/22/2019 - 06/11/2019, 23:59";
+			case 7:
+			case 8:
+				return "05/08/2019 - 05/21/2019, 23:59";
+			case 9:
+				return "05/08/2019 - 06/11/2019, 23:59";
+			case 13:
+			case 14:
+				return "05/29/2019 - 06/11/2019, 23:59";
+			case 15:
+				return "05/05/2019 - 05/05/2019, 23:59";
+			default:
+				return "";
 		}
 	}
 

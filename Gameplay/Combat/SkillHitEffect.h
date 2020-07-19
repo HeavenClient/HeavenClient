@@ -18,7 +18,6 @@
 #pragma once
 
 #include "../MapleMap/Mob.h"
-
 #include "../../Template/BoolPair.h"
 
 namespace ms
@@ -27,7 +26,8 @@ namespace ms
 	class SkillHitEffect
 	{
 	public:
-		virtual ~SkillHitEffect() {}
+		virtual ~SkillHitEffect()
+		{}
 
 		virtual void apply(const AttackUser& user, Mob& target) const = 0;
 
@@ -58,7 +58,8 @@ namespace ms
 	class NoHitEffect : public SkillHitEffect
 	{
 	public:
-		void apply(const AttackUser&, Mob&) const override {}
+		void apply(const AttackUser&, Mob&) const override
+		{}
 	};
 
 	// A single animation
@@ -98,10 +99,10 @@ namespace ms
 	};
 
 	// The animation changes with the character level and weapon used
-	class ByLevelTwoHHitEffect : public SkillHitEffect
+	class ByLevelTwoHandedHitEffect : public SkillHitEffect
 	{
 	public:
-		ByLevelTwoHHitEffect(nl::node src);
+		ByLevelTwoHandedHitEffect(nl::node src);
 
 		void apply(const AttackUser& user, Mob& target) const override;
 

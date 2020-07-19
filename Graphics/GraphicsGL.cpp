@@ -83,11 +83,19 @@ namespace ms
 
 		// Initialize and configure
 		// ------------------------
+
+#if defined(__linux__) || defined(__APPLE__)
+		if (!gladLoadGL())
+		{
+			printf("Could not initialize GLAD.\n");
+			exit(-1);
+		}
+#else
 		if (GLenum error = glewInit())
 			return Error(Error::Code::GLEW, (const char*)glewGetErrorString(error));
-
-		std::cout << "Using OpenGL " << glGetString(GL_VERSION) << std::endl;
 		std::cout << "Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+#endif
+		std::cout << "Using OpenGL " << glGetString(GL_VERSION) << std::endl;
 
 		if (FT_Init_FreeType(&ftlibrary))
 			return Error::Code::FREETYPE;
@@ -173,7 +181,8 @@ namespace ms
 		uniform_yoffset = glGetUniformLocation(shaderProgram, "yoffset");
 		uniform_fontregion = glGetUniformLocation(shaderProgram, "fontregion");
 
-		if (attribute_coord == -1 || attribute_color == -1 || uniform_texture == -1 || uniform_atlassize == -1 || uniform_screensize == -1 || uniform_yoffset == -1)
+		if (attribute_coord == -1 || attribute_color == -1 || uniform_texture == -1 || uniform_atlassize == -1 ||
+			uniform_screensize == -1 || uniform_yoffset == -1)
 			return Error::Code::SHADER_VARS;
 
 		// Vertex Buffer Object
@@ -293,7 +302,7 @@ namespace ms
 			glTexSubImage2D(GL_TEXTURE_2D, 0, ox, oy, w, h, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
 			Offset offset = Offset(ox, oy, w, h);
-			fonts[id].chars[c] = { ax, ay, w, h, l, t, offset };
+			fonts[id].chars[c] = {ax, ay, w, h, l, t, offset};
 
 			ox += w;
 		}
@@ -321,7 +330,7 @@ namespace ms
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glVertexAttribPointer(attribute_coord, 4, GL_SHORT, GL_FALSE, sizeof(Quad::Vertex), 0);
-		glVertexAttribPointer(attribute_color, 4, GL_FLOAT, GL_FALSE, sizeof(Quad::Vertex), (const void*)8);
+		glVertexAttribPointer(attribute_color, 4, GL_FLOAT, GL_FALSE, sizeof(Quad::Vertex), (const void*) 8);
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -485,7 +494,8 @@ namespace ms
 		).first->second;
 	}
 
-	void GraphicsGL::draw(const nl::bitmap& bmp, const Rectangle<int16_t>& rect, const Range<int16_t>& vertical, const Color& color, float angle)
+	void GraphicsGL::draw(const nl::bitmap& bmp, const Rectangle<int16_t>& rect, const Range<int16_t>& vertical,
+						  const Color& color, float angle)
 	{
 		if (locked)
 			return;
@@ -501,10 +511,13 @@ namespace ms
 		offset.top += vertical.first();
 		offset.bottom -= vertical.second();
 
-		quads.emplace_back(rect.left(), rect.right(), rect.top() + vertical.first(), rect.bottom() - vertical.second(), offset, color, angle);
+		quads.emplace_back(rect.left(), rect.right(), rect.top() + vertical.first(), rect.bottom() - vertical.second(),
+						   offset, color, angle);
 	}
 
-	Text::Layout GraphicsGL::createlayout(const std::string& text, Text::Font id, Text::Alignment alignment, int16_t maxwidth, bool formatted, int16_t line_adj)
+	Text::Layout
+	GraphicsGL::createlayout(const std::string& text, Text::Font id, Text::Alignment alignment, int16_t maxwidth,
+							 bool formatted, int16_t line_adj)
 	{
 		size_t length = text.length();
 
@@ -532,7 +545,8 @@ namespace ms
 		return builder.finish(first, offset);
 	}
 
-	GraphicsGL::LayoutBuilder::LayoutBuilder(const Font& f, Text::Alignment a, int16_t mw, bool fm, int16_t la) : font(f), alignment(a), maxwidth(mw), formatted(fm), line_adj(la)
+	GraphicsGL::LayoutBuilder::LayoutBuilder(const Font& f, Text::Alignment a, int16_t mw, bool fm, int16_t la) : font(
+		f), alignment(a), maxwidth(mw), formatted(fm), line_adj(la)
 	{
 		fontid = Text::Font::NUM_FONTS;
 		color = Color::Name::NUM_COLORS;
@@ -682,9 +696,10 @@ namespace ms
 		return Text::Layout(lines, advances, width, ay, ax, endy);
 	}
 
-	void GraphicsGL::LayoutBuilder::add_word(size_t word_first, size_t word_last, Text::Font word_font, Color::Name word_color)
+	void GraphicsGL::LayoutBuilder::add_word(size_t word_first, size_t word_last, Text::Font word_font,
+											 Color::Name word_color)
 	{
-		words.push_back({ word_first, word_last, word_font, word_color });
+		words.push_back({word_first, word_last, word_font, word_color});
 	}
 
 	void GraphicsGL::LayoutBuilder::add_line()
@@ -702,11 +717,13 @@ namespace ms
 				break;
 		}
 
-		lines.push_back({ words, { line_x, line_y } });
+		lines.push_back({words, {line_x, line_y}});
 		words.clear();
 	}
 
-	void GraphicsGL::drawtext(const DrawArgument& args, const Range<int16_t>& vertical, const std::string& text, const Text::Layout& layout, Text::Font id, Color::Name colorid, Text::Background background)
+	void GraphicsGL::drawtext(const DrawArgument& args, const Range<int16_t>& vertical, const std::string& text,
+							  const Text::Layout& layout, Text::Font id, Color::Name colorid,
+							  Text::Background background)
 	{
 		if (locked)
 			return;
@@ -810,7 +827,9 @@ namespace ms
 		}
 	}
 
-	void GraphicsGL::drawrectangle(int16_t x, int16_t y, int16_t width, int16_t height, float red, float green, float blue, float alpha)
+	void
+	GraphicsGL::drawrectangle(int16_t x, int16_t y, int16_t width, int16_t height, float red, float green, float blue,
+							  float alpha)
 	{
 		if (locked)
 			return;

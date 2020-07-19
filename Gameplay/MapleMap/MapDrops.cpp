@@ -22,7 +22,9 @@
 #include "../../Data/ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -67,9 +69,9 @@ namespace ms
 				if (meso)
 				{
 					MesoIcon mesotype = (itemid > 999)
-						? BAG : (itemid > 99)
-						? BUNDLE : (itemid > 49)
-						? GOLD : BRONZE;
+										? BAG : (itemid > 99)
+												? BUNDLE : (itemid > 49)
+														   ? GOLD : BRONZE;
 
 					const Animation& icon = mesoicons[mesotype];
 					drops.add(spawn.instantiate(icon));
@@ -109,7 +111,7 @@ namespace ms
 	MapDrops::Loot MapDrops::find_loot_at(Point<int16_t> playerpos)
 	{
 		if (!lootenabled)
-			return { 0, {} };
+			return {0, {}};
 
 		for (auto& mmo : drops)
 		{
@@ -122,10 +124,10 @@ namespace ms
 				int32_t oid = mmo.first;
 				Point<int16_t> position = drop->get_position();
 
-				return { oid, position };
+				return {oid, position};
 			}
 		}
 
-		return { 0, {} };
+		return {0, {}};
 	}
 }

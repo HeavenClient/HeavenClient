@@ -40,8 +40,11 @@ namespace ms
 		};
 
 		StatsEntry parseCharacterInfo(InPacket& recv);
+
 		StatsEntry parseCharStats(InPacket& recv);
+
 		bool hasSPTable(int16_t job);
+
 		void parseRemainingSkillInfo(InPacket& recv);
 	}
 }

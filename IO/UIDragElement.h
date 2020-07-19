@@ -72,7 +72,8 @@ namespace ms
 		}
 
 	protected:
-		UIDragElement() : UIDragElement(Point<int16_t>(0, 0)) {}
+		UIDragElement() : UIDragElement(Point<int16_t>(0, 0))
+		{}
 
 		UIDragElement(Point<int16_t> d) : dragarea(d)
 		{

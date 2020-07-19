@@ -26,7 +26,8 @@ namespace ms
 	class SkillAction
 	{
 	public:
-		virtual ~SkillAction() {}
+		virtual ~SkillAction()
+		{}
 
 		virtual void apply(Char& target, Attack::Type atype) const = 0;
 	};
@@ -34,7 +35,8 @@ namespace ms
 	class NoAction : public SkillAction
 	{
 	public:
-		void apply(Char&, Attack::Type) const override {}
+		void apply(Char&, Attack::Type) const override
+		{}
 	};
 
 	class RegularAction : public SkillAction

@@ -35,11 +35,15 @@ namespace ms
 		UIMiniMap(const CharStats& stats);
 
 		void draw(float alpha) const override;
+
 		void update() override;
 
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> pos) override;
+
 		void send_scroll(double yoffset) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -59,15 +63,25 @@ namespace ms
 		static constexpr Point<int16_t> WINDOW_UL_POS = Point<int16_t>(0, 0);
 
 		void update_buttons();
+
 		void toggle_buttons();
+
 		void update_text();
+
 		void update_canvas();
+
 		void draw_movable_markers(Point<int16_t> init_pos, float alpha) const;
+
 		void update_static_markers();
+
 		void set_npclist_active(bool active);
+
 		void update_dimensions();
+
 		void update_npclist();
+
 		void draw_npclist(Point<int16_t> minimap_dims, float alpha) const;
+
 		void select_npclist(int16_t choice);
 
 		enum Buttons

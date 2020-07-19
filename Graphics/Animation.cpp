@@ -40,41 +40,41 @@ namespace ms
 
 		if (hasa0 && hasa1)
 		{
-			opacities = { src["a0"], src["a1"] };
+			opacities = {src["a0"], src["a1"]};
 		}
 		else if (hasa0)
 		{
 			uint8_t a0 = src["a0"];
-			opacities = { a0, 255 - a0 };
+			opacities = {a0, 255 - a0};
 		}
 		else if (hasa1)
 		{
 			uint8_t a1 = src["a1"];
-			opacities = { 255 - a1, a1 };
+			opacities = {255 - a1, a1};
 		}
 		else
 		{
-			opacities = { 255, 255 };
+			opacities = {255, 255};
 		}
 
 		bool hasz0 = src["z0"].data_type() == nl::node::type::integer;
 		bool hasz1 = src["z1"].data_type() == nl::node::type::integer;
 
 		if (hasz0 && hasz1)
-			scales = { src["z0"], src["z1"] };
+			scales = {src["z0"], src["z1"]};
 		else if (hasz0)
-			scales = { src["z0"], 0 };
+			scales = {src["z0"], 0};
 		else if (hasz1)
-			scales = { 100, src["z1"] };
+			scales = {100, src["z1"]};
 		else
-			scales = { 100, 100 };
+			scales = {100, 100};
 	}
 
 	Frame::Frame()
 	{
 		delay = 0;
-		opacities = { 0, 0 };
-		scales = { 0, 0 };
+		opacities = {0, 0};
+		scales = {0, 0};
 	}
 
 	void Frame::draw(const DrawArgument& args) const

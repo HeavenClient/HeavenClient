@@ -24,12 +24,15 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler) : okhandler(okhandler), cancelhandler(cancelhandler)
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler, std::function<void()> cancelhandler)
+		: okhandler(okhandler), cancelhandler(cancelhandler)
 	{
 		multiple = false;
 
@@ -68,8 +71,14 @@ namespace ms
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler, []() {}) {}
-	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []() {}) {}
+	UILoginNotice::UILoginNotice(uint16_t message, std::function<void()> okhandler) : UILoginNotice(message, okhandler,
+																									[]()
+																									{})
+	{}
+
+	UILoginNotice::UILoginNotice(uint16_t message) : UILoginNotice(message, []()
+	{})
+	{}
 
 	void UILoginNotice::send_key(int32_t keycode, bool pressed, bool escape)
 	{
@@ -155,7 +164,8 @@ namespace ms
 		return Button::PRESSED;
 	}
 
-	UIClassConfirm::UIClassConfirm(uint16_t selected_class, bool unavailable, std::function<void()> okhandler) : okhandler(okhandler)
+	UIClassConfirm::UIClassConfirm(uint16_t selected_class, bool unavailable, std::function<void()> okhandler)
+		: okhandler(okhandler)
 	{
 		nl::node RaceSelect = nl::nx::ui["Login.img"]["RaceSelect_new"];
 		nl::node type = unavailable ? RaceSelect["deny"] : RaceSelect["confirm"];
@@ -168,7 +178,7 @@ namespace ms
 		int16_t pos_x = (backgrnd_x - race_x) / 2;
 
 		sprites.emplace_back(backgrnd);
-		sprites.emplace_back(race, Point<int16_t>(pos_x, 10) + (Point<int16_t>)race["origin"]);
+		sprites.emplace_back(race, Point<int16_t>(pos_x, 10) + (Point<int16_t>) race["origin"]);
 
 		if (unavailable)
 		{

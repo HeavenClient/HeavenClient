@@ -29,11 +29,13 @@ namespace ms
 		static constexpr bool TOGGLED = false;
 
 		UILoginWait();
+
 		UILoginWait(std::function<void()> okhandler);
 
 		UIElement::Type get_type() const override;
 
 		void close();
+
 		std::function<void()> get_handler();
 
 	protected:

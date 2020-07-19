@@ -38,9 +38,10 @@ namespace ms
 			b = Text(font, alignment, outerColor);
 		}
 
-		OutlinedText() {}
+		OutlinedText()
+		{}
 
-		void draw(Point<int16_t> parentpos) const
+		void draw(Point <int16_t> parentpos) const
 		{
 			l.draw(parentpos + Point<int16_t>(-1, 0));
 			r.draw(parentpos + Point<int16_t>(1, 0));
@@ -80,9 +81,10 @@ namespace ms
 			shadow = Text(font, alignment, shadowColor);
 		}
 
-		ShadowText() {}
+		ShadowText()
+		{}
 
-		void draw(Point<int16_t> parentpos) const
+		void draw(Point <int16_t> parentpos) const
 		{
 			shadow.draw(parentpos + Point<int16_t>(1, 1));
 			top.draw(parentpos);

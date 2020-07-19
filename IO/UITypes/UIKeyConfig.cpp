@@ -29,12 +29,15 @@
 #include "../../Net/Packets/PlayerPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIKeyConfig::UIKeyConfig(const Inventory& in_inventory, const SkillBook& in_skillbook) : UIDragElement<PosKEYCONFIG>(), inventory(in_inventory), skillbook(in_skillbook), dirty(false)
+	UIKeyConfig::UIKeyConfig(const Inventory& in_inventory, const SkillBook& in_skillbook)
+		: UIDragElement<PosKEYCONFIG>(), inventory(in_inventory), skillbook(in_skillbook), dirty(false)
 	{
 		keyboard = &UI::get().get_keyboard();
 		staged_mappings = keyboard->get_maplekeys();
@@ -620,60 +623,60 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::CLOSE:
-		case Buttons::CANCEL:
-			close();
-			break;
-		case Buttons::DEFAULT:
-		{
-			constexpr char* message = "Would you like to revert to default settings?";
-
-			auto onok = [&](bool ok)
+			case Buttons::CLOSE:
+			case Buttons::CANCEL:
+				close();
+				break;
+			case Buttons::DEFAULT:
 			{
-				if (ok)
+				constexpr char* message = "Would you like to revert to default settings?";
+
+				auto onok = [&](bool ok)
 				{
-					auto keysel_onok = [&](bool alternate)
+					if (ok)
 					{
-						clear();
+						auto keysel_onok = [&](bool alternate)
+						{
+							clear();
 
-						if (alternate)
-							staged_mappings = alternate_keys;
-						else
-							staged_mappings = basic_keys;
+							if (alternate)
+								staged_mappings = alternate_keys;
+							else
+								staged_mappings = basic_keys;
 
-						bind_staged_action_keys();
-					};
+							bind_staged_action_keys();
+						};
 
-					UI::get().emplace<UIKeySelect>(keysel_onok, false);
-				}
-			};
+						UI::get().emplace<UIKeySelect>(keysel_onok, false);
+					}
+				};
 
-			UI::get().emplace<UIOk>(message, onok);
-			break;
-		}
-		case Buttons::DELETE:
-		{
-			constexpr char* message = "Would you like to clear all key bindings?";
-
-			auto onok = [&](bool ok)
+				UI::get().emplace<UIOk>(message, onok);
+				break;
+			}
+			case Buttons::DELETE:
 			{
-				if (ok)
-					clear();
-			};
+				constexpr char* message = "Would you like to clear all key bindings?";
 
-			UI::get().emplace<UIOk>(message, onok);
-			break;
-		}
-		case Buttons::KEYSETTING:
-			break;
-		case Buttons::OK:
-		{
-			save_staged_mappings();
-			close();
-			break;
-		}
-		default:
-			break;
+				auto onok = [&](bool ok)
+				{
+					if (ok)
+						clear();
+				};
+
+				UI::get().emplace<UIOk>(message, onok);
+				break;
+			}
+			case Buttons::KEYSETTING:
+				break;
+			case Buttons::OK:
+			{
+				save_staged_mappings();
+				close();
+				break;
+			}
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -771,7 +774,7 @@ namespace ms
 			Rectangle<int16_t> icon_rect = Rectangle<int16_t>(
 				position + iter.second,
 				position + iter.second + Point<int16_t>(32, 32)
-				);
+			);
 
 			if (icon_rect.contains(cursorpos))
 				icon.drop_on_bindings(cursorpos, true);
@@ -1102,7 +1105,7 @@ namespace ms
 			Rectangle<int16_t> icon_rect = Rectangle<int16_t>(
 				position + iter.second,
 				position + iter.second + Point<int16_t>(32, 32)
-				);
+			);
 
 			if (icon_rect.contains(cursorpos))
 				return iter.first;
@@ -1121,7 +1124,7 @@ namespace ms
 			Rectangle<int16_t> icon_rect = Rectangle<int16_t>(
 				position + iter.second,
 				position + iter.second + Point<int16_t>(32, 32)
-				);
+			);
 
 			if (icon_rect.contains(cursorpos))
 				return iter.first;
@@ -1149,88 +1152,88 @@ namespace ms
 	{
 		switch (action)
 		{
-		case KeyAction::Id::EQUIPMENT:
-		case KeyAction::Id::ITEMS:
-		case KeyAction::Id::STATS:
-		case KeyAction::Id::SKILLS:
-		case KeyAction::Id::FRIENDS:
-		case KeyAction::Id::WORLDMAP:
-		case KeyAction::Id::MAPLECHAT:
-		case KeyAction::Id::MINIMAP:
-		case KeyAction::Id::QUESTLOG:
-		case KeyAction::Id::KEYBINDINGS:
-		case KeyAction::Id::TOGGLECHAT:
-		case KeyAction::Id::WHISPER:
-		case KeyAction::Id::SAY:
-		case KeyAction::Id::PARTYCHAT:
-		case KeyAction::Id::MENU:
-		case KeyAction::Id::QUICKSLOTS:
-		case KeyAction::Id::GUILD:
-		case KeyAction::Id::FRIENDSCHAT:
-		case KeyAction::Id::PARTY:
-		case KeyAction::Id::NOTIFIER:
-		case KeyAction::Id::CASHSHOP:
-		case KeyAction::Id::GUILDCHAT:
-		case KeyAction::Id::MEDALS:
-		case KeyAction::Id::BITS:
-		case KeyAction::Id::ALLIANCECHAT:
-		case KeyAction::Id::MAPLENEWS:
-		case KeyAction::Id::MANAGELEGION:
-		case KeyAction::Id::PROFESSION:
-		case KeyAction::Id::BOSSPARTY:
-		case KeyAction::Id::ITEMPOT:
-		case KeyAction::Id::EVENT:
-		case KeyAction::Id::SILENTCRUSADE:
-		case KeyAction::Id::BATTLEANALYSIS:
-		case KeyAction::Id::GUIDE:
-		case KeyAction::Id::VIEWERSCHAT:
-		case KeyAction::Id::ENHANCEEQUIP:
-		case KeyAction::Id::MONSTERCOLLECTION:
-		case KeyAction::Id::SOULWEAPON:
-		case KeyAction::Id::CHARINFO:
-		case KeyAction::Id::CHANGECHANNEL:
-		case KeyAction::Id::MAINMENU:
-		case KeyAction::Id::SCREENSHOT:
-		case KeyAction::Id::PICTUREMODE:
-		case KeyAction::Id::MAPLEACHIEVEMENT:
-			return KeyType::Id::MENU;
-		case KeyAction::Id::PICKUP:
-		case KeyAction::Id::SIT:
-		case KeyAction::Id::ATTACK:
-		case KeyAction::Id::JUMP:
-			return KeyType::Id::ACTION;
-		case KeyAction::Id::INTERACT_HARVEST:
-		case KeyAction::Id::MAPLESTORAGE:
-		case KeyAction::Id::SAFEMODE:
-		case KeyAction::Id::MUTE:
-		case KeyAction::Id::MONSTERBOOK:
-		case KeyAction::Id::TOSPOUSE:
-			return KeyType::Id::MENU;
-		case KeyAction::Id::FACE1:
-		case KeyAction::Id::FACE2:
-		case KeyAction::Id::FACE3:
-		case KeyAction::Id::FACE4:
-		case KeyAction::Id::FACE5:
-		case KeyAction::Id::FACE6:
-		case KeyAction::Id::FACE7:
-			return KeyType::Id::FACE;
-		case KeyAction::Id::LEFT:
-		case KeyAction::Id::RIGHT:
-		case KeyAction::Id::UP:
-		case KeyAction::Id::DOWN:
-		case KeyAction::Id::BACK:
-		case KeyAction::Id::TAB:
-		case KeyAction::Id::RETURN:
-		case KeyAction::Id::ESCAPE:
-		case KeyAction::Id::SPACE:
-		case KeyAction::Id::DELETE:
-		case KeyAction::Id::HOME:
-		case KeyAction::Id::END:
-		case KeyAction::Id::COPY:
-		case KeyAction::Id::PASTE:
-		case KeyAction::Id::LENGTH:
-		default:
-			return KeyType::Id::NONE;
+			case KeyAction::Id::EQUIPMENT:
+			case KeyAction::Id::ITEMS:
+			case KeyAction::Id::STATS:
+			case KeyAction::Id::SKILLS:
+			case KeyAction::Id::FRIENDS:
+			case KeyAction::Id::WORLDMAP:
+			case KeyAction::Id::MAPLECHAT:
+			case KeyAction::Id::MINIMAP:
+			case KeyAction::Id::QUESTLOG:
+			case KeyAction::Id::KEYBINDINGS:
+			case KeyAction::Id::TOGGLECHAT:
+			case KeyAction::Id::WHISPER:
+			case KeyAction::Id::SAY:
+			case KeyAction::Id::PARTYCHAT:
+			case KeyAction::Id::MENU:
+			case KeyAction::Id::QUICKSLOTS:
+			case KeyAction::Id::GUILD:
+			case KeyAction::Id::FRIENDSCHAT:
+			case KeyAction::Id::PARTY:
+			case KeyAction::Id::NOTIFIER:
+			case KeyAction::Id::CASHSHOP:
+			case KeyAction::Id::GUILDCHAT:
+			case KeyAction::Id::MEDALS:
+			case KeyAction::Id::BITS:
+			case KeyAction::Id::ALLIANCECHAT:
+			case KeyAction::Id::MAPLENEWS:
+			case KeyAction::Id::MANAGELEGION:
+			case KeyAction::Id::PROFESSION:
+			case KeyAction::Id::BOSSPARTY:
+			case KeyAction::Id::ITEMPOT:
+			case KeyAction::Id::EVENT:
+			case KeyAction::Id::SILENTCRUSADE:
+			case KeyAction::Id::BATTLEANALYSIS:
+			case KeyAction::Id::GUIDE:
+			case KeyAction::Id::VIEWERSCHAT:
+			case KeyAction::Id::ENHANCEEQUIP:
+			case KeyAction::Id::MONSTERCOLLECTION:
+			case KeyAction::Id::SOULWEAPON:
+			case KeyAction::Id::CHARINFO:
+			case KeyAction::Id::CHANGECHANNEL:
+			case KeyAction::Id::MAINMENU:
+			case KeyAction::Id::SCREENSHOT:
+			case KeyAction::Id::PICTUREMODE:
+			case KeyAction::Id::MAPLEACHIEVEMENT:
+				return KeyType::Id::MENU;
+			case KeyAction::Id::PICKUP:
+			case KeyAction::Id::SIT:
+			case KeyAction::Id::ATTACK:
+			case KeyAction::Id::JUMP:
+				return KeyType::Id::ACTION;
+			case KeyAction::Id::INTERACT_HARVEST:
+			case KeyAction::Id::MAPLESTORAGE:
+			case KeyAction::Id::SAFEMODE:
+			case KeyAction::Id::MUTE:
+			case KeyAction::Id::MONSTERBOOK:
+			case KeyAction::Id::TOSPOUSE:
+				return KeyType::Id::MENU;
+			case KeyAction::Id::FACE1:
+			case KeyAction::Id::FACE2:
+			case KeyAction::Id::FACE3:
+			case KeyAction::Id::FACE4:
+			case KeyAction::Id::FACE5:
+			case KeyAction::Id::FACE6:
+			case KeyAction::Id::FACE7:
+				return KeyType::Id::FACE;
+			case KeyAction::Id::LEFT:
+			case KeyAction::Id::RIGHT:
+			case KeyAction::Id::UP:
+			case KeyAction::Id::DOWN:
+			case KeyAction::Id::BACK:
+			case KeyAction::Id::TAB:
+			case KeyAction::Id::RETURN:
+			case KeyAction::Id::ESCAPE:
+			case KeyAction::Id::SPACE:
+			case KeyAction::Id::DELETE:
+			case KeyAction::Id::HOME:
+			case KeyAction::Id::END:
+			case KeyAction::Id::COPY:
+			case KeyAction::Id::PASTE:
+			case KeyAction::Id::LENGTH:
+			default:
+				return KeyType::Id::NONE;
 		}
 	}
 
@@ -1247,7 +1250,8 @@ namespace ms
 	}
 
 	/// MappingIcon
-	UIKeyConfig::MappingIcon::MappingIcon(Keyboard::Mapping m) : mapping(m) {}
+	UIKeyConfig::MappingIcon::MappingIcon(Keyboard::Mapping m) : mapping(m)
+	{}
 
 	UIKeyConfig::MappingIcon::MappingIcon(KeyAction::Id action)
 	{
@@ -1279,7 +1283,8 @@ namespace ms
 		return Icon::IconType::KEY;
 	}
 
-	UIKeyConfig::CountableMappingIcon::CountableMappingIcon(Keyboard::Mapping m, int16_t c) : UIKeyConfig::MappingIcon(m), count(c) {}
+	UIKeyConfig::CountableMappingIcon::CountableMappingIcon(Keyboard::Mapping m, int16_t c) : UIKeyConfig::MappingIcon(m), count(c)
+	{}
 
 	void UIKeyConfig::CountableMappingIcon::set_count(int16_t c)
 	{

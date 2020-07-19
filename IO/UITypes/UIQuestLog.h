@@ -38,6 +38,7 @@ namespace ms
 		void draw(float inter) const override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
+
 		Cursor::State send_cursor(bool clicking, Point<int16_t> cursorpos) override;
 
 		UIElement::Type get_type() const override;
@@ -60,7 +61,6 @@ namespace ms
 		};
 
 		const QuestLog& questlog;
-
 		uint16_t tab;
 		std::vector<Sprite> notice_sprites;
 		Textfield search;

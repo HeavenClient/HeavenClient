@@ -24,7 +24,8 @@ namespace ms
 	class SkillBullet
 	{
 	public:
-		virtual ~SkillBullet() {}
+		virtual ~SkillBullet()
+		{}
 
 		virtual Animation get(const Char& user, int32_t bulletid) const = 0;
 
@@ -38,7 +39,8 @@ namespace ms
 				animation = src;
 			}
 
-			Ball() {}
+			Ball()
+			{}
 		};
 	};
 

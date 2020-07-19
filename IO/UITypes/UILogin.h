@@ -36,6 +36,7 @@ namespace ms
 		UILogin();
 
 		void draw(float alpha) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursor_pos) override;
@@ -47,6 +48,7 @@ namespace ms
 
 	private:
 		void login();
+
 		void open_url(uint16_t id);
 
 		enum Buttons

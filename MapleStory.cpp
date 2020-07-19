@@ -23,7 +23,9 @@
 #include "Util/ScreenResolution.h"
 
 #ifdef USE_NX
+
 #include "Util/NxFiles.h"
+
 #else
 #include "Util/WzFiles.h"
 #endif
@@ -41,15 +43,15 @@ namespace ms
 #else
 		if (Error error = WzFiles::init())
 			return error;
+
 #endif
 
 		if (Error error = Window::get().init())
 			return error;
 
-		if (Error error = Sound::init())
-			return error;
-
 		if (Error error = Music::init())
+			return error;
+		if (Error error = Sound::init())
 			return error;
 
 		Char::init();
@@ -68,6 +70,9 @@ namespace ms
 		Stage::get().update();
 		UI::get().update();
 		Session::get().read();
+#if defined(__linux__) || defined(__APPLE__)
+		Music::update_context();
+#endif
 	}
 
 	void draw(float alpha)
@@ -81,8 +86,8 @@ namespace ms
 	bool running()
 	{
 		return Session::get().is_connected()
-			&& UI::get().not_quitted()
-			&& Window::get().not_closed();
+			   && UI::get().not_quitted()
+			   && Window::get().not_closed();
 	}
 
 	void loop()

@@ -61,7 +61,7 @@ namespace ms
 		chars.clear();
 	}
 
-	MapObjects * MapChars::get_chars()
+	MapObjects* MapChars::get_chars()
 	{
 		return &chars;
 	}

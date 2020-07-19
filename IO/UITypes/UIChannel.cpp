@@ -25,7 +25,9 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -65,7 +67,8 @@ namespace ms
 			}
 
 			ch.emplace_back(Channel["ch"][i], Point<int16_t>(19 + 70 * x, 60 + 20 * y));
-			buttons[Buttons::CH + i] = std::make_unique<AreaButton>(Point<int16_t>(11 + 70 * x, 55 + 20 * y), channel[true].get_dimensions());
+			buttons[Buttons::CH + i] = std::make_unique<AreaButton>(Point<int16_t>(11 + 70 * x, 55 + 20 * y),
+																	channel[true].get_dimensions());
 
 			if (i == selected_channel)
 			{
@@ -96,7 +99,8 @@ namespace ms
 			channel[false].draw(DrawArgument(position.x() + current_channel_x, position.y() + current_channel_y));
 		}
 
-		for each (auto sprite in ch)
+
+		for (auto& sprite : ch)
 			sprite.draw(position, inter);
 	}
 
@@ -104,7 +108,7 @@ namespace ms
 	{
 		UIElement::update();
 
-		for each (auto sprite in ch)
+		for (auto& sprite : ch)
 			sprite.update();
 	}
 
@@ -279,14 +283,14 @@ namespace ms
 		{
 			switch (buttonid)
 			{
-			case Buttons::CANCEL:
-				cancel();
-				break;
-			case Buttons::CHANGE:
-				change_channel();
-				break;
-			default:
-				break;
+				case Buttons::CANCEL:
+					cancel();
+					break;
+				case Buttons::CHANGE:
+					change_channel();
+					break;
+				default:
+					break;
 			}
 		}
 		else

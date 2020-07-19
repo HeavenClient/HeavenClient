@@ -26,7 +26,8 @@ namespace ms
 	class PacketError : public std::runtime_error
 	{
 	public:
-		PacketError(const std::string& msg): std::runtime_error(PREFIX + msg) {}
+		PacketError(const std::string& msg) : std::runtime_error(PREFIX + msg)
+		{}
 
 	private:
 		static constexpr const char* PREFIX = "Packet Error: ";

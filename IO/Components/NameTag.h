@@ -29,6 +29,7 @@ namespace ms
 		NameTag(nl::node src, Text::Font font, std::string name);
 
 		void draw(Point<int16_t> position) const;
+
 		void set_selected(bool selected);
 
 	private:

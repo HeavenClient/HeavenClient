@@ -31,12 +31,15 @@
 #include "../../Net/Packets/NpcInteractionPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIShop::UIShop(const CharLook& in_charlook, const Inventory& in_inventory) : UIDragElement<PosSHOP>(), charlook(in_charlook), inventory(in_inventory)
+	UIShop::UIShop(const CharLook& in_charlook, const Inventory& in_inventory)
+		: UIDragElement<PosSHOP>(), charlook(in_charlook), inventory(in_inventory)
 	{
 		nl::node src = nl::nx::ui["UIWindow2.img"]["Shop2"];
 
@@ -64,7 +67,8 @@ namespace ms
 		checkBox[0] = cbdis;
 		checkBox[1] = cben;
 
-		buttons[Buttons::CHECKBOX] = std::make_unique<AreaButton>(Point<int16_t>(std::abs(cb_x), std::abs(cb_y)), cben.get_dimensions());
+		buttons[Buttons::CHECKBOX] = std::make_unique<AreaButton>(Point<int16_t>(std::abs(cb_x), std::abs(cb_y)),
+																  cben.get_dimensions());
 
 		nl::node buyen = src["TabBuy"]["enabled"];
 		nl::node buydis = src["TabBuy"]["disabled"];
@@ -193,43 +197,43 @@ namespace ms
 		{
 			switch (buttonid)
 			{
-			case Buttons::BUY_ITEM:
-				buystate.buy();
+				case Buttons::BUY_ITEM:
+					buystate.buy();
 
-				return Button::State::NORMAL;
-			case Buttons::SELL_ITEM:
-				sellstate.sell(false);
+					return Button::State::NORMAL;
+				case Buttons::SELL_ITEM:
+					sellstate.sell(false);
 
-				return Button::State::NORMAL;
-			case Buttons::EXIT:
-				exit_shop();
+					return Button::State::NORMAL;
+				case Buttons::EXIT:
+					exit_shop();
 
-				return Button::State::PRESSED;
-			case Buttons::CHECKBOX:
-				rightclicksell = !rightclicksell;
-				Configuration::get().set_rightclicksell(rightclicksell);
+					return Button::State::PRESSED;
+				case Buttons::CHECKBOX:
+					rightclicksell = !rightclicksell;
+					Configuration::get().set_rightclicksell(rightclicksell);
 
-				return Button::State::NORMAL;
-			case Buttons::EQUIP:
-				changeselltab(InventoryType::Id::EQUIP);
+					return Button::State::NORMAL;
+				case Buttons::EQUIP:
+					changeselltab(InventoryType::Id::EQUIP);
 
-				return Button::State::IDENTITY;
-			case Buttons::USE:
-				changeselltab(InventoryType::Id::USE);
+					return Button::State::IDENTITY;
+				case Buttons::USE:
+					changeselltab(InventoryType::Id::USE);
 
-				return Button::State::IDENTITY;
-			case Buttons::ETC:
-				changeselltab(InventoryType::Id::ETC);
+					return Button::State::IDENTITY;
+				case Buttons::ETC:
+					changeselltab(InventoryType::Id::ETC);
 
-				return Button::State::IDENTITY;
-			case Buttons::SETUP:
-				changeselltab(InventoryType::Id::SETUP);
+					return Button::State::IDENTITY;
+				case Buttons::SETUP:
+					changeselltab(InventoryType::Id::SETUP);
 
-				return Button::State::IDENTITY;
-			case Buttons::CASH:
-				changeselltab(InventoryType::Id::CASH);
+					return Button::State::IDENTITY;
+				case Buttons::CASH:
+					changeselltab(InventoryType::Id::CASH);
 
-				return Button::State::IDENTITY;
+					return Button::State::IDENTITY;
 			}
 		}
 
@@ -487,7 +491,8 @@ namespace ms
 		add_rechargable(id, price, pitch, time, 0, buyable);
 	}
 
-	void UIShop::add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice, int16_t buyable)
+	void UIShop::add_rechargable(int32_t id, int32_t price, int32_t pitch, int32_t time, int16_t chargeprice,
+								 int16_t buyable)
 	{
 		auto buyitem = BuyItem(meso, id, price, pitch, time, chargeprice, buyable);
 		buystate.add(buyitem);
@@ -525,18 +530,18 @@ namespace ms
 	{
 		switch (type)
 		{
-		case InventoryType::Id::EQUIP:
-			return Buttons::EQUIP;
-		case InventoryType::Id::USE:
-			return Buttons::USE;
-		case InventoryType::Id::ETC:
-			return Buttons::ETC;
-		case InventoryType::Id::SETUP:
-			return Buttons::SETUP;
-		case InventoryType::Id::CASH:
-			return Buttons::CASH;
-		default:
-			return 0;
+			case InventoryType::Id::EQUIP:
+				return Buttons::EQUIP;
+			case InventoryType::Id::USE:
+				return Buttons::USE;
+			case InventoryType::Id::ETC:
+				return Buttons::ETC;
+			case InventoryType::Id::SETUP:
+				return Buttons::SETUP;
+			case InventoryType::Id::CASH:
+				return Buttons::CASH;
+			default:
+				return 0;
 		}
 	}
 
@@ -548,7 +553,8 @@ namespace ms
 		NpcShopActionPacket().dispatch();
 	}
 
-	UIShop::BuyItem::BuyItem(Texture cur, int32_t i, int32_t p, int32_t pt, int32_t t, int16_t cp, int16_t b) : currency(cur), id(i), price(p), pitch(pt), time(t), chargeprice(cp), buyable(b)
+	UIShop::BuyItem::BuyItem(Texture cur, int32_t i, int32_t p, int32_t pt, int32_t t, int16_t cp, int16_t b)
+		: currency(cur), id(i), price(p), pitch(pt), time(t), chargeprice(cp), buyable(b)
 	{
 		namelabel = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::MINESHAFT);
 		pricelabel = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::MINESHAFT);

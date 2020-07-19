@@ -23,7 +23,7 @@
 
 namespace ms
 {
-	template<typename K, typename V>
+	template <typename K, typename V>
 	class QuadTree
 	{
 	public:
@@ -38,7 +38,8 @@ namespace ms
 			comparator = c;
 		}
 
-		QuadTree() : QuadTree(nullptr) {}
+		QuadTree() : QuadTree(nullptr)
+		{}
 
 		void clear()
 		{
@@ -117,12 +118,12 @@ namespace ms
 			}
 		}
 
-		V& operator [](K key)
+		V& operator[](K key)
 		{
 			return nodes[key].value;
 		}
 
-		const V& operator [](K key) const
+		const V& operator[](K key) const
 		{
 			return nodes.at(key).value;
 		}
@@ -257,8 +258,11 @@ namespace ms
 			K top;
 			K bottom;
 
-			Node(const V& v, K p, K l, K r, K t, K b) : value(v), parent(p), left(l), right(r), top(t), bottom(b) {}
-			Node() : Node(V(), 0, 0, 0, 0, 0) {}
+			Node(const V& v, K p, K l, K r, K t, K b) : value(v), parent(p), left(l), right(r), top(t), bottom(b)
+			{}
+
+			Node() : Node(V(), 0, 0, 0, 0, 0)
+			{}
 
 			void erase(K key)
 			{
@@ -281,18 +285,18 @@ namespace ms
 				{
 					switch (dir)
 					{
-					case LEFT:
-						left = key;
-						break;
-					case RIGHT:
-						right = key;
-						break;
-					case UP:
-						top = key;
-						break;
-					case DOWN:
-						bottom = key;
-						break;
+						case LEFT:
+							left = key;
+							break;
+						case RIGHT:
+							right = key;
+							break;
+						case UP:
+							top = key;
+							break;
+						case DOWN:
+							bottom = key;
+							break;
 					}
 				}
 
@@ -303,20 +307,20 @@ namespace ms
 			{
 				switch (dir)
 				{
-				case LEFT:
-					return left;
-				case RIGHT:
-					return right;
-				case UP:
-					return top;
-				case DOWN:
-					return bottom;
-				default:
-					return 0;
+					case LEFT:
+						return left;
+					case RIGHT:
+						return right;
+					case UP:
+						return top;
+					case DOWN:
+						return bottom;
+					default:
+						return 0;
 				}
 			}
 
-			K operator [](size_t d)
+			K operator[](size_t d)
 			{
 				auto dir = static_cast<Direction>(d);
 

@@ -18,7 +18,9 @@
 #include "Npc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -60,11 +62,13 @@ namespace ms
 				lines[state].push_back(strsrc[speaknode.get_string()]);
 		}
 
-		name = strsrc["name"];
-		func = strsrc["func"];
+		name = std::string(strsrc["name"]);
+		func = std::string(strsrc["func"]);
 
-		namelabel = Text(Text::Font::A13B, Text::Alignment::CENTER, Color::Name::YELLOW, Text::Background::NAMETAG, name);
-		funclabel = Text(Text::Font::A13B, Text::Alignment::CENTER, Color::Name::YELLOW, Text::Background::NAMETAG, func);
+		namelabel = Text(Text::Font::A13B, Text::Alignment::CENTER, Color::Name::YELLOW, Text::Background::NAMETAG,
+						 name);
+		funclabel = Text(Text::Font::A13B, Text::Alignment::CENTER, Color::Name::YELLOW, Text::Background::NAMETAG,
+						 func);
 
 		npcid = id;
 		flip = !fl;
@@ -149,7 +153,7 @@ namespace ms
 			absp.x() + dim.x() / 2,
 			absp.y() - dim.y(),
 			absp.y()
-			).contains(cursorpos);
+		).contains(cursorpos);
 	}
 
 	std::string Npc::get_name()

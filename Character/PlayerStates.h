@@ -25,24 +25,31 @@ namespace ms
 	class PlayerState
 	{
 	public:
-		virtual ~PlayerState() {}
+		virtual ~PlayerState()
+		{}
 
 		// Actions taken when transitioning into the state
 		virtual void initialize(Player& player) const = 0;
+
 		// How to handle inputs while in the state
 		virtual void send_action(Player& player, KeyAction::Id action, bool pressed) const = 0;
+
 		// Actions taken in the player's update method, before physics are applied.
 		virtual void update(Player& player) const = 0;
+
 		// Transition into a new state after physics have been applied
 		virtual void update_state(Player& player) const = 0;
 
 	protected:
 		// Play the jumping sound
 		void play_jumpsound() const;
+
 		// Check if the left or right key is pressed
 		bool haswalkinput(const Player& player) const;
+
 		// Check if only the left key is pressed and not the right key
 		bool hasleftinput(const Player& player) const;
+
 		// Check if only the right key is pressed and not the left key
 		bool hasrightinput(const Player& player) const;
 	};
@@ -51,9 +58,14 @@ namespace ms
 	class PlayerNullState : public PlayerState
 	{
 	public:
-		void initialize(Player&) const override {}
-		void send_action(Player&, KeyAction::Id, bool) const override {}
-		void update(Player&) const override {}
+		void initialize(Player&) const override
+		{}
+
+		void send_action(Player&, KeyAction::Id, bool) const override
+		{}
+
+		void update(Player&) const override
+		{}
 
 		void update_state(Player& player) const override;
 	};
@@ -63,8 +75,11 @@ namespace ms
 	{
 	public:
 		void initialize(Player& player) const override;
+
 		void send_action(Player& player, KeyAction::Id ka, bool down) const override;
+
 		void update(Player&) const override;
+
 		void update_state(Player& player) const override;
 	};
 
@@ -72,8 +87,11 @@ namespace ms
 	class PlayerWalkState : public PlayerState
 	{
 		void initialize(Player& player) const override;
+
 		void send_action(Player& player, KeyAction::Id ka, bool down) const override;
+
 		void update(Player& player) const override;
+
 		void update_state(Player& player) const override;
 	};
 
@@ -83,7 +101,9 @@ namespace ms
 	public:
 		void initialize(Player& player) const override;
 
-		void send_action(Player& player, KeyAction::Id ka, bool down) const override {}
+		void send_action(Player& player, KeyAction::Id ka, bool down) const override
+		{}
+
 		void update(Player& player) const override;
 
 		void update_state(Player& player) const override;
@@ -93,32 +113,42 @@ namespace ms
 	class PlayerProneState : public PlayerState
 	{
 	public:
-		void initialize(Player&) const override {}
+		void initialize(Player&) const override
+		{}
 
 		void send_action(Player& player, KeyAction::Id ka, bool down) const override;
+
 		void update(Player&) const override;
 
-		void update_state(Player&) const override {}
+		void update_state(Player&) const override
+		{}
 	};
 
 	// The sitting state
 	class PlayerSitState : public PlayerState
 	{
 	public:
-		void initialize(Player&) const override {}
+		void initialize(Player&) const override
+		{}
 
 		void send_action(Player& player, KeyAction::Id ka, bool down) const override;
 
-		void update(Player&) const override {}
-		void update_state(Player&) const override {}
+		void update(Player&) const override
+		{}
+
+		void update_state(Player&) const override
+		{}
 	};
 
 	// The flying or swimming state
 	class PlayerFlyState : public PlayerState
 	{
 		void initialize(Player& player) const override;
+
 		void send_action(Player& player, KeyAction::Id ka, bool down) const override;
+
 		void update(Player& player) const override;
+
 		void update_state(Player& player) const override;
 	};
 
@@ -127,8 +157,12 @@ namespace ms
 	{
 	public:
 		void initialize(Player& player) const override;
-		void send_action(Player&, KeyAction::Id, bool) const override {}
+
+		void send_action(Player&, KeyAction::Id, bool) const override
+		{}
+
 		void update(Player& player) const override;
+
 		void update_state(Player& player) const override;
 
 	private:

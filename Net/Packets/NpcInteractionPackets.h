@@ -60,7 +60,8 @@ namespace ms
 	{
 	public:
 		// Requests that an item should be bought from or sold to a NPC shop
-		NpcShopActionPacket(int16_t slot, int32_t itemid, int16_t qty, bool buy) : NpcShopActionPacket(buy ? Mode::BUY : Mode::SELL)
+		NpcShopActionPacket(int16_t slot, int32_t itemid, int16_t qty, bool buy) : NpcShopActionPacket(
+			buy ? Mode::BUY : Mode::SELL)
 		{
 			write_short(slot);
 			write_int(itemid);
@@ -74,7 +75,8 @@ namespace ms
 		}
 
 		// Requests exiting from a NPC shop
-		NpcShopActionPacket() : NpcShopActionPacket(Mode::LEAVE) {}
+		NpcShopActionPacket() : NpcShopActionPacket(Mode::LEAVE)
+		{}
 
 	protected:
 		enum Mode : int8_t

@@ -190,7 +190,7 @@ namespace ms
 							{
 								emplace<UIEquipInventory>(
 									Stage::get().get_player().get_inventory()
-									);
+								);
 
 								break;
 							}
@@ -198,7 +198,7 @@ namespace ms
 							{
 								emplace<UIItemInventory>(
 									Stage::get().get_player().get_inventory()
-									);
+								);
 
 								break;
 							}
@@ -206,7 +206,7 @@ namespace ms
 							{
 								emplace<UIStatsInfo>(
 									Stage::get().get_player().get_stats()
-									);
+								);
 
 								break;
 							}
@@ -215,7 +215,7 @@ namespace ms
 								emplace<UISkillBook>(
 									Stage::get().get_player().get_stats(),
 									Stage::get().get_player().get_skills()
-									);
+								);
 
 								break;
 							}
@@ -279,7 +279,7 @@ namespace ms
 							{
 								emplace<UIQuestLog>(
 									Stage::get().get_player().get_quests()
-									);
+								);
 
 								break;
 							}
@@ -292,7 +292,7 @@ namespace ms
 									emplace<UIKeyConfig>(
 										Stage::get().get_player().get_inventory(),
 										Stage::get().get_player().get_skills()
-										);
+									);
 								}
 								else if (keyconfig && keyconfig->is_active())
 								{
@@ -337,7 +337,7 @@ namespace ms
 							{
 								emplace<UICharInfo>(
 									Stage::get().get_player().get_oid()
-									);
+								);
 
 								break;
 							}
@@ -524,7 +524,8 @@ namespace ms
 		}
 	}
 
-	void UIStateGame::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
+	void UIStateGame::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel,
+								 int64_t expiration)
 	{
 		sktooltip.set_skill(skill_id, level, masterlevel, expiration);
 
@@ -546,7 +547,8 @@ namespace ms
 		}
 	}
 
-	void UIStateGame::show_map(Tooltip::Parent parent, std::string name, std::string description, int32_t mapid, bool bolded)
+	void
+	UIStateGame::show_map(Tooltip::Parent parent, std::string name, std::string description, int32_t mapid, bool bolded)
 	{
 		matooltip.set_name(parent, name, bolded);
 		matooltip.set_desc(description);
@@ -566,7 +568,7 @@ namespace ms
 		{
 			(*iter).second = std::make_unique<T>(
 				std::forward<Args>(args)...
-				);
+			);
 
 			auto silent_types = {
 				UIElement::Type::STATUSMESSENGER,

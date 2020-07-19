@@ -18,6 +18,7 @@
 #include "Stage.h"
 
 #include "../Configuration.h"
+#include "Timer.h"
 
 #include "../IO/UI.h"
 
@@ -26,7 +27,9 @@
 #include "../Net/Packets/GameplayPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -87,7 +90,8 @@ namespace ms
 		std::string strid = string_format::extend_id(mapid, 9);
 		std::string prefix = std::to_string(mapid / 100000000);
 
-		nl::node src = mapid == -1 ? nl::nx::ui["CashShopPreview.img"] : nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
+		nl::node src =
+			mapid == -1 ? nl::nx::ui["CashShopPreview.img"] : nl::nx::map["Map"]["Map" + prefix][strid + ".img"];
 
 		tilesobjs = MapTilesObjs(src);
 		backgrounds = MapBackgrounds(src["back"]);

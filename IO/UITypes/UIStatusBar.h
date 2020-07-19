@@ -46,16 +46,21 @@ namespace ms
 		UIStatusBar(const CharStats& stats);
 
 		void draw(float alpha) const override;
+
 		void update() override;
 
 		bool is_in_range(Point<int16_t> cursorpos) const override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
 
 		void toggle_qs();
+
 		void toggle_menu();
+
 		void remove_menus();
+
 		bool is_menu_active();
 
 	protected:
@@ -65,14 +70,21 @@ namespace ms
 		static constexpr int16_t QUICKSLOT_MAX = 211;
 
 		float getexppercent() const;
+
 		float gethppercent() const;
+
 		float getmppercent() const;
 
 		void toggle_qs(bool quick_slot_active);
+
 		void toggle_setting();
+
 		void toggle_community();
+
 		void toggle_character();
+
 		void toggle_event();
+
 		void remove_active_menu(MenuType type);
 
 		Point<int16_t> get_quickslot_pos() const;

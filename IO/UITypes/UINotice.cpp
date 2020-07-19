@@ -24,12 +24,15 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UINotice::UINotice(std::string message, NoticeType t, Text::Alignment a) : UIDragElement<PosNOTICE>(), type(t), alignment(a)
+	UINotice::UINotice(std::string message, NoticeType t, Text::Alignment a)
+		: UIDragElement<PosNOTICE>(), type(t), alignment(a)
 	{
 		nl::node src = nl::nx::ui["Basic.img"]["Notice6"];
 
@@ -68,7 +71,8 @@ namespace ms
 			Sound(Sound::Name::DLGNOTICE).play();
 	}
 
-	UINotice::UINotice(std::string message, NoticeType t) : UINotice(message, t, Text::Alignment::CENTER) {}
+	UINotice::UINotice(std::string message, NoticeType t) : UINotice(message, t, Text::Alignment::CENTER)
+	{}
 
 	void UINotice::draw(bool textfield) const
 	{
@@ -121,7 +125,8 @@ namespace ms
 		return offset;
 	}
 
-	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yh, Text::Alignment alignment) : UINotice(message, NoticeType::YESNO, alignment)
+	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yh, Text::Alignment alignment) : UINotice(
+		message, NoticeType::YESNO, alignment)
 	{
 		yesnohandler = yh;
 
@@ -133,7 +138,9 @@ namespace ms
 		buttons[Buttons::NO] = std::make_unique<MapleButton>(src["BtCancel4"], Point<int16_t>(198, belowtext));
 	}
 
-	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler) : UIYesNo(message, yesnohandler, Text::Alignment::CENTER) {}
+	UIYesNo::UIYesNo(std::string message, std::function<void(bool yes)> yesnohandler) : UIYesNo(message, yesnohandler,
+																								Text::Alignment::CENTER)
+	{}
 
 	void UIYesNo::draw(float alpha) const
 	{
@@ -166,18 +173,19 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::YES:
-			yesnohandler(true);
-			break;
-		case Buttons::NO:
-			yesnohandler(false);
-			break;
+			case Buttons::YES:
+				yesnohandler(true);
+				break;
+			case Buttons::NO:
+				yesnohandler(false);
+				break;
 		}
 
 		return Button::State::PRESSED;
 	}
 
-	UIEnterNumber::UIEnterNumber(std::string message, std::function<void(int32_t)> nh, int32_t m, int32_t quantity) : UINotice(message, NoticeType::ENTERNUMBER)
+	UIEnterNumber::UIEnterNumber(std::string message, std::function<void(int32_t)> nh, int32_t m, int32_t quantity)
+		: UINotice(message, NoticeType::ENTERNUMBER)
 	{
 		numhandler = nh;
 		max = m;
@@ -190,7 +198,8 @@ namespace ms
 		buttons[Buttons::OK] = std::make_unique<MapleButton>(src["BtOK4"], 156, pos_y);
 		buttons[Buttons::CANCEL] = std::make_unique<MapleButton>(src["BtCancel4"], 198, pos_y);
 
-		numfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY, Rectangle<int16_t>(24, 232, belowtext, belowtext + 20), 10);
+		numfield = Textfield(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY,
+							 Rectangle<int16_t>(24, 232, belowtext, belowtext + 20), 10);
 		numfield.change_text(std::to_string(quantity));
 
 		numfield.set_enter_callback(
@@ -261,12 +270,12 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			handlestring(numfield.get_text());
-			break;
-		case Buttons::CANCEL:
-			deactivate();
-			break;
+			case Buttons::OK:
+				handlestring(numfield.get_text());
+				break;
+			case Buttons::CANCEL:
+				deactivate();
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -303,7 +312,8 @@ namespace ms
 		else if (num > max)
 		{
 			numfield.set_state(Textfield::State::DISABLED);
-			UI::get().emplace<UIOk>("You may only enter a number equal to or lower than " + std::to_string(max) + ".", okhandler);
+			UI::get().emplace<UIOk>("You may only enter a number equal to or lower than " + std::to_string(max) + ".",
+									okhandler);
 			return;
 		}
 		else
@@ -358,9 +368,9 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			okhandler(true);
-			break;
+			case Buttons::OK:
+				okhandler(true);
+				break;
 		}
 
 		return Button::State::NORMAL;

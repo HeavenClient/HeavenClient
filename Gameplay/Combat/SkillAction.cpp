@@ -28,15 +28,15 @@ namespace ms
 
 		switch (weapontype)
 		{
-		case Weapon::BOW:
-		case Weapon::CROSSBOW:
-		case Weapon::CLAW:
-		case Weapon::GUN:
-			degenerate = atype != Attack::RANGED;
-			break;
-		default:
-			degenerate = false;
-			break;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+			case Weapon::CLAW:
+			case Weapon::GUN:
+				degenerate = atype != Attack::RANGED;
+				break;
+			default:
+				degenerate = false;
+				break;
 		}
 
 		target.attack(degenerate);
@@ -44,7 +44,7 @@ namespace ms
 
 	SingleAction::SingleAction(nl::node src)
 	{
-		action = src["action"]["0"];
+		action = std::string(src["action"]["0"]);
 	}
 
 	void SingleAction::apply(Char& target, Attack::Type) const
@@ -54,8 +54,8 @@ namespace ms
 
 	TwoHandedAction::TwoHandedAction(nl::node src)
 	{
-		actions[false] = src["action"]["0"];
-		actions[true] = src["action"]["1"];
+		actions[false] = std::string(src["action"]["0"]);
+		actions[true] = std::string(src["action"]["1"]);
 	}
 
 	void TwoHandedAction::apply(Char& target, Attack::Type) const
@@ -71,7 +71,7 @@ namespace ms
 		for (auto sub : src["level"])
 		{
 			int32_t level = string_conversion::or_zero<int32_t>(sub.name());
-			actions[level] = sub["action"];
+			actions[level] = std::string(sub["action"]);
 		}
 
 		skillid = id;

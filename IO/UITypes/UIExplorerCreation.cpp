@@ -33,7 +33,9 @@
 #include "../../Net/Packets/CharCreationPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -73,27 +75,43 @@ namespace ms
 			if (i >= 2)
 				f++;
 
-			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(497, 197 + (f * 18)));
+			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"],
+										   Point<int16_t>(497, 197 + (f * 18)));
 		}
 
-		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(487, 109));
-		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(485, 109));
-		buttons[Buttons::BT_CHARC_FACEL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (0 * 18)));
-		buttons[Buttons::BT_CHARC_FACER] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (0 * 18)));
-		buttons[Buttons::BT_CHARC_HAIRL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (1 * 18)));
-		buttons[Buttons::BT_CHARC_HAIRR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (1 * 18)));
-		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (3 * 18)));
-		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (3 * 18)));
-		buttons[Buttons::BT_CHARC_TOPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_TOPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_SHOESL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (5 * 18)));
-		buttons[Buttons::BT_CHARC_SHOESR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (5 * 18)));
-		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (6 * 18)));
-		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (6 * 18)));
+		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"],
+																			Point<int16_t>(487, 109));
+		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"],
+																			Point<int16_t>(485, 109));
+		buttons[Buttons::BT_CHARC_FACEL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (0 * 18)));
+		buttons[Buttons::BT_CHARC_FACER] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (0 * 18)));
+		buttons[Buttons::BT_CHARC_HAIRL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (1 * 18)));
+		buttons[Buttons::BT_CHARC_HAIRR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (1 * 18)));
+		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (3 * 18)));
+		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (3 * 18)));
+		buttons[Buttons::BT_CHARC_TOPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		Point<int16_t>(552, 198 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_TOPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		Point<int16_t>(684, 198 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_SHOESL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		  Point<int16_t>(552, 198 + (5 * 18)));
+		buttons[Buttons::BT_CHARC_SHOESR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		  Point<int16_t>(684, 198 + (5 * 18)));
+		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		Point<int16_t>(552, 198 + (6 * 18)));
+		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		Point<int16_t>(684, 198 + (6 * 18)));
 
 		for (size_t i = 0; i <= 7; i++)
 		{
-			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i], Point<int16_t>(549 + (i * 15), 234));
+			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i],
+																				  Point<int16_t>(549 + (i * 15), 234));
 			buttons[Buttons::BT_CHARC_HAIRC0 + i]->set_active(false);
 		}
 
@@ -111,10 +129,12 @@ namespace ms
 		buttons[Buttons::BT_CHARC_WEPR]->set_active(false);
 
 		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(514, 394));
-		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(590, 394));
+		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"],
+																		  Point<int16_t>(590, 394));
 
 		nameboard = CustomizeChar["charName"];
-		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(522, 195), Point<int16_t>(630, 253)), 12);
+		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
+							 Rectangle<int16_t>(Point<int16_t>(522, 195), Point<int16_t>(630, 253)), 12);
 
 		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));

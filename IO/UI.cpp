@@ -175,7 +175,8 @@ namespace ms
 
 	void UI::send_key(int32_t keycode, bool pressed)
 	{
-		if ((is_key_down[GLFW_KEY_LEFT_ALT] || is_key_down[GLFW_KEY_RIGHT_ALT]) && (is_key_down[GLFW_KEY_ENTER] || is_key_down[GLFW_KEY_KP_ENTER]))
+		if ((is_key_down[GLFW_KEY_LEFT_ALT] || is_key_down[GLFW_KEY_RIGHT_ALT]) &&
+			(is_key_down[GLFW_KEY_ENTER] || is_key_down[GLFW_KEY_KP_ENTER]))
 		{
 			Window::get().toggle_fullscreen();
 
@@ -216,7 +217,8 @@ namespace ms
 			}
 			else
 			{
-				bool shift = is_key_down[keyboard.leftshiftcode()] || is_key_down[keyboard.rightshiftcode()] || caps_lock_enabled;
+				bool shift = is_key_down[keyboard.leftshiftcode()] || is_key_down[keyboard.rightshiftcode()] ||
+							 caps_lock_enabled;
 				Keyboard::Mapping mapping = keyboard.get_text_mapping(keycode, shift);
 				focusedtextfield->send_key(mapping.type, mapping.action, pressed);
 			}
@@ -300,11 +302,15 @@ namespace ms
 					// Login
 					types.emplace_back(UIElement::Type::WORLDSELECT);
 					types.emplace_back(UIElement::Type::CHARSELECT);
-					types.emplace_back(UIElement::Type::RACESELECT);			// No tab
-					types.emplace_back(UIElement::Type::CLASSCREATION);			// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINNOTICE);			// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINNOTICE_CONFIRM);	// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINWAIT);				// No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(UIElement::Type::RACESELECT);            // No tab
+					types.emplace_back(
+						UIElement::Type::CLASSCREATION);            // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+						UIElement::Type::LOGINNOTICE);            // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+						UIElement::Type::LOGINNOTICE_CONFIRM);    // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+						UIElement::Type::LOGINWAIT);                // No tab (No arrows, but shouldn't send else where)
 				}
 
 				if (escape)
@@ -430,7 +436,8 @@ namespace ms
 		state->show_item(parent, item_id);
 	}
 
-	void UI::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
+	void
+	UI::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
 	{
 		state->show_skill(parent, skill_id, level, masterlevel, expiration);
 	}

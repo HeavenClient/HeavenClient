@@ -38,13 +38,17 @@ namespace ms
 		};
 
 		DamageNumber(Type type, int32_t damage, int16_t starty, int16_t x = 0);
+
 		DamageNumber();
 
 		void draw(double viewx, double viewy, float alpha) const;
+
 		void set_x(int16_t headx);
+
 		bool update();
 
 		static int16_t rowheight(bool critical);
+
 		static void init();
 
 	private:

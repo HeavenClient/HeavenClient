@@ -68,24 +68,24 @@ namespace ms
 
 				switch (type)
 				{
-				case InventoryType::Id::EQUIP:
-					tab = "Eqp";
-					break;
-				case InventoryType::Id::USE:
-					tab = "Use";
-					break;
-				case InventoryType::Id::SETUP:
-					tab = "Setup";
-					break;
-				case InventoryType::Id::ETC:
-					tab = "Etc";
-					break;
-				case InventoryType::Id::CASH:
-					tab = "Cash";
-					break;
-				default:
-					tab = "UNKNOWN";
-					break;
+					case InventoryType::Id::EQUIP:
+						tab = "Eqp";
+						break;
+					case InventoryType::Id::USE:
+						tab = "Use";
+						break;
+					case InventoryType::Id::SETUP:
+						tab = "Setup";
+						break;
+					case InventoryType::Id::ETC:
+						tab = "Etc";
+						break;
+					case InventoryType::Id::CASH:
+						tab = "Cash";
+						break;
+					default:
+						tab = "UNKNOWN";
+						break;
 				}
 
 				// TODO: show_status(Color::Name::WHITE, "You have lost items in the " + tab + " tab (" + name + " " + std::to_string(qty) + ")");
@@ -95,7 +95,9 @@ namespace ms
 				else if (qty == 1)
 					show_status(Color::Name::WHITE, "You have gained an item in the " + tab + " tab (" + name + ")");
 				else
-					show_status(Color::Name::WHITE, "You have gained items in the " + tab + " tab (" + name + " " + std::to_string(qty) + ")");
+					show_status(Color::Name::WHITE,
+								"You have gained items in the " + tab + " tab (" + name + " " + std::to_string(qty) +
+								")");
 			}
 			else if (mode2 == 1)
 			{
@@ -119,11 +121,11 @@ namespace ms
 			int32_t bonus1 = recv.read_int();
 
 			recv.read_short();
-			recv.read_int();	// bonus 2
-			recv.read_bool();	// 'event or party'
-			recv.read_int();	// bonus 3
-			recv.read_int();	// bonus 4
-			recv.read_int();	// bonus 5
+			recv.read_int();    // bonus 2
+			recv.read_bool();    // 'event or party'
+			recv.read_int();    // bonus 3
+			recv.read_int();    // bonus 4
+			recv.read_int();    // bonus 5
 
 			std::string message = "You have gained experience (+" + std::to_string(gain) + ")";
 
@@ -292,8 +294,8 @@ namespace ms
 		}
 		else if (mode1 == 23) // info
 		{
-			recv.read_string();	// path
-			recv.read_int();	// some int
+			recv.read_string();    // path
+			recv.read_int();    // some int
 		}
 		else // Buff effect
 		{

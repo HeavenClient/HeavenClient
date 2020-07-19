@@ -27,8 +27,7 @@
 
 namespace ms
 {
-	// Keyboard which is used via the mouse
-	// The game uses this for PIC/PIN input
+	// Keyboard which is used via the mouse. The game uses this for pic/pin input.
 	class UISoftKey : public UIElement
 	{
 	public:
@@ -39,17 +38,23 @@ namespace ms
 		static constexpr bool FOCUSED = true;
 		static constexpr bool TOGGLED = false;
 
-		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text, Point<int16_t> tooltip_pos);
+		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text,
+				  Point<int16_t> tooltip_pos);
+
 		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback, std::string tooltip_text);
+
 		UISoftKey(OkCallback ok_callback, CancelCallback cancel_callback);
+
 		UISoftKey(OkCallback ok_callback);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void deactivate();
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -59,13 +64,19 @@ namespace ms
 
 	private:
 		void show_text(std::string text, uint16_t maxwidth = 0, bool formatted = true, int16_t line_adj = 0);
+
 		void clear_tooltip();
+
 		void append_key(std::string key);
 
 		Point<int16_t> keypos(uint16_t index, uint16_t row) const;
+
 		Button::State case_pressed(uint16_t buttonid);
+
 		std::string get_key_map_index(std::string key);
+
 		std::string get_key_from_index(uint16_t index);
+
 		bool check_pic();
 
 		enum Buttons : uint16_t
@@ -111,33 +122,33 @@ namespace ms
 		Randomizer random;
 
 		std::map<uint16_t, std::string> KeyMap =
-		{
-			{  0, "A" },
-			{  1, "B" },
-			{  2, "C" },
-			{  3, "D" },
-			{  4, "E" },
-			{  5, "F" },
-			{  6, "G" },
-			{  7, "H" },
-			{  8, "I" },
-			{  9, "J" },
-			{ 10, "K" },
-			{ 11, "L" },
-			{ 12, "M" },
-			{ 13, "N" },
-			{ 14, "O" },
-			{ 15, "P" },
-			{ 16, "Q" },
-			{ 17, "R" },
-			{ 18, "S" },
-			{ 19, "T" },
-			{ 20, "U" },
-			{ 21, "V" },
-			{ 22, "W" },
-			{ 23, "X" },
-			{ 24, "Y" },
-			{ 25, "Z" }
-		};
+			{
+				{0,  "A"},
+				{1,  "B"},
+				{2,  "C"},
+				{3,  "D"},
+				{4,  "E"},
+				{5,  "F"},
+				{6,  "G"},
+				{7,  "H"},
+				{8,  "I"},
+				{9,  "J"},
+				{10, "K"},
+				{11, "L"},
+				{12, "M"},
+				{13, "N"},
+				{14, "O"},
+				{15, "P"},
+				{16, "Q"},
+				{17, "R"},
+				{18, "S"},
+				{19, "T"},
+				{20, "U"},
+				{21, "V"},
+				{22, "W"},
+				{23, "X"},
+				{24, "Y"},
+				{25, "Z"}
+			};
 	};
 }

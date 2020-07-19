@@ -68,7 +68,9 @@ namespace ms
 		void draw(Expression::Id expression, uint8_t frame, const DrawArgument& args) const;
 
 		uint8_t nextframe(Expression::Id expression, uint8_t frame) const;
+
 		int16_t get_delay(Expression::Id expression, uint8_t frame) const;
+
 		const std::string& get_name() const;
 
 	private:

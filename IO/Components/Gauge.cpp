@@ -19,22 +19,26 @@
 
 namespace ms
 {
-	Gauge::Gauge(Type type, Texture front, int16_t max, float percent) : type(type), barfront(front), maximum(max), percentage(percent)
+	Gauge::Gauge(Type type, Texture front, int16_t max, float percent) : type(type), barfront(front), maximum(
+		max), percentage(percent)
 	{
 		target = percentage;
 	}
 
-	Gauge::Gauge(Type type, Texture front, Texture mid, int16_t max, float percent) : type(type), barfront(front), barmid(mid), maximum(max), percentage(percent)
+	Gauge::Gauge(Type type, Texture front, Texture mid, int16_t max, float percent) : type(type), barfront(
+		front), barmid(mid), maximum(max), percentage(percent)
 	{
 		target = percentage;
 	}
 
-	Gauge::Gauge(Type type, Texture front, Texture mid, Texture end, int16_t max, float percent) : type(type), barfront(front), barmid(mid), barend(end), maximum(max), percentage(percent)
+	Gauge::Gauge(Type type, Texture front, Texture mid, Texture end, int16_t max, float percent) : type(type), barfront(
+		front), barmid(mid), barend(end), maximum(max), percentage(percent)
 	{
 		target = percentage;
 	}
 
-	Gauge::Gauge() {}
+	Gauge::Gauge()
+	{}
 
 	void Gauge::draw(const DrawArgument& args) const
 	{

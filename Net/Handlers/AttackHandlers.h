@@ -38,18 +38,21 @@ namespace ms
 	class CloseAttackHandler : public AttackHandler
 	{
 	public:
-		CloseAttackHandler() : AttackHandler(Attack::Type::CLOSE) {}
+		CloseAttackHandler() : AttackHandler(Attack::Type::CLOSE)
+		{}
 	};
 
 	class RangedAttackHandler : public AttackHandler
 	{
 	public:
-		RangedAttackHandler() : AttackHandler(Attack::Type::RANGED) {}
+		RangedAttackHandler() : AttackHandler(Attack::Type::RANGED)
+		{}
 	};
 
 	class MagicAttackHandler : public AttackHandler
 	{
 	public:
-		MagicAttackHandler() : AttackHandler(Attack::Type::MAGIC) {}
+		MagicAttackHandler() : AttackHandler(Attack::Type::MAGIC)
+		{}
 	};
 }

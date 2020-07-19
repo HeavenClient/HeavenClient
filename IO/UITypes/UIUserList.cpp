@@ -20,7 +20,9 @@
 #include "../../IO/Components/MapleButton.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -84,7 +86,10 @@ namespace ms
 		int16_t party_height = party_y + 168;
 		int16_t party_unitrows = 6;
 		int16_t party_rowmax = 6;
-		party_slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(party_y, party_height), party_x, party_unitrows, party_rowmax, [](bool) {});
+		party_slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(party_y, party_height), party_x,
+							  party_unitrows,
+							  party_rowmax, [](bool)
+							  {});
 
 		// Buddy Tab
 		nl::node Friend = Main["Friend"];
@@ -94,18 +99,22 @@ namespace ms
 		friend_sprites.emplace_back(Friend["CbCondition"]["text"]);
 		friend_sprites.emplace_back(UserList["line"], DrawArgument(Point<int16_t>(132, 115), Point<int16_t>(230, 0)));
 
-		buttons[Buttons::BT_FRIEND_GROUP_0] = std::make_unique<MapleButton>(UserList["BtSheetIClose"], Point<int16_t>(13, 118));
+		buttons[Buttons::BT_FRIEND_GROUP_0] = std::make_unique<MapleButton>(UserList["BtSheetIClose"],
+																			Point<int16_t>(13, 118));
 		buttons[Buttons::BT_FRIEND_GROUP_0]->set_active(false);
 
 		for (size_t i = 0; i <= 3; i++)
 			friend_grid[i] = UserList["Sheet1"][i];
 
-		std::string text = "(" + std::to_string(friend_count) + std::string("/") + std::to_string(friend_total) + std::string(")");
+		std::string text =
+			"(" + std::to_string(friend_count) + std::string("/") + std::to_string(friend_total) + std::string(")");
 		friends_online_text = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, text, 0);
 
-		friends_cur_location = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY, "My Location - " + get_cur_location(), 0);
+		friends_cur_location = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::LIGHTGREY,
+									"My Location - " + get_cur_location(), 0);
 		friends_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::BLACK, "none", 0);
-		friends_group_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Default Group (0/0)", 0);
+		friends_group_name = Text(Text::Font::A11M, Text::Alignment::LEFT, Color::Name::WHITE, "Default Group (0/0)",
+								  0);
 
 		buttons[Buttons::BT_FRIEND_ADD] = std::make_unique<MapleButton>(Friend["BtAddFriend"]);
 		buttons[Buttons::BT_FRIEND_ADD_GROUP] = std::make_unique<MapleButton>(Friend["BtAddGroup"]);
@@ -124,7 +133,9 @@ namespace ms
 		int16_t friends_height = friends_y + 148;
 		int16_t friends_unitrows = 6;
 		int16_t friends_rowmax = 6;
-		friends_slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(friends_y, friends_height), friends_x, friends_unitrows, friends_rowmax, [](bool) {});
+		friends_slider = Slider(Slider::Type::DEFAULT_SILVER, Range<int16_t>(friends_y, friends_height), friends_x,
+								friends_unitrows, friends_rowmax, [](bool)
+								{});
 
 		// Boss tab
 		nl::node Boss = Main["Boss"];
@@ -133,11 +144,16 @@ namespace ms
 		boss_sprites.emplace_back(Boss["base3"]);
 		boss_sprites.emplace_back(Boss["base2"]);
 
-		buttons[Buttons::BT_BOSS_0] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["0"]["icon"]["disabled"]["0"], Boss["BossList"]["0"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_1] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["1"]["icon"]["disabled"]["0"], Boss["BossList"]["1"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_2] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["2"]["icon"]["disabled"]["0"], Boss["BossList"]["2"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_3] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["3"]["icon"]["disabled"]["0"], Boss["BossList"]["3"]["icon"]["normal"]["0"]);
-		buttons[Buttons::BT_BOSS_4] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["4"]["icon"]["disabled"]["0"], Boss["BossList"]["4"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_0] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["0"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["0"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_1] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["1"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["1"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_2] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["2"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["2"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_3] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["3"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["3"]["icon"]["normal"]["0"]);
+		buttons[Buttons::BT_BOSS_4] = std::make_unique<TwoSpriteButton>(Boss["BossList"]["4"]["icon"]["disabled"]["0"],
+																		Boss["BossList"]["4"]["icon"]["normal"]["0"]);
 		buttons[Buttons::BT_BOSS_L] = std::make_unique<MapleButton>(Boss["BtArrow"]["Left"]);
 		buttons[Buttons::BT_BOSS_R] = std::make_unique<MapleButton>(Boss["BtArrow"]["Right"]);
 		buttons[Buttons::BT_BOSS_DIFF_L] = std::make_unique<MapleButton>(Boss["BtArrow2"]["Left"]);
@@ -207,7 +223,7 @@ namespace ms
 		}
 		else if (tab == Buttons::BT_TAB_FRIEND)
 		{
-			for each (auto sprite in friend_sprites)
+			for (auto sprite : friend_sprites)
 				sprite.draw(position, alpha);
 
 			friends_online_text.draw(position + Point<int16_t>(211, 62));
@@ -220,7 +236,7 @@ namespace ms
 		}
 		else if (tab == Buttons::BT_TAB_BOSS)
 		{
-			for each (auto sprite in boss_sprites)
+			for (auto sprite : boss_sprites)
 				sprite.draw(position, alpha);
 		}
 		else if (tab == Buttons::BT_TAB_BLACKLIST)
@@ -238,11 +254,11 @@ namespace ms
 		UIElement::update();
 
 		if (tab == Buttons::BT_TAB_FRIEND)
-			for each (auto sprite in friend_sprites)
+			for (auto sprite : friend_sprites)
 				sprite.update();
 
 		if (tab == Buttons::BT_TAB_BOSS)
-			for each (auto sprite in boss_sprites)
+			for (auto sprite : boss_sprites)
 				sprite.update();
 	}
 
@@ -310,7 +326,8 @@ namespace ms
 		uint8_t oldtab = tab;
 		tab = tabid;
 
-		background = tabid == Buttons::BT_TAB_BOSS ? UserList["Main"]["Boss"]["backgrnd3"] : UserList["Main"]["backgrnd2"];
+		background =
+			tabid == Buttons::BT_TAB_BOSS ? UserList["Main"]["Boss"]["backgrnd3"] : UserList["Main"]["backgrnd2"];
 
 		if (oldtab != tab)
 			buttons[Buttons::BT_TAB_FRIEND + oldtab]->set_state(Button::State::NORMAL);

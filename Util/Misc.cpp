@@ -18,7 +18,9 @@
 #include "Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 #include <locale>
@@ -158,13 +160,13 @@ namespace ms
 						nl::node life_level = nl::nx::mob[life_id_str + ".img"]["info"]["level"];
 
 						if (life_name && life_level)
-							map_life[life_id] = { life_type, life_name + "(Lv. " + life_level + ")" };
+							map_life[life_id] = {life_type, life_name + "(Lv. " + life_level + ")"};
 					}
 					else if (life_type == "n")
 					{
 						// NPC
 						if (nl::node life_name = nl::nx::string["Npc.img"][life_id]["name"])
-							map_life[life_id] = { life_type, life_name };
+							map_life[life_id] = {life_type, life_name};
 					}
 				}
 

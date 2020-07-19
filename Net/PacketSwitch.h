@@ -56,14 +56,15 @@ namespace ms
 		void emplace(Args&& ...args)
 		{
 			static_assert(O < NUM_HANDLERS, "PacketSwitch::emplace - Opcode out of array bounds");
-			static_assert(std::is_base_of<PacketHandler, T>::value, "Error: Packet handlers must derive from PacketHandler");
+			static_assert(std::is_base_of<PacketHandler, T>::value,
+						  "Error: Packet handlers must derive from PacketHandler");
 
 			if (handlers[O])
 				warn(MSG_REREGISTER, O);
 
 			handlers[O] = std::make_unique<T>(
 				std::forward<Args>(args)...
-				);
+			);
 		}
 	};
 }

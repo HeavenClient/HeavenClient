@@ -32,7 +32,8 @@ namespace ms
 		fht = src;
 	}
 
-	Physics::Physics() {}
+	Physics::Physics()
+	{}
 
 	void Physics::move_object(PhysicsObject& phobj) const
 	{
@@ -42,21 +43,21 @@ namespace ms
 		// Use the appropriate physics for the terrain the object is on
 		switch (phobj.type)
 		{
-		case PhysicsObject::Type::NORMAL:
-			move_normal(phobj);
-			fht.limit_movement(phobj);
-			break;
-		case PhysicsObject::Type::FLYING:
-			move_flying(phobj);
-			fht.limit_movement(phobj);
-			break;
-		case PhysicsObject::Type::SWIMMING:
-			move_swimming(phobj);
-			fht.limit_movement(phobj);
-			break;
-		case PhysicsObject::Type::FIXATED:
-		default:
-			break;
+			case PhysicsObject::Type::NORMAL:
+				move_normal(phobj);
+				fht.limit_movement(phobj);
+				break;
+			case PhysicsObject::Type::FLYING:
+				move_flying(phobj);
+				fht.limit_movement(phobj);
+				break;
+			case PhysicsObject::Type::SWIMMING:
+				move_swimming(phobj);
+				fht.limit_movement(phobj);
+				break;
+			case PhysicsObject::Type::FIXATED:
+			default:
+				break;
 		}
 
 		// Move the object forward

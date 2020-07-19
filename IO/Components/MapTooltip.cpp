@@ -20,7 +20,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -95,7 +97,8 @@ namespace ms
 
 				int16_t half_width = new_width / 2;
 
-				frame.draw(pos + Point<int16_t>(half_width + 2, new_height - 7 + BOTTOM_PADDING), new_width - 14, new_height - 18 + BOTTOM_PADDING);
+				frame.draw(pos + Point<int16_t>(half_width + 2, new_height - 7 + BOTTOM_PADDING), new_width - 14,
+						   new_height - 18 + BOTTOM_PADDING);
 				cover.draw(pos + Point<int16_t>(-5, -2));
 				name_label.draw(pos + Point<int16_t>(half_width, -2));
 
@@ -121,7 +124,8 @@ namespace ms
 
 			int16_t half_width = fillwidth / 2;
 
-			frame.draw(pos + Point<int16_t>(half_width + 2, fillheight - 7 + BOTTOM_PADDING), fillwidth - 14, fillheight - 18 + BOTTOM_PADDING);
+			frame.draw(pos + Point<int16_t>(half_width + 2, fillheight - 7 + BOTTOM_PADDING), fillwidth - 14,
+					   fillheight - 18 + BOTTOM_PADDING);
 			cover.draw(pos + Point<int16_t>(-5, -2));
 			name_label.draw(pos + Point<int16_t>(half_width, 0));
 
@@ -191,8 +195,10 @@ namespace ms
 		if (name.empty() || (parent != Tooltip::Parent::WORLDMAP && parent != Tooltip::Parent::MINIMAP))
 			return;
 
-		name_label = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::CENTER, Color::Name::WHITE, name);
-		name_simple = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, name);
+		name_label = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::CENTER, Color::Name::WHITE,
+						  name);
+		name_simple = Text(bolded ? Text::Font::A12B : Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE,
+						   name);
 
 		int16_t width = name_label.width();
 		int16_t height = name_label.height();
@@ -249,7 +255,8 @@ namespace ms
 
 			if (life_object.first == "m" && m < MAX_LIFE)
 			{
-				mob_labels[m] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::CHARTREUSE, life_object.second);
+				mob_labels[m] = Text(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::CHARTREUSE,
+									 life_object.second);
 				fillheight += mob_labels->height() + 2;
 				m++;
 			}

@@ -21,14 +21,16 @@
 
 namespace ms
 {
-	SingleUseEffect::SingleUseEffect(nl::node src) : effect(src["effect"]) {}
+	SingleUseEffect::SingleUseEffect(nl::node src) : effect(src["effect"])
+	{}
 
 	void SingleUseEffect::apply(Char& target) const
 	{
 		effect.apply(target);
 	}
 
-	TwoHandedUseEffect::TwoHandedUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"]) {}
+	TwoHandedUseEffect::TwoHandedUseEffect(nl::node src) : effects(src["effect"]["0"], src["effect"]["1"])
+	{}
 
 	void TwoHandedUseEffect::apply(Char& target) const
 	{
@@ -72,7 +74,8 @@ namespace ms
 
 		uint16_t level = target.get_level();
 		auto iter = effects.begin();
-		for (; iter != effects.end() && level > iter->first; ++iter) {}
+		for (; iter != effects.end() && level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;

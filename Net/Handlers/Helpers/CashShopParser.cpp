@@ -50,7 +50,7 @@ namespace ms
 			CharacterParser::parse_ring1(recv);
 			CharacterParser::parse_ring2(recv);
 			CharacterParser::parse_ring3(recv);
-			CharacterParser::parse_teleportrock(recv, player.get_teleportrock());
+			CharacterParser::parse_teleportrock(recv, player.get_teleport_rock());
 			CharacterParser::parse_monsterbook(recv, player.get_monsterbook());
 			CharacterParser::parse_nyinfo(recv);
 			CharacterParser::parse_areainfo(recv);
@@ -72,9 +72,9 @@ namespace ms
 			statsentry.name = recv.read_padded_string(13);
 			statsentry.female = recv.read_bool();
 
-			recv.read_byte();	// skin
-			recv.read_int();	// face
-			recv.read_int();	// hair
+			recv.read_byte();    // skin
+			recv.read_int();    // face
+			recv.read_int();    // hair
 
 			for (size_t i = 0; i < 3; i++)
 				statsentry.petids.push_back(recv.read_long());
@@ -116,20 +116,20 @@ namespace ms
 		{
 			switch (job)
 			{
-			case Jobs::EVAN:
-			case Jobs::EVAN1:
-			case Jobs::EVAN2:
-			case Jobs::EVAN3:
-			case Jobs::EVAN4:
-			case Jobs::EVAN5:
-			case Jobs::EVAN6:
-			case Jobs::EVAN7:
-			case Jobs::EVAN8:
-			case Jobs::EVAN9:
-			case Jobs::EVAN10:
-				return true;
-			default:
-				return false;
+				case Jobs::EVAN:
+				case Jobs::EVAN1:
+				case Jobs::EVAN2:
+				case Jobs::EVAN3:
+				case Jobs::EVAN4:
+				case Jobs::EVAN5:
+				case Jobs::EVAN6:
+				case Jobs::EVAN7:
+				case Jobs::EVAN8:
+				case Jobs::EVAN9:
+				case Jobs::EVAN10:
+					return true;
+				default:
+					return false;
 			}
 		}
 

@@ -19,6 +19,12 @@
 
 #include <cstdint>
 
+#if defined(__linux__) || defined(__APPLE__)
+
+#include "unistd.h"
+
+#endif
+
 namespace ms
 {
 	const size_t HEADER_LENGTH = 4;

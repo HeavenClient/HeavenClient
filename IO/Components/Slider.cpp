@@ -18,12 +18,15 @@
 #include "Slider.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	Slider::Slider(int32_t t, Range<int16_t> ver, int16_t xp, int16_t ur, int16_t rm, std::function<void(bool)> om) : type(t), vertical(ver), x(xp), onmoved(om)
+	Slider::Slider(int32_t t, Range<int16_t> ver, int16_t xp, int16_t ur, int16_t rm, std::function<void(bool)> om)
+		: type(t), vertical(ver), x(xp), onmoved(om)
 	{
 		start = Point<int16_t>(x, vertical.first());
 		end = Point<int16_t>(x, vertical.second());
@@ -70,7 +73,8 @@ namespace ms
 		scrolling = false;
 	}
 
-	Slider::Slider() : Slider(0, {}, 0, 0, 0, {}) {}
+	Slider::Slider() : Slider(0, {}, 0, 0, 0, {})
+	{}
 
 	bool Slider::isenabled() const
 	{

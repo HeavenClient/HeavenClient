@@ -31,61 +31,61 @@ namespace ms
 
 			switch (fragment.command)
 			{
-			case 0:
-			case 5:
-			case 17:
-				fragment.type = Movement::ABSOLUTE;
-				fragment.xpos = recv.read_short();
-				fragment.ypos = recv.read_short();
-				fragment.lastx = recv.read_short();
-				fragment.lasty = recv.read_short();
-				fragment.fh = recv.read_short();
-				fragment.newstate = recv.read_byte();
-				fragment.duration = recv.read_short();
-				break;
-			case 1:
-			case 2:
-			case 6:
-			case 12:
-			case 13:
-			case 16:
-				fragment.type = Movement::RELATIVE;
-				fragment.xpos = recv.read_short();
-				fragment.ypos = recv.read_short();
-				fragment.newstate = recv.read_byte();
-				fragment.duration = recv.read_short();
-				break;
-			case 11:
-				fragment.type = Movement::CHAIR;
-				fragment.xpos = recv.read_short();
-				fragment.ypos = recv.read_short();
-				recv.skip(2);
-				fragment.newstate = recv.read_byte();
-				fragment.duration = recv.read_short();
-				break;
-			case 15:
-				fragment.type = Movement::JUMPDOWN;
-				fragment.xpos = recv.read_short();
-				fragment.ypos = recv.read_short();
-				fragment.lastx = recv.read_short();
-				fragment.lasty = recv.read_short();
-				recv.skip(2);
-				fragment.fh = recv.read_short();
-				fragment.newstate = recv.read_byte();
-				fragment.duration = recv.read_short();
-				break;
-			case 3:
-			case 4:
-			case 7:
-			case 8:
-			case 9:
-			case 14:
-				fragment.type = Movement::NONE;
-				break;
-			case 10:
-				fragment.type = Movement::NONE;
-				// Change equip
-				break;
+				case 0:
+				case 5:
+				case 17:
+					fragment.type = Movement::ABSOLUTE;
+					fragment.xpos = recv.read_short();
+					fragment.ypos = recv.read_short();
+					fragment.lastx = recv.read_short();
+					fragment.lasty = recv.read_short();
+					fragment.fh = recv.read_short();
+					fragment.newstate = recv.read_byte();
+					fragment.duration = recv.read_short();
+					break;
+				case 1:
+				case 2:
+				case 6:
+				case 12:
+				case 13:
+				case 16:
+					fragment.type = Movement::RELATIVE;
+					fragment.xpos = recv.read_short();
+					fragment.ypos = recv.read_short();
+					fragment.newstate = recv.read_byte();
+					fragment.duration = recv.read_short();
+					break;
+				case 11:
+					fragment.type = Movement::CHAIR;
+					fragment.xpos = recv.read_short();
+					fragment.ypos = recv.read_short();
+					recv.skip(2);
+					fragment.newstate = recv.read_byte();
+					fragment.duration = recv.read_short();
+					break;
+				case 15:
+					fragment.type = Movement::JUMPDOWN;
+					fragment.xpos = recv.read_short();
+					fragment.ypos = recv.read_short();
+					fragment.lastx = recv.read_short();
+					fragment.lasty = recv.read_short();
+					recv.skip(2);
+					fragment.fh = recv.read_short();
+					fragment.newstate = recv.read_byte();
+					fragment.duration = recv.read_short();
+					break;
+				case 3:
+				case 4:
+				case 7:
+				case 8:
+				case 9:
+				case 14:
+					fragment.type = Movement::NONE;
+					break;
+				case 10:
+					fragment.type = Movement::NONE;
+					// Change equip
+					break;
 			}
 
 			movements.push_back(fragment);

@@ -27,16 +27,26 @@ namespace ms
 	{
 	public:
 		TwoSpriteButton(nl::node nsrc, nl::node ssrc, Point<int16_t> npos, Point<int16_t> spos);
+
 		TwoSpriteButton(nl::node nsrc, nl::node ssrc, Point<int16_t> position);
+
 		TwoSpriteButton(nl::node nsrc, nl::node ssrc);
+
 		TwoSpriteButton();
 
 		void draw(Point<int16_t> position) const;
-		void update() {}
+
+		void update()
+		{}
+
 		Rectangle<int16_t> bounds(Point<int16_t> position) const;
+
 		int16_t width() const;
+
 		Point<int16_t> origin() const;
-		Cursor::State send_cursor(bool, Point<int16_t>) { return Cursor::State::IDLE; }
+
+		Cursor::State send_cursor(bool, Point<int16_t>)
+		{ return Cursor::State::IDLE; }
 
 	private:
 		BoolPair<Texture> textures;

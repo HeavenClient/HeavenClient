@@ -25,7 +25,8 @@ namespace ms
 	class Playable
 	{
 	public:
-		virtual ~Playable() {}
+		virtual ~Playable()
+		{}
 
 		// Sends a keystate to the object.
 		virtual void send_action(KeyAction::Id action, bool pressed) = 0;

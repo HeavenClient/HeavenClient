@@ -32,6 +32,7 @@ namespace ms
 		NpcSpawn(int32_t oid, int32_t npcid, Point<int16_t> position, bool mirrored, uint16_t fh);
 
 		int32_t get_oid() const;
+
 		std::unique_ptr<MapObject> instantiate(const Physics& physics) const;
 
 	private:
@@ -45,10 +46,13 @@ namespace ms
 	class MobSpawn
 	{
 	public:
-		MobSpawn(int32_t oid, int32_t id, int8_t mode, int8_t stance, uint16_t fh, bool newspawn, int8_t team, Point<int16_t> position);
+		MobSpawn(int32_t oid, int32_t id, int8_t mode, int8_t stance, uint16_t fh, bool newspawn, int8_t team,
+				 Point<int16_t> position);
 
 		int8_t get_mode() const;
+
 		int32_t get_oid() const;
+
 		std::unique_ptr<MapObject> instantiate() const;
 
 	private:
@@ -68,6 +72,7 @@ namespace ms
 		ReactorSpawn(int32_t oid, int32_t rid, int8_t state, Point<int16_t> position);
 
 		int32_t get_oid() const;
+
 		std::unique_ptr<MapObject> instantiate(const Physics& physics) const;
 
 	private:
@@ -80,12 +85,17 @@ namespace ms
 	class DropSpawn
 	{
 	public:
-		DropSpawn(int32_t oid, int32_t id, bool meso, int32_t owner, Point<int16_t> position, Point<int16_t> destination, int8_t droptype, int8_t mode, bool playerdrop);
+		DropSpawn(int32_t oid, int32_t id, bool meso, int32_t owner, Point<int16_t> position,
+				  Point<int16_t> destination, int8_t droptype, int8_t mode, bool playerdrop);
 
 		bool is_meso() const;
+
 		int32_t get_itemid() const;
+
 		int32_t get_oid() const;
+
 		std::unique_ptr<MapObject> instantiate(const Animation& icon) const;
+
 		std::unique_ptr<MapObject> instantiate(const Texture& icon) const;
 
 	private:
@@ -103,9 +113,11 @@ namespace ms
 	class CharSpawn
 	{
 	public:
-		CharSpawn(int32_t cid, const LookEntry& look, uint8_t level, int16_t job, const std::string& name, int8_t stance, Point<int16_t> position);
+		CharSpawn(int32_t cid, const LookEntry& look, uint8_t level, int16_t job, const std::string& name,
+				  int8_t stance, Point<int16_t> position);
 
 		int32_t get_cid() const;
+
 		std::unique_ptr<MapObject> instantiate() const;
 
 	private:

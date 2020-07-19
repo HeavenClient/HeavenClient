@@ -30,7 +30,8 @@ namespace ms
 		using underlying_t = typename std::array<E, LENGTH>;
 
 		template <std::size_t...VS>
-		constexpr Enumeration(std::index_sequence<VS...>) : values{ { static_cast<E>(VS)... } } {}
+		constexpr Enumeration(std::index_sequence<VS...>) : values{{static_cast<E>(VS)...}}
+		{}
 
 		constexpr Enumeration() : Enumeration(std::make_index_sequence<LENGTH>{})
 		{

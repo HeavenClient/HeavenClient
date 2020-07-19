@@ -18,7 +18,9 @@
 #include "PetLook.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -32,7 +34,8 @@ namespace ms
 		set_position(pos.x(), pos.y());
 		set_stance(st);
 
-		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name);
+		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG,
+						 name);
 
 		std::string strid = std::to_string(iid);
 		nl::node src = nl::nx::item["Pet"][strid + ".img"];
@@ -75,76 +78,76 @@ namespace ms
 
 		switch (stance)
 		{
-		case Stance::STAND:
-		case Stance::MOVE:
-			if (curpos.distance(charpos) > 150)
-			{
+			case Stance::STAND:
+			case Stance::MOVE:
+				if (curpos.distance(charpos) > 150)
+				{
+					set_position(charpos.x(), charpos.y());
+				}
+				else
+				{
+					if (charpos.x() - curpos.x() > 50)
+					{
+						phobj.hforce = PETWALKFORCE;
+						flip = true;
+
+						set_stance(Stance::MOVE);
+					}
+					else if (charpos.x() - curpos.x() < -50)
+					{
+						phobj.hforce = -PETWALKFORCE;
+						flip = false;
+
+						set_stance(Stance::MOVE);
+					}
+					else
+					{
+						phobj.hforce = 0.0;
+
+						set_stance(Stance::STAND);
+					}
+				}
+
+				phobj.type = PhysicsObject::Type::NORMAL;
+				phobj.clear_flag(PhysicsObject::Flag::NOGRAVITY);
+				break;
+			case Stance::HANG:
 				set_position(charpos.x(), charpos.y());
-			}
-			else
-			{
-				if (charpos.x() - curpos.x() > 50)
+				phobj.set_flag(PhysicsObject::Flag::NOGRAVITY);
+				break;
+			case Stance::FLY:
+				if ((charpos - curpos).length() > 250)
 				{
-					phobj.hforce = PETWALKFORCE;
-					flip = true;
-
-					set_stance(Stance::MOVE);
-				}
-				else if (charpos.x() - curpos.x() < -50)
-				{
-					phobj.hforce = -PETWALKFORCE;
-					flip = false;
-
-					set_stance(Stance::MOVE);
+					set_position(charpos.x(), charpos.y());
 				}
 				else
 				{
-					phobj.hforce = 0.0;
+					if (charpos.x() - curpos.x() > 50)
+					{
+						phobj.hforce = PETFLYFORCE;
+						flip = true;
+					}
+					else if (charpos.x() - curpos.x() < -50)
+					{
+						phobj.hforce = -PETFLYFORCE;
+						flip = false;
+					}
+					else
+					{
+						phobj.hforce = 0.0f;
+					}
 
-					set_stance(Stance::STAND);
-				}
-			}
-
-			phobj.type = PhysicsObject::Type::NORMAL;
-			phobj.clear_flag(PhysicsObject::Flag::NOGRAVITY);
-			break;
-		case Stance::HANG:
-			set_position(charpos.x(), charpos.y());
-			phobj.set_flag(PhysicsObject::Flag::NOGRAVITY);
-			break;
-		case Stance::FLY:
-			if ((charpos - curpos).length() > 250)
-			{
-				set_position(charpos.x(), charpos.y());
-			}
-			else
-			{
-				if (charpos.x() - curpos.x() > 50)
-				{
-					phobj.hforce = PETFLYFORCE;
-					flip = true;
-				}
-				else if (charpos.x() - curpos.x() < -50)
-				{
-					phobj.hforce = -PETFLYFORCE;
-					flip = false;
-				}
-				else
-				{
-					phobj.hforce = 0.0f;
+					if (charpos.y() - curpos.y() > 50.0f)
+						phobj.vforce = PETFLYFORCE;
+					else if (charpos.y() - curpos.y() < -50.0f)
+						phobj.vforce = -PETFLYFORCE;
+					else
+						phobj.vforce = 0.0f;
 				}
 
-				if (charpos.y() - curpos.y() > 50.0f)
-					phobj.vforce = PETFLYFORCE;
-				else if (charpos.y() - curpos.y() < -50.0f)
-					phobj.vforce = -PETFLYFORCE;
-				else
-					phobj.vforce = 0.0f;
-			}
-
-			phobj.type = PhysicsObject::Type::FLYING;
-			phobj.clear_flag(PhysicsObject::Flag::NOGRAVITY);
-			break;
+				phobj.type = PhysicsObject::Type::FLYING;
+				phobj.clear_flag(PhysicsObject::Flag::NOGRAVITY);
+				break;
 		}
 
 		physics.move_object(phobj);

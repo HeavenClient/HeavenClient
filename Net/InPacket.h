@@ -35,19 +35,25 @@ namespace ms
 
 		// Check if there are more bytes available
 		bool available() const;
+
 		// Return the remaining length in bytes
 		size_t length() const;
+
 		// Skip a number of bytes (by increasing the offset)
 		void skip(size_t count);
 
 		// Read a byte and check if it is equal to one
 		bool read_bool();
+
 		// Read a byte
 		int8_t read_byte();
+
 		// Read a short
 		int16_t read_short();
+
 		// Read a int
 		int32_t read_int();
+
 		// Read a long
 		int64_t read_long();
 
@@ -56,17 +62,22 @@ namespace ms
 
 		// Read a string
 		std::string read_string();
+
 		// Read a fixed-length string
 		std::string read_padded_string(uint16_t length);
 
 		// Skip a byte
 		void skip_bool();
+
 		// Skip a byte
 		void skip_byte();
+
 		// Skip a short
 		void skip_short();
+
 		// Skip a int
 		void skip_int();
+
 		// Skip a long
 		void skip_long();
 
@@ -75,17 +86,22 @@ namespace ms
 
 		// Skip a string
 		void skip_string();
+
 		// Skip a fixed-length string
 		void skip_padded_string(uint16_t length);
 
 		// Inspect a byte and check if it is 1. Does not advance the buffer position.
 		bool inspect_bool();
+
 		// Inspect a byte. Does not advance the buffer position.
 		int8_t inspect_byte();
+
 		// Inspect a short. Does not advance the buffer position.
 		int16_t inspect_short();
+
 		// Inspect an int. Does not advance the buffer position.
 		int32_t inspect_int();
+
 		// Inspect a long. Does not advance the buffer position.
 		int64_t inspect_long();
 

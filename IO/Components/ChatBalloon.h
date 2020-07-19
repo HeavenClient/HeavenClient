@@ -27,12 +27,15 @@ namespace ms
 	{
 	public:
 		ChatBalloon(int8_t type);
+
 		ChatBalloon();
 
 		void draw(Point<int16_t> position) const;
+
 		void update();
 
 		void change_text(const std::string& text);
+
 		void expire();
 
 	private:

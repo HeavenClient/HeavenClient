@@ -23,8 +23,12 @@
 #include "../Timer.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+
+#include "stb_image.h"
+
+#ifdef _WIN32
 #include <Windows.h>
+#endif
 
 namespace ms
 {
@@ -59,35 +63,35 @@ namespace ms
 	{
 		switch (button)
 		{
-		case GLFW_MOUSE_BUTTON_LEFT:
-			switch (action)
-			{
-			case GLFW_PRESS:
-				UI::get().send_cursor(true);
+			case GLFW_MOUSE_BUTTON_LEFT:
+				switch (action)
+				{
+					case GLFW_PRESS:
+						UI::get().send_cursor(true);
+						break;
+					case GLFW_RELEASE:
+					{
+						auto diff_ms = ContinuousTimer::get().stop(start) / 1000;
+						start = ContinuousTimer::get().start();
+
+						if (diff_ms > 10 && diff_ms < 200)
+							UI::get().doubleclick();
+
+						UI::get().send_cursor(false);
+					}
+						break;
+				}
+
 				break;
-			case GLFW_RELEASE:
-			{
-				auto diff_ms = ContinuousTimer::get().stop(start) / 1000;
-				start = ContinuousTimer::get().start();
+			case GLFW_MOUSE_BUTTON_RIGHT:
+				switch (action)
+				{
+					case GLFW_PRESS:
+						UI::get().rightclick();
+						break;
+				}
 
-				if (diff_ms > 10 && diff_ms < 200)
-					UI::get().doubleclick();
-
-				UI::get().send_cursor(false);
-			}
-			break;
-			}
-
-			break;
-		case GLFW_MOUSE_BUTTON_RIGHT:
-			switch (action)
-			{
-			case GLFW_PRESS:
-				UI::get().rightclick();
 				break;
-			}
-
-			break;
 		}
 	}
 
@@ -177,8 +181,13 @@ namespace ms
 		glfwSetWindowCloseCallback(glwnd, close_callback);
 
 		char buf[256];
+#ifdef _WIN32
 		GetCurrentDirectoryA(256, buf);
 		strcat_s(buf, sizeof(buf), "\\Icon.png");
+#else
+		std::string icon_path = GetCurrentWorkingDir() + "/Icon.png";
+		strcpy(buf, icon_path.c_str());
+#endif
 
 		GLFWimage images[1];
 
@@ -291,5 +300,13 @@ namespace ms
 			initwindow();
 			glfwPollEvents();
 		}
+	}
+
+	std::string Window::GetCurrentWorkingDir(void)
+	{
+		char buff[FILENAME_MAX];
+		GetCurrentDir(buff, FILENAME_MAX);
+		std::string current_working_dir(buff);
+		return current_working_dir;
 	}
 }

@@ -30,12 +30,16 @@
 #include "../../Net/Packets/InventoryPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIItemInventory::UIItemInventory(const Inventory& invent) : UIDragElement<PosINV>(), inventory(invent), ignore_tooltip(false), tab(InventoryType::Id::EQUIP), sort_enabled(false)
+	UIItemInventory::UIItemInventory(const Inventory& invent)
+		: UIDragElement<PosINV>(), inventory(invent), ignore_tooltip(false), tab(InventoryType::Id::EQUIP),
+		sort_enabled(false)
 	{
 		nl::node Item = nl::nx::ui["UIWindow2.img"]["Item"];
 
@@ -109,12 +113,12 @@ namespace ms
 		maplepointslabel = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::BLACK);
 		maplepointslabel.change_text("0"); // TODO: Implement
 
-		slotrange[InventoryType::Id::EQUIPPED] = { 1, 24 };
-		slotrange[InventoryType::Id::EQUIP] = { 1, 24 };
-		slotrange[InventoryType::Id::USE] = { 1, 24 };
-		slotrange[InventoryType::Id::SETUP] = { 1, 24 };
-		slotrange[InventoryType::Id::ETC] = { 1, 24 };
-		slotrange[InventoryType::Id::CASH] = { 1, 24 };
+		slotrange[InventoryType::Id::EQUIPPED] = {1, 24};
+		slotrange[InventoryType::Id::EQUIP] = {1, 24};
+		slotrange[InventoryType::Id::USE] = {1, 24};
+		slotrange[InventoryType::Id::SETUP] = {1, 24};
+		slotrange[InventoryType::Id::ETC] = {1, 24};
+		slotrange[InventoryType::Id::CASH] = {1, 24};
 
 		slider = Slider(
 			Slider::Type::DEFAULT_SILVER, Range<int16_t>(50, 245), 152, 6, 1 + inventory.get_slotmax(tab) / COLUMNS,
@@ -237,7 +241,7 @@ namespace ms
 			icons[slot] = std::make_unique<Icon>(
 				std::make_unique<ItemIcon>(*this, tab, eqslot, slot, item_id, count, untradable, cashitem),
 				texture, count
-				);
+			);
 		}
 		else if (icons.count(slot))
 		{
@@ -692,7 +696,9 @@ namespace ms
 
 		if (alerted)
 		{
-			UI::get().emplace<UIOk>("You cannot complete this action right now.\\nEvade the attack and try again.", [](bool) {});
+			UI::get().emplace<UIOk>("You cannot complete this action right now.\\nEvade the attack and try again.",
+									[](bool)
+									{});
 			return false;
 		}
 
@@ -713,7 +719,7 @@ namespace ms
 
 				break;
 			}
-			// Female
+				// Female
 			case 1:
 			{
 				if (!female)
@@ -721,7 +727,7 @@ namespace ms
 
 				break;
 			}
-			// Unisex
+				// Unisex
 			case 2:
 			default:
 			{
@@ -738,7 +744,8 @@ namespace ms
 
 		if (!stats.get_job().is_sub_job(reqJOB))
 		{
-			UI::get().emplace<UIOk>("Your current job\\ncannot equip the selected item.", [](bool) {});
+			UI::get().emplace<UIOk>("Your current job\\ncannot equip the selected item.", [](bool)
+			{});
 			return false;
 		}
 
@@ -766,7 +773,9 @@ namespace ms
 
 		if (i > 0)
 		{
-			UI::get().emplace<UIOk>("Your stats are too low to equip this item\\nor you do not meet the job requirement.", [](bool) {});
+			UI::get().emplace<UIOk>(
+				"Your stats are too low to equip this item\\nor you do not meet the job requirement.", [](bool)
+				{});
 			return false;
 		}
 
@@ -781,7 +790,8 @@ namespace ms
 		if (xoff < 1 || xoff > 143 || yoff < 1)
 			return 0;
 
-		int16_t slot = (full_enabled ? 1 : slotrange.at(tab).first) + (xoff / ICON_WIDTH) + COLUMNS * (yoff / ICON_HEIGHT);
+		int16_t slot =
+			(full_enabled ? 1 : slotrange.at(tab).first) + (xoff / ICON_WIDTH) + COLUMNS * (yoff / ICON_HEIGHT);
 
 		return is_visible(slot) ? slot : 0;
 	}
@@ -793,7 +803,7 @@ namespace ms
 		return Point<int16_t>(
 			10 + (absslot % COLUMNS) * ICON_WIDTH,
 			51 + (absslot / COLUMNS) * ICON_HEIGHT
-			);
+		);
 	}
 
 	Point<int16_t> UIItemInventory::get_full_slotpos(int16_t slot) const
@@ -806,7 +816,7 @@ namespace ms
 		return Point<int16_t>(
 			10 + adj_x + (new_slot % COLUMNS) * ICON_WIDTH,
 			51 + (new_slot / COLUMNS) * ICON_HEIGHT
-			);
+		);
 	}
 
 	Point<int16_t> UIItemInventory::get_tabpos(InventoryType::Id tb) const
@@ -915,7 +925,8 @@ namespace ms
 		return Icon::IconType::ITEM;
 	}
 
-	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory& parent, InventoryType::Id st, EquipSlot::Id eqs, int16_t s, int32_t iid, int16_t c, bool u, bool cash) : parent(parent)
+	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory& parent, InventoryType::Id st, EquipSlot::Id eqs,
+										int16_t s, int32_t iid, int16_t c, bool u, bool cash) : parent(parent)
 	{
 		sourcetab = st;
 		eqsource = eqs;
@@ -934,7 +945,8 @@ namespace ms
 
 		if (cashitem)
 		{
-			UI::get().emplace<UIOk>(cashmessage, [](bool) {});
+			UI::get().emplace<UIOk>(cashmessage, [](bool)
+			{});
 		}
 		else
 		{

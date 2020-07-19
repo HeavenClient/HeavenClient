@@ -37,7 +37,8 @@ namespace ms
 		}
 	}
 
-	Charset::Charset() : alignment(Charset::Alignment::LEFT) {}
+	Charset::Charset() : alignment(Charset::Alignment::LEFT)
+	{}
 
 	void Charset::draw(int8_t c, const DrawArgument& args) const
 	{

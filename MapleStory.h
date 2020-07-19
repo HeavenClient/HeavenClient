@@ -17,8 +17,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// If defined use Asio for networking, otherwise use Winsock.
-//#define USE_ASIO
+// USE_ASIO : Use asio for networking, if not defined use Winsock.
+#if defined(__linux__) || defined(__APPLE__)
+#define USE_ASIO
+#endif
 
 // Use cryptography for communication with the server
 #define USE_CRYPTO

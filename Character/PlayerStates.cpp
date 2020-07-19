@@ -20,6 +20,7 @@
 namespace ms
 {
 #pragma region Base
+
 	void PlayerState::play_jumpsound() const
 	{
 		Sound(Sound::Name::JUMP).play();
@@ -39,9 +40,11 @@ namespace ms
 	{
 		return player.is_key_down(KeyAction::Id::RIGHT) && !player.is_key_down(KeyAction::Id::LEFT);
 	}
+
 #pragma endregion
 
 #pragma region Null
+
 	void PlayerNullState::update_state(Player& player) const
 	{
 		Char::State state;
@@ -82,9 +85,11 @@ namespace ms
 		player.get_phobj().clear_flags();
 		player.set_state(state);
 	}
+
 #pragma endregion
 
 #pragma region Standing
+
 	void PlayerStandState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
@@ -131,9 +136,11 @@ namespace ms
 		if (!player.get_phobj().onground)
 			player.set_state(Char::State::FALL);
 	}
+
 #pragma endregion
 
 #pragma region Walking
+
 	void PlayerWalkState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
@@ -200,9 +207,11 @@ namespace ms
 			player.set_state(Char::State::FALL);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Falling
+
 	void PlayerFallState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::NORMAL;
@@ -240,9 +249,11 @@ namespace ms
 			player.set_state(Char::State::SWIM);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Prone
+
 	void PlayerProneState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (down && ka == KeyAction::Id::JUMP)
@@ -277,9 +288,11 @@ namespace ms
 			player.set_state(Char::State::WALK);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Sitting
+
 	void PlayerSitState::send_action(Player& player, KeyAction::Id ka, bool down) const
 	{
 		if (down)
@@ -300,9 +313,11 @@ namespace ms
 			}
 		}
 	}
+
 #pragma endregion
 
 #pragma region Flying
+
 	void PlayerFlyState::initialize(Player& player) const
 	{
 		player.get_phobj().type = player.is_underwater() ? PhysicsObject::Type::SWIMMING : PhysicsObject::Type::FLYING;
@@ -370,9 +385,11 @@ namespace ms
 			player.set_state(state);
 		}
 	}
+
 #pragma endregion
 
 #pragma region Climbing
+
 	void PlayerClimbState::initialize(Player& player) const
 	{
 		player.get_phobj().type = PhysicsObject::Type::FIXATED;
@@ -424,5 +441,6 @@ namespace ms
 		player.set_ladder(nullptr);
 		player.set_climb_cooldown();
 	}
+
 #pragma endregion
 }

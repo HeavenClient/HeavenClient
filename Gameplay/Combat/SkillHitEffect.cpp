@@ -21,14 +21,16 @@
 
 namespace ms
 {
-	SingleHitEffect::SingleHitEffect(nl::node src) : effect(src["hit"]["0"]) {}
+	SingleHitEffect::SingleHitEffect(nl::node src) : effect(src["hit"]["0"])
+	{}
 
 	void SingleHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		effect.apply(target, user.flip);
 	}
 
-	TwoHandedHitEffect::TwoHandedHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"]) {}
+	TwoHandedHitEffect::TwoHandedHitEffect(nl::node src) : effects(src["hit"]["0"], src["hit"]["1"])
+	{}
 
 	void TwoHandedHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
@@ -50,7 +52,8 @@ namespace ms
 			return;
 
 		auto iter = effects.begin();
-		for (; iter != effects.end() && user.level > iter->first; ++iter) {}
+		for (; iter != effects.end() && user.level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;
@@ -58,26 +61,27 @@ namespace ms
 		iter->second.apply(target, user.flip);
 	}
 
-	ByLevelTwoHHitEffect::ByLevelTwoHHitEffect(nl::node src)
+	ByLevelTwoHandedHitEffect::ByLevelTwoHandedHitEffect(nl::node src)
 	{
 		for (auto sub : src["CharLevel"])
 		{
 			auto level = string_conversion::or_zero<uint16_t>(sub.name());
 
 			effects.emplace(std::piecewise_construct,
-				std::forward_as_tuple(level),
-				std::forward_as_tuple(sub["hit"]["0"], sub["hit"]["1"])
-				);
+							std::forward_as_tuple(level),
+							std::forward_as_tuple(sub["hit"]["0"], sub["hit"]["1"])
+			);
 		}
 	}
 
-	void ByLevelTwoHHitEffect::apply(const AttackUser& user, Mob& target) const
+	void ByLevelTwoHandedHitEffect::apply(const AttackUser& user, Mob& target) const
 	{
 		if (effects.empty())
 			return;
 
 		auto iter = effects.begin();
-		for (; iter != effects.end() && user.level > iter->first; ++iter) {}
+		for (; iter != effects.end() && user.level > iter->first; ++iter)
+		{}
 
 		if (iter != effects.begin())
 			iter--;

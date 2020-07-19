@@ -18,6 +18,7 @@
 #include "NxFiles.h"
 
 #ifdef USE_NX
+
 #include <fstream>
 
 #include <nlnx/node.hpp>
@@ -30,7 +31,7 @@ namespace ms
 		Error init()
 		{
 			for (auto filename : filenames)
-				if (std::ifstream{ filename }.good() == false)
+				if (std::ifstream{filename}.good() == false)
 					return Error(Error::Code::MISSING_FILE, filename);
 
 			try

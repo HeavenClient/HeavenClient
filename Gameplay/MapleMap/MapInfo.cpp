@@ -17,6 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 #include "MapInfo.h"
 
+#include "Constants.h"
+
 namespace ms
 {
 	MapInfo::MapInfo(nl::node src, Range<int16_t> walls, Range<int16_t> borders)
@@ -41,7 +43,7 @@ namespace ms
 		cloud = info["cloud"].get_bool();
 		fieldlimit = info["fieldLimit"];
 		hideminimap = info["hideMinimap"].get_bool();
-		mapmark = info["mapMark"];
+		mapmark = std::string(info["mapMark"]);
 		swim = info["swim"].get_bool();
 		town = info["town"].get_bool();
 
@@ -52,7 +54,8 @@ namespace ms
 			ladders.push_back(ladder);
 	}
 
-	MapInfo::MapInfo() {}
+	MapInfo::MapInfo()
+	{}
 
 	bool MapInfo::is_underwater() const
 	{
@@ -129,8 +132,8 @@ namespace ms
 		auto ver = Range<int16_t>(y1, y2);
 
 		int16_t y = upwards ?
-			position.y() - 5 :
-			position.y() + 5;
+					position.y() - 5 :
+					position.y() + 5;
 
 		return hor.contains(x) && ver.contains(y);
 	}

@@ -29,8 +29,11 @@ namespace ms
 		GraphicsGL::get().drawrectangle(x, y, w, h, color[0], color[1], color[2], opacity);
 	}
 
-	ColorBox::ColorBox(int16_t w, int16_t h, Color::Name c, float o) : width(w), height(h), color(c), opacity(o) {}
-	ColorBox::ColorBox() : ColorBox(0, 0, Color::Name::BLACK, 0.0f) {}
+	ColorBox::ColorBox(int16_t w, int16_t h, Color::Name c, float o) : width(w), height(h), color(c), opacity(o)
+	{}
+
+	ColorBox::ColorBox() : ColorBox(0, 0, Color::Name::BLACK, 0.0f)
+	{}
 
 	void ColorBox::setwidth(int16_t w)
 	{
@@ -73,8 +76,12 @@ namespace ms
 		Geometry::draw(absp.x(), absp.y(), absw, absh, color, absopc);
 	}
 
-	ColorLine::ColorLine(int16_t size, Color::Name color, float opacity, bool vertical) : size(size), color(color), opacity(opacity), vertical(vertical) {}
-	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f, false) {}
+	ColorLine::ColorLine(int16_t size, Color::Name color, float opacity, bool vertical) : size(size), color(
+		color), opacity(opacity), vertical(vertical)
+	{}
+
+	ColorLine::ColorLine() : ColorLine(0, Color::Name::BLACK, 0.0f, false)
+	{}
 
 	void ColorLine::setsize(int16_t s)
 	{

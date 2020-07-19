@@ -20,7 +20,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -100,7 +102,9 @@ namespace ms
 		if (!active)
 			return false;
 
-		Rectangle<int16_t> bounds(Point<int16_t>(-30, -normal.get_dimensions().y()), Point<int16_t>(normal.get_dimensions().x() - 10, 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
+		Rectangle<int16_t> bounds(Point<int16_t>(-30, -normal.get_dimensions().y()),
+								  Point<int16_t>(normal.get_dimensions().x() - 10,
+												 0)); //normal.get_bounds(); //animations.at(stance).get_bounds();
 		bounds.shift(get_position());
 
 		return range.overlaps(bounds);

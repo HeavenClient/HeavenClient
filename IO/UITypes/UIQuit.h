@@ -17,12 +17,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../UIElement.h"
+#include "IO/UIElement.h"
 
-#include "../Components/Charset.h"
-
-#include "../../Character/CharStats.h"
-#include "../../Graphics/Geometry.h"
+#include "IO/Components/Charset.h"
+#include "Character/CharStats.h"
+#include "Graphics/Text.h"
+#include "Graphics/Geometry.h"
 
 namespace ms
 {
@@ -36,9 +36,11 @@ namespace ms
 		UIQuit(const CharStats& stats);
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -50,7 +52,9 @@ namespace ms
 		const CharStats& stats;
 
 		std::string pad_time(int64_t time);
+
 		float getexppercent(uint16_t level, int64_t exp) const;
+
 		void close();
 
 		enum Buttons : uint16_t

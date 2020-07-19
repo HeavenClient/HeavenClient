@@ -161,7 +161,7 @@ namespace ms
 		{
 			(*iter).second = std::make_unique<T>(
 				std::forward<Args>(args)...
-				);
+			);
 		}
 	}
 

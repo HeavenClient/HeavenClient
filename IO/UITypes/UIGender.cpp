@@ -26,7 +26,9 @@
 #include "../../Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -50,7 +52,9 @@ namespace ms
 
 		buttons[Buttons::NO] = std::make_unique<MapleButton>(Gender["BtNo"], Point<int16_t>(650, 349));
 		buttons[Buttons::YES] = std::make_unique<MapleButton>(Gender["BtYes"], Point<int16_t>(578, 349));
-		buttons[Buttons::SELECT] = std::make_unique<MapleComboBox>(MapleComboBox::Type::DEFAULT, options, default_option, position, Point<int16_t>(510, 283), 65);
+		buttons[Buttons::SELECT] = std::make_unique<MapleComboBox>(MapleComboBox::Type::DEFAULT, options,
+																   default_option, position, Point<int16_t>(510, 283),
+																   65);
 
 		dimension = Texture(gender_sprites[2]).get_dimensions();
 	}

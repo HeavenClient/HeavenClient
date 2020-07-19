@@ -25,7 +25,8 @@ namespace ms
 	class PacketHandler
 	{
 	public:
-		virtual ~PacketHandler() {}
+		virtual ~PacketHandler()
+		{}
 
 		virtual void handle(InPacket& recv) const = 0;
 	};

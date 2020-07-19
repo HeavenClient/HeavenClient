@@ -89,7 +89,8 @@ namespace ms
 			mob->send_movement(start, std::move(movements));
 	}
 
-	void MapMobs::send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t>& targets, uint8_t mobcount)
+	void MapMobs::send_attack(AttackResult& result, const Attack& attack, const std::vector<int32_t>& targets,
+							  uint8_t mobcount)
 	{
 		for (auto& target : targets)
 		{
@@ -107,7 +108,8 @@ namespace ms
 		}
 	}
 
-	void MapMobs::apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move)
+	void
+	MapMobs::apply_damage(int32_t oid, int32_t damage, bool toleft, const AttackUser& user, const SpecialMove& move)
 	{
 		if (Optional<Mob> mob = mobs.get(oid))
 		{

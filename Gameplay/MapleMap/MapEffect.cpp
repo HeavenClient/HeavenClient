@@ -20,7 +20,9 @@
 #include "../../Constants.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -36,7 +38,8 @@ namespace ms
 		position = Point<int16_t>(width / 2, 250);
 	}
 
-	MapEffect::MapEffect() {}
+	MapEffect::MapEffect()
+	{}
 
 	void MapEffect::draw() const
 	{

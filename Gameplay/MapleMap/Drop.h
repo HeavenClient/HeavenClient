@@ -34,7 +34,7 @@ namespace ms
 
 	protected:
 		Drop(int32_t oid, int32_t owner, Point<int16_t> start,
-			Point<int16_t> dest, int8_t type, int8_t mode, bool playerdrop);
+			 Point<int16_t> dest, int8_t type, int8_t mode, bool playerdrop);
 
 		Linear<float> opacity;
 		Linear<float> angle;

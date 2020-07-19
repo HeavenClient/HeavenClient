@@ -33,7 +33,9 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -131,7 +133,8 @@ namespace ms
 		buttons[Buttons::RIGHT] = std::make_unique<MapleButton>(RaceSelect["rightArrow"], Point<int16_t>(718, 458));
 
 		for (size_t i = 0; i <= Buttons::CLASS0; i++)
-			buttons[Buttons::CLASS0 + i] = std::make_unique<AreaButton>(get_class_pos(i), class_normal[0][true].get_dimensions());
+			buttons[Buttons::CLASS0 + i] = std::make_unique<AreaButton>(get_class_pos(i),
+																		class_normal[0][true].get_dimensions());
 
 		index_shift = 0;
 		selected_index = 0;
@@ -177,7 +180,7 @@ namespace ms
 		class_details[corrected_index].draw(position);
 		class_title[corrected_index].draw(position);
 
-		for (nl::node node : hotlist)
+		for (const auto& node : hotlist)
 		{
 			if (node.get_integer() == selected_class)
 			{
@@ -190,7 +193,7 @@ namespace ms
 			}
 		}
 
-		for (nl::node node : newlist)
+		for (const auto& node : newlist)
 		{
 			if (node.get_integer() == selected_class)
 			{
@@ -207,7 +210,7 @@ namespace ms
 			auto found_class = class_isdisabled[cur_class] ? class_disabled : class_normal;
 			found_class[cur_class][mouseover[i]].draw(position + button_pos);
 
-			for (nl::node node : hotlist)
+			for (const auto& node : hotlist)
 			{
 				if (node.get_integer() == class_index[i])
 				{
@@ -216,7 +219,7 @@ namespace ms
 				}
 			}
 
-			for (nl::node node : newlist)
+			for (const auto& node : newlist)
 			{
 				if (node.get_integer() == class_index[i])
 				{
@@ -325,7 +328,7 @@ namespace ms
 	{
 		nl::node ForbiddenName = nl::nx::etc["ForbiddenName.img"];
 
-		for (std::string forbiddenName : ForbiddenName)
+		for (auto forbiddenName : ForbiddenName)
 		{
 			std::string lName = to_lower(name);
 			std::string fName = to_lower(forbiddenName);

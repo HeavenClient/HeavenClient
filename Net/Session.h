@@ -26,7 +26,9 @@
 #include "../Template/Singleton.h"
 
 #ifdef USE_ASIO
+
 #include "SocketAsio.h"
+
 #else
 #include "SocketWinsock.h"
 #endif
@@ -37,23 +39,30 @@ namespace ms
 	{
 	public:
 		Session();
+
 		~Session();
 
 		// Connect using host and port from the configuration file
 		Error init();
+
 		// Send a packet to the server
 		void write(int8_t* bytes, size_t length);
+
 		// Check for incoming packets and handle them
 		void read();
+
 		// Closes the current connection and opens a new one with default connection settings
 		void reconnect();
+
 		// Closes the current connection and opens a new one
 		void reconnect(const char* address, const char* port);
+
 		// Check if the connection is alive
 		bool is_connected() const;
 
 	private:
 		bool init(const char* host, const char* port);
+
 		void process(const int8_t* bytes, size_t available);
 
 		Cryptography cryptography;

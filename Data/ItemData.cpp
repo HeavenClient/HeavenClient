@@ -18,7 +18,9 @@
 #include "ItemData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -40,31 +42,31 @@ namespace ms
 
 		switch (prefix)
 		{
-		case 1:
-			category = get_eqcategory(itemid);
-			src = nl::nx::character[category][strid + ".img"]["info"];
-			strsrc = nl::nx::string["Eqp.img"]["Eqp"][category][std::to_string(itemid)];
-			break;
-		case 2:
-			category = "Consume";
-			src = nl::nx::item["Consume"][strprefix + ".img"][strid]["info"];
-			strsrc = nl::nx::string["Consume.img"][std::to_string(itemid)];
-			break;
-		case 3:
-			category = "Install";
-			src = nl::nx::item["Install"][strprefix + ".img"][strid]["info"];
-			strsrc = nl::nx::string["Ins.img"][std::to_string(itemid)];
-			break;
-		case 4:
-			category = "Etc";
-			src = nl::nx::item["Etc"][strprefix + ".img"][strid]["info"];
-			strsrc = nl::nx::string["Etc.img"]["Etc"][std::to_string(itemid)];
-			break;
-		case 5:
-			category = "Cash";
-			src = nl::nx::item["Cash"][strprefix + ".img"][strid]["info"];
-			strsrc = nl::nx::string["Cash.img"][std::to_string(itemid)];
-			break;
+			case 1:
+				category = get_eqcategory(itemid);
+				src = nl::nx::character[category][strid + ".img"]["info"];
+				strsrc = nl::nx::string["Eqp.img"]["Eqp"][category][std::to_string(itemid)];
+				break;
+			case 2:
+				category = "Consume";
+				src = nl::nx::item["Consume"][strprefix + ".img"][strid]["info"];
+				strsrc = nl::nx::string["Consume.img"][std::to_string(itemid)];
+				break;
+			case 3:
+				category = "Install";
+				src = nl::nx::item["Install"][strprefix + ".img"][strid]["info"];
+				strsrc = nl::nx::string["Ins.img"][std::to_string(itemid)];
+				break;
+			case 4:
+				category = "Etc";
+				src = nl::nx::item["Etc"][strprefix + ".img"][strid]["info"];
+				strsrc = nl::nx::string["Etc.img"]["Etc"][std::to_string(itemid)];
+				break;
+			case 5:
+				category = "Cash";
+				src = nl::nx::item["Cash"][strprefix + ".img"][strid]["info"];
+				strsrc = nl::nx::string["Cash.img"][std::to_string(itemid)];
+				break;
 		}
 
 		if (src)
@@ -78,8 +80,8 @@ namespace ms
 			cashitem = src["cash"].get_bool();
 			gender = get_item_gender(itemid);
 
-			name = strsrc["name"];
-			desc = strsrc["desc"];
+			name = std::string(strsrc["name"]);
+			desc = std::string(strsrc["desc"]);
 
 			valid = true;
 		}
@@ -92,23 +94,23 @@ namespace ms
 	std::string ItemData::get_eqcategory(int32_t id) const
 	{
 		constexpr char* categorynames[15] =
-		{
-			"Cap",
-			"Accessory",
-			"Accessory",
-			"Accessory",
-			"Coat",
-			"Longcoat",
-			"Pants",
-			"Shoes",
-			"Glove",
-			"Shield",
-			"Cape",
-			"Ring",
-			"Accessory",
-			"Accessory",
-			"Accessory"
-		};
+			{
+				"Cap",
+				"Accessory",
+				"Accessory",
+				"Accessory",
+				"Coat",
+				"Longcoat",
+				"Pants",
+				"Shoes",
+				"Glove",
+				"Shield",
+				"Cape",
+				"Ring",
+				"Accessory",
+				"Accessory",
+				"Accessory"
+			};
 
 		int32_t index = get_item_prefix(id) - 100;
 

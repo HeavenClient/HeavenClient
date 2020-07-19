@@ -33,7 +33,9 @@
 #include "../../Net/Packets/CharCreationPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -66,20 +68,27 @@ namespace ms
 		sprites_lookboard.emplace_back(CustomizeChar["charSet"], Point<int16_t>(473, 103));
 
 		for (size_t i = 0; i <= 6; i++)
-			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(504, 187 + (i * 18)));
+			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"],
+										   Point<int16_t>(504, 187 + (i * 18)));
 
-		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(439, 106));
-		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(437, 106));
-		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(562, 187 + (2 * 18)));
-		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(699, 187 + (2 * 18)));
+		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"],
+																			Point<int16_t>(439, 106));
+		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"],
+																			Point<int16_t>(437, 106));
+		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(562, 187 + (2 * 18)));
+		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(699, 187 + (2 * 18)));
 		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(520, 397));
-		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(594, 397));
+		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"],
+																		  Point<int16_t>(594, 397));
 
 		buttons[Buttons::BT_CHARC_SKINL]->set_active(false);
 		buttons[Buttons::BT_CHARC_SKINR]->set_active(false);
 
 		nameboard = CustomizeChar["charName"];
-		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(524, 196), Point<int16_t>(630, 253)), 12);
+		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
+							 Rectangle<int16_t>(Point<int16_t>(524, 196), Point<int16_t>(630, 253)), 12);
 
 		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
@@ -90,18 +99,18 @@ namespace ms
 		namechar.set_state(Textfield::DISABLED);
 
 		namechar.set_enter_callback(
-			[&](std::string)
-			{
-				button_pressed(Buttons::BT_CHARC_OK);
-			}
+				[&](std::string)
+				{
+					button_pressed(Buttons::BT_CHARC_OK);
+				}
 		);
 
 		namechar.set_key_callback(
-			KeyAction::Id::ESCAPE,
-			[&]()
-			{
-				button_pressed(Buttons::BT_CHARC_CANCEL);
-			}
+				KeyAction::Id::ESCAPE,
+				[&]()
+				{
+					button_pressed(Buttons::BT_CHARC_CANCEL);
+				}
 		);
 
 		facename = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::BLACK);

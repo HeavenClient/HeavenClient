@@ -23,7 +23,7 @@ namespace ms
 {
 	void SkillBook::set_skill(int32_t id, int32_t level, int32_t mlevel, int64_t expire)
 	{
-		skillentries[id] = { level, mlevel, expire };
+		skillentries[id] = {level, mlevel, expire};
 	}
 
 	bool SkillBook::has_skill(int32_t id) const

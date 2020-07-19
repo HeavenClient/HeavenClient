@@ -18,7 +18,9 @@
 #include "DamageNumber.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -79,7 +81,8 @@ namespace ms
 		opacity.set(1.5f);
 	}
 
-	DamageNumber::DamageNumber() {}
+	DamageNumber::DamageNumber()
+	{}
 
 	void DamageNumber::draw(double viewx, double viewy, float alpha) const
 	{
@@ -89,11 +92,11 @@ namespace ms
 
 		if (miss)
 		{
-			charsets[type][true].draw('M', { position, interopc });
+			charsets[type][true].draw('M', {position, interopc});
 		}
 		else
 		{
-			charsets[type][false].draw(firstnum, { position, interopc });
+			charsets[type][false].draw(firstnum, {position, interopc});
 
 			if (multiple)
 			{
@@ -103,8 +106,8 @@ namespace ms
 				for (size_t i = 0; i < restnum.length(); i++)
 				{
 					char c = restnum[i];
-					Point<int16_t> yshift = { 0, (i % 2) ? -2 : 2 };
-					charsets[type][true].draw(c, { position + yshift, interopc });
+					Point<int16_t> yshift = {0, (i % 2) ? -2 : 2};
+					charsets[type][true].draw(c, {position + yshift, interopc});
 
 					int16_t advance;
 
@@ -131,9 +134,9 @@ namespace ms
 		constexpr size_t LENGTH = 10;
 
 		constexpr int16_t advances[LENGTH] =
-		{
-			24, 20, 22, 22, 24, 23, 24, 22, 24, 24
-		};
+			{
+				24, 20, 22, 22, 24, 23, 24, 22, 24, 24
+			};
 
 		size_t index = c - 48;
 
@@ -143,18 +146,18 @@ namespace ms
 
 			switch (type)
 			{
-			case DamageNumber::Type::CRITICAL:
-				if (first)
-					advance += 8;
-				else
-					advance += 4;
+				case DamageNumber::Type::CRITICAL:
+					if (first)
+						advance += 8;
+					else
+						advance += 4;
 
-				break;
-			default:
-				if (first)
-					advance += 2;
+					break;
+				default:
+					if (first)
+						advance += 2;
 
-				break;
+					break;
 			}
 
 			return advance;
@@ -187,12 +190,18 @@ namespace ms
 
 	void DamageNumber::init()
 	{
-		charsets[DamageNumber::Type::NORMAL].set(false, nl::nx::effect["BasicEff.img"]["NoRed1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::NORMAL].set(true, nl::nx::effect["BasicEff.img"]["NoRed0"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::CRITICAL].set(false, nl::nx::effect["BasicEff.img"]["NoCri1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::CRITICAL].set(true, nl::nx::effect["BasicEff.img"]["NoCri0"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::TOPLAYER].set(false, nl::nx::effect["BasicEff.img"]["NoViolet1"], Charset::Alignment::LEFT);
-		charsets[DamageNumber::Type::TOPLAYER].set(true, nl::nx::effect["BasicEff.img"]["NoViolet0"], Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::NORMAL].set(false, nl::nx::effect["BasicEff.img"]["NoRed1"],
+												 Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::NORMAL].set(true, nl::nx::effect["BasicEff.img"]["NoRed0"],
+												 Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::CRITICAL].set(false, nl::nx::effect["BasicEff.img"]["NoCri1"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::CRITICAL].set(true, nl::nx::effect["BasicEff.img"]["NoCri0"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::TOPLAYER].set(false, nl::nx::effect["BasicEff.img"]["NoViolet1"],
+												   Charset::Alignment::LEFT);
+		charsets[DamageNumber::Type::TOPLAYER].set(true, nl::nx::effect["BasicEff.img"]["NoViolet0"],
+												   Charset::Alignment::LEFT);
 	}
 
 	BoolPair<Charset> DamageNumber::charsets[NUM_TYPES];

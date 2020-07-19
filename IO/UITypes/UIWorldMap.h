@@ -34,12 +34,15 @@ namespace ms
 		UIWorldMap();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void toggle_active() override;
 
 		void remove_cursor() override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursor_pos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -51,6 +54,7 @@ namespace ms
 		static constexpr uint8_t MAPSPOT_TYPE_MAX = 4u;
 
 		void set_search(bool enable);
+
 		void update_world(std::string parent_map);
 
 		enum Buttons

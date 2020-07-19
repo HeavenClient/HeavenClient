@@ -28,12 +28,16 @@
 #include "../../Net/Packets/InventoryPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UIEquipInventory::UIEquipInventory(const Inventory& invent) : UIDragElement<PosEQINV>(), inventory(invent), tab(Buttons::BT_TAB1), hasPendantSlot(false), hasPocketSlot(false)
+	UIEquipInventory::UIEquipInventory(const Inventory& invent)
+		: UIDragElement<PosEQINV>(), inventory(invent), tab(Buttons::BT_TAB1), hasPendantSlot(false),
+		hasPocketSlot(false)
 	{
 		// Column 1
 		iconpositions[EquipSlot::Id::RING1] = Point<int16_t>(14, 50);
@@ -117,8 +121,10 @@ namespace ms
 		buttons[Buttons::BT_SLOT] = std::make_unique<MapleButton>(Equip[tab_source[Buttons::BT_TAB0]]["BtSlot"]);
 		buttons[Buttons::BT_EFFECT] = std::make_unique<MapleButton>(EquipGL["Equip"]["btEffect"]);
 		buttons[Buttons::BT_SALON] = std::make_unique<MapleButton>(EquipGL["Equip"]["btSalon"]);
-		buttons[Buttons::BT_CONSUMESETTING] = std::make_unique<MapleButton>(Equip[tab_source[Buttons::BT_TAB2]]["BtConsumeSetting"]);
-		buttons[Buttons::BT_EXCEPTION] = std::make_unique<MapleButton>(Equip[tab_source[Buttons::BT_TAB2]]["BtException"]);
+		buttons[Buttons::BT_CONSUMESETTING] = std::make_unique<MapleButton>(
+			Equip[tab_source[Buttons::BT_TAB2]]["BtConsumeSetting"]);
+		buttons[Buttons::BT_EXCEPTION] = std::make_unique<MapleButton>(
+			Equip[tab_source[Buttons::BT_TAB2]]["BtException"]);
 		buttons[Buttons::BT_SHOP] = std::make_unique<MapleButton>(Equip[tab_source[Buttons::BT_TAB3]]["BtShop"]);
 
 		buttons[Buttons::BT_CONSUMESETTING]->set_state(Button::State::DISABLED);
@@ -128,7 +134,8 @@ namespace ms
 		nl::node Tab = Equip["Tab"];
 
 		for (uint16_t i = Buttons::BT_TAB0; i < Buttons::BT_TABE; i++)
-			buttons[Buttons::BT_TAB0 + i] = std::make_unique<TwoSpriteButton>(Tab["disabled"][i], Tab["enabled"][i], Point<int16_t>(0, 3));
+			buttons[Buttons::BT_TAB0 + i] = std::make_unique<TwoSpriteButton>(Tab["disabled"][i], Tab["enabled"][i],
+																			  Point<int16_t>(0, 3));
 
 		dimension = bg_dimensions;
 		dragarea = Point<int16_t>(bg_dimensions.x(), 20);
@@ -171,18 +178,18 @@ namespace ms
 	{
 		switch (id)
 		{
-		case Buttons::BT_CLOSE:
-			toggle_active();
-			break;
-		case Buttons::BT_TAB0:
-		case Buttons::BT_TAB1:
-		case Buttons::BT_TAB2:
-		case Buttons::BT_TAB3:
-			change_tab(id);
+			case Buttons::BT_CLOSE:
+				toggle_active();
+				break;
+			case Buttons::BT_TAB0:
+			case Buttons::BT_TAB1:
+			case Buttons::BT_TAB2:
+			case Buttons::BT_TAB3:
+				change_tab(id);
 
-			return Button::State::IDENTITY;
-		default:
-			break;
+				return Button::State::IDENTITY;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -198,7 +205,7 @@ namespace ms
 				std::make_unique<EquipIcon>(slot),
 				texture,
 				-1
-				);
+			);
 		}
 		else if (icons[slot])
 		{
@@ -322,14 +329,14 @@ namespace ms
 
 		switch (mode)
 		{
-		case 0:
-		case 3:
-			update_slot(eqpos);
-			break;
-		case 2:
-			update_slot(eqpos);
-			update_slot(eqarg);
-			break;
+			case 0:
+			case 3:
+				update_slot(eqpos);
+				break;
+			case 2:
+				update_slot(eqpos);
+				update_slot(eqarg);
+				break;
 		}
 	}
 
@@ -353,7 +360,7 @@ namespace ms
 			Rectangle<int16_t> iconrect = Rectangle<int16_t>(
 				position + iter.second,
 				position + iter.second + Point<int16_t>(32, 32)
-				);
+			);
 
 			if (iconrect.contains(cursorpos))
 				return iter.first;
@@ -413,7 +420,8 @@ namespace ms
 			Sound(Sound::Name::DRAGEND).play();
 	}
 
-	bool UIEquipInventory::EquipIcon::drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const
+	bool UIEquipInventory::EquipIcon::drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot,
+													bool equip) const
 	{
 		if (tab != InventoryType::Id::EQUIP)
 		{

@@ -18,7 +18,9 @@
 #include "MapleFrame.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -38,6 +40,9 @@ namespace ms
 		xtile = std::max<int16_t>(north.width(), 1);
 		ytile = std::max<int16_t>(west.height(), 1);
 	}
+
+	MapleFrame::MapleFrame()
+	{}
 
 	void MapleFrame::draw(Point<int16_t> position, int16_t rwidth, int16_t rheight) const
 	{

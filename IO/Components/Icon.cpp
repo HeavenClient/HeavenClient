@@ -22,7 +22,9 @@
 #include "../../Audio/Audio.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -34,7 +36,8 @@ namespace ms
 		dragged = false;
 	}
 
-	Icon::Icon() : Icon(std::make_unique<NullType>(), {}, -1) {}
+	Icon::Icon() : Icon(std::make_unique<NullType>(), {}, -1)
+	{}
 
 	void Icon::draw(Point<int16_t> position) const
 	{
@@ -50,8 +53,8 @@ namespace ms
 
 	void Icon::dragdraw(Point<int16_t> cursorpos) const
 	{
-		if (dragged)
-			get_texture().draw(DrawArgument(cursorpos - cursoroffset, 0.5f));
+		if (dragged && texture.is_valid())
+			texture.draw(DrawArgument(cursorpos - cursoroffset, 0.5f));
 	}
 
 	void Icon::drop_on_stage() const
@@ -66,6 +69,9 @@ namespace ms
 
 	bool Icon::drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const
 	{
+		if (!texture.is_valid())
+			return false;
+
 		bool remove_icon = type->drop_on_items(tab, eqslot, slot, equip);
 
 		if (remove_icon)

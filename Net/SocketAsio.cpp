@@ -20,7 +20,8 @@
 #ifdef USE_ASIO
 namespace ms
 {
-	SocketAsio::SocketAsio() : resolver(ioservice), socket(ioservice) {}
+	SocketAsio::SocketAsio() : resolver(ioservice), socket(ioservice)
+	{}
 
 	SocketAsio::~SocketAsio()
 	{

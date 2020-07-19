@@ -25,7 +25,8 @@ namespace ms
 	class SkillUseEffect
 	{
 	public:
-		virtual ~SkillUseEffect() {}
+		virtual ~SkillUseEffect()
+		{}
 
 		virtual void apply(Char& target) const = 0;
 
@@ -54,7 +55,8 @@ namespace ms
 	class NoUseEffect : public SkillUseEffect
 	{
 	public:
-		void apply(Char&) const override {}
+		void apply(Char&) const override
+		{}
 	};
 
 	// An effect which displays an animation over the character's position

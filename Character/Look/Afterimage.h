@@ -25,12 +25,15 @@ namespace ms
 	{
 	public:
 		Afterimage(int32_t skill_id, const std::string& name, const std::string& stance, int16_t level);
+
 		Afterimage();
 
 		void draw(uint8_t stframe, const DrawArgument& args, float alpha) const;
+
 		void update(uint8_t stframe, uint16_t timestep);
 
 		uint8_t get_first_frame() const;
+
 		Rectangle<int16_t> get_range() const;
 
 	private:

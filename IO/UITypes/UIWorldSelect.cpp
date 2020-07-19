@@ -32,7 +32,9 @@
 #include "../../Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -71,7 +73,7 @@ namespace ms
 
 		sprites.emplace_back(obj["WorldSelect"]["default"][0], background_pos);
 
-		std::vector<std::string> backgrounds = { "16thNewtro" };
+		std::vector<std::string> backgrounds = {"16thNewtro"};
 		auto backgrounds_size = backgrounds.size();
 
 		if (backgrounds_size > 0)
@@ -94,11 +96,16 @@ namespace ms
 		sprites.emplace_back(common["step"]["1"], Point<int16_t>(40, 0));
 
 		buttons[Buttons::BT_VIEWALL] = std::make_unique<MapleButton>(worldselect["BtViewAll"], Point<int16_t>(0, 53));
-		buttons[Buttons::BT_VIEWRECOMMENDED] = std::make_unique<MapleButton>(worldselect["BtViewChoice"], Point<int16_t>(0, 53));
-		buttons[Buttons::BT_VIEWRECOMMENDED_SELECT] = std::make_unique<MapleButton>(worldselect["alert"]["BtChoice"], Point<int16_t>(349, 327));
-		buttons[Buttons::BT_VIEWRECOMMENDED_CANCEL] = std::make_unique<MapleButton>(worldselect["alert"]["BtClose"], Point<int16_t>(407, 327));
-		buttons[Buttons::BT_VIEWRECOMMENDED_PREV] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowL"], Point<int16_t>(338, 244));
-		buttons[Buttons::BT_VIEWRECOMMENDED_NEXT] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowR"], Point<int16_t>(439, 244));
+		buttons[Buttons::BT_VIEWRECOMMENDED] = std::make_unique<MapleButton>(worldselect["BtViewChoice"],
+																			 Point<int16_t>(0, 53));
+		buttons[Buttons::BT_VIEWRECOMMENDED_SELECT] = std::make_unique<MapleButton>(worldselect["alert"]["BtChoice"],
+																					Point<int16_t>(349, 327));
+		buttons[Buttons::BT_VIEWRECOMMENDED_CANCEL] = std::make_unique<MapleButton>(worldselect["alert"]["BtClose"],
+																					Point<int16_t>(407, 327));
+		buttons[Buttons::BT_VIEWRECOMMENDED_PREV] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowL"],
+																				  Point<int16_t>(338, 244));
+		buttons[Buttons::BT_VIEWRECOMMENDED_NEXT] = std::make_unique<MapleButton>(worldselect["alert"]["BtArrowR"],
+																				  Point<int16_t>(439, 244));
 
 		buttons[Buttons::BT_VIEWALL]->set_active(false);
 		buttons[Buttons::BT_VIEWRECOMMENDED]->set_active(use_recommended ? true : false);
@@ -111,14 +118,17 @@ namespace ms
 
 		recommended_textures.emplace_back(worldselect["alert"]["backgrd"]);
 
-		buttons[Buttons::BT_CHANGEREGION] = std::make_unique<MapleButton>(worldselect["BtRegion"], Point<int16_t>(3, 127));
+		buttons[Buttons::BT_CHANGEREGION] = std::make_unique<MapleButton>(worldselect["BtRegion"],
+																		  Point<int16_t>(3, 127));
 		buttons[Buttons::BT_QUITGAME] = std::make_unique<MapleButton>(common["BtExit"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < Buttons::BT_ENTERWORLD - Buttons::BT_CHANNEL0; i++)
 		{
 			std::string ch = std::to_string(i);
 
-			buttons[Buttons::BT_CHANNEL0 + i] = std::make_unique<TwoSpriteButton>(channelsrc["button:" + ch]["normal"]["0"], channelsrc["button:" + ch]["keyFocused"]["0"], channelsrc_pos);
+			buttons[Buttons::BT_CHANNEL0 + i] = std::make_unique<TwoSpriteButton>(
+				channelsrc["button:" + ch]["normal"]["0"], channelsrc["button:" + ch]["keyFocused"]["0"],
+				channelsrc_pos);
 			buttons[Buttons::BT_CHANNEL0 + i]->set_active(false);
 		}
 
@@ -177,12 +187,12 @@ namespace ms
 		Rectangle<int16_t> channels_bounds = Rectangle<int16_t>(
 			position + channelsrc_pos,
 			position + channelsrc_pos + channels_background.get_dimensions()
-			);
+		);
 
 		Rectangle<int16_t> worlds_bounds = Rectangle<int16_t>(
 			position + worldsrc_pos,
 			position + worldsrc_pos + worlds_background.get_dimensions()
-			);
+		);
 
 		if (world_selected && !channels_bounds.contains(cursorpos) && !worlds_bounds.contains(cursorpos))
 		{
@@ -268,7 +278,8 @@ namespace ms
 
 				if (keycode == KeyAction::Id::UP)
 				{
-					auto next_channel = (selected_channel - COLUMNS < 0 ? (selected_channel - COLUMNS) + rows * COLUMNS : selected_channel - COLUMNS);
+					auto next_channel = (selected_channel - COLUMNS < 0 ? (selected_channel - COLUMNS) + rows * COLUMNS
+																		: selected_channel - COLUMNS);
 
 					if (next_channel == channelid)
 						return;
@@ -280,7 +291,8 @@ namespace ms
 				}
 				else if (keycode == KeyAction::Id::DOWN)
 				{
-					auto next_channel = (selected_channel + COLUMNS >= channel_total ? current_col : selected_channel + COLUMNS);
+					auto next_channel = (selected_channel + COLUMNS >= channel_total ? current_col : selected_channel +
+																									 COLUMNS);
 
 					if (next_channel == channelid)
 						return;
@@ -329,7 +341,8 @@ namespace ms
 				auto selected_world = worldid;
 				auto world_count = worldcount - 1;
 
-				if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::RIGHT || keycode == KeyAction::Id::UP || keycode == KeyAction::Id::DOWN || keycode == KeyAction::Id::TAB)
+				if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::RIGHT || keycode == KeyAction::Id::UP ||
+					keycode == KeyAction::Id::DOWN || keycode == KeyAction::Id::TAB)
 				{
 					bool world_found = false;
 					bool forward = keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::UP;
@@ -485,7 +498,10 @@ namespace ms
 
 			nl::node worldbtn = worldsrc["button:" + world];
 
-			buttons[Buttons::BT_WORLD0 + i] = std::make_unique<TwoSpriteButton>(worldbtn["normal"]["0"], worldbtn["keyFocused"]["0"], worldsrc_pos + Point<int16_t>(region["origin"][i + 1]));
+			buttons[Buttons::BT_WORLD0 + i] = std::make_unique<TwoSpriteButton>(worldbtn["normal"]["0"],
+																				worldbtn["keyFocused"]["0"],
+																				worldsrc_pos + Point<int16_t>(
+																					region["origin"][i + 1]));
 			buttons[Buttons::BT_WORLD0 + i]->set_active(false);
 		}
 	}

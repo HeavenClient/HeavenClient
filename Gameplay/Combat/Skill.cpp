@@ -22,7 +22,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -73,13 +75,13 @@ namespace ms
 			{
 				switch (skillid)
 				{
-				case SkillId::IRON_BODY:
-				case SkillId::MAGIC_ARMOR:
-					useeffect = std::make_unique<IronBodyUseEffect>();
-					break;
-				default:
-					useeffect = std::make_unique<NoUseEffect>();
-					break;
+					case SkillId::IRON_BODY:
+					case SkillId::MAGIC_ARMOR:
+						useeffect = std::make_unique<IronBodyUseEffect>();
+						break;
+					default:
+						useeffect = std::make_unique<NoUseEffect>();
+						break;
 				}
 			}
 		}
@@ -92,7 +94,7 @@ namespace ms
 		if (bylevelhit)
 		{
 			if (hashit0 && hashit1)
-				hiteffect = std::make_unique<ByLevelTwoHHitEffect>(src);
+				hiteffect = std::make_unique<ByLevelTwoHandedHitEffect>(src);
 			else
 				hiteffect = std::make_unique<ByLevelHitEffect>(src);
 		}
@@ -204,12 +206,12 @@ namespace ms
 
 		switch (attack.type)
 		{
-		case Attack::RANGED:
-			attack.hitcount = stats.bulletcount;
-			break;
-		default:
-			attack.hitcount = stats.attackcount;
-			break;
+			case Attack::RANGED:
+				attack.hitcount = stats.bulletcount;
+				break;
+			default:
+				attack.hitcount = stats.attackcount;
+				break;
 		}
 
 		if (!stats.range.empty())
@@ -219,23 +221,23 @@ namespace ms
 		{
 			switch (skillid)
 			{
-			case SkillId::THREE_SNAILS:
-				switch (level)
-				{
-				case 1:
-					attack.bullet = 4000019;
+				case SkillId::THREE_SNAILS:
+					switch (level)
+					{
+						case 1:
+							attack.bullet = 4000019;
+							break;
+						case 2:
+							attack.bullet = 4000000;
+							break;
+						case 3:
+							attack.bullet = 4000016;
+							break;
+					}
 					break;
-				case 2:
-					attack.bullet = 4000000;
+				default:
+					attack.bullet = skillid;
 					break;
-				case 3:
-					attack.bullet = 4000016;
-					break;
-				}
-				break;
-			default:
-				attack.bullet = skillid;
-				break;
 			}
 		}
 
@@ -275,7 +277,8 @@ namespace ms
 		return skillid;
 	}
 
-	SpecialMove::ForbidReason Skill::can_use(int32_t level, Weapon::Type weapon, const Job& job, uint16_t hp, uint16_t mp, uint16_t bullets) const
+	SpecialMove::ForbidReason
+	Skill::can_use(int32_t level, Weapon::Type weapon, const Job& job, uint16_t hp, uint16_t mp, uint16_t bullets) const
 	{
 		if (level <= 0 || level > SkillData::get(skillid).get_masterlevel())
 			return FBR_OTHER;
@@ -298,13 +301,13 @@ namespace ms
 
 		switch (weapon)
 		{
-		case Weapon::BOW:
-		case Weapon::CROSSBOW:
-		case Weapon::CLAW:
-		case Weapon::GUN:
-			return (bullets >= stats.bulletcost) ? FBR_NONE : FBR_BULLETCOST;
-		default:
-			return FBR_NONE;
+			case Weapon::BOW:
+			case Weapon::CROSSBOW:
+			case Weapon::CLAW:
+			case Weapon::GUN:
+				return (bullets >= stats.bulletcost) ? FBR_NONE : FBR_BULLETCOST;
+			default:
+				return FBR_NONE;
 		}
 	}
 }

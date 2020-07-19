@@ -45,6 +45,7 @@ namespace ms
 		void draw(Stance::Id stance, Layer layer, uint8_t frame, const DrawArgument& args) const;
 
 		const std::string& get_name() const;
+
 		const std::string& getcolor() const;
 
 	private:

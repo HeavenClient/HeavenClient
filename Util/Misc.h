@@ -26,7 +26,7 @@ namespace ms
 {
 	namespace string_conversion
 	{
-		template<typename T>
+		template <typename T>
 		inline T or_default(const std::string& str, T def)
 		{
 			try
@@ -42,7 +42,7 @@ namespace ms
 			}
 		}
 
-		template<typename T>
+		template <typename T>
 		inline T or_zero(const std::string& str)
 		{
 			return or_default<T>(str, T(0));
@@ -51,7 +51,8 @@ namespace ms
 
 	namespace string_format
 	{
-		// Format a number string so that each three decimal points are separated by a comma
+		// Format a number string so that each 3 decimal points
+		// are seperated by a ',' character.
 		void split_number(std::string& input);
 
 		// Prefix an id with zeros so that it has the minimum specified length

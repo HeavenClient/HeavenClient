@@ -40,11 +40,11 @@ namespace ms
 
 		while (pet_unique_id != 0)
 		{
-			recv.skip_int();	// pet_id
-			recv.skip_string();	// pet_name
-			recv.skip_byte();	// pet_level
-			recv.skip_short();	// pet_closeness
-			recv.skip_byte();	// pet_fullness
+			recv.skip_int();    // pet_id
+			recv.skip_string();    // pet_name
+			recv.skip_byte();    // pet_level
+			recv.skip_short();    // pet_closeness
+			recv.skip_byte();    // pet_fullness
 
 			recv.skip_short();
 
@@ -82,6 +82,7 @@ namespace ms
 
 		// Update the character information window
 		if (auto charinfo = UI::get().get_element<UICharInfo>())
-			charinfo->update_stats(character_id, character_job_id, character_level, character_fame, guild_name, alliance_name);
+			charinfo->update_stats(character_id, character_job_id, character_level, character_fame, guild_name,
+								   alliance_name);
 	}
 }

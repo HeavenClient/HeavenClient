@@ -18,6 +18,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <map>
 #include <cstdint>
 
 namespace ms
@@ -29,7 +30,8 @@ namespace ms
 	class Cache
 	{
 	public:
-		virtual ~Cache() {}
+		virtual ~Cache()
+		{}
 
 		// Return a ref to the game object with the specified id.
 		// If the object is not in cache, it is created.
@@ -38,15 +40,15 @@ namespace ms
 			auto iter = cache.find(id);
 
 			if (iter == cache.end())
-				iter = cache.emplace(id, T{ id }).first;
+				iter = cache.emplace(id, T{id}).first;
 
 			return iter->second;
 		}
 
 	private:
-		static std::unordered_map<std::int32_t, T> cache;
+		static std::map<std::int32_t, T> cache;
 	};
 
 	template <typename T>
-	std::unordered_map<std::int32_t, T> Cache<T>::cache;
+	std::map<std::int32_t, T> Cache<T>::cache;
 }

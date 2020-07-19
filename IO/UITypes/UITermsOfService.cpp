@@ -16,17 +16,18 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UITermsOfService.h"
-
 #include "UILoginWait.h"
 
 #include "../UI.h"
 
-#include "../Components/MapleButton.h"
+#include "IO/Components/MapleButton.h"
 
-#include "../../Net/Packets/LoginPackets.h"
+#include "Net/Packets/LoginPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -1119,17 +1120,17 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::OK:
-			UI::get().emplace<UILoginWait>();
+			case Buttons::OK:
+				UI::get().emplace<UILoginWait>();
 
-			TOSPacket().dispatch();
-			break;
-		case Buttons::CANCEL:
-			deactivate();
-			okhandler();
-			break;
-		default:
-			break;
+				TOSPacket().dispatch();
+				break;
+			case Buttons::CANCEL:
+				deactivate();
+				okhandler();
+				break;
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;

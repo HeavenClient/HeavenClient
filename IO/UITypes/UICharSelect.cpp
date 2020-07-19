@@ -16,7 +16,6 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UICharSelect.h"
-
 #include "UILoginNotice.h"
 #include "UIRaceSelect.h"
 #include "UISoftKey.h"
@@ -35,15 +34,25 @@
 #include "../../Net/Packets/SelectCharPackets.h"
 
 #define NOMINMAX
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UICharSelect::UICharSelect(std::vector<CharEntry> characters, int8_t characters_count, int32_t slots, int8_t require_pic) : characters(characters), characters_count(characters_count), slots(slots), require_pic(require_pic)
+	UICharSelect::UICharSelect(std::vector<CharEntry> c, int8_t char_count, int32_t s, int8_t rp) : UIElement(
+		Point<int16_t>(0, 0), Point<int16_t>(800, 600)),
+		characters(c),
+		characters_count(
+			char_count),
+		slots(s),
+		require_pic(rp)
 	{
 		burning_character = true;
 
@@ -60,7 +69,7 @@ namespace ms
 
 		selected_character = Setting<DefaultCharacter>::get().load();
 		selected_page = selected_character / PAGESIZE;
-		page_count = std::ceil((double)slots / (double)PAGESIZE);
+		page_count = std::ceil((double) slots / (double) PAGESIZE);
 
 		tab = nl::nx::ui["Basic.img"]["Cursor"]["18"]["0"];
 
@@ -135,12 +144,15 @@ namespace ms
 		buttons[Buttons::PAGELEFT] = std::make_unique<MapleButton>(CharSelect["pageL"], Point<int16_t>(98, 491));
 		buttons[Buttons::PAGERIGHT] = std::make_unique<MapleButton>(CharSelect["pageR"], Point<int16_t>(485, 491));
 		buttons[Buttons::CHANGEPIC] = std::make_unique<MapleButton>(Common["BtChangePIC"], Point<int16_t>(0, 80));
-		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"], Point<int16_t>(0, 115));
-		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"], Point<int16_t>(-1, 47));
+		buttons[Buttons::RESETPIC] = std::make_unique<MapleButton>(Login["WorldSelect"]["BtResetPIC"],
+																   Point<int16_t>(0, 115));
+		buttons[Buttons::EDITCHARLIST] = std::make_unique<MapleButton>(CharSelect["EditCharList"]["BtCharacter"],
+																	   Point<int16_t>(-1, 47));
 		buttons[Buttons::BACK] = std::make_unique<MapleButton>(Common["BtStart"], Point<int16_t>(0, 515));
 
 		for (size_t i = 0; i < PAGESIZE; i++)
-			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144), Point<int16_t>(50, 90));
+			buttons[Buttons::CHARACTER_SLOT0 + i] = std::make_unique<AreaButton>(get_character_slot_pos(i, 105, 144),
+																				 Point<int16_t>(50, 90));
 
 		if (require_pic == 0)
 		{
@@ -149,12 +161,14 @@ namespace ms
 		}
 
 		levelset = Charset(CharSelect["lv"], Charset::Alignment::CENTER);
-		namelabel = OutlinedText(Text::Font::A14B, Text::Alignment::CENTER, Color::Name::WHITE, Color::Name::IRISHCOFFEE);
+		namelabel = OutlinedText(Text::Font::A14B, Text::Alignment::CENTER, Color::Name::WHITE,
+								 Color::Name::IRISHCOFFEE);
 
 		for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
-			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE, Color::Name::TOBACCOBROWN);
+			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE,
+										 Color::Name::TOBACCOBROWN);
 
-		for (CharEntry& entry : characters)
+		for (auto& entry : characters)
 		{
 			charlooks.emplace_back(entry.look);
 			nametags.emplace_back(nametag, Text::Font::A12M, entry.stats.name);
@@ -166,7 +180,8 @@ namespace ms
 		selectedslot_effect[0] = CharSelect["effect"][0];
 		selectedslot_effect[1] = CharSelect["effect"][1];
 
-		charslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE, Color::Name::JAMBALAYA);
+		charslotlabel = OutlinedText(Text::Font::A12M, Text::Alignment::LEFT, Color::Name::WHITE,
+									 Color::Name::JAMBALAYA);
 		charslotlabel.change_text(get_slot_text());
 
 		update_buttons();
@@ -205,7 +220,7 @@ namespace ms
 		std::string total = pad_number_with_leading_zero(page_count);
 		std::string current = pad_number_with_leading_zero(selected_page + 1);
 
-		std::list<uint8_t> fliplist = { 2, 3, 6, 7 };
+		std::list<uint8_t> fliplist = {2, 3, 6, 7};
 
 		for (uint8_t i = 0; i < PAGESIZE; i++)
 		{
@@ -323,10 +338,10 @@ namespace ms
 		if (!tab_move && tab_move_pos > 0)
 			tab_move_pos -= 1;
 
-		for (CharLook& charlook : charlooks)
+		for (auto& charlook : charlooks)
 			charlook.update(Constants::TIMESTEP);
 
-		for (Animation& effect : selectedslot_effect)
+		for (auto& effect : selectedslot_effect)
 			effect.update();
 
 		emptyslot_effect.update();
@@ -340,7 +355,8 @@ namespace ms
 		uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
 		auto& btit = buttons[button_index];
 
-		if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
+		if (btit->is_active() && btit->bounds(position).contains(cursorpos) &&
+			btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
 			button_pressed(Buttons::CHARACTER_SELECT);
 	}
 
@@ -349,7 +365,7 @@ namespace ms
 		Rectangle<int16_t> charslot_bounds = Rectangle<int16_t>(
 			worldpos,
 			worldpos + world_dimensions
-			);
+		);
 
 		if (charslot_bounds.contains(cursorpos))
 		{
@@ -419,7 +435,7 @@ namespace ms
 					uint16_t btn_index = tab_map[tab_index];
 
 					auto& btn = buttons[btn_index];
-					Button::State state = btn->get_state();
+					auto state = btn->get_state();
 
 					if (state != Button::State::DISABLED)
 						button_pressed(btn_index);
@@ -457,7 +473,7 @@ namespace ms
 					tab_move_pos = 0;
 
 					auto& prev_btn = buttons[tab_map[prev_tab]];
-					Button::State prev_state = prev_btn->get_state();
+					auto prev_state = prev_btn->get_state();
 
 					if (prev_state != Button::State::DISABLED)
 						prev_btn->set_state(Button::State::NORMAL);
@@ -465,7 +481,7 @@ namespace ms
 					if (tab_active)
 					{
 						auto& btn = buttons[tab_map[tab_index]];
-						Button::State state = btn->get_state();
+						auto state = btn->get_state();
 
 						if (state != Button::State::DISABLED)
 							btn->set_state(Button::State::MOUSEOVER);
@@ -474,7 +490,8 @@ namespace ms
 				else
 				{
 					uint8_t selected_index = selected_character;
-					uint8_t index_total = std::min(characters_count, static_cast<int8_t>((selected_page + 1) * PAGESIZE));
+					uint8_t index_total = std::min(characters_count,
+												   static_cast<int8_t>((selected_page + 1) * PAGESIZE));
 
 					uint8_t COLUMNS = 4;
 					uint8_t columns = std::min(index_total, COLUMNS);
@@ -491,7 +508,8 @@ namespace ms
 
 					if (keycode == KeyAction::Id::UP)
 					{
-						uint8_t next_index = (selected_index - COLUMNS < 0 ? (selected_index - COLUMNS) + rows * COLUMNS : selected_index - COLUMNS);
+						uint8_t next_index = (selected_index - COLUMNS < 0 ? (selected_index - COLUMNS) + rows * COLUMNS
+																		   : selected_index - COLUMNS);
 
 						if (next_index == selected_character)
 							return;
@@ -503,7 +521,8 @@ namespace ms
 					}
 					else if (keycode == KeyAction::Id::DOWN)
 					{
-						uint8_t next_index = (selected_index + COLUMNS >= index_total ? current_col : selected_index + COLUMNS);
+						uint8_t next_index = (selected_index + COLUMNS >= index_total ? current_col : selected_index +
+																									  COLUMNS);
 
 						if (next_index == selected_character)
 							return;
@@ -609,13 +628,13 @@ namespace ms
 
 	const CharEntry& UICharSelect::get_character(int32_t id)
 	{
-		for (CharEntry& character : characters)
+		for (auto& character : characters)
 			if (character.id == id)
 				return character;
 
 		std::cout << "Invalid character id: [" << id << "]" << std::endl;
 
-		static const CharEntry null_character = { {}, {}, 0 };
+		static const CharEntry null_character = {{}, {}, 0};
 
 		return null_character;
 	}
@@ -715,7 +734,8 @@ namespace ms
 						uint16_t cjob = character_stats.stats[MapleStat::Id::JOB];
 
 						if (cjob < 1000)
-							UI::get().emplace<UILoginNotice>(UILoginNotice::Message::DELETE_CONFIRMATION, onok, oncancel);
+							UI::get().emplace<UILoginNotice>(UILoginNotice::Message::DELETE_CONFIRMATION, onok,
+															 oncancel);
 						else
 							UI::get().emplace<UILoginNotice>(UILoginNotice::Message::CASH_ITEMS_CONFIRM_DELETION, onok);
 
@@ -772,7 +792,9 @@ namespace ms
 			{
 				std::string url = Configuration::get().get_resetpic();
 
+#ifdef _WIN32
 				ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+#endif
 				break;
 			}
 			case Buttons::EDITCHARLIST:
@@ -849,7 +871,8 @@ namespace ms
 		}
 
 		buttons[Buttons::CHARACTER_SELECT]->set_active(character_found);
-		buttons[Buttons::CHARACTER_DELETE]->set_state(character_found ? Button::State::NORMAL : Button::State::DISABLED);
+		buttons[Buttons::CHARACTER_DELETE]->set_state(
+			character_found ? Button::State::NORMAL : Button::State::DISABLED);
 	}
 
 	void UICharSelect::update_selected_character()
@@ -977,9 +1000,11 @@ namespace ms
 				}
 			};
 
-			UI::get().emplace<UISoftKey>(verifypic, []() {}, "Please re-enter your new PIC.", Point<int16_t>(24, 0));
+			UI::get().emplace<UISoftKey>(verifypic, []()
+			{}, "Please re-enter your new PIC.", Point<int16_t>(24, 0));
 		};
 
-		UI::get().emplace<UISoftKey>(enterpic, []() {}, "Your new PIC must at least be 6 characters long.", Point<int16_t>(24, 0));
+		UI::get().emplace<UISoftKey>(enterpic, []()
+		{}, "Your new PIC must at least be 6 characters long.", Point<int16_t>(24, 0));
 	}
 }

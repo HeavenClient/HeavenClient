@@ -18,7 +18,9 @@
 #include "EquipData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -63,42 +65,42 @@ namespace ms
 		if (index < NON_WEAPON_TYPES)
 		{
 			constexpr char* types[NON_WEAPON_TYPES] =
-			{
-				"HAT",
-				"FACE ACCESSORY",
-				"EYE ACCESSORY",
-				"EARRINGS",
-				"TOP",
-				"OVERALL",
-				"BOTTOM",
-				"SHOES",
-				"GLOVES",
-				"SHIELD",
-				"CAPE",
-				"RING",
-				"PENDANT",
-				"BELT",
-				"MEDAL"
-			};
+				{
+					"HAT",
+					"FACE ACCESSORY",
+					"EYE ACCESSORY",
+					"EARRINGS",
+					"TOP",
+					"OVERALL",
+					"BOTTOM",
+					"SHOES",
+					"GLOVES",
+					"SHIELD",
+					"CAPE",
+					"RING",
+					"PENDANT",
+					"BELT",
+					"MEDAL"
+				};
 
 			constexpr EquipSlot::Id equipslots[NON_WEAPON_TYPES] =
-			{
-				EquipSlot::Id::HAT,
-				EquipSlot::Id::FACE,
-				EquipSlot::Id::EYEACC,
-				EquipSlot::Id::EARACC,
-				EquipSlot::Id::TOP,
-				EquipSlot::Id::TOP,
-				EquipSlot::Id::BOTTOM,
-				EquipSlot::Id::SHOES,
-				EquipSlot::Id::GLOVES,
-				EquipSlot::Id::SHIELD,
-				EquipSlot::Id::CAPE,
-				EquipSlot::Id::RING1,
-				EquipSlot::Id::PENDANT1,
-				EquipSlot::Id::BELT,
-				EquipSlot::Id::MEDAL
-			};
+				{
+					EquipSlot::Id::HAT,
+					EquipSlot::Id::FACE,
+					EquipSlot::Id::EYEACC,
+					EquipSlot::Id::EARACC,
+					EquipSlot::Id::TOP,
+					EquipSlot::Id::TOP,
+					EquipSlot::Id::BOTTOM,
+					EquipSlot::Id::SHOES,
+					EquipSlot::Id::GLOVES,
+					EquipSlot::Id::SHIELD,
+					EquipSlot::Id::CAPE,
+					EquipSlot::Id::RING1,
+					EquipSlot::Id::PENDANT1,
+					EquipSlot::Id::BELT,
+					EquipSlot::Id::MEDAL
+				};
 
 			type = types[index];
 			eqslot = equipslots[index];
@@ -106,26 +108,26 @@ namespace ms
 		else if (index >= WEAPON_OFFSET && index < WEAPON_OFFSET + WEAPON_TYPES)
 		{
 			constexpr char* types[WEAPON_TYPES] =
-			{
-				"ONE-HANDED SWORD",
-				"ONE-HANDED AXE",
-				"ONE-HANDED MACE",
-				"DAGGER",
-				"", "", "",
-				"WAND",
-				"STAFF",
-				"",
-				"TWO-HANDED SWORD",
-				"TWO-HANDED AXE",
-				"TWO-HANDED MACE",
-				"SPEAR",
-				"POLEARM",
-				"BOW",
-				"CROSSBOW",
-				"CLAW",
-				"KNUCKLE",
-				"GUN"
-			};
+				{
+					"ONE-HANDED SWORD",
+					"ONE-HANDED AXE",
+					"ONE-HANDED MACE",
+					"DAGGER",
+					"", "", "",
+					"WAND",
+					"STAFF",
+					"",
+					"TWO-HANDED SWORD",
+					"TWO-HANDED AXE",
+					"TWO-HANDED MACE",
+					"SPEAR",
+					"POLEARM",
+					"BOW",
+					"CROSSBOW",
+					"CLAW",
+					"KNUCKLE",
+					"GUN"
+				};
 
 			size_t weaponindex = index - WEAPON_OFFSET;
 			type = types[weaponindex];

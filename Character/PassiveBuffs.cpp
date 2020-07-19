@@ -22,7 +22,9 @@
 #include "../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -40,13 +42,13 @@ namespace ms
 		stats.add_value(EquipStat::Id::AVOID, level["z"]);
 	}
 
-	template<Weapon::Type W1, Weapon::Type W2>
+	template <Weapon::Type W1, Weapon::Type W2>
 	bool f_is_applicable(CharStats& stats, nl::node level)
 	{
 		return f_is_applicable<W1>(stats, level) || f_is_applicable<W2>(stats, level);
 	}
 
-	template<Weapon::Type W1>
+	template <Weapon::Type W1>
 	bool f_is_applicable(CharStats& stats, nl::node)
 	{
 		return stats.get_weapontype() == W1;

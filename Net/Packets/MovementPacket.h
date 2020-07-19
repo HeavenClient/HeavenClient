@@ -25,7 +25,8 @@ namespace ms
 	class MovementPacket : public OutPacket
 	{
 	public:
-		MovementPacket(OutPacket::Opcode opc) : OutPacket(opc) {}
+		MovementPacket(OutPacket::Opcode opc) : OutPacket(opc)
+		{}
 
 	protected:
 		void writemovement(const Movement& movement)

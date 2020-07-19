@@ -90,14 +90,14 @@ namespace ms
 				if (split != std::string::npos && split + 2 < line.size())
 				{
 					rawsettings.emplace(
-						line.substr(0, split - 1),
-						line.substr(split + 2)
+							line.substr(0, split - 1),
+							line.substr(split + 2)
 					);
 				}
 			}
 		}
 
-		// Replace default values with loaded values
+		// Replace default values with loaded values.
 		for (auto& setting : settings)
 		{
 			auto rsiter = rawsettings.find(setting.second->name);
@@ -114,7 +114,7 @@ namespace ms
 
 		if (config.is_open())
 		{
-			// Save settings line by line
+			// Save settings line by line.
 			for (auto& setting : settings)
 				config << setting.second->to_string() << std::endl;
 		}
@@ -153,7 +153,7 @@ namespace ms
 		auto x = string_conversion::or_zero<int16_t>(xstr);
 		auto y = string_conversion::or_zero<int16_t>(ystr);
 
-		return { x, y };
+		return {x, y};
 	}
 
 	bool Configuration::get_show_fps() const

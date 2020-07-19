@@ -46,8 +46,11 @@ namespace ms
 			LENGTH
 		};
 
-		constexpr Error(Code c) : Error(c, "") {}
-		constexpr Error(Code c, const char* args) : code(c), args(args) {}
+		constexpr Error(Code c) : Error(c, "")
+		{}
+
+		constexpr Error(Code c, const char* args) : code(c), args(args)
+		{}
 
 		constexpr operator bool() const
 		{
@@ -56,7 +59,8 @@ namespace ms
 
 		constexpr bool can_retry() const
 		{
-			return code == Code::CONNECTION || code == Code::MISSING_FILE || code == Code::WRONG_UI_FILE || code == Code::MISSING_ICON || code == Code::FONT_PATH;
+			return code == Code::CONNECTION || code == Code::MISSING_FILE || code == Code::WRONG_UI_FILE ||
+				   code == Code::MISSING_ICON || code == Code::FONT_PATH;
 		}
 
 		constexpr const char* get_message() const
@@ -74,25 +78,25 @@ namespace ms
 		const char* args;
 
 		static constexpr const char* messages[Code::LENGTH] =
-		{
-			"",
-			"Cannot connect to server.",
-			"Could not initialize NLNX.",
-			"Could not initialize WZ.",
-			"Missing a game file: ",
-			"UI.nx has wrong version.",
-			"Could not initialize GLFW.",
-			"Could not initialize GLEW.",
-			"Could not initialize FreeType.",
-			"Failed to compile vertex shader.",
-			"Failed to compile fragment shader.",
-			"Failed to link shader program.",
-			"Failed to validate shader program.",
-			"Failed to locate shader variables.",
-			"Failed to create window.",
-			"Failed to initialize audio.",
-			"Could not load icon.",
-			"Could not load fonts."
-		};
+			{
+				"",
+				"Cannot connect to server.",
+				"Could not initialize NLNX.",
+				"Could not initialize WZ.",
+				"Missing a game file: ",
+				"UI.nx has wrong version.",
+				"Could not initialize GLFW.",
+				"Could not initialize GLEW.",
+				"Could not initialize FreeType.",
+				"Failed to compile vertex shader.",
+				"Failed to compile fragment shader.",
+				"Failed to link shader program.",
+				"Failed to validate shader program.",
+				"Failed to locate shader variables.",
+				"Failed to create window.",
+				"Failed to initialize audio.",
+				"Could not load icon.",
+				"Could not load fonts."
+			};
 	};
 }

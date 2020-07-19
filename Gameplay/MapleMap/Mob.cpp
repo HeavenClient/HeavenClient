@@ -22,12 +22,15 @@
 #include "../../Net/Packets/GameplayPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	Mob::Mob(int32_t oi, int32_t mid, int8_t mode, int8_t st, uint16_t fh, bool newspawn, int8_t tm, Point<int16_t> position) : MapObject(oi)
+	Mob::Mob(int32_t oi, int32_t mid, int8_t mode, int8_t st, uint16_t fh, bool newspawn, int8_t tm,
+			 Point<int16_t> position) : MapObject(oi)
 	{
 		std::string strid = string_format::extend_id(mid, 7);
 		nl::node src = nl::nx::mob[strid + ".img"];
@@ -67,7 +70,7 @@ namespace ms
 		animations[Stance::HIT] = src["hit1"];
 		animations[Stance::DIE] = src["die1"];
 
-		name = nl::nx::string["Mob.img"][std::to_string(mid)]["name"];
+		name = std::string(nl::nx::string["Mob.img"][std::to_string(mid)]["name"]);
 
 		nl::node sndsrc = nl::nx::sound["Mob.img"][strid];
 
@@ -98,7 +101,8 @@ namespace ms
 		flydirection = STRAIGHT;
 		counter = 0;
 
-		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name);
+		namelabel = Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG,
+						 name);
 
 		if (newspawn)
 		{
@@ -196,38 +200,38 @@ namespace ms
 
 			switch (stance)
 			{
-			case Stance::MOVE:
-				if (canfly)
-				{
-					phobj.hforce = flip ? flyspeed : -flyspeed;
-
-					switch (flydirection)
+				case Stance::MOVE:
+					if (canfly)
 					{
-					case FlyDirection::UPWARDS:
-						phobj.vforce = -flyspeed;
-						break;
-					case FlyDirection::DOWNWARDS:
-						phobj.vforce = flyspeed;
-						break;
+						phobj.hforce = flip ? flyspeed : -flyspeed;
+
+						switch (flydirection)
+						{
+							case FlyDirection::UPWARDS:
+								phobj.vforce = -flyspeed;
+								break;
+							case FlyDirection::DOWNWARDS:
+								phobj.vforce = flyspeed;
+								break;
+						}
 					}
-				}
-				else
-				{
-					phobj.hforce = flip ? speed : -speed;
-				}
+					else
+					{
+						phobj.hforce = flip ? speed : -speed;
+					}
 
-				break;
-			case Stance::HIT:
-				if (canmove)
-				{
-					double KBFORCE = phobj.onground ? 0.2 : 0.1;
-					phobj.hforce = flip ? -KBFORCE : KBFORCE;
-				}
+					break;
+				case Stance::HIT:
+					if (canmove)
+					{
+						double KBFORCE = phobj.onground ? 0.2 : 0.1;
+						phobj.hforce = flip ? -KBFORCE : KBFORCE;
+					}
 
-				break;
-			case Stance::JUMP:
-				phobj.vforce = -5.0;
-				break;
+					break;
+				case Stance::JUMP:
+					phobj.vforce = -5.0;
+					break;
 			}
 
 			physics.move_object(phobj);
@@ -240,15 +244,15 @@ namespace ms
 
 				switch (stance)
 				{
-				case Stance::HIT:
-					next = counter > 200;
-					break;
-				case Stance::JUMP:
-					next = phobj.onground;
-					break;
-				default:
-					next = aniend && counter > 200;
-					break;
+					case Stance::HIT:
+						next = counter > 200;
+						break;
+					case Stance::JUMP:
+						next = phobj.onground;
+						break;
+					default:
+						next = aniend && counter > 200;
+						break;
 				}
 
 				if (next)
@@ -274,36 +278,36 @@ namespace ms
 		{
 			switch (stance)
 			{
-			case Stance::HIT:
-			case Stance::STAND:
-				set_stance(Stance::MOVE);
-				flip = randomizer.next_bool();
-				break;
-			case Stance::MOVE:
-			case Stance::JUMP:
-				if (canjump && phobj.onground && randomizer.below(0.25f))
-				{
-					set_stance(Stance::JUMP);
-				}
-				else
-				{
-					switch (randomizer.next_int(3))
+				case Stance::HIT:
+				case Stance::STAND:
+					set_stance(Stance::MOVE);
+					flip = randomizer.next_bool();
+					break;
+				case Stance::MOVE:
+				case Stance::JUMP:
+					if (canjump && phobj.onground && randomizer.below(0.25f))
 					{
-					case 0:
-						set_stance(Stance::STAND);
-						break;
-					case 1:
-						set_stance(Stance::MOVE);
-						flip = false;
-						break;
-					case 2:
-						set_stance(Stance::MOVE);
-						flip = true;
-						break;
+						set_stance(Stance::JUMP);
 					}
-				}
+					else
+					{
+						switch (randomizer.next_int(3))
+						{
+							case 0:
+								set_stance(Stance::STAND);
+								break;
+							case 1:
+								set_stance(Stance::MOVE);
+								flip = false;
+								break;
+							case 2:
+								set_stance(Stance::MOVE);
+								flip = true;
+								break;
+						}
+					}
 
-				break;
+					break;
 			}
 
 			if (stance == Stance::MOVE && canfly)
@@ -389,18 +393,18 @@ namespace ms
 	{
 		switch (animation)
 		{
-		case 0:
-			deactivate();
-			break;
-		case 1:
-			dying = true;
+			case 0:
+				deactivate();
+				break;
+			case 1:
+				dying = true;
 
-			apply_death();
-			break;
-		case 2:
-			fading = true;
-			dying = true;
-			break;
+				apply_death();
+				break;
+			case 2:
+				fading = true;
+				dying = true;
+				break;
 		}
 	}
 
@@ -434,17 +438,17 @@ namespace ms
 
 		switch (pos)
 		{
-		case 0:
-			shift = get_head_position(Point<int16_t>());
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
+			case 0:
+				shift = get_head_position(Point<int16_t>());
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
 		}
 
 		effects.add(animation, DrawArgument(shift, f), z);
@@ -496,19 +500,21 @@ namespace ms
 
 		switch (damagetype)
 		{
-		case Attack::DamageType::DMG_WEAPON:
-		case Attack::DamageType::DMG_MAGIC:
-			mindamage = calculate_mindamage(leveldelta, attack.mindamage, damagetype == Attack::DamageType::DMG_MAGIC);
-			maxdamage = calculate_maxdamage(leveldelta, attack.maxdamage, damagetype == Attack::DamageType::DMG_MAGIC);
-			hitchance = calculate_hitchance(leveldelta, attack.accuracy);
-			critical = attack.critical;
-			break;
-		case Attack::DamageType::DMG_FIXED:
-			mindamage = attack.fixdamage;
-			maxdamage = attack.fixdamage;
-			hitchance = 1.0f;
-			critical = 0.0f;
-			break;
+			case Attack::DamageType::DMG_WEAPON:
+			case Attack::DamageType::DMG_MAGIC:
+				mindamage = calculate_mindamage(leveldelta, attack.mindamage,
+												damagetype == Attack::DamageType::DMG_MAGIC);
+				maxdamage = calculate_maxdamage(leveldelta, attack.maxdamage,
+												damagetype == Attack::DamageType::DMG_MAGIC);
+				hitchance = calculate_hitchance(leveldelta, attack.accuracy);
+				critical = attack.critical;
+				break;
+			case Attack::DamageType::DMG_FIXED:
+				mindamage = attack.fixdamage;
+				maxdamage = attack.fixdamage;
+				hitchance = 1.0f;
+				critical = 0.0f;
+				break;
 		}
 
 		std::vector<std::pair<int32_t, bool>> result(attack.hitcount);

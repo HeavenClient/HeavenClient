@@ -36,6 +36,6 @@ namespace ms
 			LENGTH
 		};
 
-		constexpr Enumeration<Id> IDs;
+		constexpr Enumeration <Id> IDs;
 	}
 }

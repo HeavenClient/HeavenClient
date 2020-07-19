@@ -29,9 +29,11 @@ namespace ms
 
 		// Update animation
 		void update();
-		// Draw the object at the specified position
+
+		// Draw the obj at the specified position.
 		void draw(Point<int16_t> viewpos, float inter) const;
-		// Return the depth of the object
+
+		// Return depth of the obj.
 		uint8_t getz() const;
 
 	private:

@@ -25,7 +25,8 @@ namespace ms
 			iter.second = nullptr;
 	}
 
-	void CharEquips::draw(EquipSlot::Id slot, Stance::Id stance, Clothing::Layer layer, uint8_t frame, const DrawArgument& args) const
+	void CharEquips::draw(EquipSlot::Id slot, Stance::Id stance, Clothing::Layer layer, uint8_t frame,
+						  const DrawArgument& args) const
 	{
 		if (const Clothing* cloth = clothes[slot])
 			cloth->draw(stance, layer, frame, args);
@@ -44,7 +45,7 @@ namespace ms
 				std::piecewise_construct,
 				std::forward_as_tuple(itemid),
 				std::forward_as_tuple(itemid, drawinfo)
-				).first;
+			).first;
 		}
 
 		const Clothing& cloth = iter->second;
@@ -118,14 +119,14 @@ namespace ms
 		{
 			switch (stance)
 			{
-			case Stance::Id::STAND1:
-			case Stance::Id::STAND2:
-				return weapon->get_stand();
-			case Stance::Id::WALK1:
-			case Stance::Id::WALK2:
-				return weapon->get_walk();
-			default:
-				return stance;
+				case Stance::Id::STAND1:
+				case Stance::Id::STAND2:
+					return weapon->get_stand();
+				case Stance::Id::WALK1:
+				case Stance::Id::WALK2:
+					return weapon->get_walk();
+				default:
+					return stance;
 			}
 		}
 		else

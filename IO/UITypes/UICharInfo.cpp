@@ -24,12 +24,16 @@
 #include "../../Net/Packets/PlayerInteractionPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UICharInfo::UICharInfo(int32_t cid) : UIDragElement<PosCHARINFO>(), is_loading(true), timestep(Constants::TIMESTEP), personality_enabled(false), collect_enabled(false), damage_enabled(false), item_enabled(false)
+	UICharInfo::UICharInfo(int32_t cid)
+		: UIDragElement<PosCHARINFO>(), is_loading(true), timestep(Constants::TIMESTEP), personality_enabled(
+		false), collect_enabled(false), damage_enabled(false), item_enabled(false)
 	{
 		nl::node close = nl::nx::ui["Basic.img"]["BtClose3"];
 		nl::node UserInfo = nl::nx::ui["UIWindow2.img"]["UserInfo"];
@@ -209,7 +213,9 @@ namespace ms
 			for (size_t i = 0; i < 15; i++)
 			{
 				div_t div = std::div(i, 5);
-				default_medal.draw(position + bottom_window_adj + Point<int16_t>(61, 66) + Point<int16_t>(38 * div.rem, 38 * div.quot), inter);
+				default_medal.draw(
+					position + bottom_window_adj + Point<int16_t>(61, 66) + Point<int16_t>(38 * div.rem, 38 * div.quot),
+					inter);
 			}
 
 			for (size_t i = Buttons::BtArrayGet; i < Buttons::BtFAQ; i++)
@@ -256,29 +262,29 @@ namespace ms
 	{
 		switch (buttonid)
 		{
-		case Buttons::BtClose:
-			deactivate();
-			return Button::State::NORMAL;
-		case Buttons::BtFamily:
-		case Buttons::BtParty:
-			break;
-		case Buttons::BtItem:
-			show_right_window(buttonid);
-			return Button::State::NORMAL;
-		case Buttons::BtCollect:
-		case Buttons::BtPersonality:
-		case Buttons::BtRide:
-		case Buttons::BtPet:
-		case Buttons::BtDamage:
-			show_bottom_window(buttonid);
-			return Button::State::NORMAL;
-		case Buttons::BtPopDown:
-		case Buttons::BtPopUp:
-		case Buttons::BtTrad:
-		case Buttons::BtFriend:
-		case Buttons::BtVisit:
-		default:
-			break;
+			case Buttons::BtClose:
+				deactivate();
+				return Button::State::NORMAL;
+			case Buttons::BtFamily:
+			case Buttons::BtParty:
+				break;
+			case Buttons::BtItem:
+				show_right_window(buttonid);
+				return Button::State::NORMAL;
+			case Buttons::BtCollect:
+			case Buttons::BtPersonality:
+			case Buttons::BtRide:
+			case Buttons::BtPet:
+			case Buttons::BtDamage:
+				show_bottom_window(buttonid);
+				return Button::State::NORMAL;
+			case Buttons::BtPopDown:
+			case Buttons::BtPopUp:
+			case Buttons::BtTrad:
+			case Buttons::BtFriend:
+			case Buttons::BtVisit:
+			default:
+				break;
 		}
 
 		return Button::State::DISABLED;
@@ -321,7 +327,8 @@ namespace ms
 			right_bounds.shift(right_window_adj);
 		}
 
-		return bounds.contains(cursorpos) || farm_bounds.contains(cursorpos) || bottom_bounds.contains(cursorpos) || right_bounds.contains(cursorpos);
+		return bounds.contains(cursorpos) || farm_bounds.contains(cursorpos) || bottom_bounds.contains(cursorpos) ||
+			   right_bounds.contains(cursorpos);
 	}
 
 	void UICharInfo::send_key(int32_t keycode, bool pressed, bool escape)
@@ -335,7 +342,8 @@ namespace ms
 		return TYPE;
 	}
 
-	void UICharInfo::update_stats(int32_t character_id, int16_t job_id, int8_t lv, int16_t f, std::string g, std::string a)
+	void
+	UICharInfo::update_stats(int32_t character_id, int16_t job_id, int8_t lv, int16_t f, std::string g, std::string a)
 	{
 		int32_t player_id = Stage::get().get_player().get_oid();
 
@@ -368,15 +376,15 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::BtPersonality:
-			personality_enabled = true;
-			break;
-		case Buttons::BtCollect:
-			collect_enabled = true;
-			break;
-		case Buttons::BtDamage:
-			damage_enabled = true;
-			break;
+			case Buttons::BtPersonality:
+				personality_enabled = true;
+				break;
+			case Buttons::BtCollect:
+				collect_enabled = true;
+				break;
+			case Buttons::BtDamage:
+				damage_enabled = true;
+				break;
 		}
 	}
 
@@ -386,9 +394,9 @@ namespace ms
 
 		switch (buttonid)
 		{
-		case Buttons::BtItem:
-			item_enabled = true;
-			break;
+			case Buttons::BtItem:
+				item_enabled = true;
+				break;
 		}
 	}
 }

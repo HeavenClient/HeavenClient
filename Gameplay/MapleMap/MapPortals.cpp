@@ -22,7 +22,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -40,7 +42,7 @@ namespace ms
 			std::string name = sub["pn"];
 			std::string target_name = sub["tn"];
 			int32_t target_id = sub["tm"];
-			Point<int16_t> position = { sub["x"], sub["y"] };
+			Point<int16_t> position = {sub["x"], sub["y"]};
 
 			const Animation* animation = &animations[type];
 			bool intramap = target_id == mapid;
@@ -72,10 +74,10 @@ namespace ms
 			Portal& portal = iter.second;
 			switch (portal.get_type())
 			{
-			case Portal::HIDDEN:
-			case Portal::TOUCH:
-				portal.update(playerpos);
-				break;
+				case Portal::HIDDEN:
+				case Portal::TOUCH:
+					portal.update(playerpos);
+					break;
 			}
 		}
 

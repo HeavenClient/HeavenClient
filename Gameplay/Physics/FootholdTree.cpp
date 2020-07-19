@@ -88,11 +88,12 @@ namespace ms
 			}
 		}
 
-		walls = { leftw + 25, rightw - 25 };
-		borders = { topb - 300, botb + 100 };
+		walls = {leftw + 25, rightw - 25};
+		borders = {topb - 300, botb + 100};
 	}
 
-	FootholdTree::FootholdTree() {}
+	FootholdTree::FootholdTree()
+	{}
 
 	void FootholdTree::limit_movement(PhysicsObject& phobj) const
 	{
@@ -126,7 +127,7 @@ namespace ms
 			auto ground = Range<double>(
 				get_fh(phobj.fhid).ground_below(phobj.crnt_x()),
 				get_fh(phobj.fhid).ground_below(phobj.next_x())
-				);
+			);
 
 			bool collision = crnt_y <= ground.first() && next_y >= ground.second();
 

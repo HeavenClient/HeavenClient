@@ -20,7 +20,9 @@
 #include "Body.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -84,13 +86,22 @@ namespace ms
 					body_positions[stance][frame] = bodyshiftmap[Body::Layer::BODY]["navel"];
 
 					arm_positions[stance][frame] = bodyshiftmap.count(Body::Layer::ARM) ?
-						(bodyshiftmap[Body::Layer::ARM]["hand"] - bodyshiftmap[Body::Layer::ARM]["navel"] + bodyshiftmap[Body::Layer::BODY]["navel"]) :
-						(bodyshiftmap[Body::Layer::ARM_OVER_HAIR]["hand"] - bodyshiftmap[Body::Layer::ARM_OVER_HAIR]["navel"] + bodyshiftmap[Body::Layer::BODY]["navel"]);
+												   (bodyshiftmap[Body::Layer::ARM]["hand"] -
+													bodyshiftmap[Body::Layer::ARM]["navel"] +
+													bodyshiftmap[Body::Layer::BODY]["navel"]) :
+												   (bodyshiftmap[Body::Layer::ARM_OVER_HAIR]["hand"] -
+													bodyshiftmap[Body::Layer::ARM_OVER_HAIR]["navel"] +
+													bodyshiftmap[Body::Layer::BODY]["navel"]);
 
 					hand_positions[stance][frame] = bodyshiftmap[Body::Layer::HAND_BELOW_WEAPON]["handMove"];
-					head_positions[stance][frame] = bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"];
-					face_positions[stance][frame] = bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"] + bodyshiftmap[Body::Layer::HEAD]["brow"];
-					hair_positions[stance][frame] = bodyshiftmap[Body::Layer::HEAD]["brow"] - bodyshiftmap[Body::Layer::HEAD]["neck"] + bodyshiftmap[Body::Layer::BODY]["neck"];
+					head_positions[stance][frame] =
+						bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"];
+					face_positions[stance][frame] =
+						bodyshiftmap[Body::Layer::BODY]["neck"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
+						bodyshiftmap[Body::Layer::HEAD]["brow"];
+					hair_positions[stance][frame] =
+						bodyshiftmap[Body::Layer::HEAD]["brow"] - bodyshiftmap[Body::Layer::HEAD]["neck"] +
+						bodyshiftmap[Body::Layer::BODY]["neck"];
 				}
 			}
 		}

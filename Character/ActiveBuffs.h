@@ -28,19 +28,20 @@ namespace ms
 	class ActiveBuff
 	{
 	public:
-		virtual ~ActiveBuff() {}
+		virtual ~ActiveBuff()
+		{}
 
 		virtual void apply_to(CharStats& stats, int16_t value) const = 0;
 	};
 
-	template<EquipStat::Id STAT>
+	template <EquipStat::Id STAT>
 	// Template for buffs which just add their value to a stat
 	class SimpleStatBuff : public ActiveBuff
 	{
 		void apply_to(CharStats& stats, int16_t value) const override;
 	};
 
-	template<EquipStat::Id STAT>
+	template <EquipStat::Id STAT>
 	// Template for buffs which apply an increase by percentage
 	class PercentageStatBuff : public ActiveBuff
 	{
@@ -71,7 +72,7 @@ namespace ms
 		// Register all buffs effects
 		ActiveBuffs();
 
-		// Return the buff effect associated with the buff stat
+		// Return the buff effect associated with the buff stat.
 		void apply_buff(CharStats& stats, Buffstat::Id stat, int16_t value) const;
 
 	private:

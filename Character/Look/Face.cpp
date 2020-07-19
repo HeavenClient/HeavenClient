@@ -20,7 +20,9 @@
 #include <iostream>
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -38,32 +40,32 @@ namespace ms
 	}
 
 	const EnumMap<Expression::Id, std::string> Expression::names =
-	{
-		"default",
-		"blink",
-		"hit",
-		"smile",
-		"troubled",
-		"cry",
-		"angry",
-		"bewildered",
-		"stunned",
-		"blaze",
-		"bowing",
-		"cheers",
-		"chu",
-		"dam",
-		"despair",
-		"glitter",
-		"hot",
-		"hum",
-		"love",
-		"oops",
-		"pain",
-		"shine",
-		"vomit",
-		"wink"
-	};
+		{
+			"default",
+			"blink",
+			"hit",
+			"smile",
+			"troubled",
+			"cry",
+			"angry",
+			"bewildered",
+			"stunned",
+			"blaze",
+			"bowing",
+			"cheers",
+			"chu",
+			"dam",
+			"despair",
+			"glitter",
+			"hot",
+			"hum",
+			"love",
+			"oops",
+			"pain",
+			"shine",
+			"vomit",
+			"wink"
+		};
 
 	Face::Face(int32_t faceid)
 	{
@@ -88,7 +90,7 @@ namespace ms
 			}
 		}
 
-		name = nl::nx::string["Eqp.img"]["Eqp"]["Face"][std::to_string(faceid)]["name"];
+		name = std::string(nl::nx::string["Eqp.img"]["Eqp"]["Face"][std::to_string(faceid)]["name"]);
 	}
 
 	void Face::draw(Expression::Id expression, uint8_t frame, const DrawArgument& args) const

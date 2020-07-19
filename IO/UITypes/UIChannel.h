@@ -33,9 +33,11 @@ namespace ms
 		UIChannel();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
+
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
 
 		UIElement::Type get_type() const override;
@@ -45,7 +47,9 @@ namespace ms
 
 	private:
 		void cancel();
+
 		void change_channel();
+
 		void update_selected_channel_position();
 
 		enum Buttons : uint16_t

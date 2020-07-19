@@ -25,10 +25,27 @@
 
 namespace ms
 {
-	Combat::Combat(Player& in_player, MapChars& in_chars, MapMobs& in_mobs, MapReactors& in_reactors) : player(in_player), chars(in_chars), mobs(in_mobs), reactors(in_reactors),
-		attackresults([&](const AttackResult& attack) { apply_attack(attack); }),
-		bulleteffects([&](const BulletEffect& effect) { apply_bullet_effect(effect); }),
-		damageeffects([&](const DamageEffect& effect) { apply_damage_effect(effect); }) {}
+	Combat::Combat(Player& in_player, MapChars& in_chars, MapMobs& in_mobs, MapReactors& in_reactors) : player(
+			in_player), chars(in_chars), mobs(in_mobs), reactors(in_reactors),
+																										attackresults(
+																												[&](const AttackResult& attack)
+																												{
+																													apply_attack(
+																															attack);
+																												}),
+																										bulleteffects(
+																												[&](const BulletEffect& effect)
+																												{
+																													apply_bullet_effect(
+																															effect);
+																												}),
+																										damageeffects(
+																												[&](const DamageEffect& effect)
+																												{
+																													apply_damage_effect(
+																															effect);
+																												})
+	{}
 
 	void Combat::draw(double viewx, double viewy, float alpha) const
 	{
@@ -46,32 +63,32 @@ namespace ms
 		damageeffects.update();
 
 		bullets.remove_if(
-			[&](BulletEffect& mb)
-			{
-				int32_t target_oid = mb.damageeffect.target_oid;
-
-				if (mobs.contains(target_oid))
+				[&](BulletEffect& mb)
 				{
-					mb.target = mobs.get_mob_head_position(target_oid);
-					bool apply = mb.bullet.update(mb.target);
+					int32_t target_oid = mb.damageeffect.target_oid;
 
-					if (apply)
-						apply_damage_effect(mb.damageeffect);
+					if (mobs.contains(target_oid))
+					{
+						mb.target = mobs.get_mob_head_position(target_oid);
+						bool apply = mb.bullet.update(mb.target);
 
-					return apply;
+						if (apply)
+							apply_damage_effect(mb.damageeffect);
+
+						return apply;
+					}
+					else
+					{
+						return mb.bullet.update(mb.target);
+					}
 				}
-				else
-				{
-					return mb.bullet.update(mb.target);
-				}
-			}
 		);
 
 		damagenumbers.remove_if(
-			[](DamageNumber& dn)
-			{
-				return dn.update();
-			}
+				[](DamageNumber& dn)
+				{
+					return dn.update();
+				}
 		);
 	}
 
@@ -86,12 +103,12 @@ namespace ms
 
 		switch (reason)
 		{
-		case SpecialMove::ForbidReason::FBR_NONE:
-			apply_move(move);
-			break;
-		default:
-			ForbidSkillMessage(reason, weapontype).drop();
-			break;
+			case SpecialMove::ForbidReason::FBR_NONE:
+				apply_move(move);
+				break;
+			default:
+				ForbidSkillMessage(reason, weapontype).drop();
+				break;
 		}
 	}
 
@@ -115,19 +132,19 @@ namespace ms
 			if (attack.toleft)
 			{
 				range = {
-					origin.x() + hrange,
-					origin.x() + range.right(),
-					origin.y() + range.top(),
-					origin.y() + range.bottom()
+						origin.x() + hrange,
+						origin.x() + range.right(),
+						origin.y() + range.top(),
+						origin.y() + range.bottom()
 				};
 			}
 			else
 			{
 				range = {
-					origin.x() - range.right(),
-					origin.x() - hrange,
-					origin.y() + range.top(),
-					origin.y() + range.bottom()
+						origin.x() - range.right(),
+						origin.x() - hrange,
+						origin.y() + range.top(),
+						origin.y() + range.bottom()
 				};
 			}
 
@@ -165,7 +182,9 @@ namespace ms
 		}
 	}
 
-	std::vector<int32_t> Combat::find_closest(MapObjects* objs, Rectangle<int16_t> range, Point<int16_t> origin, uint8_t objcount, bool use_mobs) const
+	std::vector<int32_t>
+	Combat::find_closest(MapObjects* objs, Rectangle<int16_t> range, Point<int16_t> origin, uint8_t objcount,
+						 bool use_mobs) const
 	{
 		std::multimap<uint16_t, int32_t> distances;
 
@@ -213,12 +232,12 @@ namespace ms
 	{
 		switch (move.get_id())
 		{
-		case SkillId::Id::TELEPORT_FP:
-		case SkillId::Id::IL_TELEPORT:
-		case SkillId::Id::PRIEST_TELEPORT:
-		case SkillId::Id::FLASH_JUMP:
-		default:
-			break;
+			case SkillId::Id::TELEPORT_FP:
+			case SkillId::Id::IL_TELEPORT:
+			case SkillId::Id::PRIEST_TELEPORT:
+			case SkillId::Id::FLASH_JUMP:
+			default:
+				break;
 		}
 	}
 
@@ -226,13 +245,13 @@ namespace ms
 	{
 		switch (move.get_id())
 		{
-		case SkillId::Id::RUSH_HERO:
-		case SkillId::Id::RUSH_PALADIN:
-		case SkillId::Id::RUSH_DK:
-			apply_rush(result);
-			break;
-		default:
-			break;
+			case SkillId::Id::RUSH_HERO:
+			case SkillId::Id::RUSH_PALADIN:
+			case SkillId::Id::RUSH_DK:
+				apply_rush(result);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -297,18 +316,18 @@ namespace ms
 	void Combat::extract_effects(const Char& user, const SpecialMove& move, const AttackResult& result)
 	{
 		AttackUser attackuser = {
-			user.get_skilllevel(move.get_id()),
-			user.get_level(),
-			user.is_twohanded(),
-			!result.toleft
+				user.get_skilllevel(move.get_id()),
+				user.get_level(),
+				user.is_twohanded(),
+				!result.toleft
 		};
 
 		if (result.bullet)
 		{
 			Bullet bullet{
-				move.get_bullet(user, result.bullet),
-				user.get_position(),
-				result.toleft
+					move.get_bullet(user, result.bullet),
+					user.get_position(),
+					result.toleft
 			};
 
 			for (auto& line : result.damagelines)
@@ -325,12 +344,12 @@ namespace ms
 					for (auto& number : numbers)
 					{
 						DamageEffect effect{
-							attackuser,
-							number,
-							line.second[i].first,
-							result.toleft,
-							oid,
-							move.get_id()
+								attackuser,
+								number,
+								line.second[i].first,
+								result.toleft,
+								oid,
+								move.get_id()
 						};
 
 						bulleteffects.emplace(user.get_attackdelay(i), std::move(effect), bullet, head);
@@ -346,7 +365,7 @@ namespace ms
 
 				for (uint8_t i = 0; i < result.hitcount; i++)
 				{
-					DamageEffect effect{ attackuser, {}, 0, false, 0, 0 };
+					DamageEffect effect{attackuser, {}, 0, false, 0, 0};
 					bulleteffects.emplace(user.get_attackdelay(i), std::move(effect), bullet, target);
 				}
 			}
@@ -366,14 +385,14 @@ namespace ms
 					for (auto& number : numbers)
 					{
 						damageeffects.emplace(
-							user.get_attackdelay(i),
-							attackuser,
-							number,
-							line.second[i].first,
-							result.toleft,
-							oid,
-							move.get_id()
-							);
+								user.get_attackdelay(i),
+								attackuser,
+								number,
+								line.second[i].first,
+								result.toleft,
+								oid,
+								move.get_id()
+						);
 
 						i++;
 					}
@@ -382,7 +401,8 @@ namespace ms
 		}
 	}
 
-	std::vector<DamageNumber> Combat::place_numbers(int32_t oid, const std::vector<std::pair<int32_t, bool>>& damagelines)
+	std::vector<DamageNumber>
+	Combat::place_numbers(int32_t oid, const std::vector<std::pair<int32_t, bool>>& damagelines)
 	{
 		std::vector<DamageNumber> numbers;
 		int16_t head = mobs.get_mob_head_position(oid).y();

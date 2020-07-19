@@ -75,52 +75,52 @@ namespace ms
 
 			switch (mod.mode)
 			{
-			case Inventory::Modification::ADD:
-				ItemParser::parse_item(recv, mod.type, mod.pos, inventory);
+				case Inventory::Modification::ADD:
+					ItemParser::parse_item(recv, mod.type, mod.pos, inventory);
 
-				if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
+					if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
+					{
+						int16_t count_now = inventory.get_item_count(mod.type, mod.pos);
+						keyconfig->update_item_count(mod.type, mod.pos, count_now);
+					}
+
+					break;
+				case Inventory::Modification::CHANGECOUNT:
 				{
-					int16_t count_now = inventory.get_item_count(mod.type, mod.pos);
-					keyconfig->update_item_count(mod.type, mod.pos, count_now);
-				}
+					mod.arg = recv.read_short();
 
-				break;
-			case Inventory::Modification::CHANGECOUNT:
-			{
-				mod.arg = recv.read_short();
-
-				int16_t count_before = inventory.get_item_count(mod.type, mod.pos);
-				int16_t count_now = mod.arg;
-
-				inventory.modify(mod.type, mod.pos, mod.mode, mod.arg, Inventory::Movement::MOVE_NONE);
-
-				if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
-					keyconfig->update_item_count(mod.type, mod.pos, count_now - count_before);
-
-				if (count_before < count_now)
-					mod.mode = Inventory::Modification::ADDCOUNT;
-			}
-			break;
-			case Inventory::Modification::SWAP:
-				mod.arg = recv.read_short();
-				break;
-			case Inventory::Modification::REMOVE:
-				if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
-				{
 					int16_t count_before = inventory.get_item_count(mod.type, mod.pos);
-					keyconfig->update_item_count(mod.type, mod.pos, -1 * count_before);
-				}
+					int16_t count_now = mod.arg;
 
-				inventory.modify(mod.type, mod.pos, mod.mode, mod.arg, Inventory::Movement::MOVE_INTERNAL);
-				break;
+					inventory.modify(mod.type, mod.pos, mod.mode, mod.arg, Inventory::Movement::MOVE_NONE);
+
+					if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
+						keyconfig->update_item_count(mod.type, mod.pos, count_now - count_before);
+
+					if (count_before < count_now)
+						mod.mode = Inventory::Modification::ADDCOUNT;
+				}
+					break;
+				case Inventory::Modification::SWAP:
+					mod.arg = recv.read_short();
+					break;
+				case Inventory::Modification::REMOVE:
+					if (auto keyconfig = UI::get().get_element<UIKeyConfig>())
+					{
+						int16_t count_before = inventory.get_item_count(mod.type, mod.pos);
+						keyconfig->update_item_count(mod.type, mod.pos, -1 * count_before);
+					}
+
+					inventory.modify(mod.type, mod.pos, mod.mode, mod.arg, Inventory::Movement::MOVE_INTERNAL);
+					break;
 			}
 
 			mods.push_back(mod);
 		}
 
 		Inventory::Movement move = (recv.length() > 0) ?
-			Inventory::movementbyvalue(recv.read_byte()) :
-			Inventory::Movement::MOVE_INTERNAL;
+								   Inventory::movementbyvalue(recv.read_byte()) :
+								   Inventory::Movement::MOVE_INTERNAL;
 
 		for (const Mod& mod : mods)
 		{
@@ -135,52 +135,52 @@ namespace ms
 
 			switch (move)
 			{
-			case Inventory::Movement::MOVE_INTERNAL:
-				switch (mod.type)
-				{
-				case InventoryType::Id::EQUIPPED:
-					if (eqinvent)
-						eqinvent->modify(mod.pos, mod.mode, mod.arg);
+				case Inventory::Movement::MOVE_INTERNAL:
+					switch (mod.type)
+					{
+						case InventoryType::Id::EQUIPPED:
+							if (eqinvent)
+								eqinvent->modify(mod.pos, mod.mode, mod.arg);
 
-					Stage::get().get_player().change_equip(-mod.pos);
-					Stage::get().get_player().change_equip(-mod.arg);
+							Stage::get().get_player().change_equip(-mod.pos);
+							Stage::get().get_player().change_equip(-mod.arg);
+							break;
+						case InventoryType::Id::EQUIP:
+						case InventoryType::Id::USE:
+						case InventoryType::Id::SETUP:
+						case InventoryType::Id::ETC:
+						case InventoryType::Id::CASH:
+							if (itinvent)
+								itinvent->modify(mod.type, mod.pos, mod.mode, mod.arg);
+
+							break;
+					}
+
 					break;
-				case InventoryType::Id::EQUIP:
-				case InventoryType::Id::USE:
-				case InventoryType::Id::SETUP:
-				case InventoryType::Id::ETC:
-				case InventoryType::Id::CASH:
-					if (itinvent)
-						itinvent->modify(mod.type, mod.pos, mod.mode, mod.arg);
+				case Inventory::Movement::MOVE_EQUIP:
+				case Inventory::Movement::MOVE_UNEQUIP:
+					if (mod.pos < 0)
+					{
+						if (eqinvent)
+							eqinvent->modify(-mod.pos, 3, 0);
+
+						if (itinvent)
+							itinvent->modify(InventoryType::Id::EQUIP, mod.arg, mod.mode, 0);
+
+						Stage::get().get_player().change_equip(-mod.pos);
+					}
+					else if (mod.arg < 0)
+					{
+						if (eqinvent)
+							eqinvent->modify(-mod.arg, 0, 0);
+
+						if (itinvent)
+							itinvent->modify(InventoryType::Id::EQUIP, mod.pos, Inventory::Modification::REMOVE, 0);
+
+						Stage::get().get_player().change_equip(-mod.arg);
+					}
 
 					break;
-				}
-
-				break;
-			case Inventory::Movement::MOVE_EQUIP:
-			case Inventory::Movement::MOVE_UNEQUIP:
-				if (mod.pos < 0)
-				{
-					if (eqinvent)
-						eqinvent->modify(-mod.pos, 3, 0);
-
-					if (itinvent)
-						itinvent->modify(InventoryType::Id::EQUIP, mod.arg, mod.mode, 0);
-
-					Stage::get().get_player().change_equip(-mod.pos);
-				}
-				else if (mod.arg < 0)
-				{
-					if (eqinvent)
-						eqinvent->modify(-mod.arg, 0, 0);
-
-					if (itinvent)
-						itinvent->modify(InventoryType::Id::EQUIP, mod.pos, Inventory::Modification::REMOVE, 0);
-
-					Stage::get().get_player().change_equip(-mod.arg);
-				}
-
-				break;
 			}
 		}
 

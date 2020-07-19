@@ -20,7 +20,9 @@
 #include "../../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -59,14 +61,14 @@ namespace ms
 
 						switch (layer)
 						{
-						case Body::Layer::HAND_BELOW_WEAPON:
-							shift = drawinfo.get_hand_position(stance, frame);
-							shift -= partnode["map"]["handMove"];
-							break;
-						default:
-							shift = drawinfo.get_body_position(stance, frame);
-							shift -= partnode["map"]["navel"];
-							break;
+							case Body::Layer::HAND_BELOW_WEAPON:
+								shift = drawinfo.get_hand_position(stance, frame);
+								shift -= partnode["map"]["handMove"];
+								break;
+							default:
+								shift = drawinfo.get_body_position(stance, frame);
+								shift -= partnode["map"]["navel"];
+								break;
 						}
 
 						stances[stance][layer]
@@ -89,18 +91,18 @@ namespace ms
 		constexpr size_t NUM_SKINTYPES = 12;
 
 		constexpr char* skintypes[NUM_SKINTYPES] =
-		{
-			"Light",
-			"Tan",
-			"Dark",
-			"Pale",
-			"Blue",
-			"Green",
-			"", "", "",
-			"Grey",
-			"Pink",
-			"Red"
-		};
+			{
+				"Light",
+				"Tan",
+				"Dark",
+				"Pale",
+				"Blue",
+				"Green",
+				"", "", "",
+				"Grey",
+				"Pink",
+				"Red"
+			};
 
 		size_t index = skin;
 		name = (index < NUM_SKINTYPES) ? skintypes[index] : "";
@@ -137,17 +139,17 @@ namespace ms
 	}
 
 	const std::unordered_map<std::string, Body::Layer> Body::layers_by_name =
-	{
-		{ "body",						Body::Layer::BODY						},
-		{ "backBody",					Body::Layer::BODY						},
-		{ "arm",						Body::Layer::ARM						},
-		{ "armBelowHead",				Body::Layer::ARM_BELOW_HEAD				},
-		{ "armBelowHeadOverMailChest",	Body::Layer::ARM_BELOW_HEAD_OVER_MAIL	},
-		{ "armOverHair",				Body::Layer::ARM_OVER_HAIR				},
-		{ "armOverHairBelowWeapon",		Body::Layer::ARM_OVER_HAIR_BELOW_WEAPON	},
-		{ "handBelowWeapon",			Body::Layer::HAND_BELOW_WEAPON			},
-		{ "handOverHair",				Body::Layer::HAND_OVER_HAIR				},
-		{ "handOverWeapon",				Body::Layer::HAND_OVER_WEAPON			},
-		{ "head",						Body::Layer::HEAD }
-	};
+		{
+			{"body",                      Body::Layer::BODY},
+			{"backBody",                  Body::Layer::BODY},
+			{"arm",                       Body::Layer::ARM},
+			{"armBelowHead",              Body::Layer::ARM_BELOW_HEAD},
+			{"armBelowHeadOverMailChest", Body::Layer::ARM_BELOW_HEAD_OVER_MAIL},
+			{"armOverHair",               Body::Layer::ARM_OVER_HAIR},
+			{"armOverHairBelowWeapon",    Body::Layer::ARM_OVER_HAIR_BELOW_WEAPON},
+			{"handBelowWeapon",           Body::Layer::HAND_BELOW_WEAPON},
+			{"handOverHair",              Body::Layer::HAND_OVER_HAIR},
+			{"handOverWeapon",            Body::Layer::HAND_OVER_WEAPON},
+			{"head",                      Body::Layer::HEAD}
+		};
 }

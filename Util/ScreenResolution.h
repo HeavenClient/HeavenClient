@@ -19,8 +19,16 @@
 
 #include "../Configuration.h"
 
+#ifdef _WIN32
 #include <windef.h>
 #include <WinUser.h>
+#elif defined(__linux__)
+
+#include <X11/Xlib.h>
+
+#else defined(__APPLE__)
+#include <CoreGraphics/CGDisplayConfiguration.h>
+#endif
 
 namespace ms
 {
@@ -29,17 +37,34 @@ namespace ms
 	public:
 		ScreenResolution()
 		{
+#ifdef _WIN32
 			RECT desktop;
 
 			// Get a handle to the desktop window
 			const HWND hDesktop = GetDesktopWindow();
 
-			// Get the size of screen to the variable desktop
+			//Get the size of screen to the variable desktop
 			GetWindowRect(hDesktop, &desktop);
 
 			// The top left corner will have coordinates (0, 0) and the bottom right corner will have coordinates (horizontal, vertical)
 			Configuration::get().set_max_width(desktop.right);
 			Configuration::get().set_max_height(desktop.bottom);
+#elif defined(__linux__)
+			Display* disp = XOpenDisplay(NULL);
+			Screen* scrn = DefaultScreenOfDisplay(disp);
+			int height = scrn->height;
+			int width = scrn->width;
+
+			Configuration::get().set_max_width(width);
+			Configuration::get().set_max_height(height);
+#elif defined(__APPLE__)
+			auto mainDisplayId = CGMainDisplayID();
+			int width = CGDisplayPixelsWide(mainDisplayId);
+			int height = CGDisplayPixelsHigh(mainDisplayId);
+
+			Configuration::get().set_max_width(width);
+			Configuration::get().set_max_height(height);
+#endif
 		}
 	};
 }

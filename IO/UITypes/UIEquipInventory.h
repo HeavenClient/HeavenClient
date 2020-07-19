@@ -34,11 +34,15 @@ namespace ms
 		void draw(float inter) const override;
 
 		void toggle_active() override;
+
 		bool send_icon(const Icon& icon, Point<int16_t> position) override;
 
 		void doubleclick(Point<int16_t> position) override;
+
 		bool is_in_range(Point<int16_t> cursorpos) const override;
+
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -50,10 +54,15 @@ namespace ms
 
 	private:
 		void show_equip(EquipSlot::Id slot);
+
 		void clear_tooltip();
+
 		void load_icons();
+
 		void update_slot(EquipSlot::Id slot);
+
 		EquipSlot::Id slot_by_position(Point<int16_t> position) const;
+
 		void change_tab(uint16_t tabid);
 
 		class EquipIcon : public Icon::Type
@@ -62,10 +71,17 @@ namespace ms
 			EquipIcon(int16_t source);
 
 			void drop_on_stage() const override;
+
 			void drop_on_equips(EquipSlot::Id slot) const override;
+
 			bool drop_on_items(InventoryType::Id tab, EquipSlot::Id eqslot, int16_t slot, bool equip) const override;
-			void drop_on_bindings(Point<int16_t>, bool) const override {}
-			void set_count(int16_t) override {}
+
+			void drop_on_bindings(Point<int16_t>, bool) const override
+			{}
+
+			void set_count(int16_t) override
+			{}
+
 			Icon::IconType get_type() override;
 
 		private:

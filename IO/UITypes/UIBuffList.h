@@ -29,6 +29,7 @@ namespace ms
 		BuffIcon(int32_t buff, int32_t dur);
 
 		void draw(Point<int16_t> position, float alpha) const;
+
 		bool update();
 
 	private:
@@ -53,7 +54,9 @@ namespace ms
 		UIBuffList();
 
 		void draw(float inter) const override;
+
 		void update() override;
+
 		void update_screen(int16_t new_width, int16_t new_height) override;
 
 		Cursor::State send_cursor(bool pressed, Point<int16_t> position) override;

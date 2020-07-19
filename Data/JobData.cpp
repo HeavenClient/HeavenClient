@@ -20,7 +20,9 @@
 #include "../Util/Misc.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -33,7 +35,7 @@ namespace ms
 
 		icon = src["info"]["icon"];
 
-		name = strsrc["bookName"];
+		name = std::string(strsrc["bookName"]);
 
 		for (nl::node sub : src["skill"])
 		{

@@ -29,7 +29,9 @@ namespace ms
 		ScrollingNotice();
 
 		void setnotice(std::string notice);
+
 		void draw(float alpha) const;
+
 		void update();
 
 	private:

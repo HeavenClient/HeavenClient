@@ -28,9 +28,11 @@ namespace ms
 	class PassiveBuff
 	{
 	public:
-		virtual ~PassiveBuff() {}
+		virtual ~PassiveBuff()
+		{}
 
 		virtual bool is_applicable(CharStats& stats, nl::node level) const = 0;
+
 		virtual void apply_to(CharStats& stats, nl::node level) const = 0;
 	};
 
@@ -49,11 +51,12 @@ namespace ms
 	};
 
 	template <Weapon::Type...W>
-	// Buff for Mastery skills
+	// Buff for Mastery skills.
 	class WeaponMasteryBuff : public PassiveBuff
 	{
 	public:
 		bool is_applicable(CharStats& stats, nl::node level) const override;
+
 		void apply_to(CharStats& stats, nl::node level) const override;
 	};
 
@@ -69,6 +72,7 @@ namespace ms
 	{
 	public:
 		bool is_applicable(CharStats& stats, nl::node level) const override;
+
 		void apply_to(CharStats& stats, nl::node level) const override;
 	};
 
@@ -79,7 +83,7 @@ namespace ms
 		// Register all effects
 		PassiveBuffs();
 
-		// Apply a passive skill effect to the character stats
+		// Apply a passive skill effect to the character stats.
 		void apply_buff(CharStats& stats, int32_t skill_id, int32_t skill_level) const;
 
 	private:

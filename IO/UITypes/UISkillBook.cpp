@@ -29,12 +29,15 @@
 #include "../../Net/Packets/PlayerPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	UISkillBook::SkillIcon::SkillIcon(int32_t id) : skill_id(id) {}
+	UISkillBook::SkillIcon::SkillIcon(int32_t id) : skill_id(id)
+	{}
 
 	void UISkillBook::SkillIcon::drop_on_bindings(Point<int16_t> cursorposition, bool remove) const
 	{
@@ -101,7 +104,9 @@ namespace ms
 		return icon.get();
 	}
 
-	UISkillBook::UISkillBook(const CharStats& in_stats, const SkillBook& in_skillbook) : UIDragElement<PosSKILL>(), stats(in_stats), skillbook(in_skillbook), grabbing(false), tab(0), macro_enabled(false), sp_enabled(false)
+	UISkillBook::UISkillBook(const CharStats& in_stats, const SkillBook& in_skillbook)
+		: UIDragElement<PosSKILL>(), stats(in_stats), skillbook(in_skillbook), grabbing(false), tab(0),
+		macro_enabled(false), sp_enabled(false)
 	{
 		nl::node Skill = nl::nx::ui["UIWindow2.img"]["Skill"];
 		nl::node main = Skill["main"];
@@ -129,11 +134,16 @@ namespace ms
 		sp_backgrnd2 = skillPoint["backgrnd2"];
 		sp_backgrnd3 = skillPoint["backgrnd3"];
 
-		buttons[Buttons::BT_CANCLE] = std::make_unique<MapleButton>(skillPoint["BtCancle"], Point<int16_t>(bg_dimensions.x(), 0));
-		buttons[Buttons::BT_OKAY] = std::make_unique<MapleButton>(skillPoint["BtOkay"], Point<int16_t>(bg_dimensions.x(), 0));
-		buttons[Buttons::BT_SPDOWN] = std::make_unique<MapleButton>(skillPoint["BtSpDown"], Point<int16_t>(bg_dimensions.x(), 0));
-		buttons[Buttons::BT_SPMAX] = std::make_unique<MapleButton>(skillPoint["BtSpMax"], Point<int16_t>(bg_dimensions.x(), 0));
-		buttons[Buttons::BT_SPUP] = std::make_unique<MapleButton>(skillPoint["BtSpUp"], Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_CANCLE] = std::make_unique<MapleButton>(skillPoint["BtCancle"],
+																	Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_OKAY] = std::make_unique<MapleButton>(skillPoint["BtOkay"],
+																  Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_SPDOWN] = std::make_unique<MapleButton>(skillPoint["BtSpDown"],
+																	Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_SPMAX] = std::make_unique<MapleButton>(skillPoint["BtSpMax"],
+																   Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_SPUP] = std::make_unique<MapleButton>(skillPoint["BtSpUp"],
+																  Point<int16_t>(bg_dimensions.x(), 0));
 
 		buttons[Buttons::BT_SPDOWN]->set_state(Button::State::DISABLED);
 
@@ -153,7 +163,8 @@ namespace ms
 		macro_backgrnd2 = macro["backgrnd2"];
 		macro_backgrnd3 = macro["backgrnd3"];
 
-		buttons[Buttons::BT_MACRO_OK] = std::make_unique<MapleButton>(macro["BtOK"], Point<int16_t>(bg_dimensions.x(), 0));
+		buttons[Buttons::BT_MACRO_OK] = std::make_unique<MapleButton>(macro["BtOK"],
+																	  Point<int16_t>(bg_dimensions.x(), 0));
 
 		buttons[Buttons::BT_MACRO_OK]->set_state(Button::State::DISABLED);
 
@@ -298,119 +309,119 @@ namespace ms
 
 		switch (id)
 		{
-		case Buttons::BT_CLOSE:
-			close();
-			break;
-		case Buttons::BT_MACRO:
-			set_macro(!macro_enabled);
-			break;
-		case Buttons::BT_CANCLE:
-			set_skillpoint(false);
-			break;
-		case Buttons::BT_OKAY:
-		{
-			int32_t used = std::stoi(sp_used.get_text());
-
-			while (used > 0)
+			case Buttons::BT_CLOSE:
+				close();
+				break;
+			case Buttons::BT_MACRO:
+				set_macro(!macro_enabled);
+				break;
+			case Buttons::BT_CANCLE:
+				set_skillpoint(false);
+				break;
+			case Buttons::BT_OKAY:
 			{
-				spend_sp(sp_id);
+				int32_t used = std::stoi(sp_used.get_text());
+
+				while (used > 0)
+				{
+					spend_sp(sp_id);
+					used--;
+				}
+
+				change_sp();
+				set_skillpoint(false);
+			}
+				break;
+			case Buttons::BT_SPDOWN:
+			{
+				int32_t used = std::stoi(sp_used.get_text());
+				int32_t sp_after = std::stoi(sp_after_text);
+				int32_t sp_before = std::stoi(sp_before_text);
 				used--;
+				sp_after--;
+
+				sp_after_text = std::to_string(sp_after);
+				sp_used.change_text(std::to_string(used));
+				sp_remaining.change_text(std::to_string(cur_sp - used));
+
+				buttons[Buttons::BT_SPUP]->set_state(Button::State::NORMAL);
+				buttons[Buttons::BT_SPMAX]->set_state(Button::State::NORMAL);
+
+				if (sp_after - 1 == sp_before)
+					return Button::State::DISABLED;
+
+				return Button::State::NORMAL;
 			}
-
-			change_sp();
-			set_skillpoint(false);
-		}
-		break;
-		case Buttons::BT_SPDOWN:
-		{
-			int32_t used = std::stoi(sp_used.get_text());
-			int32_t sp_after = std::stoi(sp_after_text);
-			int32_t sp_before = std::stoi(sp_before_text);
-			used--;
-			sp_after--;
-
-			sp_after_text = std::to_string(sp_after);
-			sp_used.change_text(std::to_string(used));
-			sp_remaining.change_text(std::to_string(cur_sp - used));
-
-			buttons[Buttons::BT_SPUP]->set_state(Button::State::NORMAL);
-			buttons[Buttons::BT_SPMAX]->set_state(Button::State::NORMAL);
-
-			if (sp_after - 1 == sp_before)
-				return Button::State::DISABLED;
-
-			return Button::State::NORMAL;
-		}
-		break;
-		case Buttons::BT_SPMAX:
-		{
-			int32_t used = std::stoi(sp_used.get_text());
-			int32_t sp_before = std::stoi(sp_before_text);
-			int32_t sp_touse = sp_masterlevel - sp_before - used;
-
-			used += sp_touse;
-
-			sp_after_text = std::to_string(sp_masterlevel);
-			sp_used.change_text(std::to_string(used));
-			sp_remaining.change_text(std::to_string(cur_sp - used));
-
-			buttons[Buttons::BT_SPUP]->set_state(Button::State::DISABLED);
-			buttons[Buttons::BT_SPDOWN]->set_state(Button::State::NORMAL);
-
-			return Button::State::DISABLED;
-		}
-		break;
-		case Buttons::BT_SPUP:
-		{
-			int32_t used = std::stoi(sp_used.get_text());
-			int32_t sp_after = std::stoi(sp_after_text);
-			used++;
-			sp_after++;
-
-			sp_after_text = std::to_string(sp_after);
-			sp_used.change_text(std::to_string(used));
-			sp_remaining.change_text(std::to_string(cur_sp - used));
-
-			buttons[Buttons::BT_SPDOWN]->set_state(Button::State::NORMAL);
-
-			if (sp_after == sp_masterlevel)
+				break;
+			case Buttons::BT_SPMAX:
 			{
-				buttons[Buttons::BT_SPMAX]->set_state(Button::State::DISABLED);
+				int32_t used = std::stoi(sp_used.get_text());
+				int32_t sp_before = std::stoi(sp_before_text);
+				int32_t sp_touse = sp_masterlevel - sp_before - used;
+
+				used += sp_touse;
+
+				sp_after_text = std::to_string(sp_masterlevel);
+				sp_used.change_text(std::to_string(used));
+				sp_remaining.change_text(std::to_string(cur_sp - used));
+
+				buttons[Buttons::BT_SPUP]->set_state(Button::State::DISABLED);
+				buttons[Buttons::BT_SPDOWN]->set_state(Button::State::NORMAL);
 
 				return Button::State::DISABLED;
 			}
+				break;
+			case Buttons::BT_SPUP:
+			{
+				int32_t used = std::stoi(sp_used.get_text());
+				int32_t sp_after = std::stoi(sp_after_text);
+				used++;
+				sp_after++;
 
-			return Button::State::NORMAL;
-		}
-		break;
-		case Buttons::BT_TAB0:
-		case Buttons::BT_TAB1:
-		case Buttons::BT_TAB2:
-		case Buttons::BT_TAB3:
-		case Buttons::BT_TAB4:
-			change_tab(id - Buttons::BT_TAB0);
+				sp_after_text = std::to_string(sp_after);
+				sp_used.change_text(std::to_string(used));
+				sp_remaining.change_text(std::to_string(cur_sp - used));
 
-			return Button::State::PRESSED;
-		case Buttons::BT_SPUP0:
-		case Buttons::BT_SPUP1:
-		case Buttons::BT_SPUP2:
-		case Buttons::BT_SPUP3:
-		case Buttons::BT_SPUP4:
-		case Buttons::BT_SPUP5:
-		case Buttons::BT_SPUP6:
-		case Buttons::BT_SPUP7:
-		case Buttons::BT_SPUP8:
-		case Buttons::BT_SPUP9:
-		case Buttons::BT_SPUP10:
-		case Buttons::BT_SPUP11:
-			send_spup(id - Buttons::BT_SPUP0 + offset);
-			break;
-		case Buttons::BT_HYPER:
-		case Buttons::BT_GUILDSKILL:
-		case Buttons::BT_RIDE:
-		case Buttons::BT_MACRO_OK:
-		default:
-			break;
+				buttons[Buttons::BT_SPDOWN]->set_state(Button::State::NORMAL);
+
+				if (sp_after == sp_masterlevel)
+				{
+					buttons[Buttons::BT_SPMAX]->set_state(Button::State::DISABLED);
+
+					return Button::State::DISABLED;
+				}
+
+				return Button::State::NORMAL;
+			}
+				break;
+			case Buttons::BT_TAB0:
+			case Buttons::BT_TAB1:
+			case Buttons::BT_TAB2:
+			case Buttons::BT_TAB3:
+			case Buttons::BT_TAB4:
+				change_tab(id - Buttons::BT_TAB0);
+
+				return Button::State::PRESSED;
+			case Buttons::BT_SPUP0:
+			case Buttons::BT_SPUP1:
+			case Buttons::BT_SPUP2:
+			case Buttons::BT_SPUP3:
+			case Buttons::BT_SPUP4:
+			case Buttons::BT_SPUP5:
+			case Buttons::BT_SPUP6:
+			case Buttons::BT_SPUP7:
+			case Buttons::BT_SPUP8:
+			case Buttons::BT_SPUP9:
+			case Buttons::BT_SPUP10:
+			case Buttons::BT_SPUP11:
+				send_spup(id - Buttons::BT_SPUP0 + offset);
+				break;
+			case Buttons::BT_HYPER:
+			case Buttons::BT_GUILDSKILL:
+			case Buttons::BT_RIDE:
+			case Buttons::BT_MACRO_OK:
+			default:
+				break;
 		}
 
 		return Button::State::NORMAL;
@@ -571,12 +582,12 @@ namespace ms
 	{
 		switch (stat)
 		{
-		case MapleStat::Id::JOB:
-			change_job(value);
-			break;
-		case MapleStat::Id::SP:
-			change_sp();
-			break;
+			case MapleStat::Id::JOB:
+				change_job(value);
+				break;
+			case MapleStat::Id::SP:
+				change_sp();
+				break;
 		}
 	}
 
@@ -615,7 +626,8 @@ namespace ms
 			{
 				int32_t skillid = skills[i].get_id();
 
-				if (skillid == SkillId::Id::THREE_SNAILS || skillid == SkillId::Id::HEAL || skillid == SkillId::Id::FEATHER)
+				if (skillid == SkillId::Id::THREE_SNAILS || skillid == SkillId::Id::HEAL ||
+					skillid == SkillId::Id::FEATHER)
 					remaining_beginner_sp -= skills[i].get_level();
 			}
 
@@ -723,10 +735,10 @@ namespace ms
 
 		switch (skill_id)
 		{
-		case SkillId::Id::ANGEL_BLESSING:
-			return false;
-		default:
-			return check_required(skill_id);
+			case SkillId::Id::ANGEL_BLESSING:
+				return false;
+			default:
+				return check_required(skill_id);
 		}
 	}
 
@@ -787,16 +799,16 @@ namespace ms
 	{
 		switch (t)
 		{
-		case 1:
-			return Job::Level::FIRST;
-		case 2:
-			return Job::Level::SECOND;
-		case 3:
-			return Job::Level::THIRD;
-		case 4:
-			return Job::Level::FOURTH;
-		default:
-			return Job::Level::BEGINNER;
+			case 1:
+				return Job::Level::FIRST;
+			case 2:
+				return Job::Level::SECOND;
+			case 3:
+				return Job::Level::THIRD;
+			case 4:
+				return Job::Level::FOURTH;
+			default:
+				return Job::Level::BEGINNER;
 		}
 	}
 

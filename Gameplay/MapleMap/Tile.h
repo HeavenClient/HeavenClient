@@ -20,7 +20,9 @@
 #include "../../Graphics/Texture.h"
 
 #ifdef USE_NX
+
 #include <nlnx/node.hpp>
+
 #endif
 
 namespace ms
@@ -33,6 +35,7 @@ namespace ms
 
 		// Draw the tile
 		void draw(Point<int16_t> viewpos) const;
+
 		// Returns the depth of the tile
 		uint8_t getz() const;
 

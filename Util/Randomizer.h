@@ -55,7 +55,7 @@ namespace ms
 
 			std::uniform_real_distribution<T> range(from, to);
 			std::random_device rd;
-			std::default_random_engine engine{ rd() };
+			std::default_random_engine engine{rd()};
 
 			return range(engine);
 		}
@@ -74,7 +74,7 @@ namespace ms
 
 			std::uniform_int_distribution<T> range(from, to - 1);
 			std::random_device rd;
-			std::default_random_engine engine{ rd() };
+			std::default_random_engine engine{rd()};
 
 			return range(engine);
 		}
@@ -88,7 +88,7 @@ namespace ms
 		template <class E>
 		E next_enum(E from, E to) const
 		{
-			auto next_underlying = next_int<std::underlying_type<E>::type>(from, to);
+			auto next_underlying = next_int<typename std::underlying_type<E>::type>(from, to);
 
 			return static_cast<E>(next_underlying);
 		}

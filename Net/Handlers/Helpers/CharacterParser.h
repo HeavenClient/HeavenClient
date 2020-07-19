@@ -26,16 +26,27 @@ namespace ms
 	namespace CharacterParser
 	{
 		void parse_inventory(InPacket& recv, Inventory& inventory);
+
 		void parse_skillbook(InPacket& recv, SkillBook& skills);
+
 		void parse_cooldowns(InPacket& recv, Player& player);
+
 		void parse_questlog(InPacket& recv, QuestLog& quests);
+
 		void parse_ring1(InPacket& recv);
+
 		void parse_ring2(InPacket& recv);
+
 		void parse_ring3(InPacket& recv);
+
 		void parse_minigame(InPacket& recv);
+
 		void parse_monsterbook(InPacket& recv, MonsterBook& monsterbook);
+
 		void parse_teleportrock(InPacket& recv, TeleportRock& teleportrock);
+
 		void parse_nyinfo(InPacket& recv);
+
 		void parse_areainfo(InPacket& recv);
 	}
 }

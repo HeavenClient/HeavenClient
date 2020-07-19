@@ -22,6 +22,7 @@
 #include "../../Template/Point.h"
 
 #include <unordered_map>
+#include <vector>
 
 namespace ms
 {
@@ -53,7 +54,8 @@ namespace ms
 			}
 		}
 
-		BodyAction() {}
+		BodyAction()
+		{}
 
 		bool isattackframe() const
 		{
@@ -94,16 +96,25 @@ namespace ms
 		void init();
 
 		Point<int16_t> get_body_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_arm_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_hand_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> get_head_position(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> gethairpos(Stance::Id stance, uint8_t frame) const;
+
 		Point<int16_t> getfacepos(Stance::Id stance, uint8_t frame) const;
+
 		uint8_t nextframe(Stance::Id stance, uint8_t frame) const;
+
 		uint16_t get_delay(Stance::Id stance, uint8_t frame) const;
 
 		uint16_t get_attackdelay(std::string action, size_t no) const;
+
 		uint8_t next_actionframe(std::string action, uint8_t frame) const;
+
 		const BodyAction* get_action(std::string action, uint8_t frame) const;
 
 	private:

@@ -31,6 +31,7 @@ namespace ms
 		StatusInfo(const std::string& str, Color::Name color);
 
 		void draw(Point<int16_t> position, float alpha) const;
+
 		bool update();
 
 	private:
@@ -53,7 +54,9 @@ namespace ms
 		UIStatusMessenger();
 
 		void draw(float alpha) const override;
+
 		void update() override;
+
 		void update_screen(int16_t new_width, int16_t new_height) override;
 
 		UIElement::Type get_type() const override;

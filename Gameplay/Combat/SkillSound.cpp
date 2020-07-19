@@ -18,7 +18,9 @@
 #include "SkillSound.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
@@ -31,12 +33,12 @@ namespace ms
 		hitsound = soundsrc["Hit"];
 	}
 
-	void SingleSkillSound::play_use() const
+	void SingleSkillSound::play_use()
 	{
 		usesound.play();
 	}
 
-	void SingleSkillSound::play_hit() const
+	void SingleSkillSound::play_hit()
 	{
 		hitsound.play();
 	}

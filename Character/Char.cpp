@@ -20,12 +20,20 @@
 #include "../Data/WeaponData.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
 {
-	Char::Char(int32_t o, const CharLook& lk, const std::string& name) : MapObject(o), look(lk), look_preview(lk), namelabel(Text(Text::Font::A13M, Text::Alignment::CENTER, Color::Name::WHITE, Text::Background::NAMETAG, name)) {}
+	Char::Char(int32_t o, const CharLook& lk, const std::string& name) : MapObject(o), look(lk), look_preview(lk),
+		namelabel(
+			Text(Text::Font::A13M,
+				 Text::Alignment::CENTER,
+				 Color::Name::WHITE,
+				 Text::Background::NAMETAG, name))
+	{}
 
 	void Char::draw(double viewx, double viewy, float alpha) const
 	{
@@ -38,7 +46,7 @@ namespace ms
 		if (invincible)
 		{
 			float phi = invincible.alpha() * 30;
-			float rgb = 0.9f - 0.5f * std::abs(std::sinf(phi));
+			float rgb = 0.9f - 0.5f * std::abs(std::sin(phi));
 
 			color = Color(rgb, rgb, rgb, 1.0f);
 		}
@@ -99,18 +107,18 @@ namespace ms
 			{
 				switch (state)
 				{
-				case State::LADDER:
-				case State::ROPE:
-					pet.set_stance(PetLook::Stance::HANG);
-					break;
-				case State::SWIM:
-					pet.set_stance(PetLook::Stance::FLY);
-					break;
-				default:
-					if (pet.get_stance() == PetLook::Stance::HANG || pet.get_stance() == PetLook::Stance::FLY)
-						pet.set_stance(PetLook::Stance::STAND);
+					case State::LADDER:
+					case State::ROPE:
+						pet.set_stance(PetLook::Stance::HANG);
+						break;
+					case State::SWIM:
+						pet.set_stance(PetLook::Stance::FLY);
+						break;
+					default:
+						if (pet.get_stance() == PetLook::Stance::HANG || pet.get_stance() == PetLook::Stance::FLY)
+							pet.set_stance(PetLook::Stance::STAND);
 
-					break;
+						break;
 				}
 
 				pet.update(physics, get_position());
@@ -134,13 +142,13 @@ namespace ms
 
 		switch (state)
 		{
-		case State::WALK:
-			return static_cast<float>(std::abs(phobj.hspeed));
-		case State::LADDER:
-		case State::ROPE:
-			return static_cast<float>(std::abs(phobj.vspeed));
-		default:
-			return 1.0f;
+			case State::WALK:
+				return static_cast<float>(std::abs(phobj.hspeed));
+			case State::LADDER:
+			case State::ROPE:
+				return static_cast<float>(std::abs(phobj.vspeed));
+			default:
+				return 1.0f;
 		}
 	}
 
@@ -209,15 +217,15 @@ namespace ms
 	{
 		switch (stat)
 		{
-		case MapleStat::Id::SKIN:
-			look.set_body(id);
-			break;
-		case MapleStat::Id::FACE:
-			look.set_face(id);
-			break;
-		case MapleStat::Id::HAIR:
-			look.set_hair(id);
-			break;
+			case MapleStat::Id::SKIN:
+				look.set_body(id);
+				break;
+			case MapleStat::Id::FACE:
+				look.set_face(id);
+				break;
+			case MapleStat::Id::HAIR:
+				look.set_hair(id);
+				break;
 		}
 	}
 
@@ -303,7 +311,8 @@ namespace ms
 		look.set_stance(stance);
 	}
 
-	void Char::add_pet(uint8_t index, int32_t iid, const std::string& name, int32_t uniqueid, Point<int16_t> pos, uint8_t stance, int32_t fhid)
+	void Char::add_pet(uint8_t index, int32_t iid, const std::string& name, int32_t uniqueid, Point<int16_t> pos,
+					   uint8_t stance, int32_t fhid)
 	{
 		if (index > 2)
 			return;

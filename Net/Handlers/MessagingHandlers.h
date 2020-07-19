@@ -29,6 +29,7 @@ namespace ms
 	{
 	public:
 		void handle(InPacket& recv) const override;
+
 	private:
 		void show_status(Color::Name color, const std::string& message) const;
 	};

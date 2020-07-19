@@ -59,10 +59,12 @@ namespace ms
 		expelapsed = 0;
 	}
 
-	void CharLook::draw(const DrawArgument& args, Stance::Id interstance, Expression::Id interexpression, uint8_t interframe, uint8_t interexpframe) const
+	void
+	CharLook::draw(const DrawArgument& args, Stance::Id interstance, Expression::Id interexpression, uint8_t interframe,
+				   uint8_t interexpframe) const
 	{
 		Point<int16_t> faceshift = drawinfo.getfacepos(interstance, interframe);
-		DrawArgument faceargs = args + DrawArgument{ faceshift, false, Point<int16_t>{} };
+		DrawArgument faceargs = args + DrawArgument{faceshift, false, Point<int16_t>{}};
 
 		if (Stance::is_climbing(interstance))
 		{
@@ -195,7 +197,7 @@ namespace ms
 		if (action)
 			acmove = action->get_move();
 
-		DrawArgument relargs = { acmove, flip };
+		DrawArgument relargs = {acmove, flip};
 
 		Stance::Id interstance = stance.get(alpha);
 		Expression::Id interexpression = expression.get(alpha);
@@ -206,21 +208,20 @@ namespace ms
 		{
 			case Stance::Id::STAND1:
 			case Stance::Id::STAND2:
-			{
 				if (alerted)
 					interstance = Stance::Id::ALERT;
 
 				break;
-			}
 		}
 
 		draw(relargs + args, interstance, interexpression, interframe, interexpframe);
 	}
 
-	void CharLook::draw(Point<int16_t> position, bool flipped, Stance::Id interstance, Expression::Id interexpression) const
+	void CharLook::draw(Point<int16_t> position, bool flipped, Stance::Id interstance,
+						Expression::Id interexpression) const
 	{
 		interstance = equips.adjust_stance(interstance);
-		draw({ position, flipped }, interstance, interexpression, 0, 0);
+		draw({position, flipped}, interstance, interexpression, 0, 0);
 	}
 
 	bool CharLook::update(uint16_t timestep)
@@ -468,31 +469,31 @@ namespace ms
 
 		static const std::array<std::vector<Stance::Id>, Attack::NUM_ATTACKS> degen_stances = {
 			{
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGT1, Stance::Id::SWINGT3 },
-				{ Stance::Id::SWINGT1, Stance::Id::STABT1 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGT1, Stance::Id::STABT1 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SWINGP1, Stance::Id::STABT2 }
+				{Stance::Id::NONE},
+				{Stance::Id::NONE},
+				{Stance::Id::NONE},
+				{Stance::Id::SWINGT1, Stance::Id::SWINGT3},
+				{Stance::Id::SWINGT1, Stance::Id::STABT1},
+				{Stance::Id::NONE},
+				{Stance::Id::NONE},
+				{Stance::Id::SWINGT1, Stance::Id::STABT1},
+				{Stance::Id::NONE},
+				{Stance::Id::SWINGP1, Stance::Id::STABT2}
 			}
 		};
 
 		static const std::array<std::vector<Stance::Id>, NUM_ATTACKS> attack_stances = {
 			{
-				{ Stance::Id::NONE },
-				{ Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGO1, Stance::Id::SWINGO2, Stance::Id::SWINGO3 },
-				{ Stance::Id::STABT1, Stance::Id::SWINGP1 },
-				{ Stance::Id::SHOOT1 },
-				{ Stance::Id::SHOOT2 },
-				{ Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGT1, Stance::Id::SWINGT2, Stance::Id::SWINGT3 },
-				{ Stance::Id::SWINGO1, Stance::Id::SWINGO2 },
-				{ Stance::Id::SWINGO1, Stance::Id::SWINGO2 },
-				{ Stance::Id::NONE },
-				{ Stance::Id::SHOT }
+				{Stance::Id::NONE},
+				{Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGO1, Stance::Id::SWINGO2, Stance::Id::SWINGO3},
+				{Stance::Id::STABT1, Stance::Id::SWINGP1},
+				{Stance::Id::SHOOT1},
+				{Stance::Id::SHOOT2},
+				{Stance::Id::STABO1, Stance::Id::STABO2, Stance::Id::SWINGT1, Stance::Id::SWINGT2, Stance::Id::SWINGT3},
+				{Stance::Id::SWINGO1, Stance::Id::SWINGO2},
+				{Stance::Id::SWINGO1, Stance::Id::SWINGO2},
+				{Stance::Id::NONE},
+				{Stance::Id::SHOT}
 			}
 		};
 
@@ -568,7 +569,7 @@ namespace ms
 
 	bool CharLook::get_alerted() const
 	{
-		return (bool)alerted;
+		return (bool) alerted;
 	}
 
 	bool CharLook::is_twohanded(Stance::Id st) const

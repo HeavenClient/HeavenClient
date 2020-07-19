@@ -42,7 +42,7 @@ namespace ms
 		if (connected)
 		{
 			// Read keys necessary for communicating with the server
-			cryptography = { socket.get_buffer() };
+			cryptography = {socket.get_buffer()};
 		}
 
 		return connected;

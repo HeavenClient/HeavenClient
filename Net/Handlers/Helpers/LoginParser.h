@@ -25,11 +25,17 @@ namespace ms
 	namespace LoginParser
 	{
 		Account parse_account(InPacket& recv);
+
 		World parse_world(InPacket& recv);
+
 		RecommendedWorld parse_recommended_world(InPacket& recv);
+
 		CharEntry parse_charentry(InPacket& recv);
+
 		StatsEntry parse_stats(InPacket& recv);
+
 		LookEntry parse_look(InPacket& recv);
+
 		void parse_login(InPacket& recv);
 	}
 }

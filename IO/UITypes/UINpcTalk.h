@@ -35,7 +35,7 @@ namespace ms
 			SENDYESNO,
 
 			// TODO: Unconfirmed
-			SENDNEXT,
+				SENDNEXT,
 			SENDNEXTPREV,
 			SENDACCEPTDECLINE,
 			SENDGETTEXT,
@@ -51,9 +51,11 @@ namespace ms
 		UINpcTalk();
 
 		void draw(float inter) const override;
+
 		void update() override;
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursorpos) override;
+
 		void send_key(int32_t keycode, bool pressed, bool escape) override;
 
 		UIElement::Type get_type() const override;
@@ -65,6 +67,7 @@ namespace ms
 
 	private:
 		TalkType get_by_value(int8_t value);
+
 		std::string format_text(const std::string& tx, const int32_t& npcid);
 
 		static constexpr int16_t MAX_HEIGHT = 248;

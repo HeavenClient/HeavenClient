@@ -71,7 +71,8 @@ namespace ms
 		set_direction(true);
 	}
 
-	Player::Player() : Char(0, {}, "") {}
+	Player::Player() : Char(0, {}, "")
+	{}
 
 	void Player::respawn(Point<int16_t> pos, bool uw)
 	{
@@ -359,7 +360,7 @@ namespace ms
 
 		uint8_t direction = fromleft ? 0 : 1;
 
-		return { attack, damage, direction };
+		return {attack, damage, direction};
 	}
 
 	void Player::give_buff(Buff buff)
@@ -522,7 +523,7 @@ namespace ms
 		return questlog;
 	}
 
-	TeleportRock& Player::get_teleportrock()
+	TeleportRock& Player::get_teleport_rock()
 	{
 		return teleportrock;
 	}
