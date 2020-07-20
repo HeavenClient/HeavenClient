@@ -146,19 +146,6 @@ namespace ms
 		{
 			account.set_state(Textfield::State::FOCUSED);
 		}
-
-		if (Configuration::get().get_auto_login())
-		{
-			UI::get().emplace<UILoginWait>([]() {});
-
-			auto loginwait = UI::get().get_element<UILoginWait>();
-
-			if (loginwait && loginwait->is_active())
-				LoginPacket(
-					Configuration::get().get_auto_acc(),
-					Configuration::get().get_auto_pass()
-				).dispatch();
-		}
 	}
 
 	void UILogin::draw(float alpha) const
@@ -182,6 +169,19 @@ namespace ms
 
 	void UILogin::update()
 	{
+		if (Configuration::get().get_auto_login())
+		{
+			auto loginwait = UI::get().get_element<UILoginWait>();
+
+			if (!loginwait || !loginwait->is_active()) {
+				UI::get().emplace<UILoginWait>([]() {});
+
+				LoginPacket(
+					Configuration::get().get_auto_acc(),
+					Configuration::get().get_auto_pass()
+				).dispatch();
+			}
+		}
 		UIElement::update();
 
 		account.update(position);

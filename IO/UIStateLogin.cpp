@@ -31,11 +31,13 @@ namespace ms
 	{
 		focused = UIElement::Type::NONE;
 
+#ifndef DEBUG
 		bool start_shown = Configuration::get().get_start_shown();
 
 		if (!start_shown)
 			emplace<UILogo>();
 		else
+#endif // !DEBUG
 			emplace<UILogin>();
 	}
 
