@@ -62,12 +62,12 @@ namespace ms
 		buffer[2] = static_cast<int8_t>(b % 0x100);
 		buffer[3] = static_cast<int8_t>(b / 0x100);
 #else
-		int32_t length = static_cast<int32_t>(slength);
+		int32_t slength = static_cast<int32_t>(length);
 
-		for (int32_t i = 0; i < HEADERLEN; i++)
+		for (int32_t i = 0; i < HEADER_LENGTH; i++)
 		{
-			buffer[i] = static_cast<int8_t>(length);
-			length = length >> 8;
+			buffer[i] = static_cast<int8_t>(slength);
+			slength = slength >> 8;
 		}
 #endif
 	}
@@ -84,7 +84,7 @@ namespace ms
 #else
 		size_t length = 0;
 
-		for (int32_t i = 0; i < HEADERLEN; i++)
+		for (int32_t i = 0; i < HEADER_LENGTH; i++)
 			length += static_cast<uint8_t>(bytes[i]) << (8 * i);
 
 		return length;
