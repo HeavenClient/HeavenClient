@@ -16,17 +16,26 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "PlayerInteractionHandlers.h"
-
+#include "../../Gameplay/Stage.h"
 #include "../../IO/UI.h"
-
 #include "../../IO/UITypes/UICharInfo.h"
 
 namespace ms
 {
+	/*
+	- TODO:
+	+ Add Pet
+	+ Add Mount
+	+ WishList
+	+ Monster book
+	+ Medal
+	+ Medal Quest
+	*/
 	void CharInfoHandler::handle(InPacket& recv) const
 	{
+		Player& player = Stage::get().get_player();
 		int32_t character_id = recv.read_int();
-		int8_t character_level = recv.read_byte();
+		int8_t character_level = recv.read_short();
 		int16_t character_job_id = recv.read_short();
 		int16_t character_fame = recv.read_short();
 		recv.skip_byte(); // character_marriage_ring
@@ -34,7 +43,7 @@ namespace ms
 		std::string guild_name = recv.read_string();
 		std::string alliance_name = recv.read_string();
 
-		recv.skip_byte();
+		recv.skip_byte(); // pMedalInfo
 
 		int8_t pet_unique_id = recv.read_byte();
 
@@ -67,11 +76,12 @@ namespace ms
 		for (int8_t sn = 0; sn < wishlist_size; sn++)
 			recv.skip_int(); // wishlist_item
 
-		recv.skip_int(); // monster_book_level
-		recv.skip_int(); // monster_book_card_normal
-		recv.skip_int(); // monster_book_card_special
+		MonsterBook& cards = player.get_monsterbook();
+		cards.set_level(recv.read_int()); // monster_book_level
+		cards.set_normal(recv.read_int()); // monster_book_card_normal
+		cards.set_special(recv.read_int()); // monster_book_card_special
 		recv.skip_int(); // monster_book_cards_total
-		recv.skip_int(); // monster_book_cover
+		cards.set_cover(recv.read_int()); // monster_book_cover
 
 		recv.skip_int(); // medal
 

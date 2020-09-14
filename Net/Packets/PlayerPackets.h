@@ -30,7 +30,7 @@ namespace ms
 	class SpendApPacket : public OutPacket
 	{
 	public:
-		SpendApPacket(MapleStat::Id stat) : OutPacket(OutPacket::Opcode::SPEND_AP)
+		SpendApPacket(MapleStat::Id stat) : OutPacket(OutPacket::Opcode::DISTRIBUTE_AP)
 		{
 			write_time();
 			write_int(MapleStat::codes[stat]);
@@ -42,7 +42,7 @@ namespace ms
 	class SpendSpPacket : public OutPacket
 	{
 	public:
-		SpendSpPacket(int32_t skill_id) : OutPacket(OutPacket::Opcode::SPEND_SP)
+		SpendSpPacket(int32_t skill_id) : OutPacket(OutPacket::Opcode::DISTRIBUTE_SP)
 		{
 			write_time();
 			write_int(skill_id);

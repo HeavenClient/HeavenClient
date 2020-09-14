@@ -53,33 +53,35 @@ namespace ms
 
 	World LoginParser::parse_world(InPacket& recv)
 	{
-		int8_t wid = recv.read_byte();
+		int8_t worldid = recv.read_byte();
 
-		if (wid == -1)
-			return { {}, {}, {}, 0, 0, wid };
+		if (worldid == -1)
+			return { {}, {}, {}, 0, 0, worldid };
 
 		std::string name = recv.read_string();
-		uint8_t flag = recv.read_byte();
-		std::string message = recv.read_string();
+		uint8_t worldstate = recv.read_byte();
+		std::string worldeventdesc = recv.read_string();
 
-		recv.skip(5);
+		recv.read_short(); // WorldEventEXP_WSE
+		recv.read_short(); // WorldEventDrop_WSE
+		recv.read_byte(); // BlockCharCreation
 
-		std::vector<int32_t> chloads;
+		std::vector<uint32_t> chloads;
 		uint8_t channelcount = recv.read_byte();
 
 		for (uint8_t i = 0; i < channelcount; ++i)
 		{
-			recv.read_string(); // channel name
+			std::string channelname = recv.read_string(); // channel name
+			chloads.push_back(recv.read_int()); // UserNo
 
-			chloads.push_back(recv.read_int());
-
-			recv.skip(1);
-			recv.skip(2);
+			uint8_t worldid = recv.read_byte(); // WorldID
+			uint8_t channelid = recv.read_byte(); // ChannelID
+			recv.read_bool(); // AdultChannel
 		}
 
-		recv.skip(2);
+		recv.read_short(); // BalloonCount
 
-		return { name, message, chloads, channelcount, flag, wid };
+		return { name, worldeventdesc, chloads, channelcount, worldstate, worldid };
 	}
 
 	RecommendedWorld LoginParser::parse_recommended_world(InPacket& recv)
@@ -96,7 +98,7 @@ namespace ms
 
 	CharEntry LoginParser::parse_charentry(InPacket& recv)
 	{
-		int32_t cid = recv.read_int();
+		int32_t dwCharacterID = recv.read_int();
 		StatsEntry stats = parse_stats(recv);
 		LookEntry look = parse_look(recv);
 
@@ -115,47 +117,42 @@ namespace ms
 			stats.jobrank = std::make_pair(curjobrank, jobrankmc);
 		}
 
-		return { stats, look, cid };
+		return { stats, look, dwCharacterID };
 	}
 
 	StatsEntry LoginParser::parse_stats(InPacket& recv)
 	{
 		// TODO: This is similar to CashShopParser.cpp, try and merge these.
-		StatsEntry statsentry;
+		StatsEntry statsEntry;
 
-		statsentry.name = recv.read_padded_string(13);
-		statsentry.female = recv.read_bool();
+		statsEntry.name = recv.read_padded_string(13);
+		statsEntry.female = recv.read_bool(); // 0 = male, 1 = female
+		statsEntry.stats[MapleStat::Id::SKIN] = recv.read_byte();	// skin color
+		statsEntry.stats[MapleStat::Id::FACE] = recv.read_int();	// face
+		statsEntry.stats[MapleStat::Id::HAIR] = recv.read_int();	// hair
+		for (size_t i = 0; i < 3; i++) {
+			statsEntry.petids.push_back(recv.read_long());
+		}
+		statsEntry.stats[MapleStat::Id::LEVEL] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::JOB] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::STR] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::DEX] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::INT] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::LUK] = recv.read_short();
+		statsEntry.hp = recv.read_int();
+		statsEntry.maxhp = recv.read_int();
+		statsEntry.mp = recv.read_int();
+		statsEntry.maxmp = recv.read_int();
+		statsEntry.stats[MapleStat::Id::AP] = recv.read_short();
+		statsEntry.stats[MapleStat::Id::SP] = recv.read_short();
+		statsEntry.exp = recv.read_int();
+		statsEntry.stats[MapleStat::Id::FAME] = recv.read_short();
+		statsEntry.termexp = recv.read_int(); // TermEXP
+		statsEntry.mapid = recv.read_int(); // dwPosMap
+		statsEntry.portal = recv.read_byte(); // Portal
+		statsEntry.playTime = recv.read_int(); // Playtime
 
-		recv.read_byte();	// skin
-		recv.read_int();	// face
-		recv.read_int();	// hair
-
-		for (size_t i = 0; i < 3; i++)
-			statsentry.petids.push_back(recv.read_long());
-
-		statsentry.stats[MapleStat::Id::LEVEL] = recv.read_byte(); // TODO: Change to recv.read_short(); to increase level cap
-		statsentry.stats[MapleStat::Id::JOB] = recv.read_short();
-		statsentry.stats[MapleStat::Id::STR] = recv.read_short();
-		statsentry.stats[MapleStat::Id::DEX] = recv.read_short();
-		statsentry.stats[MapleStat::Id::INT] = recv.read_short();
-		statsentry.stats[MapleStat::Id::LUK] = recv.read_short();
-		statsentry.stats[MapleStat::Id::HP] = recv.read_short();
-		statsentry.stats[MapleStat::Id::MAXHP] = recv.read_short();
-		statsentry.stats[MapleStat::Id::MP] = recv.read_short();
-		statsentry.stats[MapleStat::Id::MAXMP] = recv.read_short();
-		statsentry.stats[MapleStat::Id::AP] = recv.read_short();
-		statsentry.stats[MapleStat::Id::SP] = recv.read_short();
-		statsentry.exp = recv.read_int();
-		statsentry.stats[MapleStat::Id::FAME] = recv.read_short();
-
-		recv.skip(4); // gachaexp
-
-		statsentry.mapid = recv.read_int();
-		statsentry.portal = recv.read_byte();
-
-		recv.skip(4); // timestamp
-
-		return statsentry;
+		return statsEntry;
 	}
 
 	LookEntry LoginParser::parse_look(InPacket& recv)

@@ -198,36 +198,32 @@ namespace ms
 	}
 
 	void SpawnMobHandler::handle(InPacket& recv) const
-	{
-		int32_t oid = recv.read_int();
-		recv.read_byte(); // 5 if controller == null
-		int32_t id = recv.read_int();
-
-		recv.skip(22);
+	{	
+		int32_t MobId = recv.read_int(); // life.setObjectId();
+		int8_t CalcDamageIndex = recv.read_byte(); // life.setController() == null ? 5 : 1
+		int32_t TemplateID = recv.read_int(); // life.setId();
+		
+	    recv.skip(16);	
 
 		Point<int16_t> position = recv.read_point();
 		int8_t stance = recv.read_byte();
-
-		recv.skip(2);
-
-		uint16_t fh = recv.read_short();
+		recv.skip(2); // Origin FootHold
+		uint16_t fh = recv.read_short(); // life.getFh()
 		int8_t effect = recv.read_byte();
-
-		if (effect > 0)
-		{
-			recv.read_byte();
-			recv.read_short();
-
-			if (effect == 15)
+		// decodeParentlessMobSpawnEffect - Unhandled
+			if (effect > 0)
+			{
 				recv.read_byte();
-		}
+				recv.read_short();
 
-		int8_t team = recv.read_byte();
-
-		recv.skip(4);
+				if (effect == 15)
+					recv.read_byte();
+			}
+		int8_t team = recv.read_byte(); // life.setTeam()
+		int32_t itemEffect = recv.read_int(); // setItemEffect
 
 		Stage::get().get_mobs().spawn(
-			{ oid, id, 0, stance, fh, effect == -2, team, position }
+			{ MobId, TemplateID, 0, stance, fh, effect == -2, team, position }
 		);
 	}
 
@@ -256,7 +252,7 @@ namespace ms
 
 				int32_t id = recv.read_int();
 
-				recv.skip(22);
+				recv.skip(16);
 
 				Point<int16_t> position = recv.read_point();
 				int8_t stance = recv.read_byte();

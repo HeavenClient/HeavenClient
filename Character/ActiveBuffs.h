@@ -47,20 +47,31 @@ namespace ms
 		void apply_to(CharStats& stats, int16_t value) const override;
 	};
 
-	// Buff for MAPLEWARRIOR
 	class MapleWarriorBuff : public ActiveBuff
 	{
 		void apply_to(CharStats& stats, int16_t value) const override;
 	};
-
-	// Buff for STANCE
 	class StanceBuff : public ActiveBuff
 	{
 		void apply_to(CharStats& stats, int16_t value) const override;
 	};
-
-	// Buff for BOOSTER
 	class BoosterBuff : public ActiveBuff
+	{
+		void apply_to(CharStats& stats, int16_t value) const override;
+	};
+	class SharpEyesBuff : public ActiveBuff
+	{
+		void apply_to(CharStats& stats, int16_t value) const override;
+	};
+	class ConcentrateBuff : public ActiveBuff
+	{
+		void apply_to(CharStats& stats, int16_t value) const override;
+	};
+	class EchoOfHeroBuff : public ActiveBuff
+	{
+		void apply_to(CharStats& stats, int16_t value) const override;
+	};
+	class SpecialBuff : public ActiveBuff
 	{
 		void apply_to(CharStats& stats, int16_t value) const override;
 	};

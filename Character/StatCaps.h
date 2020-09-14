@@ -24,12 +24,12 @@ namespace ms
 	// Externalizing this for easier configurability
 	const std::unordered_map<EquipStat::Id, int32_t> EQSTAT_CAPS =
 	{
-		{ EquipStat::Id::STR,	999		},
-		{ EquipStat::Id::DEX,	999		},
-		{ EquipStat::Id::INT,	999		},
-		{ EquipStat::Id::LUK,	999		},
-		{ EquipStat::Id::HP,	30000	},
-		{ EquipStat::Id::MP,	30000	},
+		{ EquipStat::Id::STR,	32767		},
+		{ EquipStat::Id::DEX,	32767		},
+		{ EquipStat::Id::INT,	32767		},
+		{ EquipStat::Id::LUK,	32767		},
+		{ EquipStat::Id::HP,	500000	},
+		{ EquipStat::Id::MP,	500000	},
 		{ EquipStat::Id::WATK,	999		},
 		{ EquipStat::Id::MAGIC,	2000	},
 		{ EquipStat::Id::WDEF,	999		},

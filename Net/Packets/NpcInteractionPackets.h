@@ -26,7 +26,7 @@ namespace ms
 	class TalkToNPCPacket : public OutPacket
 	{
 	public:
-		TalkToNPCPacket(int32_t oid) : OutPacket(OutPacket::Opcode::TALK_TO_NPC)
+		TalkToNPCPacket(int32_t oid) : OutPacket(OutPacket::Opcode::NPC_TALK)
 		{
 			write_int(oid);
 		}
@@ -82,7 +82,7 @@ namespace ms
 			BUY, SELL, RECHARGE, LEAVE
 		};
 
-		NpcShopActionPacket(Mode mode) : OutPacket(OutPacket::Opcode::NPC_SHOP_ACTION)
+		NpcShopActionPacket(Mode mode) : OutPacket(OutPacket::Opcode::NPC_SHOP)
 		{
 			write_byte(mode);
 		}

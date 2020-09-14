@@ -27,9 +27,23 @@ namespace ms
 	public:
 		MonsterBook();
 
-		void set_cover(int32_t);
 		void add_card(int16_t, int8_t);
+
+		int32_t get_level();
+		void set_level(int32_t);
+
+		int32_t get_special();
+		void set_special(int32_t);
+
+		int32_t get_normal();
+		void set_normal(int32_t);
+
+		int32_t get_cover();
+		void set_cover(int32_t);
 	private:
+		int32_t bookLevel;
+		int32_t normalCard;
+		int32_t specialCard;
 		int32_t cover;
 		std::map<int16_t, int8_t> cards;
 	};

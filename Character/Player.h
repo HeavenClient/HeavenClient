@@ -19,11 +19,11 @@
 
 #include "ActiveBuffs.h"
 #include "MonsterBook.h"
+#include "CalcDamage.h"
 #include "PassiveBuffs.h"
 #include "QuestLog.h"
 #include "SkillBook.h"
 #include "TeleportRock.h"
-
 #include "Inventory/Inventory.h"
 
 #include "../Gameplay/Playable.h"
@@ -38,7 +38,7 @@ namespace ms
 	{
 	public:
 		// Construct a player object from the given character entry
-		Player(const CharEntry& entry);
+		Player(const CharEntry& entry, uint8_t wid, uint8_t channel_id);
 		Player();
 
 		// Draw the player
@@ -112,6 +112,11 @@ namespace ms
 		float get_climbforce() const;
 		// Returns the flying force
 		float get_flyforce() const;
+		// Retuns the world Id
+		uint8_t get_world_id() const;
+		// Returns the channel Id
+		uint8_t get_channel_id() const;
+		void set_channel_id(uint8_t ch);
 
 		// Return whether the player is underwater
 		bool is_underwater() const;
@@ -124,11 +129,14 @@ namespace ms
 		void set_seat(Optional<const Seat> seat);
 		// Change players x-position to the ladder x and change stance to Char::State::LADDER or Char::State::ROPE
 		void set_ladder(Optional<const Ladder> ladder);
+		
 		// Sets a quick cooldown on climbing so when jumping off a ladder or rope, it doesn't start climb again.
 		void set_climb_cooldown();
 		// Checks if the player can climb
 		bool can_climb();
 
+		// Obtain a refecence to the player's calculate damage
+		CalcDamage& get_calcdamage();
 		// Obtain a reference to the player's stats
 		CharStats& get_stats();
 		// Obtain a reference to the player's stats
@@ -153,6 +161,7 @@ namespace ms
 		QuestLog questlog;
 		TeleportRock teleportrock;
 		MonsterBook monsterbook;
+		CalcDamage calcdamage;
 
 		EnumMap<Buffstat::Id, Buff> buffs;
 		ActiveBuffs active_buffs;
@@ -169,6 +178,9 @@ namespace ms
 		Optional<const Ladder> ladder;
 		TimedBool climb_cooldown;
 
-		bool underwater;
+		bool underwater;  
+
+		uint8_t wid;
+		uint8_t channel_id;
 	};
 }

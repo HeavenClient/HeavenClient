@@ -62,18 +62,19 @@ namespace ms
 		Constants::Constants::get().set_viewheight(Setting<Height>::get().load());
 
 		int32_t channel = recv.read_int();
-		int8_t mode1 = recv.read_byte();
-		int8_t mode2 = recv.read_byte();
+		int8_t notifiermessage = recv.read_byte();
+		bool characterdata = recv.read_bool();
+		int32_t notifiercheck = recv.read_short();
 
-		if (mode1 == 0 && mode2 == 0)
-			change_map(recv, channel);
-		else
+		if (characterdata)
 			set_field(recv);
+		else
+			change_map(recv, channel);
 	}
 
 	void SetFieldHandler::change_map(InPacket& recv, int32_t) const
 	{
-		recv.skip(3);
+		recv.skip(1); // revive
 
 		int32_t mapid = recv.read_int();
 		int8_t portalid = recv.read_byte();
@@ -83,7 +84,12 @@ namespace ms
 
 	void SetFieldHandler::set_field(InPacket& recv) const
 	{
-		recv.skip(23);
+		uint32_t s1 = recv.read_int();
+		uint32_t s2 = recv.read_int();
+		uint32_t s3 = recv.read_int();
+		
+		recv.read_long(); // charflag
+		recv.read_byte(); // combatorders
 
 		int32_t cid = recv.read_int();
 		auto charselect = UI::get().get_element<UICharSelect>();
@@ -96,11 +102,13 @@ namespace ms
 		if (playerentry.id != cid)
 			return;
 
-		Stage::get().loadplayer(playerentry);
+		Stage::get().loadplayer(playerentry, Configuration::get().get_worldid(), Configuration::get().get_channelid());
 
 		LoginParser::parse_stats(recv);
 
 		Player& player = Stage::get().get_player();
+
+		player.get_calcdamage().set_seed(s1, s2, s3);
 
 		recv.read_byte(); // 'buddycap'
 
@@ -119,6 +127,8 @@ namespace ms
 		CharacterParser::parse_monsterbook(recv, player.get_monsterbook());
 		CharacterParser::parse_nyinfo(recv);
 		CharacterParser::parse_areainfo(recv);
+
+		recv.read_long(); // getTime(System.currentTimeMillis()
 
 		player.recalc_stats(true);
 

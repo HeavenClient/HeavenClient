@@ -27,9 +27,104 @@ namespace ms
 		void handle(InPacket& recv) const override;
 	};
 
+	class LatestConnectedWorldHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class AdminResultHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class QuickslotKeyMappedManHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class sendAutoHpPotHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class sendAutoMpPotHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class updateInventorySlotLimitHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class MapTransferResultHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class SetTamingMobInfoHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
 	// TODO: Comment
 	class FieldEffectHandler : public PacketHandler
 	{
 		void handle(InPacket& recv) const override;
+	};
+
+	class SetShowQuestCompletionHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class skillBookResultHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class SueCharacterResultHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class TradeMoneyLimitHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class TownPortalHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class KeymapHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class NotifyLevelUpHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class FriendResultHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class ScriptProgressMessageHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
+
+	class ClockHandler : public PacketHandler
+	{
+	public:
+		void handle(InPacket& recv) const override;
+	private:
+		void setClock(InPacket& recv) const;
+		void setClockTime(InPacket& recv) const;
+		void setEventTime(InPacket& recv) const;
 	};
 }

@@ -29,18 +29,19 @@ namespace ms
 
 	void AttackHandler::handle(InPacket& recv) const
 	{
+		AttackResult attack;
+
 		int32_t cid = recv.read_int();
-		uint8_t count = recv.read_byte();
+		uint8_t numAttackedAndDamage = recv.read_byte();
+		attack.hitcount = numAttackedAndDamage & 0xF;
+		attack.mobcount = (numAttackedAndDamage >> 4) & 0xF;
 
 		recv.skip(1);
 
-		AttackResult attack;
 		attack.type = type;
 		attack.attacker = cid;
-
 		attack.level = recv.read_byte();
 		attack.skill = (attack.level > 0) ? recv.read_int() : 0;
-
 		attack.display = recv.read_byte();
 		attack.toleft = recv.read_bool();
 		attack.stance = recv.read_byte();
@@ -50,14 +51,11 @@ namespace ms
 
 		attack.bullet = recv.read_int();
 
-		attack.mobcount = (count >> 4) & 0xF;
-		attack.hitcount = count & 0xF;
-
 		for (uint8_t i = 0; i < attack.mobcount; i++)
 		{
 			int32_t oid = recv.read_int();
 
-			recv.skip(1);
+			recv.skip(14);
 
 			uint8_t length = (attack.skill == SkillId::Id::MESO_EXPLOSION) ? recv.read_byte() : attack.hitcount;
 
@@ -67,6 +65,13 @@ namespace ms
 				bool critical = false; // TODO: ?
 				auto singledamage = std::make_pair(damage, critical);
 				attack.damagelines[oid].push_back(singledamage);
+			}
+		}
+		if (attack.type == Attack::Type::RANGED)
+			recv.skip(4);
+		if (attack.type == Attack::Type::MAGIC) {
+			if (recv.available() > 0) {
+				attack.charge = recv.read_int();
 			}
 		}
 

@@ -26,7 +26,7 @@ namespace ms
 	class NameCharPacket : public OutPacket
 	{
 	public:
-		NameCharPacket(const std::string& name) : OutPacket(OutPacket::Opcode::NAME_CHAR)
+		NameCharPacket(const std::string& name) : OutPacket(OutPacket::Opcode::CHECK_CHAR_NAME)
 		{
 			write_string(name);
 		}

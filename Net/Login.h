@@ -39,7 +39,7 @@ namespace ms
 	{
 		std::string name;
 		std::string message;
-		std::vector<int32_t> chloads;
+		std::vector<uint32_t> chloads;
 		uint8_t channelcount;
 		uint8_t flag;
 		int8_t wid;
@@ -57,9 +57,15 @@ namespace ms
 		bool female;
 		std::vector<int64_t> petids;
 		EnumMap<MapleStat::Id, uint16_t> stats;
+		uint32_t hp;
+		uint32_t maxhp;
+		uint32_t mp;
+		uint32_t maxmp;
 		int64_t exp;
+		int64_t termexp;
 		int32_t mapid;
 		uint8_t portal;
+		int32_t playTime;
 		std::pair<int32_t, int8_t> rank;
 		std::pair<int32_t, int8_t> jobrank;
 	};

@@ -26,7 +26,7 @@ namespace ms
 	{
 	public:
 		// Request the server to warp the player to a different map
-		ChangeMapPacket(bool died, int32_t targetid, const std::string& targetp, bool usewheel) : OutPacket(OutPacket::Opcode::CHANGEMAP)
+		ChangeMapPacket(bool died, int32_t targetid, const std::string& targetp, bool usewheel) : OutPacket(OutPacket::Opcode::CHANGE_MAP)
 		{
 			write_byte(died);
 			write_int(targetid);
@@ -36,7 +36,18 @@ namespace ms
 		}
 
 		// Request the server to exit the cash shop
-		ChangeMapPacket() : OutPacket(OutPacket::Opcode::CHANGEMAP) {}
+		ChangeMapPacket() : OutPacket(OutPacket::Opcode::CHANGE_MAP) {}
+	};
+
+	// Opcode: CHANGE_CHANNEL(40)
+	class ChangeChannelPacket : public OutPacket
+	{
+	public:
+		// Requests the server to warp the player into the cash shop
+		ChangeChannelPacket(uint8_t ch) : OutPacket(OutPacket::Opcode::CHANGE_CHANNEL) {
+			write_byte(ch);
+			write_int(0);
+		}
 	};
 
 	// Opcode: ENTER_CASHSHOP(40)
@@ -172,7 +183,7 @@ namespace ms
 	{
 	public:
 		// Updates a mob's position with the server
-		MoveMobPacket(int32_t oid, int16_t type, int8_t skillb, int8_t skill0, int8_t skill1, int8_t skill2, int8_t skill3, int8_t skill4, Point<int16_t> startpos, const Movement& movement) : MovementPacket(OutPacket::Opcode::MOVE_MONSTER)
+		MoveMobPacket(int32_t oid, int16_t type, int8_t skillb, int8_t skill0, int8_t skill1, int8_t skill2, int8_t skill3, int8_t skill4, Point<int16_t> startpos, const Movement& movement) : MovementPacket(OutPacket::Opcode::MOVE_LIFE)
 		{
 			write_int(oid);
 			write_short(type);
@@ -197,7 +208,7 @@ namespace ms
 	{
 	public:
 		// Requests picking up an item
-		PickupItemPacket(int32_t oid, Point<int16_t> position) : OutPacket(OutPacket::Opcode::PICKUP_ITEM)
+		PickupItemPacket(int32_t oid, Point<int16_t> position) : OutPacket(OutPacket::Opcode::ITEM_PICKUP)
 		{
 			write_int(0);
 			write_byte(0);
@@ -234,6 +245,6 @@ namespace ms
 	{
 	public:
 		// Finished updating player stats
-		PlayerUpdatePacket() : OutPacket(OutPacket::Opcode::PLAYER_UPDATE) {}
+		PlayerUpdatePacket() : OutPacket(OutPacket::Opcode::PARTY_SEARCH_UPDATE) {}
 	};
 }
