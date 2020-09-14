@@ -17,24 +17,42 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include <cstdint>
+#include <unordered_map>
 
 namespace ms
 {
-	namespace EquipQuality
+	namespace Debuffstat
 	{
 		enum Id
 		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
+			NULL_,
+			SLOW,
+			SEDUCE,
+			FISHABLE,
+			ZOMBIFY,
+			CONFUSE,
+			STUN,
+			POISON,
+			SEAL,
+			DARKNESS,
+			WEAKEN,
+			CURSE
 		};
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
+		extern const std::unordered_map<Id, uint64_t> first_codes;
+		extern const std::unordered_map<Id, uint64_t> second_codes;
 	}
+
+	struct Debuff
+	{
+		Debuffstat::Id stat;
+		int16_t value;
+		int16_t skillid;
+		int16_t skilllevel;
+		int32_t duration;
+
+		constexpr Debuff(Debuffstat::Id stat, int16_t value, int16_t skillid, int16_t skilllevel, int32_t duration) : stat(stat), value(value), skillid(skillid), skilllevel(skilllevel), duration(duration) {}
+		constexpr Debuff() : Debuff(Debuffstat::Id::NULL_, 0, 0, 0, 0) {}
+	};
 }

@@ -21,6 +21,7 @@ namespace ms
 {
 	namespace Buffstat
 	{
+
 		const std::unordered_map<Id, uint64_t> first_codes =
 		{
 			{ Id::DASH2, 0x8000000000000L },
@@ -47,6 +48,7 @@ namespace ms
 			{ Id::STANCE, 0x10 },
 			{ Id::SHARP_EYES, 0x20 },
 			{ Id::MANA_REFLECTION, 0x40 },
+			{ Id::SEDUCE, 0x40 },
 			{ Id::SHADOW_CLAW, 0x100 },
 			{ Id::INFINITY_, 0x200 },
 			{ Id::HOLY_SHIELD, 0x400 },
@@ -94,7 +96,8 @@ namespace ms
 			{ Id::PICKPOCKET, 0x800000000000000L },
 			{ Id::PUPPET, 0x800000000000000L },
 			{ Id::MESOGUARD, 0x1000000000000000L },
-			{ Id::WEAKEN, 0x4000000000000000L }
+			{ Id::WEAKEN, 0x4000000000000000L },
+			{ Id::CURSE, 0x8000000000000000L }
 		};
 	}
 }

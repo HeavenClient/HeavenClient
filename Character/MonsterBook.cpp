@@ -21,16 +21,54 @@ namespace ms
 {
 	MonsterBook::MonsterBook()
 	{
+		bookLevel = 1;
+		normalCard = 0;
+		specialCard = 0;
 		cover = 0;
-	}
-
-	void MonsterBook::set_cover(int32_t cov)
-	{
-		cover = cov;
 	}
 
 	void MonsterBook::add_card(int16_t card, int8_t level)
 	{
 		cards[card] = level;
+	}
+
+	int32_t MonsterBook::get_level()
+	{
+		return bookLevel;
+	}
+
+	void MonsterBook::set_level(int32_t bookLevel)
+	{
+		bookLevel = bookLevel;
+	}
+
+	int32_t MonsterBook::get_special()
+	{
+		return specialCard;
+	}
+
+	void MonsterBook::set_special(int32_t specialCard)
+	{
+		specialCard = specialCard;
+	}
+
+	int32_t MonsterBook::get_normal()
+	{
+		return normalCard;
+	}
+
+	void MonsterBook::set_normal(int32_t normalCard)
+	{
+		normalCard = normalCard;
+	}
+
+	int32_t MonsterBook::get_cover()
+	{
+		return cover;
+	}
+
+	void MonsterBook::set_cover(int32_t cov)
+	{
+		cover = cov;
 	}
 }

@@ -130,6 +130,8 @@ namespace ms
 		bool is_twohanded() const;
 		// Return the type of the currently equipped weapon
 		Weapon::Type get_weapontype() const;
+		// Return the the currently equipped weapon
+		uint8_t get_weaponspeed() const;
 
 		// Obtain a reference to this character's look
 		CharLook& get_look();

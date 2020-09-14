@@ -42,8 +42,10 @@ namespace ms
 		void set_exp(int64_t exp);
 		void set_portal(uint8_t portal);
 		void set_mastery(float mastery);
+		void add_damagepercent(float damagepercent);
 		void set_damagepercent(float damagepercent);
 		void set_reducedamage(float reducedamage);
+		void add_range(int32_t projectilerange);
 
 		void change_job(uint16_t id);
 
@@ -51,6 +53,7 @@ namespace ms
 
 		bool is_damage_buffed() const;
 		uint16_t get_stat(MapleStat::Id stat) const;
+		EnumMap<MapleStat::Id, uint16_t> get_basestats() const;
 		int32_t get_total(EquipStat::Id stat) const;
 		int32_t get_buffdelta(EquipStat::Id stat) const;
 		Rectangle<int16_t> get_range() const;
@@ -58,11 +61,23 @@ namespace ms
 		void set_mapid(int32_t id);
 		int32_t get_mapid() const;
 		uint8_t get_portal() const;
+		void set_hp(uint32_t newhp);
+		void add_hp(int32_t delta);
+		uint32_t get_hp() const;
+		void set_maxhp(uint32_t newmaxhp);
+		uint32_t get_maxhp() const;
+		void set_mp(uint32_t newmp);
+		void add_mp(int32_t delta);
+		uint32_t get_mp() const;
+		void set_maxmp(uint32_t newmaxmp);
+		uint32_t get_maxmp() const;
 		int64_t get_exp() const;
 		const std::string& get_name() const;
 		const std::string& get_jobname() const;
 		Weapon::Type get_weapontype() const;
 		float get_mastery() const;
+		void add_critical(float c);
+		void set_critical(float c);
 		float get_critical() const;
 		float get_mincrit() const;
 		float get_maxcrit() const;
@@ -71,6 +86,7 @@ namespace ms
 		float get_ignoredef() const;
 		void set_stance(float stance);
 		float get_stance() const;
+		void set_resistance(float resistance); ////
 		float get_resistance() const;
 		int32_t get_maxdamage() const;
 		int32_t get_mindamage() const;
@@ -79,6 +95,7 @@ namespace ms
 		int8_t get_attackspeed() const;
 		const Job& get_job() const;
 		bool get_female() const;
+		void set_female(uint8_t type);
 
 	private:
 		int32_t calculateaccuracy() const;
@@ -89,6 +106,10 @@ namespace ms
 		std::string name;
 		std::vector<int64_t> petids;
 		Job job;
+		uint32_t hp;
+		uint32_t maxhp;
+		uint32_t mp;
+		uint32_t maxmp;
 		int64_t exp;
 		int32_t mapid;
 		uint8_t portal;

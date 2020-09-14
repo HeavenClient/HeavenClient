@@ -21,23 +21,35 @@
 
 namespace ms
 {
-	CharStats::CharStats(const StatsEntry& s) : name(s.name), petids(s.petids), exp(s.exp), mapid(s.mapid), portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats), female(s.female)
+	CharStats::CharStats(const StatsEntry& s) : name(s.name), petids(s.petids), hp(s.hp), maxhp(s.maxhp), mp(s.mp), maxmp(s.maxmp), exp(s.exp), mapid(s.mapid), portal(s.portal), rank(s.rank), jobrank(s.jobrank), basestats(s.stats), female(s.female)
 	{
 		job = basestats[MapleStat::Id::JOB];
 
 		init_totalstats();
 	}
 
-	CharStats::CharStats() {}
+	CharStats::CharStats() {
+	}
 
 	void CharStats::init_totalstats()
 	{
+		basestats.clear(); // TODO: Makes all stats to uint32_t
 		totalstats.clear();
 		buffdeltas.clear();
 		percentages.clear();
 
-		totalstats[EquipStat::Id::HP] = get_stat(MapleStat::Id::MAXHP);
-		totalstats[EquipStat::Id::MP] = get_stat(MapleStat::Id::MAXMP);
+		basestats.emplace(MapleStat::Id::LEVEL, get_stat(MapleStat::Id::LEVEL));
+		basestats.emplace(MapleStat::Id::FAME, get_stat(MapleStat::Id::FAME));
+		basestats.emplace(MapleStat::Id::JOB, get_stat(MapleStat::Id::JOB));
+		//basestats.emplace(MapleStat::Id::MAXHP, static_cast<uint16_t>(get_maxhp()));
+		//basestats.emplace(MapleStat::Id::MAXMP, static_cast<uint16_t>(get_maxmp()));
+		basestats.emplace(MapleStat::Id::STR, get_stat(MapleStat::Id::STR));
+		basestats.emplace(MapleStat::Id::DEX, get_stat(MapleStat::Id::DEX));
+		basestats.emplace(MapleStat::Id::LUK, get_stat(MapleStat::Id::LUK));
+		basestats.emplace(MapleStat::Id::INT, get_stat(MapleStat::Id::INT));
+
+		totalstats[EquipStat::Id::HP] = hp;
+		totalstats[EquipStat::Id::MP] = mp;
 		totalstats[EquipStat::Id::STR] = get_stat(MapleStat::Id::STR);
 		totalstats[EquipStat::Id::DEX] = get_stat(MapleStat::Id::DEX);
 		totalstats[EquipStat::Id::INT] = get_stat(MapleStat::Id::INT);
@@ -76,8 +88,16 @@ namespace ms
 
 		int32_t primary = get_primary_stat();
 		int32_t secondary = get_secondary_stat();
-		int32_t attack = get_total(EquipStat::Id::WATK);
-		float multiplier = damagepercent + static_cast<float>(attack) / 100;
+		int32_t attack = 0;
+		if (weapontype == Weapon::Type::WAND || weapontype == Weapon::Type::STAFF) {
+			attack = get_total(EquipStat::Id::MAGIC);
+		}
+		else {
+			attack = get_total(EquipStat::Id::WATK);
+		}
+		float multiplier = damagepercent + static_cast<float>(attack) / 10;
+
+		// Calculate Damage in range:
 		maxdamage = static_cast<int32_t>((primary + secondary) * multiplier);
 		mindamage = static_cast<int32_t>(((primary * 0.9f * mastery) + secondary) * multiplier);
 	}
@@ -173,6 +193,10 @@ namespace ms
 	{
 		percentages[stat] += percent;
 	}
+	void CharStats::add_range(int32_t range)
+	{
+		projectilerange += range;
+	}
 
 	void CharStats::set_weapontype(Weapon::Type w)
 	{
@@ -194,6 +218,11 @@ namespace ms
 		mastery = 0.5f + m;
 	}
 
+	void CharStats::add_damagepercent(float d)
+	{
+		damagepercent += d;
+	}
+
 	void CharStats::set_damagepercent(float d)
 	{
 		damagepercent = d;
@@ -202,6 +231,10 @@ namespace ms
 	void CharStats::set_reducedamage(float r)
 	{
 		reducedamage = r;
+	}
+	void CharStats::set_resistance(float re) ///////////
+	{
+		resiststatus = re;
 	}
 
 	void CharStats::change_job(uint16_t id)
@@ -233,6 +266,11 @@ namespace ms
 		return basestats[stat];
 	}
 
+	EnumMap<MapleStat::Id, uint16_t> CharStats::get_basestats() const
+	{
+		return basestats;
+	}
+
 	int32_t CharStats::get_total(EquipStat::Id stat) const
 	{
 		return totalstats[stat];
@@ -248,6 +286,7 @@ namespace ms
 		return Rectangle<int16_t>(-projectilerange, -5, -50, 50);
 	}
 
+
 	void CharStats::set_mapid(int32_t id)
 	{
 		mapid = id;
@@ -261,6 +300,56 @@ namespace ms
 	uint8_t CharStats::get_portal() const
 	{
 		return portal;
+	}
+
+	void CharStats::set_hp(uint32_t newhp)
+	{
+		hp = newhp;
+	}
+
+	void CharStats::add_hp(int32_t delta)
+	{
+		hp = hp + delta;
+	}
+
+	uint32_t CharStats::get_hp() const
+	{
+		return hp;
+	}
+
+	void CharStats::set_maxhp(uint32_t newmaxhp)
+	{
+		maxhp = newmaxhp;
+	}
+
+	uint32_t CharStats::get_maxhp() const
+	{
+		return maxhp;
+	}
+
+	void CharStats::set_mp(uint32_t newmp)
+	{
+		mp = newmp;
+	}
+
+	void CharStats::add_mp(int32_t delta)
+	{
+		mp = mp + delta;
+	}
+
+	uint32_t CharStats::get_mp() const
+	{
+		return mp;
+	}
+
+	void CharStats::set_maxmp(uint32_t newmaxmp)
+	{
+		maxmp = newmaxmp;
+	}
+
+	uint32_t CharStats::get_maxmp() const
+	{
+		return maxmp;
 	}
 
 	int64_t CharStats::get_exp() const
@@ -286,6 +375,16 @@ namespace ms
 	float CharStats::get_mastery() const
 	{
 		return mastery;
+	}
+
+	void CharStats::add_critical(float c)
+	{
+		critical += c;
+	}
+
+	void CharStats::set_critical(float c)
+	{
+		critical = c;
 	}
 
 	float CharStats::get_critical() const
@@ -366,5 +465,10 @@ namespace ms
 	bool CharStats::get_female() const
 	{
 		return female;
+	}
+
+	void CharStats::set_female(uint8_t type)
+	{
+		female = type;
 	}
 }

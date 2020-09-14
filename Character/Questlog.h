@@ -17,24 +17,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include <map>
 
 namespace ms
 {
-	namespace EquipQuality
+	// Class that stores information on the quest log of an individual character
+	class QuestLog
 	{
-		enum Id
-		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
-		};
+	public:
+		void add_started(int16_t, const std::string& quest_data);
+		void add_in_progress(int16_t, int16_t, const std::string& quest_data);
+		void add_completed(int16_t, int64_t);
+		bool is_started(int16_t);
+		int16_t get_last_started();
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
-	}
+	private:
+		std::map<int16_t, std::string> started;
+		std::map<int16_t, std::pair<int16_t, std::string>> in_progress;
+		std::map<int16_t, int64_t> completed;
+	};
 }

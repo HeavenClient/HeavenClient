@@ -354,6 +354,14 @@ namespace ms
 		return WeaponData::get(weapon_id).get_type();
 	}
 
+	uint8_t Char::get_weaponspeed() const
+	{
+		int32_t weapon_id = look.get_equips().get_weapon();
+
+		return WeaponData::get(weapon_id).get_speed();
+	}
+
+
 	bool Char::getflip() const
 	{
 		return facing_right;

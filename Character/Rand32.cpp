@@ -15,26 +15,32 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#pragma once
-
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include "Rand32.h"
 
 namespace ms
 {
-	namespace EquipQuality
-	{
-		enum Id
-		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
-		};
+	Rand32::Rand32() {}
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
+	int64_t Rand32::random() {
+		int32_t v3;
+		int32_t v4;
+		int32_t v5;
+
+		v3 = ((client_seed1 & 0xFFFFFFFE) << 12) ^ ((client_seed1 & 0x7FFC0 ^ (client_seed1 >> 13)) >> 6);
+		v4 = 16 * (client_seed2 & 0xFFFFFFF8) ^ (((client_seed2 >> 2) ^ client_seed2 & 0x3F800000) >> 23);
+		v5 = ((client_seed3 & 0xFFFFFFF0) << 17) ^ (((client_seed3 >> 3) ^ client_seed3 & 0x1FFFFF00) >> 8);
+
+		client_seed3 = v5;
+		client_seed1 = v3;
+		client_seed2 = v4;
+
+		return (client_seed1 ^ client_seed2 ^ client_seed3) & 0xFFFFFFFFL;
+	}
+
+	void Rand32::set_seed(int32_t server_seed1, int32_t server_seed2, int32_t server_seed3)
+	{
+		client_seed1 = server_seed1;
+		client_seed2 = server_seed2;
+		client_seed3 = server_seed3;
 	}
 }

@@ -17,24 +17,19 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include <map>
 
 namespace ms
 {
-	namespace EquipQuality
+	class Rand32
 	{
-		enum Id
-		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
-		};
-
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
-	}
+	public:
+		Rand32();
+		int64_t random();
+		void set_seed(int32_t server_seed1, int32_t server_seed2, int32_t server_seed3);
+	private:
+		int32_t client_seed1;
+		int32_t client_seed2;
+		int32_t client_seed3;
+	};
 }

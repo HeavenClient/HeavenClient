@@ -15,26 +15,31 @@
 //	You should have received a copy of the GNU Affero General Public License	//
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
-#pragma once
-
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include "Debuff.h"
 
 namespace ms
 {
-	namespace EquipQuality
+	namespace Debuffstat
 	{
-		enum Id
-		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
+		const std::unordered_map<Id, uint64_t> first_codes =
+		{ 
+			{}
 		};
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
+		const std::unordered_map<Id, uint64_t> second_codes =
+		{
+			{ Id::NULL_, 0x0 },
+			{ Id::SLOW, 0x1 },
+			{ Id::SEDUCE, 0x80 },
+			{ Id::FISHABLE, 0x100 },
+			{ Id::ZOMBIFY, 0x4000 },
+			{ Id::CONFUSE, 0x80000 },
+			{ Id::STUN, 0x2000000000000L },
+			{ Id::POISON, 0x4000000000000L },
+			{ Id::SEAL, 0x8000000000000L },
+			{ Id::DARKNESS, 0x10000000000000L },
+			{ Id::WEAKEN, 0x4000000000000000L },
+			{ Id::CURSE, 0x8000000000000000L }
+		};
 	}
 }

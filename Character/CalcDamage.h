@@ -17,24 +17,29 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../EquipStat.h"
-
-#include "../../Template/EnumMap.h"
+#include "Rand32.h"
 
 namespace ms
 {
-	namespace EquipQuality
+	class CalcDamage
 	{
-		enum Id
-		{
-			GREY,
-			WHITE,
-			ORANGE,
-			BLUE,
-			VIOLET,
-			GOLD
-		};
+	public:
+		CalcDamage();
+		
+		void set_seed(int32_t server_seed1, int32_t server_seed2, int32_t server_seed3);
 
-		Id check_quality(int32_t item_id, bool scrolled, const EnumMap<EquipStat::Id, uint16_t>& stats);
-	}
+		Rand32& get_RndGenForCharacter();
+		Rand32& get_RndForCheckDamageMiss();
+		Rand32& get_RndForMortalBlow();
+		Rand32& get_RndForSummoned();
+		Rand32& get_RndForMob();
+		Rand32& get_RndGenForMob();
+	private:
+		Rand32 RndGenForCharacter;
+		Rand32 RndForCheckDamageMiss;
+		Rand32 RndForMortalBlow;
+		Rand32 RndForSummoned;
+		Rand32 RndForMob;
+		Rand32 RndGenForMob;
+	};
 }
