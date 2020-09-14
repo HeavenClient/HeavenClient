@@ -28,7 +28,7 @@ namespace ms
 	class GatherItemsPacket : public OutPacket
 	{
 	public:
-		GatherItemsPacket(InventoryType::Id type) : OutPacket(OutPacket::Opcode::GATHER_ITEMS)
+		GatherItemsPacket(InventoryType::Id type) : OutPacket(OutPacket::Opcode::ITEM_SORT)
 		{
 			write_time();
 			write_byte(type);
@@ -40,7 +40,7 @@ namespace ms
 	class SortItemsPacket : public OutPacket
 	{
 	public:
-		SortItemsPacket(InventoryType::Id type) : OutPacket(OutPacket::Opcode::SORT_ITEMS)
+		SortItemsPacket(InventoryType::Id type) : OutPacket(OutPacket::Opcode::ITEM_SORT2)
 		{
 			write_time();
 			write_byte(type);
@@ -52,7 +52,7 @@ namespace ms
 	class MoveItemPacket : public OutPacket
 	{
 	public:
-		MoveItemPacket(InventoryType::Id type, int16_t slot, int16_t action, int16_t qty) : OutPacket(OutPacket::Opcode::MOVE_ITEM)
+		MoveItemPacket(InventoryType::Id type, int16_t slot, int16_t action, int16_t qty) : OutPacket(OutPacket::Opcode::ITEM_MOVE)
 		{
 			write_time();
 			write_byte(type);
@@ -105,7 +105,7 @@ namespace ms
 			WHITESCROLL = 0x02
 		};
 
-		ScrollEquipPacket(int16_t source, EquipSlot::Id target, uint8_t flags) : OutPacket(OutPacket::Opcode::SCROLL_EQUIP)
+		ScrollEquipPacket(int16_t source, EquipSlot::Id target, uint8_t flags) : OutPacket(OutPacket::Opcode::USE_UPGRADE_SCROLL)
 		{
 			write_time();
 			write_short(source);

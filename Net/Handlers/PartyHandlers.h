@@ -17,19 +17,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../../InPacket.h"
-#include "../../Login.h"
+#include "../PacketHandler.h"
 
 namespace ms
 {
-	namespace LoginParser
+	class PartyResultHandler : public PacketHandler 
 	{
-		Account parse_account(InPacket& recv);
-		World parse_world(InPacket& recv);
-		RecommendedWorld parse_recommended_world(InPacket& recv);
-		CharEntry parse_charentry(InPacket& recv);
-		StatsEntry parse_stats(InPacket& recv);
-		LookEntry parse_look(InPacket& recv);
-		void parse_login(InPacket& recv);
-	}
+	public:
+		void handle(InPacket& recv) const override;
+	private:
+		void message(InPacket& recv) const;
+	};
+
+	class PartyValueHandler : public PacketHandler
+	{
+		void handle(InPacket& recv) const override;
+	};
 }

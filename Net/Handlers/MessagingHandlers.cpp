@@ -34,6 +34,7 @@ namespace ms
 	// 6 - Guild points
 	void ShowStatusInfoHandler::handle(InPacket& recv) const
 	{
+		Player& player = Stage::get().get_player();
 		int8_t mode = recv.read_byte();
 
 		if (mode == 0)
@@ -144,8 +145,14 @@ namespace ms
 			int32_t gain = recv.read_int();
 			std::string sign = (gain < 0) ? "-" : "+";
 
-			// TODO: Lose fame?
+			uint16_t newfame = player.get_stats().get_stat(MapleStat::Id::FAME) + gain;
+
+			player.get_stats().set_stat(MapleStat::Id::FAME, newfame);
+
 			show_status(Color::Name::WHITE, "You have gained fame. (" + sign + std::to_string(gain) + ")");
+		}
+		else if (mode == 6) {
+			int32_t gp = recv.read_int();
 		}
 		else
 		{

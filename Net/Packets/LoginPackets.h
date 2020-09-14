@@ -21,6 +21,8 @@
 
 #include "../../Configuration.h"
 
+#include "../../Net/Login.h"
+
 namespace ms
 {
 	// Opcode: LOGIN(1)
@@ -28,7 +30,7 @@ namespace ms
 	{
 	public:
 		// Request to be logged-in to an account
-		LoginPacket(const std::string& acc, const std::string& pass) : OutPacket(OutPacket::Opcode::LOGIN)
+		LoginPacket(const std::string& acc, const std::string& pass) : OutPacket(OutPacket::Opcode::LOGIN_PASSWORD)
 		{
 			std::string volumeSerialNumber = Configuration::get().get_vol_serial_num();
 
@@ -114,7 +116,7 @@ namespace ms
 	{
 	public:
 		// Requests being logged-in to a channel server with the specified character
-		PlayerLoginPacket(int32_t cid) : OutPacket(OutPacket::Opcode::PLAYER_LOGIN)
+		PlayerLoginPacket(int32_t cid) : OutPacket(OutPacket::Opcode::PLAYER_LOGGEDIN)
 		{
 			write_int(cid);
 		}
@@ -125,6 +127,8 @@ namespace ms
 	{
 	public:
 		// Sends whenever we hit the start of the Login screen
-		LoginStartPacket() : OutPacket(OutPacket::Opcode::LOGIN_START) {}
+		LoginStartPacket() : OutPacket(OutPacket::Opcode::LOGIN_START) {
+			// TODO: Check on File, Version
+		}
 	};
 }

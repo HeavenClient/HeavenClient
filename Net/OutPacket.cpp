@@ -58,7 +58,7 @@ namespace ms
 
 	void OutPacket::write_short(int16_t sh)
 	{
-		for (size_t i = 0; i < sizeof(short); i++)
+		for (size_t i = 0; i < sizeof(int16_t); i++)
 		{
 			write_byte(static_cast<int8_t>(sh));
 			sh >>= 8;
@@ -76,7 +76,7 @@ namespace ms
 
 	void OutPacket::write_long(int64_t lg)
 	{
-		for (size_t i = 0; i < sizeof(long); i++)
+		for (size_t i = 0; i < sizeof(int64_t); i++)
 		{
 			write_byte(static_cast<int8_t>(lg));
 			lg >>= 8;

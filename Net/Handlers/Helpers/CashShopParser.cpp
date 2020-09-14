@@ -64,52 +64,37 @@ namespace ms
 
 		StatsEntry parseCharStats(InPacket& recv)
 		{
-			recv.read_int(); // character id
+			// TODO: This is similar to CashShopParser.cpp, try and merge these.
+			StatsEntry statsEntry;
 
-			// TODO: This is similar to LoginParser.cpp, try and merge these.
-			StatsEntry statsentry;
+			statsEntry.name = recv.read_padded_string(13);
+			statsEntry.female = recv.read_bool(); // 0 = male, 1 = female
+			statsEntry.stats[MapleStat::Id::SKIN] = recv.read_byte();	// skin color
+			statsEntry.stats[MapleStat::Id::FACE] = recv.read_int();	// face
+			statsEntry.stats[MapleStat::Id::HAIR] = recv.read_int();	// hair
+			for (size_t i = 0; i < 3; i++) {
+				statsEntry.petids.push_back(recv.read_long());
+			}
+			statsEntry.stats[MapleStat::Id::LEVEL] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::JOB] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::STR] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::DEX] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::INT] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::LUK] = recv.read_short();
+			statsEntry.hp = recv.read_int();
+			statsEntry.maxhp = recv.read_int();
+			statsEntry.mp = recv.read_int();
+			statsEntry.maxmp = recv.read_int();
+			statsEntry.stats[MapleStat::Id::AP] = recv.read_short();
+			statsEntry.stats[MapleStat::Id::SP] = recv.read_short();
+			statsEntry.exp = recv.read_int();
+			statsEntry.stats[MapleStat::Id::FAME] = recv.read_short();
+			statsEntry.termexp = recv.read_int(); // TermEXP
+			statsEntry.mapid = recv.read_int(); // dwPosMap
+			statsEntry.portal = recv.read_byte(); // Portal
+			statsEntry.playTime = recv.read_int(); // Playtime
 
-			statsentry.name = recv.read_padded_string(13);
-			statsentry.female = recv.read_bool();
-
-			recv.read_byte();	// skin
-			recv.read_int();	// face
-			recv.read_int();	// hair
-
-			for (size_t i = 0; i < 3; i++)
-				statsentry.petids.push_back(recv.read_long());
-
-			statsentry.stats[MapleStat::Id::LEVEL] = recv.read_byte(); // TODO: Change to recv.read_short(); to increase level cap
-
-			auto job = recv.read_short();
-
-			statsentry.stats[MapleStat::Id::JOB] = job;
-			statsentry.stats[MapleStat::Id::STR] = recv.read_short();
-			statsentry.stats[MapleStat::Id::DEX] = recv.read_short();
-			statsentry.stats[MapleStat::Id::INT] = recv.read_short();
-			statsentry.stats[MapleStat::Id::LUK] = recv.read_short();
-			statsentry.stats[MapleStat::Id::HP] = recv.read_short();
-			statsentry.stats[MapleStat::Id::MAXHP] = recv.read_short();
-			statsentry.stats[MapleStat::Id::MP] = recv.read_short();
-			statsentry.stats[MapleStat::Id::MAXMP] = recv.read_short();
-			statsentry.stats[MapleStat::Id::AP] = recv.read_short();
-
-			if (hasSPTable(job))
-				parseRemainingSkillInfo(recv);
-			else
-				recv.read_short(); // remaining sp
-
-			statsentry.exp = recv.read_int();
-			statsentry.stats[MapleStat::Id::FAME] = recv.read_short();
-
-			recv.skip(4); // gachaexp
-
-			statsentry.mapid = recv.read_int();
-			statsentry.portal = recv.read_byte();
-
-			recv.skip(4); // timestamp
-
-			return statsentry;
+			return statsEntry;
 		}
 
 		bool hasSPTable(int16_t job)

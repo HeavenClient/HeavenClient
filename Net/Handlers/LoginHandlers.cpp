@@ -108,13 +108,8 @@ namespace ms
 
 	void ServerStatusHandler::handle(InPacket& recv) const
 	{
-		// Possible values for status:
-		// 0 - Normal
-		// 1 - Highly populated
-		// 2 - Full
-		recv.read_short(); // status
-
-		// TODO: I believe it shows a warning message if it's 1 and blocks enter into the world if it's 2. Need to find those messages.
+		int8_t overuserlimit = recv.read_byte();
+		int8_t populatelevel = recv.read_byte();
 	}
 
 	void ServerlistHandler::handle(InPacket& recv) const
@@ -153,17 +148,19 @@ namespace ms
 
 		if (loginwait && loginwait->is_active())
 		{
-			uint8_t channel_id = recv.read_byte();
+			uint8_t nStatus = recv.read_byte();
+			// TODO: Handle all errors status.
 
 			// Parse all characters
 			std::vector<CharEntry> characters;
-			int8_t charcount = recv.read_byte();
+			int8_t nCharCount = recv.read_byte();
 
-			for (uint8_t i = 0; i < charcount; ++i)
+			for (uint8_t i = 0; i < nCharCount; ++i) {
 				characters.emplace_back(LoginParser::parse_charentry(recv));
+			}
 
-			int8_t pic = recv.read_byte();
-			int32_t slots = recv.read_int();
+			int8_t bLoginOpt = recv.read_byte();
+			int32_t nSlotCount = recv.read_int();
 
 			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);
@@ -174,7 +171,7 @@ namespace ms
 				worldselect->remove_selected();
 
 			// Add the character selection screen
-			UI::get().emplace<UICharSelect>(characters, charcount, slots, pic);
+			UI::get().emplace<UICharSelect>(characters, nCharCount, nSlotCount, bLoginOpt);
 		}
 	}
 

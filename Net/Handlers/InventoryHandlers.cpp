@@ -48,9 +48,7 @@ namespace ms
 	{
 		recv.read_bool(); // 'updatetick'
 
-		Inventory& inventory = Stage::get()
-			.get_player()
-			.get_inventory();
+		Inventory& inventory = Stage::get().get_player().get_inventory();
 
 		struct Mod
 		{

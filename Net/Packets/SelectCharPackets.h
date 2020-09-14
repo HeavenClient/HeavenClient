@@ -26,7 +26,7 @@ namespace ms
 	class SelectCharPacket : public OutPacket
 	{
 	public:
-		SelectCharPacket(int32_t cid) : OutPacket(OutPacket::Opcode::SELECT_CHAR)
+		SelectCharPacket(int32_t cid) : OutPacket(OutPacket::Opcode::CHAR_SELECT)
 		{
 			write_int(cid);
 			write_hardware_info();
@@ -53,7 +53,7 @@ namespace ms
 	class SelectCharPicPacket : public OutPacket
 	{
 	public:
-		SelectCharPicPacket(const std::string& pic, int32_t cid) : OutPacket(OutPacket::Opcode::SELECT_CHAR_PIC)
+		SelectCharPicPacket(const std::string& pic, int32_t cid) : OutPacket(OutPacket::Opcode::CHAR_SELECT_WITH_PIC)
 		{
 			write_string(pic);
 			write_int(cid);
